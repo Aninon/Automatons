@@ -1,0 +1,138 @@
+
+#water mob?
+#tree planter mob?
+#more artificial tree?
+
+
+#combine worker dig/collect?
+#golem, aemaeth maeth
+
+#lag spikes?
+
+
+#duplex bugged?
+
+
+#alltech not working?
+#mob remote control?
+#change shoop da whoop, lol
+#fix the fuckin bot carrying in their crotch bug
+#sliders cause crash on die sometimes, shell or core?
+
+
+v0.5.8
+
+
+-added the slider pan for many lulz
+-added a naturalizing item to counter the ability of the bionic conversion item
+-finally got around to fixing the age old glitch with the workers trying to pick up gravel, it was just 1 null point exception i overlooked, really simple glitch, im an idiot XD
+-also changed the trigger item for worker item retrieval to a chest block, cuz it makes more sense than a stick
+-tried to idiot proof how the underground cities were generated to prevent any possible overlap, seems to work fine in testing :D
+-also made cities generate their chests AFTER they were fully created so chests werent destroyed when it was still generating, some associated glitches with that are naturally fixed as well.
+-used this generation mechanism for crypts, now they no longer overlap in a stupid fashion but perfectly grided like giant blocks. This also fixes some chest overlap issues
+-made adjacently spawned cities place a tunnel inbetween the rock, assuming theres rock in the way which hopefully there is..
+-made the city's chest spawns a tiny bit more variant
+-sped up frass growth in water considerably, at least 5 times faster, frass on other blocks is also a little faster but cant grow down over 2 block lengths anymore
+-remodelled the crypts abit, personally i think they look better now
+-added some more compatability for the 'fast' graphics option
+-fixed a dumb visual glitch with water frass
+-finally renamed a few classes for mobs to their REAL names, not my initial prototyping ones
+
+v0.5.7
+-finally added some more 'independent' items and means to survive on alltech biome option
+-a new artificial 'plant'
+-a power pickaxe item, stronger than diamond but only 3 uses :V super easy to make though
+-a couple weird superpowered items of sorts
+-a handful of new blocks specifically for....
+-a freaking huge new world gen thing, seriously, look underground in tech biomes :]
+-changed some textures
+-went totally crazy and put an AM_ in front of 'almost' every class name (i have a couple good reasons though :P )
+-frass now spreads to sand and water, it only spreads to water within a tech biome however (if all tech is on though, it will slowly cover the ocean >:D)
+-added some variance to 'foliage array' colors
+-also finally added graphics option to foliage array
+-finally nerfed the healing block, big time, it's pretty balanced now with a timer based healing, it charges up and heals then you have to wait
+-messed around with biome gen stuff some more
+-fixed a derp glitch where solid frass would turn to clay if it was covered just like frassed clay
+-fixed a silly texture glitch with the guard turret
+-changed the sentry model a tiny bit, also now with silly teeth chomping action XD
+-fixed a very old little visual glitch with the sliders face
+
+
+
+v0.5.3
+-fixed a pesky little glitch where dig particles didnt show up when workers dug, i fixed in the strangest fashion, but it works
+hopefully... i'll probably get a mountain of bugs posted on here because of it XD
+-made code more reliant on my own system
+-fixed the empty handed worker bug! will now follow/idle toggle with empty hand or item they dont recognize
+-slider shell can now be placed on walls or upside down for many bouncing possibilites!
+-added another new entity! :D
+-3 new  items, 2 being just parts for the new bot, last being a new automaton body for 'higher tier' bots like the sentry
+-changed some of the stack sizes for a few bots, nothing too notable
+-changed some recipes AGAIN XD
+-changed where the textures are stored, all in one folder now for convenience and so i dont forget stuff again XD
+-verrrrrry subtle texture changes, trying to get a slight older look to some
+-started setting up for a bunch of new entities, coming soon!
+
+
+v0.5.1
+-modloader version! woo, took forever XD
+-new item, blocks, and entity ids config file! no moar conflicts! hopefully.
+-also added 'all tech biome' option, so all biomes can be mechy, if you so choose, default is off
+-sentry no longer attacks tame or wild wolves, but will attack angry wolves 
+-sentry also attacks slimes now
+-guard attacks slimes now
+-fixed a mistake where i accidently removed duplex collisions ^^
+
+
+v0.5
+-SOUNDS FINALLY,no more slime,skeleton, and creeper noises for my bots XD
+-made alot of item changes, some ids have changed and you probably lost some stuff, sorry :[
+-workers will now find coal ore when shown coal, or redstone ore when shown redstone dust, no diamond though, cuz that's too easy and im sure they'd
+fuck it up and then i'd get ragers about "ZOMG YOUR @#%@# WORKER LOST MEH DIAMONDS!!!11ONE!1"
+-completley rewrote worker's item finding ability, hopefully they'll work better now, I notice they wander around more but don't seem to be
+getting stuck so far, please let me know if it's still terrible! XD
+-added mortar? and other unrelated recipes that hardly seem to fit this mod, but i felt like it
+-added another use for blue cores ^^ (new entities)
+-added omni
+-slider file name changed to ASLider for compatability issues
+-finally added death smoke particles, since bots disapear instantly rather then the normal 'fall over' first i had to
+recode a bit :B
+-made the laser gun more accurate, i know i know it's getting too OP, but it's so fun!!
+-made the guard turret more accurate, like stupidly accurate
+-capped Bobby dupping at 50, this is 50 Bobbies in the entire world, so no way that can lag spike (there can often be 300 entities in a world)
+-nerfed Bobby drops
+-sentry now takes priority with keeping near the player over 14 units if targetting
+-sentry also does a 'boomerang' sort of move now where if he cant seem to reach an  enemy he runs back to the owner first and refinds targets
+-sentry no longer wanders around aimlessly, if he moves, he's either catching up to you, or hunting.
+-fixed a glitch where choppers would constantly get stuck, especially in trees
+-frass now grows onto clayblocks just like normal grass grows onto dirt! it's virtually identical, however, now when you break frass
+it drops a frass block and returns the 'infected' clay to normal, but adjacent frass can grow onto it again! upon placing the frass 
+again it will no longer turn to clay when harvested but will infect other clay blocks into normal frass again.. it's confusing, 
+play around with it!
+-the magic of metadata allows me to add blocks without using more ids! wodnerous! blue trees now have custom trunk block
+-bugtesting stick thing
+
+v0.41
+-made Slider spawn less crazy(barely) only spawns on sand, grass, or fake grass
+-fixed a rather bad SMP bug with fake grass
+-guards should properly deploy in SMP now
+-made Bobby the most overpowered little bugger imaginable! remember: still allergic to water :B
+-fixed broken worker head recipe, woops ^^
+-duplex duplication recipe now works properly in SMP
+
+v0.113
+-fixed some really derpy but subtle code mistakes
+-made Watcher more sinister
+-Watcher new drops
+-Added Guard bot
+
+v0.112
+-MODLOADER SUPPORT, sheesh...
+-no externally changable item id's yet.
+-still learning how to make a changelog look right XD
+-automatons and biters no longer wander aimlessly when following you
+-automatons no longer need stick for follow or idle mode change, go barehanded!
+
+
+v0.11 
+-hopefully actually works now
