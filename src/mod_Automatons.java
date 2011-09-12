@@ -21,6 +21,8 @@ public class mod_Automatons extends BaseMod
 		return "v0.5.8";
 	}
 	
+	//DERP DERP TEST MESSAGE GOES HERE
+	
 	// In parenthesis is the Block ID followed by the texture (BlockID,Texture)
 	// Block IDs can go up to 255
 	// .setHardness = The blocks hardness, how long it takes to destroy (Stone is 1.5F)
