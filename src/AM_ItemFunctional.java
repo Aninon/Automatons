@@ -45,6 +45,9 @@ public class AM_ItemFunctional extends Item
 		}else if(derp==3){
 		
 		AutomatonActions.Hollow(world,entityplayer);
+		}else if(derp==4){
+		
+		AutomatonActions.Naturalization(world,entityplayer);
 		}
         return itemstack;
     }

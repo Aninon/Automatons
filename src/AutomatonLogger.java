@@ -34,6 +34,7 @@ public class AutomatonLogger {
 	public static int regulator=123;
 	public static int daymaker=124;
 	public static int techifier=125;
+	public static int naturizer=126;
 
 	public static int tech=97;
 	public static int crystal=98;
@@ -176,6 +177,7 @@ public class AutomatonLogger {
 				out.write("regulator="+regulator+"\n");
 				out.write("daymaker="+daymaker+"\n");
 				out.write("techifier="+techifier+"\n");
+				out.write("naturizer="+naturizer+"\n");
 
 				out.write("//\n//\n//BLOCKS:\n");
 

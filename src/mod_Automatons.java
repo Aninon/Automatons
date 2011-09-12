@@ -15,30 +15,12 @@ import net.minecraft.client.Minecraft;
 
 public class mod_Automatons extends BaseMod
 {                              
-	//This can be almost anything to my knowledge. I just put version of Minecraft.
 	public String Version()
 	{
 		return "v0.5.8";
 	}
 	
 	//DERP DERP TEST MESSAGE GOES HERE
-	
-	// In parenthesis is the Block ID followed by the texture (BlockID,Texture)
-	// Block IDs can go up to 255
-	// .setHardness = The blocks hardness, how long it takes to destroy (Stone is 1.5F)
-	// .setResistance = How resistant a block is to explosions (Stone is 10F, obsidian is 2000F)
-	//public static Block ExampleBlock = new ExampleBlock(100,0).setHardness(5.0F).setResistance(10F).setItemName("ExampleBlock");
-	
-	// In parenthesis is the Item ID
-	// Item IDs can go up to 32000
-	// Add .setIconCoords(int,int)if you want to make it look like a item already in /gui/items.png (For example, .setIconCoords(8,4) for diamond)
-	//public static Item ExampleItem = new ExampleItem(5000).setItemName("ExampleItem");
-	
-	
-	
-	//AutomatonLogger AutomatonLogger;
-	
-	
 	
 	public static AutomatonLogger self;
 	static{
@@ -67,22 +49,15 @@ public class mod_Automatons extends BaseMod
 	public static Item factotum = (new AM_ItemBot(AutomatonLogger.itemFactotum,4)).setIconCoord(4, 10).setItemName("factotum").setMaxStackSize(1);
 	
 	
-	public static Item pickTech = (new AM_ItemAPickaxe(AutomatonLogger.pickTech, Arrays.asList("TECH",0,3,999,100f,2))).setIconCoord(2, 6).setItemName("pickTech");
+	public static Item pickTech = (new AM_ItemAPickaxe(AutomatonLogger.pickTech, Arrays.asList("TECH",0,3,4,100f,2))).setIconCoord(2, 6).setItemName("pickTech");
 	
 	
 	public static Item regulator = (new AM_ItemFunctional(AutomatonLogger.regulator,3)).setIconCoord(4, 10).setItemName("regulator").setMaxStackSize(1);
 	public static Item daymaker = (new AM_ItemFunctional(AutomatonLogger.daymaker,1)).setIconCoord(4, 10).setItemName("daymaker");
 	public static Item techifier = (new AM_ItemFunctional(AutomatonLogger.techifier,2)).setIconCoord(4, 10).setItemName("techifier");
 	public static Item smack = (new AM_ItemSmack(AutomatonLogger.smack)).setIconCoord(4, 10).setItemName("smack");
+	public static Item naturizer = (new AM_ItemFunctional(AutomatonLogger.naturizer,4)).setIconCoord(4, 10).setItemName("naturizer");
 	
-	
-	
-	//2
-	
-	//12f
-
-
-	//public static int mort=AutomatonLogger.mortar;
 	
 	static 
 	{
@@ -134,11 +109,7 @@ public class mod_Automatons extends BaseMod
 	
 	public mod_Automatons()
 	{
-		//You need to register your block (Only for blocks)
-		//ModLoader.RegisterBlock(ExampleBlock);
-		//Now lets set the textures for the block and the item
-		//ExampleBlock.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/FolderName/ExampleBlock.png");
-		
+
 		
 		techAchievement = (new Achievement(4281,"WERG",-4,-6,Item.appleRed,null)).registerAchievement();
 		ModLoader.AddAchievementDesc(techAchievement, "YOU IS WINRAR!", "herpy derp derp?");
@@ -164,6 +135,9 @@ public class mod_Automatons extends BaseMod
 		
 		smack.iconIndex = ModLoader.addOverride("/gui/items.png", "/automatons/sliderpan.png");
 		ModLoader.AddName(smack, "Slider Pan");
+		
+		naturizer.iconIndex = ModLoader.addOverride("/gui/items.png", "/automatons/naturizer.png");
+		ModLoader.AddName(naturizer, "Organic Conversion System");
 		
 		//itemBally
 		
@@ -301,12 +275,12 @@ public class mod_Automatons extends BaseMod
 		fakeCrystal.loadSprites(((AM_BlockGlow)crystal).D[0],((AM_BlockGlow)crystal).D[1]);
 		
 		
-		ModLoader.AddSpawn(AM_EntityWatcher.class, 5, EnumCreatureType.monster);
-		ModLoader.AddSpawn(AM_EntitySlider.class, 2, EnumCreatureType.monster);
+		ModLoader.AddSpawn(AM_EntityWatcher.class, 15, EnumCreatureType.monster);
+		ModLoader.AddSpawn(AM_EntitySlider.class, 100, EnumCreatureType.monster);
 		
-		ModLoader.AddSpawn(AM_EntityChopper.class, 12, EnumCreatureType.creature);
-		ModLoader.AddSpawn(AM_EntityBobby.class, 12, EnumCreatureType.creature);
-		ModLoader.AddSpawn(AM_EntityGolem.class, 5, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityChopper.class, 10, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityBobby.class, 10, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityGolem.class, 16, EnumCreatureType.creature);
 		
 		
 		
@@ -441,6 +415,15 @@ public class mod_Automatons extends BaseMod
 		});
 		
 		
+		ModLoader.AddRecipe(new ItemStack(techifier, 1), new Object[] {
+			"OOO","OfO","i i",Character.valueOf('O'),new ItemStack(stuffs, 1,11),Character.valueOf('f'),frass,Character.valueOf('i'),new ItemStack(stuffs, 1,4)
+		});
+		
+		ModLoader.AddRecipe(new ItemStack(naturizer, 1), new Object[] {
+			"i i","OfO","OOO",Character.valueOf('O'),new ItemStack(stuffs, 1,11),Character.valueOf('f'),Block.sapling,Character.valueOf('i'),Item.stick
+		});
+		
+		
 		
 		
 		ModLoader.AddRecipe(new ItemStack(dapling, 1), new Object[] {
@@ -475,7 +458,7 @@ public class mod_Automatons extends BaseMod
 			"DD","DD",Character.valueOf('D'),new ItemStack(tech, 1, 1) 
 		});
 		
-		ModLoader.AddRecipe(new ItemStack(Block.wood, 64), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(smack, 1), new Object[] {
 			" S","i ",Character.valueOf('S'),boing,Character.valueOf('i'),new ItemStack(stuffs, 1, 4) 
 		});
 		
@@ -499,7 +482,7 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddRecipe(new ItemStack(techifier, 10), new Object[] {
 			"#", "#", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(smack, 10), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(itemBot, 10), new Object[] {
 			"##", Character.valueOf('#'),frass
 		});
 		ModLoader.AddRecipe(new ItemStack(regulator, 10), new Object[] {
@@ -543,7 +526,7 @@ public class mod_Automatons extends BaseMod
 		map.put(AM_EntityOmni.class, new AM_RenderChopper(new AM_ModelOmni(), 0.25F));
 		map.put(AM_EntityGolem.class, new AM_RenderGolem(new AM_ModelGolem(), 0.25F));
 		map.put(AM_EntityFactotum.class, new AM_RenderFactotum(new AM_ModelFactotum(), 1.5F));
-		map.put(AM_EntityHydra.class, new AM_RenderHydra(new  AM_ModelHydra(), 0.75F));
+		map.put(AM_EntityHydra.class, new AM_RenderHydra(new  AM_ModelHydra(), 5F));
 		map.put(AM_EntityLaser.class, new AM_RenderLaser());
 		
 		map.put(AM_EntityRemnant.class, new AM_RenderSentry(new  AM_ModelRemnant(), 0.25F));

@@ -20,7 +20,7 @@ public class AM_EntityWatcher extends EntityMob
 		health=60;
 		moveSpeed = 0.2F;
 		setSize(1.0F, 3.8F);
-        texture = "/automatons/tall.png";
+        texture = "/automatons/watcher.png";
     }
 	public AM_EntityWatcher(World world, double d, double d1, double d2){
         this(world);

@@ -20,11 +20,15 @@
 #sliders cause crash on die sometimes, shell or core?
 
 
+#make cities generate more dynamically, 1 building at a time?
+
 v0.5.8
 
 
 -added the slider pan for many lulz
 -added a naturalizing item to counter the ability of the bionic conversion item
+-can finally craft the bionic conversion system
+-redid the watcher's model, animation and skin a bit
 -finally got around to fixing the age old glitch with the workers trying to pick up gravel, it was just 1 null point exception i overlooked, really simple glitch, im an idiot XD
 -also changed the trigger item for worker item retrieval to a chest block, cuz it makes more sense than a stick
 -tried to idiot proof how the underground cities were generated to prevent any possible overlap, seems to work fine in testing :D
@@ -35,7 +39,9 @@ v0.5.8
 -sped up frass growth in water considerably, at least 5 times faster, frass on other blocks is also a little faster but cant grow down over 2 block lengths anymore
 -remodelled the crypts abit, personally i think they look better now
 -added some more compatability for the 'fast' graphics option
+-may have fixed a small glitch where sliders would just stand in front of you and not push you
 -fixed a dumb visual glitch with water frass
+-tried once again to lower the slider spawn rate, it seems to work a little better now
 -finally renamed a few classes for mobs to their REAL names, not my initial prototyping ones
 
 v0.5.7

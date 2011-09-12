@@ -26,7 +26,7 @@ public class AM_ItemSmack extends Item
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
     {
 
-		itemstack.damageItem(30, entityplayer);
+		itemstack.damageItem(10, entityplayer);
 		List L=world.getEntitiesWithinAABBExcludingEntity(entityplayer,entityplayer.boundingBox.expand(6D, 3D, 6D));
 		
 		if(!L.isEmpty()){

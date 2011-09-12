@@ -55,7 +55,7 @@ public class AM_BlockHeal extends Block
 		int l=world.getBlockMetadata(i,j,k);
 		if(l>0){
 		world.spawnParticle("heart", i+0.5F, j+0.5F, k+0.5F, 0, 0.4F, 0);
-		((EntityLiving)entity).heal(l);
+		((EntityLiving)entity).heal(l*2);
 		
 		world.setBlockAndMetadataWithNotify(i,j,k,blockID,0);
 		}

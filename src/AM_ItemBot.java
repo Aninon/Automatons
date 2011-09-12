@@ -66,7 +66,7 @@ public class AM_ItemBot extends Item
 		 }else if(N==2){
 		 world.entityJoinedWorld(new AM_EntityBeacon(world, (float)i + 0.5F, (float)j, (float)k + 0.5F,entityplayer.username));
 		 }else if(N==3){
-			world.entityJoinedWorld(new AM_EntityBally(world, (float)i + 0.5F, (float)j+0.5F, (float)k + 0.5F));
+			world.entityJoinedWorld(new AM_EntityHydra(world, (float)i + 0.5F, (float)j+0.5F, (float)k + 0.5F));
 		 
 		 }else if(N==4){
 			world.entityJoinedWorld(new AM_EntityFactotum(world, (float)i + 0.5F, (float)j+0.5F, (float)k + 0.5F,entityplayer.username));

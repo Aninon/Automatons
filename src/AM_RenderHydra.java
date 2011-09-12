@@ -26,7 +26,7 @@ public class AM_RenderHydra extends RenderLiving
     }
 	protected void preRenderCallback(EntityLiving entityliving, float f)
     {
-         GL11.glScalef(3f, 3f, 3f);
+         GL11.glScalef(8f, 8f, 8f);
     }
 
 	

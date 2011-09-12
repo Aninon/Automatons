@@ -41,6 +41,7 @@ public class AM_EntityChopper extends AM_EntityFlying2
     {
         return 20;
     }
+	
 	public void onLivingUpdate()
     {
         if(isWet())
@@ -66,25 +67,28 @@ public class AM_EntityChopper extends AM_EntityFlying2
         double d1 = waypointY - posY;
         double d2 = waypointZ - posZ;
         double d3 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
+	
 		double d9 = MathHelper.sqrt_double(motionX*motionX + motionZ*motionZ + motionY*motionY);
-        
+       // if(d9<1){
+		//d9=1;
+		//}
 		//System.out.println(d9);
-		if(d9 < 4.5D)// || d3 > 60D || d9<1D)
+		if(d9 < 0.5D)// || d3 > 60D || d9<1D)
         {
-            waypointX = posX + (double)((rand.nextFloat() * 2.0F - 1.0F) * 8F);
+            waypointX = posX + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16F);
+			waypointZ = posZ + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16F);
+			
 			if(posY<50){
-            waypointY = posY + (double)((rand.nextFloat() * 2.0F - 1.0F) * 8F);
+            waypointY = posY + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16F);
 			}else{
-			waypointY=worldObj.findTopSolidBlock((int)posX,(int)posZ)+5;
-			if(waypointY<65){
-			waypointY=65;
+			waypointY=worldObj.findTopSolidBlock((int)waypointX,(int)waypointZ)+5;
+			
 			}
-			}
-            waypointZ = posZ + (double)((rand.nextFloat() * 2.0F - 1.0F) * 8F);
+           
 			
 			
         }
-		/*
+		
         if(courseChangeCooldown-- <= 0)
         {
             courseChangeCooldown += rand.nextInt(5) + 2;
@@ -99,7 +103,7 @@ public class AM_EntityChopper extends AM_EntityFlying2
 				waypointY = posY + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16F);
 				waypointZ = posZ + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16F);
             }
-        }*/
+        }
         
         
         /*double d4 = 64D;

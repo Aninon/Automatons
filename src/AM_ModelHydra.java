@@ -63,8 +63,8 @@ public class AM_ModelHydra extends ModelBase
 		bod1.mirror = false;
 		
 		head1 = new ModelRenderer(8, 0);
-		head1.addBox(-1F, -1F, -4F, 2, 2, 4, 0F);
-		head1.setRotationPoint(0F, 9F, -5F);
+		head1.addBox(-1F, -1F, -6F, 2, 2, 4, 0F);
+		head1.setRotationPoint(0F, 9F, -3F);
 		
 		head1.rotateAngleX = 0F;
 		head1.rotateAngleY = 0F;
@@ -191,28 +191,41 @@ public class AM_ModelHydra extends ModelBase
 		
 		
 		
-		GL11.glPushMatrix();
+		//GL11.glPushMatrix();
 		float I=(float)WERG;
-		
-		float F1=(float)MathHelper.sin(leg2.rotateAngleX)*0.15625f;//(float)Math.cos(leg2.rotateAngleX)*0.3125f;
-		float F2=(float)MathHelper.cos(leg2.rotateAngleX)*0.15625f;
 
-		GL11.glTranslatef(0f,F2-.125f,F1+.125f);//I*.0625f);
+		
+		float dd2=leg2.rotateAngleX;//+3.1457f;
+		float dd1=leg1.rotateAngleX;//+3.1457f;
+		float F1=(float)MathHelper.sin(dd1);//(float)Math.cos(leg2.rotateAngleX)*0.3125f;
+		float F2=(float)MathHelper.cos(dd1);
+
+		
+		knee1.rotationPointZ=1+F1*5;
+		knee1.rotationPointY=15+F2*5;
+		foot1.rotationPointZ=4+F1*5;
+		foot1.rotationPointY=19+F2*5;
+		//GL11.glTranslatef(0f,F2-.125f,F1+.125f);//I*.0625f);
+		
+		//GL11.glPopMatrix();
+		
+		
+		//GL11.glPushMatrix();
+		float F3=(float)MathHelper.sin(dd2);//(float)Math.cos(leg2.rotateAngleX)*0.3125f;
+		float F4=(float)MathHelper.cos(dd2);
+		
+		//GL11.glTranslatef(0f,F4-.125f,F3+.125f);//I*.0625f);
+		
+		knee2.rotationPointZ=1+F3*5;
+		knee2.rotationPointY=15+F4*5;
+		foot2.rotationPointZ=4+F3*5;
+		foot2.rotationPointY=19+F4*5;
+		
 		knee2.render(f5);
-		
 		foot2.render(f5);
-		GL11.glPopMatrix();
-		
-		
-		GL11.glPushMatrix();
-		float F3=(float)MathHelper.sin(leg1.rotateAngleX)*0.15625f;//(float)Math.cos(leg2.rotateAngleX)*0.3125f;
-		float F4=(float)MathHelper.cos(leg1.rotateAngleX)*0.15625f;
-		
-		GL11.glTranslatef(0f,F4-.125f,F3+.125f);//I*.0625f);
 		knee1.render(f5);
-		
 		foot1.render(f5);
-		GL11.glPopMatrix();
+		//GL11.glPopMatrix();
 
 	}
 	
@@ -222,7 +235,11 @@ public class AM_ModelHydra extends ModelBase
 	{
 		//super.setRotationAngles(f, f1, f2, f3, f4, f5);
 		
-		
+		float fn1=MathHelper.cos(1+f*0.1f)*f1;
+		fin1.rotateAngleX=1.15f+fn1;
+		fin2.rotateAngleX=1.07f+MathHelper.cos(f*0.1f)*f1;
+		fin3.rotateAngleX=1.15f+MathHelper.cos(2.7f+f*0.1f)*f1;
+		fin4.rotateAngleX=0.97f+fn1/1.5f;
 		
 		head1.rotateAngleX = f4 / 57.2958F;
         head1.rotateAngleY = f3 / 57.29578F;
@@ -230,8 +247,20 @@ public class AM_ModelHydra extends ModelBase
 		head2.rotateAngleX=head1.rotateAngleX;	
 		head2.rotateAngleY=head1.rotateAngleY;
 		
-		leg1.rotateAngleX = -0.6981317F+MathHelper.cos(f * 0.6662F) * 1.4F * f1;
-        leg2.rotateAngleX = -0.6981317F+MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1;
+		
+		float ff1=MathHelper.cos(f * 0.6662F) * 0.4F * f1;
+		float ff2=MathHelper.cos(f * 0.6662F + 3.141593F) * 0.4F * f1;
+		
+		if(WERG==1){
+		army1.rotateAngleX=-0.785f+MathHelper.cos(f2 * 0.6662F) * 0.2F;
+		army2.rotateAngleX=-0.785f+MathHelper.cos(f2 * 0.6662F + 3.141593F) * 0.2F;
+		}else{
+		army1.rotateAngleX=ff2/4f;
+		army2.rotateAngleX=ff1/4f;
+		}
+		
+		leg1.rotateAngleX = -0.6981317F+ff1;
+        leg2.rotateAngleX = -0.6981317F+ff2;
         leg1.rotateAngleY = 0.0F;
         leg2.rotateAngleY = 0.0F;
 	}
