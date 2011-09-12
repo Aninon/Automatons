@@ -283,7 +283,8 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddSpawn(AM_EntityBobby.class, 18, EnumCreatureType.creature);
 		ModLoader.AddSpawn(AM_EntityGolem.class, 5, EnumCreatureType.creature);
 		
-		
+		ModLoader.AddSpawn(AM_EntityArborist.class, 1, EnumCreatureType.creature);
+
 		
 		//ModLoader.getUniqueEntityId()
 		ModLoader.RegisterEntityID(AM_EntityWatcher.class, "AM_Watcher", AutomatonLogger.watcher);
@@ -299,7 +300,7 @@ public class mod_Automatons extends BaseMod
 		ModLoader.RegisterEntityID(AM_EntityOmni.class, "Omni",AutomatonLogger.omni);		
 		ModLoader.RegisterEntityID(AM_EntityFactotum.class, "AM_Factotum",AutomatonLogger.factotum);	
 		ModLoader.RegisterEntityID(AM_EntityRemnant.class, "AM_Remnant",AutomatonLogger.remnant);	
-		//ModLoader.RegisterEntityID(EntityAArborist.class, "AArborist",AutomatonLogger.arborist);	
+		ModLoader.RegisterEntityID(AM_EntityArborist.class, "AM_Arborist",AutomatonLogger.arborist);	
 		ModLoader.RegisterEntityID(AM_EntityHydra.class, "AM_Hydra",AutomatonLogger.hydra);
 		//ModLoader.RegisterEntityID(EntityAZiz.class, "AZiz",AutomatonLogger.ziz);
 		
