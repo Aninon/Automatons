@@ -277,7 +277,7 @@ public class mod_Automatons extends BaseMod
 		
 		
 		ModLoader.AddSpawn(AM_EntityWatcher.class, 15, EnumCreatureType.monster);
-		ModLoader.AddSpawn(AM_EntitySlider.class, 5, EnumCreatureType.monster);
+		ModLoader.AddSpawn(AM_EntitySlider.class, 5, EnumCreatureType.creature);
 		
 		ModLoader.AddSpawn(AM_EntityChopper.class, 20, EnumCreatureType.creature);
 		ModLoader.AddSpawn(AM_EntityBobby.class, 18, EnumCreatureType.creature);

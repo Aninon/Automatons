@@ -9,7 +9,7 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            EntityMob, World, MathHelper, Item
 
-public class AM_EntitySlider extends EntityMob
+public class AM_EntitySlider extends EntityAnimal
 {
 
     public AM_EntitySlider(World world)
@@ -19,7 +19,7 @@ public class AM_EntitySlider extends EntityMob
 		//System.out.println("ohai");
         texture = "/automatons/slider.png";
         moveSpeed = 1.0F;
-        attackStrength = 0;
+        //attackStrength = 0;
 		health=8;
 		setSize(1.0F, 0.1F);
     }
@@ -217,7 +217,7 @@ public class AM_EntitySlider extends EntityMob
         }
         super.onLivingUpdate();
     }
-	/*
+	
 	public boolean getCanSpawnHere(){
 	int i = MathHelper.floor_double(posX);
         int j = MathHelper.floor_double(boundingBox.minY);
@@ -227,9 +227,48 @@ public class AM_EntitySlider extends EntityMob
 	return true;
 	}
 		return false;
-	}*/
+	}
 	
 
+    public void onUpdate()
+    {
+        super.onUpdate();
+        if(!worldObj.multiplayerWorld && worldObj.difficultySetting == 0)
+        {
+            setEntityDead();
+        }
+    }
+
+    protected Entity findPlayerToAttack()
+    {
+        EntityPlayer entityplayer = worldObj.getClosestPlayerToEntity(this, 16D);
+        if(entityplayer != null && canEntityBeSeen(entityplayer))
+        {
+            return entityplayer;
+        } else
+        {
+            return null;
+        }
+    }
+
+    public boolean attackEntityFrom(Entity entity, int i)
+    {
+        if(super.attackEntityFrom(entity, i))
+        {
+            if(riddenByEntity == entity || ridingEntity == entity)
+            {
+                return true;
+            }
+            if(entity != this)
+            {
+                playerToAttack = entity;
+            }
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 	
 	protected void attackEntity(Entity entity, float f)
     {
