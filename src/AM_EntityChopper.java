@@ -37,10 +37,11 @@ public class AM_EntityChopper extends AM_EntityFlying2
         //setPathToEntity(null);    
 
     }
+	/*
 	public int getMaxSpawnedInChunk()
     {
         return 20;
-    }
+    }*/
 	
 	public void onLivingUpdate()
     {
@@ -165,10 +166,10 @@ public class AM_EntityChopper extends AM_EntityFlying2
 
         return true;
     }
-	
+	/*
 	public boolean getCanSpawnHere(){
 		return true;
-	}
+	}*/
 	
 
 	

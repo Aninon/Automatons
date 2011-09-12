@@ -42,7 +42,7 @@ public class AM_EntitySlider extends EntityMob
 	
 	public int getMaxSpawnedInChunk()
     {
-        return 4;
+        return 1;
     }
 	
 	   protected void updatePlayerActionState()
@@ -217,17 +217,17 @@ public class AM_EntitySlider extends EntityMob
         }
         super.onLivingUpdate();
     }
-	
+	/*
 	public boolean getCanSpawnHere(){
 	int i = MathHelper.floor_double(posX);
         int j = MathHelper.floor_double(boundingBox.minY);
         int k = MathHelper.floor_double(posZ);
 	int l=worldObj.getBlockId(i, j-1, k);
-	if(l==2 || l==12 || l==AutomatonLogger.frass || l==AutomatonLogger.frass2){
+	if(l==AutomatonLogger.frass || l==AutomatonLogger.frass2){
 	return true;
 	}
 		return false;
-	}
+	}*/
 	
 
 	

@@ -22,6 +22,8 @@
 
 #make cities generate more dynamically, 1 building at a time?
 
+#IMPORTANT- fix the spawn rates somehow!
+
 v0.5.8
 
 

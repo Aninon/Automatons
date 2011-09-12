@@ -12,6 +12,7 @@ import org.lwjgl.opengl.Display;
 import java.nio.ByteBuffer;
 import org.lwjgl.BufferUtils;
 import net.minecraft.client.Minecraft;
+import java.util.Random;
 
 public class mod_Automatons extends BaseMod
 {                              
@@ -276,11 +277,11 @@ public class mod_Automatons extends BaseMod
 		
 		
 		ModLoader.AddSpawn(AM_EntityWatcher.class, 15, EnumCreatureType.monster);
-		ModLoader.AddSpawn(AM_EntitySlider.class, 100, EnumCreatureType.monster);
+		ModLoader.AddSpawn(AM_EntitySlider.class, 5, EnumCreatureType.monster);
 		
-		ModLoader.AddSpawn(AM_EntityChopper.class, 10, EnumCreatureType.creature);
-		ModLoader.AddSpawn(AM_EntityBobby.class, 10, EnumCreatureType.creature);
-		ModLoader.AddSpawn(AM_EntityGolem.class, 16, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityChopper.class, 20, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityBobby.class, 18, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityGolem.class, 5, EnumCreatureType.creature);
 		
 		
 		
@@ -532,6 +533,15 @@ public class mod_Automatons extends BaseMod
 		map.put(AM_EntityRemnant.class, new AM_RenderSentry(new  AM_ModelRemnant(), 0.25F));
 		
 	}
+	
+	
+	public void GenerateSurface(World world, Random random, int i, int j)
+    {
+	
+	int y=world.findTopSolidBlock(i,j);
+	
+	world.setBlock(i,y,j,AutomatonLogger.sky);
+    }
 	
 
 	

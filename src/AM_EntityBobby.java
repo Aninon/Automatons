@@ -11,7 +11,7 @@ package net.minecraft.src;
 //            EntityLightningBolt
 import java.util.List;
 
-public class AM_EntityBobby extends EntityAnimal
+public class AM_EntityBobby extends EntityCreature
 {
 
     public AM_EntityBobby(World world)
@@ -41,6 +41,8 @@ public class AM_EntityBobby extends EntityAnimal
         }
         super.onLivingUpdate();
     }
+	
+	/*
 	protected float getBlockPathWeight(int i, int j, int k)
     {
         if(worldObj.getBlockId(i, j - 1, k) == mod_Automatons.frass.blockID)
@@ -50,11 +52,11 @@ public class AM_EntityBobby extends EntityAnimal
         {
             return worldObj.getLightBrightness(i, j, k) - 0.5F;
         }
-    }
+    }*/
 	
 	public int getMaxSpawnedInChunk()
     {
-        return 20;
+        return 100;
     }
 
     /*protected void entityInit()
@@ -108,6 +110,8 @@ public class AM_EntityBobby extends EntityAnimal
 	public boolean getCanSpawnHere(){
 		return true;
 	}
+	
+	
     protected int getDropItemId()
     {
 		return Item.silk.shiftedIndex;
