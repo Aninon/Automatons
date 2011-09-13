@@ -75,6 +75,12 @@ public class AM_WorldGenStructure extends WorldGenerator
 	int bb1=world.getBlockId(i,j,k+w);
 	int mm1=world.getBlockMetadata(i,j,k+w);
 	bo[0]=!(bb1==AutomatonLogger.sky || (bb1==AutomatonLogger.importantBuildingThingy && mm1==0));
+	
+	if(bo[0] && bb1!=AutomatonLogger.frass){
+	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	foliage.set=1;
+	foliage.generate( world,  random,  i,  j,  k+w);
+	}
 		//bo[0]=!cell[ii][jj+1];
 	//}
 	
@@ -84,7 +90,11 @@ public class AM_WorldGenStructure extends WorldGenerator
 		int bb2=world.getBlockId(i,j,k-w);
 	int mm2=world.getBlockMetadata(i,j,k-w);
 	bo[1]=!(bb2==AutomatonLogger.sky || (bb2==AutomatonLogger.importantBuildingThingy && mm2==0));
-	
+	if(bo[1] && bb2!=AutomatonLogger.frass){
+	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	foliage.set=1;
+	foliage.generate( world,  random,  i,  j,  k-w);
+	}
 		
 	//}
 	
@@ -93,6 +103,11 @@ public class AM_WorldGenStructure extends WorldGenerator
 			int bb3=world.getBlockId(i+w,j,k);
 		int mm3=world.getBlockMetadata(i+w,j,k);
 	bo[2]=!(bb3==AutomatonLogger.sky || (bb3==AutomatonLogger.importantBuildingThingy && mm3==0));
+	if(bo[2] && bb3!=AutomatonLogger.frass){
+	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	foliage.set=1;
+	foliage.generate( world,  random,  i+w,  j,  k);
+	}
 	
 	//}
 	
@@ -101,7 +116,11 @@ public class AM_WorldGenStructure extends WorldGenerator
 				int bb4=world.getBlockId(i-w,j,k);
 		int mm4=world.getBlockMetadata(i-w,j,k);
 	bo[3]=!(bb4==AutomatonLogger.sky || (bb4==AutomatonLogger.importantBuildingThingy && mm4==0));
-	
+	if(bo[3] && bb4!=AutomatonLogger.frass){
+	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	foliage.set=1;
+	foliage.generate( world,  random,  i-w,  j,  k);
+	}
 	//}
 	
 	

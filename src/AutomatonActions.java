@@ -42,6 +42,8 @@ public static void Frassify(World world,EntityPlayer entity){
 				case 6:world.setBlockWithNotify(l, i1, j1,AutomatonLogger.grower);break;
 				case 7:world.setBlockAndMetadataWithNotify(l, i1, j1,h==17?AutomatonLogger.tech:AutomatonLogger.crink,h==17?1:0);break;
 				case 8:world.setBlockWithNotify(l, i1, j1,((world.rand.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));break;
+				case 9:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,1);break;
+				case 10:world.setBlockWithNotify(l, i1, j1,0);break;
 				}
 				
 			/*

@@ -29,6 +29,8 @@ v0.5.8
 
 -added the slider pan for many lulz
 -added a naturalizing item to counter the ability of the bionic conversion item
+-frass can now spread to grass/dirt, im sure there will be horrifying repurcusions >:] , you can disable it in the config file though
+-frass melts snow, spreads onto ice, spreads onto all other plantlife in it's path, also burns down organic trees
 -can finally craft the bionic conversion system
 -redid the watcher's model, animation and skin a bit
 -finally got around to fixing the age old glitch with the workers trying to pick up gravel, it was just 1 null point exception i overlooked, really simple glitch, im an idiot XD
@@ -43,6 +45,7 @@ v0.5.8
 -added some more compatability for the 'fast' graphics option
 -may have fixed a small glitch where sliders would just stand in front of you and not push you
 -fixed a dumb visual glitch with water frass
+-fixed a little mistake where daplings would take forever to grow, they now grow about if not faster than normal saplings
 -tried once again to lower the slider spawn rate, it seems to work a little better now
 -finally renamed a few classes for mobs to their REAL names, not my initial prototyping ones
 

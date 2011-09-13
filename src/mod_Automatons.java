@@ -97,9 +97,10 @@ public class mod_Automatons extends BaseMod
 	
 	
 	public static Block deployer= (new AM_BlockDeployer(AutomatonLogger.deployer)).setHardness(5f).setResistance(5F).setBlockName("deployer");
-	public static Block techPlant= (new AM_BlockTechPlant(AutomatonLogger.techPlant)).setHardness(0.1f).setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
+	public static Block techPlant= (new AM_BlockTechPlant(AutomatonLogger.techPlant,ModLoader.addOverride("/terrain.png", "/automatons/techPlant.png"))).setHardness(0.1f).setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
 	
 	public static Block importantBuildingThingy= (new AM_Buildo(AutomatonLogger.importantBuildingThingy)).setBlockUnbreakable().setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
+	public static Block arbor = (new AM_BlockArbor(AutomatonLogger.arbor)).setHardness(0.5f).setBlockName("arbor");
 	
 	
 	
@@ -232,7 +233,7 @@ public class mod_Automatons extends BaseMod
 		ModLoader.RegisterBlock(sky,AM_ItemLumo.class);
 		ModLoader.RegisterBlock(techPlant);
 		ModLoader.RegisterBlock(importantBuildingThingy);
-		
+		ModLoader.RegisterBlock(arbor);
 		ModLoader.RegisterBlock(deployer);
 		
 		ModLoader.AddName(new ItemStack(tech,1,0), "Ancient Construct");
@@ -260,7 +261,7 @@ public class mod_Automatons extends BaseMod
 		duplex.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/automatons/duplex.png");
 		frass2.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/frass5.png");
 		hollow.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/crink3.png");
-		techPlant.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/techPlant.png");
+		//techPlant.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/techPlant.png");
 		
 		//sky.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/sky.png");
 		//dapling.blockIndexInTexture = 
@@ -290,7 +291,7 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddSpawn(AM_EntityBobby.class, 18, EnumCreatureType.creature);
 		ModLoader.AddSpawn(AM_EntityGolem.class, 5, EnumCreatureType.creature);
 		
-		ModLoader.AddSpawn(AM_EntityArborist.class, 1, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityArborist.class, 2, EnumCreatureType.creature);
 
 		
 		//ModLoader.getUniqueEntityId()
@@ -494,7 +495,7 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddRecipe(new ItemStack(naturizer, 10), new Object[] {
 			" #", "##", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(importantBuildingThingy, 64), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(Block.plantRed, 64), new Object[] {
 			"##", Character.valueOf('#'),frass
 		});
 		ModLoader.AddRecipe(new ItemStack(regulator, 10), new Object[] {

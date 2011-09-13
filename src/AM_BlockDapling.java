@@ -29,7 +29,7 @@ public class AM_BlockDapling extends Block
             return;
         }
        //func_268_h(world, i, j, k);
-        if(random.nextInt(30) == 0) //world.getBlockLightValue(i, j + 1, k) >= 9 && 
+        if(random.nextInt(4) == 0) //world.getBlockLightValue(i, j + 1, k) >= 9 && 
         {
             int l = world.getBlockMetadata(i, j, k);
             if((l & 8) == 0)

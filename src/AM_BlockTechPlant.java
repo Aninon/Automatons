@@ -13,10 +13,10 @@ import java.util.Random;
 public class AM_BlockTechPlant extends Block
 {
 
-    protected AM_BlockTechPlant(int i)
+    protected AM_BlockTechPlant(int i,int j)
     {
         super(i, Material.plants);
-        blockIndexInTexture = 0;
+        blockIndexInTexture = j;
         //setTickOnLoad(true);
         //float f = 0.2F;
         //setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3F, 0.5F + f);

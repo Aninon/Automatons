@@ -38,7 +38,7 @@ public class AM_ItemStuffs extends Item
 	textur[9]=ModLoader.addOverride("/gui/items.png", "/automatons/coaly.png");
 	
 	textur[10]=ModLoader.addOverride("/gui/items.png", "/automatons/coaly.png");
-	textur[11]=ModLoader.addOverride("/gui/items.png", "/automatons/ABC.png");
+	textur[11]=textur[0];//ModLoader.addOverride("/gui/items.png", "/automatons/ABC.png");
 	
 	textur[12]=ModLoader.addOverride("/gui/items.png", "/automatons/factotumhead.png");
 	textur[13]=ModLoader.addOverride("/gui/items.png", "/automatons/furnaceChunk.png");

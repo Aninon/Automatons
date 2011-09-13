@@ -22,7 +22,13 @@ public class AM_ItemWerg extends Item
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
 	
+	for(int x=0;x<100;x++){
+	for(int z=0;z<100;z++){
+	world.setBlock(100+i+x,j,k+z,AutomatonLogger.importantBuildingThingy);
+	}
+	}
 	
+	/*
 	int W=7;//M*M;
 	i=(i/W)*W;
 	k=(k/W)*W;
@@ -31,12 +37,8 @@ public class AM_ItemWerg extends Item
 	int y=world.findTopSolidBlock(i,k);
 	world.setBlockWithNotify(i,y,k,1);
 	if(bbb!=AutomatonLogger.tech && bbb!=AutomatonLogger.importantBuildingThingy){
-		//world.setBlock(i,30,k,AutomatonLogger.importantBuildingThingy);
 		world.setBlockAndMetadata(i,30,k,AutomatonLogger.importantBuildingThingy,world.rand.nextInt(2));
-	}
-			
-			
-	//AutomatonActions.Naturalization(world,entityplayer);
+	}*/
 	
 	/*
 			int nono=world.loadedEntityList.indexOf(world.playerEntities.get(0));

@@ -54,6 +54,7 @@ public class AutomatonLogger {
 	public static int deployer=112;
 	public static int techPlant=113;
 	public static int importantBuildingThingy=114;
+	public static int arbor=115;
 	
 	
 	public static int worker=58;
@@ -203,6 +204,8 @@ public class AutomatonLogger {
 				out.write("deployer="+deployer+"\n");
 				out.write("techPlant="+techPlant+"\n");
 				out.write("importantBuildingThingy="+importantBuildingThingy+"\n");
+				out.write("arbor="+arbor+"\n");
+				
 				
 				
 				out.write("//\n//\n//RENDER ID'S (these are VERY unlikely you'll need to change)\n");

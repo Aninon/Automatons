@@ -32,15 +32,15 @@ public class AM_BlockFrass extends Block
 		blocks[3]=5;
 		blocks[3]=5;
 		
-		blocks[37]=6;
-		blocks[38]=6;
+		blocks[37]=8;
+		blocks[38]=8;
 		blocks[39]=6;
 		blocks[40]=6;
 		blocks[83]=6;
 		blocks[81]=6;
 		
 		blocks[6]=8;
-		blocks[59]=8;
+		blocks[59]=6;
 		blocks[31]=8;
 		blocks[32]=8;
 		
@@ -48,6 +48,9 @@ public class AM_BlockFrass extends Block
 		blocks[18]=7;
 		
 		blocks[60]=9;
+		
+		blocks[78]=10;
+		blocks[79]=3;
 		//0 nothing
 		//1 green frass
 		//2 desert frass
@@ -57,7 +60,8 @@ public class AM_BlockFrass extends Block
 		//6 turn to stalks
 		//7 burn
 		//8 other plant
-		//9 plain frass?	
+		//9 plain frass?
+			//10 air
 	}
 	
 	public static int max=84;
@@ -206,14 +210,60 @@ public class AM_BlockFrass extends Block
 				case 2:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,2);return;
 				case 3:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,0);return;
 				case 4:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,1);return;
-				case 5:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,3);return;
-				case 6:world.setBlockWithNotify(l, i1, j1,AutomatonLogger.grower);return;
+				case 5:checkPlants(random,world,l,i1,j1);return;
+				case 6:fixStalks(world,l,i1,j1);return;
 				case 7:world.setBlockWithNotify(l, i1, j1,51);return;
-				case 8:world.setBlockWithNotify(l, i1, j1,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));return;
+				case 8:fixPlants(random,world,l,i1,j1);return;
+				case 9:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,1);return;
+				case 10:world.setBlockWithNotify(l, i1, j1,0);return;
 				}
 				
 			}
 		}
+	}
+	
+	public void fixStalks(World world,int i, int j , int k){
+	
+	int t=world.getBlockId(i,j-1,k);
+	world.setBlock(i,j,k,0);
+	if(t!=AutomatonLogger.frass){
+		world.setBlockAndMetadata(i, j-1, k,AutomatonLogger.frass,3);
+	}
+	world.setBlockWithNotify(i, j, k,AutomatonLogger.grower);
+	
+	}
+	public void fixPlants(Random random,World world,int i, int j , int k){
+	
+	int t=world.getBlockId(i,j-1,k);
+	world.setBlock(i,j,k,0);
+	if(t!=AutomatonLogger.frass){
+		world.setBlockAndMetadata(i, j-1, k,AutomatonLogger.frass,3);
+	}
+	world.setBlockWithNotify(i, j, k,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));
+	
+	}
+	
+	public void checkPlants(Random random,World world,int i, int j , int k){
+	int t=world.getBlockId(i,j+1,k);
+	int F=0;
+	if(t!=0 && t<max){
+		 F=blocks[t];
+		if(F==6 || F==8){
+			world.setBlock(i,j+1,k,0);
+		}
+	}else{
+	world.setBlockAndMetadataWithNotify(i, j, k,AutomatonLogger.frass,3);return;
+	}
+	
+	world.setBlockAndMetadataWithNotify(i, j, k,AutomatonLogger.frass,3);
+	
+
+		if(F==6){
+			world.setBlock(i, j+1, k,AutomatonLogger.grower);
+		}else if (F==8){
+			world.setBlock(i, j+1, k,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));
+		}
+	
 	}
 
 	public int getBlockTextureFromSideAndMetadata(int i, int j)

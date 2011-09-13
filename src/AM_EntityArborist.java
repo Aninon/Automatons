@@ -11,7 +11,7 @@ package net.minecraft.src;
 //            EntityLightningBolt
 import java.util.List;
 
-public class AM_EntityArborist extends EntityCreature
+public class AM_EntityArborist extends EntityAnimal
 {
 
     public AM_EntityArborist(World world)
@@ -20,6 +20,8 @@ public class AM_EntityArborist extends EntityCreature
         texture = "/automatons/bobby.png";
         setSize(0.9F, 0.9F);
 		health=5;
+		
+		System.out.println("HI I SPAWNED, LOL");
     }
 	public AM_EntityArborist(World world, double d, double d1, double d2){
         this(world);

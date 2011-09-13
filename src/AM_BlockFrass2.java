@@ -72,12 +72,12 @@ public class AM_BlockFrass2 extends Block
 			}else {
 				derp=(world.getWorldChunkManager().getBiomeGenAt(l, j1).biomeName=="tech");
 			}
-            if( derp&&(bbb==9 || bbb==8) && (k1==0)) //&& world.getBlockLightValue(l, i1 + 1, j1) >= 4 && Block.lightOpacity[k1] <= 2 
+            if( derp&&(bbb==9 || bbb==8 || bbb==79) && (k1==0)) //&& world.getBlockLightValue(l, i1 + 1, j1) >= 4 && Block.lightOpacity[k1] <= 2 
             {
-				if(bbb==9){
-					world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,0);
-				}else{
+				if(bbb==8){
 					world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,1);
+				}else{
+					world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,0);
 				}
             }
         }
