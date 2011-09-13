@@ -217,16 +217,20 @@ public class AM_EntitySlider extends EntityAnimal
         }
         super.onLivingUpdate();
     }
-	
+	/*
 	public boolean getCanSpawnHere(){
 	int i = MathHelper.floor_double(posX);
         int j = MathHelper.floor_double(boundingBox.minY);
         int k = MathHelper.floor_double(posZ);
 	int l=worldObj.getBlockId(i, j-1, k);
-	if(l==AutomatonLogger.frass || l==AutomatonLogger.frass2){
+	if(l==2||l==AutomatonLogger.frass || l==AutomatonLogger.frass2){
 	return true;
 	}
 		return false;
+	}*/
+	
+	public boolean getCanSpawnHere(){
+		return true;
 	}
 	
 

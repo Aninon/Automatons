@@ -32,8 +32,8 @@ public class AM_WorldGenCrypt extends WorldGenerator
         return true;
     }
 	private void boxy(World world,Random random, int height,int width,int length, int i, int j, int k){
-	i=(int)(width*Math.floor(i/width));
-	k=(int)(length*Math.floor(k/length));
+	i=width*(i/width);
+	k=length*(k/length);
 	
 	
 	
@@ -108,9 +108,9 @@ public class AM_WorldGenCrypt extends WorldGenerator
 		}else if(R==3){
 		world.setBlockWithNotify(i,j+1,k,AutomatonLogger.boing);
 		}else if(R==4){
-		world.setBlockWithNotify(i,j+1,k,AutomatonLogger.sky);
-		WorldGenerator obj = new AM_WorldGenCity();
-        obj.generate(world, world.rand, i, 25, k);
+		//world.setBlockWithNotify(i,j+1,k,AutomatonLogger.sky);
+		//WorldGenerator obj = new AM_WorldGenCity();
+        //obj.generate(world, world.rand, i, 25, k);
 		}else if(R==5){
 		world.setBlockAndMetadataWithNotify(i,j+1,k,AutomatonLogger.deployer,2);
 		}else{

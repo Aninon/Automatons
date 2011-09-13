@@ -83,8 +83,10 @@ public class AM_BlockDapling extends Block
     {
         //int l = world.getBlockMetadata(i, j, k) & 3;
         world.setBlock(i, j, k, 0);
-        Object obj = new AM_WorldGenBigFakeTree();
-        if(!((WorldGenerator) (obj)).generate(world, random, i, j, k))
+        AM_WorldGenBigFakeTree obj = new AM_WorldGenBigFakeTree();
+		obj.boo=false;
+		
+        if(!obj.generate(world, random, i, j, k))
         {
             world.setBlockAndMetadata(i, j, k, blockID, 0);
         }

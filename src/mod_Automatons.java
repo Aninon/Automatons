@@ -97,7 +97,10 @@ public class mod_Automatons extends BaseMod
 	
 	
 	public static Block deployer= (new AM_BlockDeployer(AutomatonLogger.deployer)).setHardness(5f).setResistance(5F).setBlockName("deployer");
-	public static Block techbench= (new AM_BlockBench(AutomatonLogger.bench)).setHardness(1.5f).setBlockName("workbench");
+	public static Block techPlant= (new AM_BlockTechPlant(AutomatonLogger.techPlant)).setHardness(0.1f).setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
+	
+	public static Block importantBuildingThingy= (new AM_Buildo(AutomatonLogger.importantBuildingThingy)).setBlockUnbreakable().setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
+	
 	
 	
 	
@@ -197,7 +200,7 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddName(pickTech, "Charged Pick");
 		
 		
-		ModLoader.AddName(new ItemStack(stuffs,1,0), "Iron Fragment");
+		ModLoader.AddName(new ItemStack(stuffs,1,0), "Adaptive Bionic Conglomerate");
 		ModLoader.AddName(new ItemStack(stuffs,1,1), "Automaton Body");
 		ModLoader.AddName(new ItemStack(stuffs,1,2), "Worker Head");
 		ModLoader.AddName(new ItemStack(stuffs,1,3), "Automaton Leg");
@@ -227,7 +230,8 @@ public class mod_Automatons extends BaseMod
 		ModLoader.RegisterBlock(frass2);
 		ModLoader.RegisterBlock(tv);
 		ModLoader.RegisterBlock(sky,AM_ItemLumo.class);
-		ModLoader.RegisterBlock(techbench);
+		ModLoader.RegisterBlock(techPlant);
+		ModLoader.RegisterBlock(importantBuildingThingy);
 		
 		ModLoader.RegisterBlock(deployer);
 		
@@ -256,7 +260,7 @@ public class mod_Automatons extends BaseMod
 		duplex.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/automatons/duplex.png");
 		frass2.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/frass5.png");
 		hollow.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/crink3.png");
-		deployer.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/deployer.png");
+		techPlant.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/techPlant.png");
 		
 		//sky.blockIndexInTexture =ModLoader.addOverride("/terrain.png", "/automatons/sky.png");
 		//dapling.blockIndexInTexture = 
@@ -270,11 +274,14 @@ public class mod_Automatons extends BaseMod
 		AM_BlockCrink.loadSprites();
 		AM_BlockHollow.loadSprites();
 		AM_BlockLumo.loadSprites();
+		AM_BlockDeployer.loadSprites();
 		//Item.itemsList[frass.blockID] = (new ItemFrass(frass.blockID - 256)).setItemName("frass");
 		
 		((AM_BlockGlow)crystal).loadSprites1();
 		fakeCrystal.loadSprites(((AM_BlockGlow)crystal).D[0],((AM_BlockGlow)crystal).D[1]);
 		
+		
+		AM_BlockFrass.setAllowed();
 		
 		ModLoader.AddSpawn(AM_EntityWatcher.class, 15, EnumCreatureType.monster);
 		ModLoader.AddSpawn(AM_EntitySlider.class, 5, EnumCreatureType.creature);
@@ -412,28 +419,28 @@ public class mod_Automatons extends BaseMod
 		});
 		
 		
-		ModLoader.AddShapelessRecipe(new ItemStack(stuffs, 1,11), new Object[] {
+		ModLoader.AddShapelessRecipe(new ItemStack(stuffs, 1,0), new Object[] {
 			new ItemStack(stuffs, 2,8), new ItemStack(stuffs, 2,7)
 		});
 		
 		
 		ModLoader.AddRecipe(new ItemStack(techifier, 1), new Object[] {
-			"OOO","OfO","i i",Character.valueOf('O'),new ItemStack(stuffs, 1,11),Character.valueOf('f'),frass,Character.valueOf('i'),new ItemStack(stuffs, 1,4)
+			"OOO","OfO","i i",Character.valueOf('O'),new ItemStack(stuffs, 1,0),Character.valueOf('f'),frass,Character.valueOf('i'),new ItemStack(stuffs, 1,4)
 		});
 		
 		ModLoader.AddRecipe(new ItemStack(naturizer, 1), new Object[] {
-			"i i","OfO","OOO",Character.valueOf('O'),new ItemStack(stuffs, 1,11),Character.valueOf('f'),Block.sapling,Character.valueOf('i'),Item.stick
+			"i i","OfO","OOO",Character.valueOf('O'),new ItemStack(stuffs, 1,0),Character.valueOf('f'),Block.sapling,Character.valueOf('i'),Item.stick
 		});
 		
 		
 		
 		
 		ModLoader.AddRecipe(new ItemStack(dapling, 1), new Object[] {
-			" O ","OCO"," s ",Character.valueOf('O'),crink,Character.valueOf('C'),automatonCore,Character.valueOf('s'),new ItemStack(stuffs, 1,11)
+			" O ","OCO"," s ",Character.valueOf('O'),crink,Character.valueOf('C'),automatonCore,Character.valueOf('s'),new ItemStack(stuffs, 1,0)
 		});
 		
 		ModLoader.AddRecipe(new ItemStack(itemOmni, 1), new Object[] {
-			"OOO","OCO","OOO",Character.valueOf('O'),new ItemStack(stuffs, 1,11),Character.valueOf('C'),superCore
+			"OOO","OCO","OOO",Character.valueOf('O'),new ItemStack(stuffs, 1,0),Character.valueOf('C'),superCore
 		});
 		
 		
@@ -484,7 +491,10 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddRecipe(new ItemStack(techifier, 10), new Object[] {
 			"#", "#", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(itemBot, 10), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(naturizer, 10), new Object[] {
+			" #", "##", Character.valueOf('#'),frass
+		});
+		ModLoader.AddRecipe(new ItemStack(importantBuildingThingy, 64), new Object[] {
 			"##", Character.valueOf('#'),frass
 		});
 		ModLoader.AddRecipe(new ItemStack(regulator, 10), new Object[] {
@@ -535,14 +545,14 @@ public class mod_Automatons extends BaseMod
 		
 	}
 	
-	
+	/*
 	public void GenerateSurface(World world, Random random, int i, int j)
     {
 	
 	int y=world.findTopSolidBlock(i,j);
 	
 	world.setBlock(i,y,j,AutomatonLogger.sky);
-    }
+    }*/
 	
 
 	

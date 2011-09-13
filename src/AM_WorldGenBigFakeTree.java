@@ -406,6 +406,8 @@ public class AM_WorldGenBigFakeTree extends WorldGenerator
         field_872_k = d2;
     }
 	public int Meto=0;
+	
+	public boolean boo=true;
     public boolean generate(World world, Random random, int i, int j, int k)
     {
 		Meto=random.nextInt(6);
@@ -428,8 +430,25 @@ public class AM_WorldGenBigFakeTree extends WorldGenerator
             generateLeaves();
             generateTrunk();
             generateLeafNodeBases();
+			
+			
+			if(boo){
+			int W=7;//M*M;
+			i=(i/W)*W;
+			k=(k/W)*W;
+			int bbb=world.getBlockId(i,30,k);
+			if(bbb!=AutomatonLogger.tech && bbb!=AutomatonLogger.importantBuildingThingy){
+				world.setBlockAndMetadata(i,30,k,AutomatonLogger.importantBuildingThingy,random.nextInt(2));
+			}
+			}
+			
+			
+			
             return true;
         }
+
+		
+		
     }
 
     static final byte otherCoordPairs[] = {

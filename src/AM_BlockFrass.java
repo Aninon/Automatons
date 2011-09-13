@@ -13,186 +13,247 @@ import java.util.Random;
 public class AM_BlockFrass extends Block
 {
 
-    protected AM_BlockFrass(int i)
-    {
-        super(i, Material.grassMaterial);
-        //blockIndexInTexture = 235;
-        setTickOnLoad(true);
-		//slipperiness = 1.50F;
+	protected AM_BlockFrass(int i)
+	{
+		super(i, Material.grassMaterial);
+		setTickOnLoad(true);
+	}
+
+	public static void setAllowed(){
+	
+		for(int  n=0;n<max;n++){
+			blocks[n] =0;
+		}
+		blocks[82]=1;
+		blocks[12]=2;
+		blocks[9]=3;
+		blocks[8]=4;
+		blocks[2]=5;
+		blocks[3]=5;
+		blocks[3]=5;
 		
-		//TYPE=type;
-    }
-	//int TYPE;
+		blocks[37]=6;
+		blocks[38]=6;
+		blocks[39]=6;
+		blocks[40]=6;
+		blocks[83]=6;
+		blocks[81]=6;
+		
+		blocks[6]=8;
+		blocks[59]=8;
+		blocks[31]=8;
+		blocks[32]=8;
+		
+		blocks[17]=7;
+		blocks[18]=7;
+		
+		blocks[60]=9;
+		//0 nothing
+		//1 green frass
+		//2 desert frass
+		//3 still water frass
+		//4 moving water frass
+		//5 grass frass
+		//6 turn to stalks
+		//7 burn
+		//8 other plant
+		//9 plain frass?	
+	}
+	
+	public static int max=84;
+	public static int blocks[]=new int[max];
 	
 	static int D[];
 	static void loadSprites(){
-		D=new int[7];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/frass1.png");
+		D=new int[10];
+		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/frass1.png"); //clay
 		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/frass2.png");
+		D[2]=72; 
 		
-		D[3]=ModLoader.addOverride("/terrain.png", "/automatons/frass3.png");
+		D[3]=ModLoader.addOverride("/terrain.png", "/automatons/frass3.png"); //desert
 		D[4]=ModLoader.addOverride("/terrain.png", "/automatons/frass4.png");
 		D[5]=18;
+		
+		D[7]=ModLoader.addOverride("/terrain.png", "/automatons/frass7.png"); //dirt
+		D[8]=ModLoader.addOverride("/terrain.png", "/automatons/frass6.png");
+		D[9]=2;
+		
+		
 		//D[6]=ModLoader.addOverride("/terrain.png", "/automatons/frass5.png");
 		
 		D[6]=ModLoader.addOverride("/terrain.png", "/automatons/frassn.png");
-		D[2]=72;
+		
 	}
 
-	/*public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k)
-    {
-        float f = 0.125F;
-        return AxisAlignedBB.getBoundingBoxFromPool(i, j, k, i + 1, (float)(j + 1) - f, k + 1);
-    }
-	
-	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
-    {
-	int h=world.getBlockMetadata(i,j,k);
-	if(h<25){
-	world.setBlockAndMetadata(i, j, k,Block.frass.blockID,h+1 );
-	}*/
-		
-	/*if(entity.motionX!=0 &&entity.motionZ!=0){
-		float r=(float)Math.sqrt(entity.motionX*entity.motionX+entity.motionZ*entity.motionZ);
-        entity.motionX = 0.2F*entity.motionX/r;
-        entity.motionZ = 0.2F*entity.motionZ/r;
-		}*/
-		//entity.motionX=-MathHelper.sin(entity.rotationYaw*0.0175F)*0.2F;
-		//entity.motionZ=MathHelper.cos(entity.rotationYaw*0.0175F)*0.2F;
-		//entity.fallDistance=-10;
-		//entity.motionY=2F;
-		//entity.motionZ*=1.2F;
-		//entity.motionX*=1.2F;
-    //}
-	
 	public void onBlockRemoval(World world, int i, int j, int k)
-    {
+	{
 		int bbb=world.getBlockMetadata(i,j,k);
 		if(bbb==0){
 			world.setBlockWithNotify(i, j, k, Block.blockClay.blockID);
 		}else if(bbb==2){
 			world.setBlockWithNotify(i, j, k, Block.sand.blockID);
+		}else if(bbb==3){
+			world.setBlockWithNotify(i, j, k, world.rand.nextInt(4)==0?2:3);
 		}
 	}
 	
 	public boolean testMe(int c){
-	return (c!=0 &&c!=78&& Block.blocksList[c].blockMaterial!=Material.plants);
+		//
+		//if((mat=Block.blocksList[c].blockMaterial)==null){
+		//return false;
+		//}
+		
+		if(c==0){
+			return false;
+		}
+		
+		Material mat=Block.blocksList[c].blockMaterial;
+		
+
+		
+		
+		return (!mat.getIsGroundCover() && mat!=Material.air &&mat!=Material.plants);
 	}
-	public void updateTick(World world, int i, int j, int k, Random random)
-    {
-        if(world.multiplayerWorld)
-        {
-            return;
-        }
+	
+	
+	
+	
+	public void updateTick(World world, int i, int j, int k, Random random){
+		if(world.multiplayerWorld){
+			return;
+		}
 		
 		//String biome = world.getWorldChunkManager().getBiomeGenAt(i, k).biomeName;
 		
-		int meto=world.getBlockMetadata(i, j, k);
-		
-		
 		int ccc=world.getBlockId(i,j+1,k);
-        if(testMe(ccc))//world.getBlockLightValue(i, j + 1, k) < 4 && Block.lightOpacity[world.getBlockId(i, j + 1, k)] > 2)
-        {
-		if(meto==1){
-			return;
-		}
-            if(random.nextInt(4) != 0)
-            {
-                return;
-            }
+		if(testMe(ccc)){
+			
+			if(world.getBlockMetadata(i, j, k)==1){
+				return;
+			}
+			if(random.nextInt(4) != 0){
+				return;
+			}
 			
 			world.setBlockWithNotify(i, j, k, 0);
-			/*
-			if(meto==0){
-				world.setBlockWithNotify(i, j, k, 82);
-			}else{
-				world.setBlockWithNotify(i, j, k, 12);
-			}*/
-        } else{
-            int l = (i + random.nextInt(3)) - 1;
-            int i1 = (j + random.nextInt(3)) - 1;
-            int j1 = (k + random.nextInt(3)) - 1;
-            int k1 = world.getBlockId(l, i1 + 1, j1);
+
+		} else{
+			int l = (i + random.nextInt(3)) - 1;
+			
+			int i1=j;
+			
+			int rr=random.nextInt(5);
+			if(rr==0){
+			i1--;
+			}else if(rr==4){
+			i1++;
+			}
+			
+			
+			
+			int j1 = (k + random.nextInt(3)) - 1;
+			int k1 = world.getBlockId(l, i1 + 1, j1);
 			int bbb=world.getBlockId(l, i1, j1);
-            if( (bbb== 82||bbb==12 ||bbb==9||bbb==8) && (k1==0 ||k1==78|| Block.blocksList[k1].blockMaterial==Material.plants)){// && world.getBlockLightValue(l, i1 + 1, j1) >= 4 && Block.lightOpacity[k1] <= 2)
-            
-				if(bbb== 82){
-					world.setBlockWithNotify(l, i1, j1, AutomatonLogger.frass);
-				}else if(bbb==12){
-					world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,2);
-				}else if(bbb==9){
-					world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,0);
+			
+			if(bbb>=max){
+				return;
+			}
+			int FIX=blocks[bbb];
+			
+			if(FIX==0){
+				return;
+			}
+			boolean bool;
+			if(k1==0){
+				bool=true;
+			}else{
+				
+				if(FIX==7){
+					bool=true;
 				}else{
-					world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,1);
+					Material  mat=Block.blocksList[k1].blockMaterial;
+					
+					if((bool=(mat.getIsGroundCover() || mat==Material.air || mat==Material.plants))){
+						
+						if (FIX==5 && AutomatonLogger.frassDirtSpread==0 && AutomatonLogger.allTech==0){
+							bool=(world.getWorldChunkManager().getBiomeGenAt(i, k).biomeName=="tech");
+							
+						}
+					}
 				}
 				
-            }
-        }
-    }
-	/*
+			}
+			
+			
+			
+			if(bool){// && world.getBlockLightValue(l, i1 + 1, j1) >= 4 && Block.lightOpacity[k1] <= 2)
+				
+				
+				
+				//0 nothing
+				//1 green frass
+				//2 desert frass
+				//3 still water frass
+				//4 moving water frass
+				//5 grass frass
+				//6 turn to stalks
+				//7 burn
+				//8 other plant
+				//9 plain frass?
+				
+				switch(FIX){
+				case 1:world.setBlockWithNotify(l, i1, j1, AutomatonLogger.frass);return;
+				case 2:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,2);return;
+				case 3:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,0);return;
+				case 4:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,1);return;
+				case 5:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,3);return;
+				case 6:world.setBlockWithNotify(l, i1, j1,AutomatonLogger.grower);return;
+				case 7:world.setBlockWithNotify(l, i1, j1,51);return;
+				case 8:world.setBlockWithNotify(l, i1, j1,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));return;
+				}
+				
+			}
+		}
+	}
+
 	public int getBlockTextureFromSideAndMetadata(int i, int j)
-    {
-        if(i == 1)
-        {
-            return 21;
-        }
-        if(i == 0)
-        {
-            return 21;
-        }
-        if(j == 1)
-        {
-            return 116;
-        }
-        return j != 2 ? 20 : 117;
-    }*/
-	
-    public int getBlockTextureFromSideAndMetadata(int i, int j)
-    {
+	{
 		//if(TYPE==2){return D[6];}
-        if(j==1){return D[6];}
+		if(j==1){return D[6];}
 		
 		
 		if(i==1){
 			if(j==0){
 				return D[0];//top 235
-			}else{
+			}else if(j==2){
 				return D[3];
-			}
-        }
-		
-        if(i == 0){
-			if(j==0){
-            return D[2]; //bottom
 			}else{
-			return D[5];
+				return D[8];
 			}
-        }
-        //Material material = iblockaccess.getBlockMaterial(i, j + 1, k);
-		//side
+		}
+		
+		if(i == 0){
+			if(j==0){
+				return D[2];//bottom
+			}else if(j==2){
+				return D[5];
+			}else{
+				return D[9];
+			}
+		}
+
 		if(j==2){
 			return D[4];
-		}	
-		return D[1];
-    }
-	
-	/*public int getRenderBlockPass()
-    {
-        if(TYPE==2){
-        return 1;
 		}
-		return 0;
-    }
-	
-	public boolean isOpaqueCube()
-    {
-
-		return false;
-    }*/
+		if(j==0){
+			return D[1];
+		}
+		return D[7];
+	}
 	
 	protected int damageDropped(int i)
-    {
-        return 1;
-    }
+	{
+		return 1;
+	}
 	
 }

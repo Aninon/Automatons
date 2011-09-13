@@ -26,7 +26,7 @@ public class AM_ItemStuffs extends Item
 	int textur[];
 	public void loadSprites(){
 	textur=new int[16];
-	textur[0]=ModLoader.addOverride("/gui/items.png", "/automatons/frag.png");
+	textur[0]=ModLoader.addOverride("/gui/items.png", "/automatons/ABC.png");
 	textur[1]=ModLoader.addOverride("/gui/items.png", "/automatons/automatonBod.png");
 	textur[2]=ModLoader.addOverride("/gui/items.png", "/automatons/automatonHead.png");
 	textur[3]=ModLoader.addOverride("/gui/items.png", "/automatons/automatonLeg.png");
@@ -57,7 +57,7 @@ public class AM_ItemStuffs extends Item
     }
 
     public static final String dyeColorNames[] = {
-        "ironFrag", "automatonBod", "automatonHead", "automatonLeg", "rod", "automatonBack", "biterHead", "robo", "greens", "coals", 
+        "techo", "automatonBod", "automatonHead", "automatonLeg", "rod", "automatonBack", "biterHead", "robo", "greens", "coals", 
         "superMetal", "techo", "factotumHead", "furnaceChunk", "automatonBod2", "white"
     };
   

@@ -52,7 +52,8 @@ public class AutomatonLogger {
 	public static int tv=110;
 	public static int sky=111;
 	public static int deployer=112;
-	public static int bench=113;
+	public static int techPlant=113;
+	public static int importantBuildingThingy=114;
 	
 	
 	public static int worker=58;
@@ -79,8 +80,9 @@ public class AutomatonLogger {
 	public static int crinkRenderId=28;
 	
 	public static int allTech=0;
-	public static int frassWaterSpread=1;
-	public static int maxDeployableEntities=100;
+	public static int frassWaterSpread=0;
+	public static int frassDirtSpread=0;
+	public static int maxDeployableEntities=300;
 	
 	
 	public static boolean tvOut=false;
@@ -149,8 +151,10 @@ public class AutomatonLogger {
 				out.write("//Rise of the Automatons config file! :D hooray!\n");
 				out.write("//\n//\n//SET ALL NEW TERRAIN AND BIOMES TO GENERATE AS TECH( 0=off, 1=on):\n");
 				out.write("allTech="+allTech+"\n");
-				out.write("//ALLOW FRASS TO SPREAD ONTO WATER THATS NOT IN THE TECH BIOME,\n//WARNING, THIS IS CRAZY!\n");
+				out.write("//ALLOW FRASS TO SPREAD ONTO WATER THAT'S NOT IN THE TECH BIOME(DANGEROUS)\n");
 				out.write("frassWaterSpread="+frassWaterSpread+"\n");
+				out.write("//ALLOW FRASS TO SPREAD ONTO DIRT/GRASS THAT'S NOT IN THE TECH BIOME(EVEN MOAR DANGEROUS)\n");
+				out.write("frassDirtSpread="+frassDirtSpread+"\n");
 				out.write("//How many entities can be in the world before the deployer stops putting out mobs?:\n");
 				out.write("maxDeployableEntities="+maxDeployableEntities+"\n");
 				
@@ -197,7 +201,9 @@ public class AutomatonLogger {
 				out.write("tv="+tv+"\n");
 				out.write("sky="+sky+"\n");
 				out.write("deployer="+deployer+"\n");
-				out.write("bench="+bench+"\n");
+				out.write("techPlant="+techPlant+"\n");
+				out.write("importantBuildingThingy="+importantBuildingThingy+"\n");
+				
 				
 				out.write("//\n//\n//RENDER ID'S (these are VERY unlikely you'll need to change)\n");
 				out.write("tvRenderId="+tvRenderId+"\n");

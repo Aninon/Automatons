@@ -4,52 +4,52 @@ import java.util.Random;
 
 
 
-public class AM_BlockDeployer extends Block
+public class AM_Buildo extends Block
 {
 
-    protected AM_BlockDeployer(int i)
+    protected AM_Buildo(int i)
     {
         super(i, 0, Material.glass);
 		setTickOnLoad(true);
+		blockIndexInTexture=21;
     }
 	
-	static void loadSprites(){
-		D=new int[2];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/deployer.png"); 
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/deployer2.png");
-		
-	}
 	
 	
 	public void updateTick(World world, int i, int j, int k, Random random)
     {
-	//int r1=0;//random.nextInt(6);
-	
-	//if(r1==0){
-	deploy(random.nextInt(6),world,i,j,k);
-	//}
-	
-	}
-	static int D[];
-	public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l)
-    {
-		//if(TYPE==2){return D[6];}
-		//if(j==1){}
-		
-		
-		if(l<=1){
-			return D[1];
+		if(world.getClosestPlayer(i,j,k,65D)!=null){
+			ACTIVATE(world,i,j,k,random);
 		}
-		return D[0];
+	}
+	
+	
+	public void ACTIVATE(World world, int i, int j, int k, Random random){
+	int meta =world.getBlockMetadata(i,j,k);
+	
+	world.setBlock(i,j,k,1);
+	if(j!=30){
+		world.setBlock(i,j,k,1);
+	}else{
+		world.setBlock(i,j,k,1);
+		
+		AM_WorldGenStructure wg= new AM_WorldGenStructure();
+		wg.set=meta;
+		wg.generate(world, random, i, j, k);
+		/*int y=world.findTopSolidBlock(i,k);
+		for(int n=0;n<30;n++){
+		world.setBlock(i,y+n,k,1);
+		}*/
+		
+		
+		
 		
 	}
 	
-	public void onNeighborBlockChange(World world, int i, int j, int k, int l)
-    {
-	if(world.isBlockGettingPowered(i,j,k)){
-	deploy(world.rand.nextInt(5),world,i,j,k);
+	
 	}
-	}
+
+	
 	
 	public void deploy(int R,World world,int i,int j,int k){
 	

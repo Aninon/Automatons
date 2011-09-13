@@ -11,24 +11,15 @@ import java.util.ArrayList;
 //            WorldGenerator, World, Material, Block, 
 //            TileEntityChest, TileEntityMobSpawner, ItemStack, Item
 
-public class AM_WorldGenCity extends WorldGenerator
+public class AM_WorldGenStructure extends WorldGenerator
 {
 
-    public AM_WorldGenCity()
+    public AM_WorldGenStructure()
     {
     }
 	public int M=7;
 	public int W;
-	public boolean cell[][]=new boolean[M][M];
-	
-	public void assign(Random random){
-	
-	for(int i=0;i<M;i++){
-	for(int j=0;j<M;j++){
-	cell[i][j]=(random.nextInt(2)==0);
-	}
-	}
-	}
+	public int set=0;
 
     public boolean generate(World world, Random random, int i, int j, int k)
     {
@@ -37,7 +28,7 @@ public class AM_WorldGenCity extends WorldGenerator
 	
 	//int bb=world.getBlockId(i,j-1,k);
 	//if(bb==2 || bb==12 || bb==AutomatonLogger.frass){
-	assign(random);
+
 	int m2=M/2;
 	
 	int m=M-1;
@@ -46,10 +37,12 @@ public class AM_WorldGenCity extends WorldGenerator
 	
 	int m22=m/2;
 	
+	int m33=m22-1;
+	//System.out.println(i+","+k);
 	
-	W=M*M;
-	i=(i/W)*W;
-	k=(k/W)*W;
+	W=M;
+	//i=(i/W)*W;
+	//k=(k/W)*W;
 	
 	
 	if(world.getBlockId(i,j,k)==AutomatonLogger.tech){
@@ -58,63 +51,89 @@ public class AM_WorldGenCity extends WorldGenerator
 	
 	System.out.println("city generating.........");
 	
-	for(int ii=0;ii<M;ii++){
-	for(int jj=0;jj<M;jj++){
-	if(cell[ii][jj]){
-	emptyOut(world,24,m,m,i+m*(ii-m2),j,k+m*(jj-m2));
+	//for(int ii=0;ii<M;ii++){
+	//for(int jj=0;jj<M;jj++){
+	
+	int RRR=set;
+	if(RRR==0){
+	emptyOut(world,24,m,m,i,j,k);
 	}else{
-	cavernize(world,random,27,m,m,i+m*(ii-m2),j,k+m*(jj-m2));
-	}
-	}
+	cavernize(world,random,27,m,m,i,j,k);
 	}
 	
-	for(int ii=0;ii<M;ii++){
-	for(int jj=0;jj<M;jj++){
-	if(cell[ii][jj]){
+	//}
+	//}
+	
+	//for(int ii=0;ii<M;ii++){
+	//for(int jj=0;jj<M;jj++){
+	if(RRR==0){
 	boolean[] bo={true,true,true,true};
 	
-	if(jj<m ){
-		bo[0]=!cell[ii][jj+1];
-	}
+	int w=W;
+	//if(jj<m ){
 	
-	if(jj>0){
-		bo[1]=!cell[ii][jj-1];
-	}
+	int bb1=world.getBlockId(i,j,k+w);
+	int mm1=world.getBlockMetadata(i,j,k+w);
+	bo[0]=!(bb1==AutomatonLogger.sky || (bb1==AutomatonLogger.importantBuildingThingy && mm1==0));
+		//bo[0]=!cell[ii][jj+1];
+	//}
 	
-	if(ii<m ){
-		bo[2]=!cell[ii+1][jj];
-	}
-	
-	if(ii>0){
-		bo[3]=!cell[ii-1][jj];
-	}
-	
-	
-	
-		boxy(world,random,bo,7,m,m,i+m*(ii-m2),j,k+m*(jj-m2));
+	//if(jj>0){
+		//bo[1]=!cell[ii][jj-1];
 		
-		boxy(world,random,bo,7,m5,m5,i+m*(ii-m2),j+8,k+m*(jj-m2));
-		boxy(world,random,bo,7,m6,m6,i+m*(ii-m2),j+16,k+m*(jj-m2));
+		int bb2=world.getBlockId(i,j,k-w);
+	int mm2=world.getBlockMetadata(i,j,k-w);
+	bo[1]=!(bb2==AutomatonLogger.sky || (bb2==AutomatonLogger.importantBuildingThingy && mm2==0));
+	
+		
+	//}
+	
+	//if(ii<m ){
+		//bo[2]=!cell[ii+1][jj];
+			int bb3=world.getBlockId(i+w,j,k);
+		int mm3=world.getBlockMetadata(i+w,j,k);
+	bo[2]=!(bb3==AutomatonLogger.sky || (bb3==AutomatonLogger.importantBuildingThingy && mm3==0));
+	
+	//}
+	
+	//if(ii>0){
+		//bo[3]=!cell[ii-1][jj];
+				int bb4=world.getBlockId(i-w,j,k);
+		int mm4=world.getBlockMetadata(i-w,j,k);
+	bo[3]=!(bb4==AutomatonLogger.sky || (bb4==AutomatonLogger.importantBuildingThingy && mm4==0));
+	
+	//}
+	
+	
+	
+		boxy(world,random,bo,7,m,m,i,j,k);
+		
+		boxy(world,random,bo,7,m5,m5,i,j+8,k);
+		boxy(world,random,bo,7,m6,m6,i,j+16,k);
 		
 		for(int z=0;z<=m;z++){
 		for(int x=0;x<=m;x++){
-		world.setBlockAndMetadata(i+(x-m22)+m*(ii-m2), j, k+(z-m22)+m*(jj-m2), AutomatonLogger.sky,1);
+		world.setBlockAndMetadata(i+(x-m22), j, k+(z-m22), AutomatonLogger.sky,1);
 		}
 		}
+		
+		//world.setBlock(i,j,k,AutomatonLogger.tech);
 	}
-	}
-	}
-	int r= m*m2;
+	//}
+	//}
+	int r= m2;
 	
-	world.setBlock(i,j,k,AutomatonLogger.tech);
+	
 	world.markBlocksDirty(i-r,j-3,k-r,i+r,j+24,k+r);
-	addTunnels(world,i,j,k);
+	
+	
+	//addTunnels(world,i,j,k);
 	
 	
 	applyChests(world,random);
 	
 	
-	cell=null;
+	//cell=null;
 	chests=null;
 
 	System.out.println("done");
@@ -149,7 +168,10 @@ public class AM_WorldGenCity extends WorldGenerator
 	
 	int bb=4;
 	int ww=(W/2);
-	if(world.getBlockId(i+W,j,k)==AutomatonLogger.tech){
+	int WWW=W*2;
+	int F;
+	F=world.getBlockId(i+WWW,j,k);
+	if(F==AutomatonLogger.sky ||F==AutomatonLogger.importantBuildingThingy || F==AutomatonLogger.frass){
 	//System.out.println("add tunnel south(-x)");
 		int xe=(1+i+ww);
 		
@@ -187,7 +209,8 @@ public class AM_WorldGenCity extends WorldGenerator
 		
 		
 	}
-	if(world.getBlockId(i-W,j,k)==AutomatonLogger.tech){
+	F=world.getBlockId(i-WWW,j,k);
+	if(F==AutomatonLogger.sky ||F==AutomatonLogger.importantBuildingThingy || F==AutomatonLogger.frass){
 		//world.setBlock(i-ww,j,k,bb);
 		//System.out.println("add tunnel north(+x)");
 		int xe=(i-ww);
@@ -227,7 +250,8 @@ public class AM_WorldGenCity extends WorldGenerator
 		
 		
 	}
-	if(world.getBlockId(i,j,k+W)==AutomatonLogger.tech){
+	F=world.getBlockId(i,j,k+WWW);
+	if(F==AutomatonLogger.sky ||F==AutomatonLogger.importantBuildingThingy || F==AutomatonLogger.frass){
 	//System.out.println("add tunnel west(+z)");
 		int xe=(k+ww);
 		
@@ -265,7 +289,8 @@ public class AM_WorldGenCity extends WorldGenerator
 		
 		
 	}
-	if(world.getBlockId(i,j,k-W)==AutomatonLogger.tech){
+	F=world.getBlockId(i,j,k-WWW);
+	if(F==AutomatonLogger.sky ||F==AutomatonLogger.importantBuildingThingy || F==AutomatonLogger.frass){
 	//System.out.println("add tunnel east(-z)");
 		int xe=(k-ww);
 		
@@ -309,7 +334,7 @@ public class AM_WorldGenCity extends WorldGenerator
 	
 	private void boxy(World world,Random random,boolean[] boo, int height,int width,int length, int i, int j, int k){
 	
-	int w2=width/2;
+	/*int w2=width/2;
 		int l2=length/2;
 		int h2=height/2;
 		int w3=width-2;
@@ -318,7 +343,7 @@ public class AM_WorldGenCity extends WorldGenerator
 	
 		int w4=w2-1;
 		int l4=l2-1;
-		int h4=h2-1;
+		int h4=h2-1;*/
 
 	
 	struct(world,random,boo,height,width,length,i,j,k);
@@ -337,6 +362,7 @@ public class AM_WorldGenCity extends WorldGenerator
 		for(int y=0;y<=height;y++){
 		for(int x=0;x<=width;x++){
 		world.setBlock(i+(x-w2), j+y, k+(z-l2), 0);
+		//System.out.println("HERE: "+(x-w2));
 		}
 		}
 		}
@@ -361,9 +387,9 @@ public class AM_WorldGenCity extends WorldGenerator
 		
 		
 		
-		for(int z=0;z<length;z++){
+		for(int z=0;z<=length;z++){
 		for(int y=1;y<=he;y++){
-		for(int x=0;x<width;x++){
+		for(int x=0;x<=width;x++){
 		world.setBlock(i+(x-w2), j+y, k+(z-l2), 0);
 		}
 		}
@@ -373,9 +399,9 @@ public class AM_WorldGenCity extends WorldGenerator
 		
 		
 		
-		for(int z=0;z<length;z++){
+		for(int z=0;z<=length;z++){
 		for(int y=he;y<=newheight;y++){
-		for(int x=0;x<width;x++){
+		for(int x=0;x<=width;x++){
 		//System.out.println(newheight+" : "+y);
 		if(random.nextInt(1+newheight-y)!=0){
 		world.setBlock(i+(x-w2), j+y, k+(z-l2), 0);
@@ -392,7 +418,7 @@ public class AM_WorldGenCity extends WorldGenerator
 		 switch(RR){
 		 case 4: obj = new AM_WorldGenDerk();break;
 		 case 5: obj = new AM_WorldGenPool();break;
-		 default: obj= new AM_WorldGenBigFakeTree();((AM_WorldGenBigFakeTree)obj).boo=false;break;
+		 default: obj= new AM_WorldGenBigFakeTree();break;
 		 }
 		 
 		 

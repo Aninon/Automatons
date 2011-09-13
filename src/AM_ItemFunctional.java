@@ -18,6 +18,9 @@ public class AM_ItemFunctional extends Item
         super(i);
 		if(j==1){
         setMaxDamage(1);
+		}else if(j==4){
+		setMaxDamage(26);
+		maxStackSize=1;
 		}else{
 		setMaxDamage(13);
 		maxStackSize=1;

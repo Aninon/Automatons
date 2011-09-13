@@ -28,7 +28,23 @@ public static void Frassify(World world,EntityPlayer entity){
 		for(int n=0;n<nerp.length;n++){
 		
 			int h=world.getBlockId(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2]);
-			if(h>0 && h<86){
+			
+			if(h>0 && h<AM_BlockFrass.max){
+			int FIX=AM_BlockFrass.blocks[h];
+			if(FIX>0){
+				int l=i+nerp[n][0];int i1=j+nerp[n][1];int j1=k+nerp[n][2];
+				switch(FIX){
+				case 1:world.setBlockWithNotify(l, i1, j1, AutomatonLogger.frass);
+				case 2:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,2);break;
+				case 3:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,0);break;
+				case 4:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass2,1);break;
+				case 5:world.setBlockAndMetadataWithNotify(l, i1, j1,AutomatonLogger.frass,3);break;
+				case 6:world.setBlockWithNotify(l, i1, j1,AutomatonLogger.grower);break;
+				case 7:world.setBlockAndMetadataWithNotify(l, i1, j1,h==17?AutomatonLogger.tech:AutomatonLogger.crink,h==17?1:0);break;
+				case 8:world.setBlockWithNotify(l, i1, j1,((world.rand.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));break;
+				}
+				
+			/*
 			if(h==9){
 			world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],AutomatonLogger.frass2);
 			}else if(h==8){
@@ -45,6 +61,8 @@ public static void Frassify(World world,EntityPlayer entity){
 			world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],3);
 			}else if(Block.blocksList[h].blockMaterial==Material.plants ||Block.blocksList[h].blockMaterial==Material.cactus){
 				world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],AutomatonLogger.grower);
+			}
+			}*/
 			}
 			}
 			
@@ -89,7 +107,7 @@ public static void Frassify(World world,EntityPlayer entity){
 			int m=world.getBlockMetadata(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2]);
 			if(h>96){
 			
-			if(h==3||(h==AutomatonLogger.frass &&m==0)){
+			if(h==3||(h==AutomatonLogger.frass &&(m==0||m==3))){
 				world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],0);
 				world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],2);
 			}else if(h==AutomatonLogger.frass || h==AutomatonLogger.frass2){
@@ -101,7 +119,7 @@ public static void Frassify(World world,EntityPlayer entity){
 			}else if(h==AutomatonLogger.tech){
 				world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],4);
 			}
-			}else if(h==AutomatonLogger.grower){
+			}else if(h==AutomatonLogger.grower || h==AutomatonLogger.techPlant){
 			int r=world.rand.nextInt(4);
 			switch(r){
 				case 0:world.setBlock(i+nerp[n][0],j+nerp[n][1],k+nerp[n][2],Block.sapling.blockID);break;

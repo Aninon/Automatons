@@ -38,7 +38,7 @@ v0.5.8
 -used this generation mechanism for crypts, now they no longer overlap in a stupid fashion but perfectly grided like giant blocks. This also fixes some chest overlap issues
 -made adjacently spawned cities place a tunnel inbetween the rock, assuming theres rock in the way which hopefully there is..
 -made the city's chest spawns a tiny bit more variant
--sped up frass growth in water considerably, at least 5 times faster, frass on other blocks is also a little faster but cant grow down over 2 block lengths anymore
+-sped up frass growth in water considerably, at least 5 times faster, frass on other blocks is also a little faster but cant grow down over 2 block lengths anymore, and is lower rate to grow down 1
 -remodelled the crypts abit, personally i think they look better now
 -added some more compatability for the 'fast' graphics option
 -may have fixed a small glitch where sliders would just stand in front of you and not push you

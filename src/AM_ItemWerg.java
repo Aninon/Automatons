@@ -23,7 +23,20 @@ public class AM_ItemWerg extends Item
     {
 	
 	
-	AutomatonActions.Naturalization(world,entityplayer);
+	int W=7;//M*M;
+	i=(i/W)*W;
+	k=(k/W)*W;
+	int bbb=world.getBlockId(i,30,k);
+	
+	int y=world.findTopSolidBlock(i,k);
+	world.setBlockWithNotify(i,y,k,1);
+	if(bbb!=AutomatonLogger.tech && bbb!=AutomatonLogger.importantBuildingThingy){
+		//world.setBlock(i,30,k,AutomatonLogger.importantBuildingThingy);
+		world.setBlockAndMetadata(i,30,k,AutomatonLogger.importantBuildingThingy,world.rand.nextInt(2));
+	}
+			
+			
+	//AutomatonActions.Naturalization(world,entityplayer);
 	
 	/*
 			int nono=world.loadedEntityList.indexOf(world.playerEntities.get(0));

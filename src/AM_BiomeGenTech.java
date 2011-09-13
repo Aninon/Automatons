@@ -24,11 +24,14 @@ public class AM_BiomeGenTech extends BiomeGenBase
 		
         //spawnableWaterCreatureList.clear();
 		
-        spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.AM_EntityChopper.class, 2));
-		spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.AM_EntityBobby.class, 2));
-		spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.AM_EntityGolem.class, 8));
-		spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.AM_EntityWatcher.class, 8));
-		//spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.AM_EntitySlider.class, 50));
+		
+
+		
+        spawnableCreatureList.add(new SpawnListEntry(AM_EntityChopper.class, 30));
+		spawnableCreatureList.add(new SpawnListEntry(AM_EntityBobby.class, 28));
+		spawnableCreatureList.add(new SpawnListEntry(AM_EntityGolem.class, 8));
+		spawnableMonsterList.add(new SpawnListEntry(AM_EntityWatcher.class, 20));
+		spawnableMonsterList.add(new SpawnListEntry(AM_EntitySlider.class, 3));
 		//spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityChopper.class, 14));
     }
 	public WorldGenerator getRandomWorldGenForTrees(Random random)
