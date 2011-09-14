@@ -1,6 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
 
 package net.minecraft.src;
 import java.util.List;
@@ -30,21 +27,12 @@ public class AM_EntityGolem2 extends EntityAnimal
 		prevPosX = d;
 		prevPosY = d1;
 		prevPosZ = d2;
-		//setPathToEntity(null);
-		
+	
 	}
 	
 	public void knockBack(Entity entity, int i, double d, double d1)
     {
 	}
-	
-	/////PSST
-	/*public float getEyeHeight()
-	{
-		return height * 0.8F;
-	}*/
-	
-	
 	
 	protected Entity entityplayer;
 	
@@ -52,7 +40,7 @@ public class AM_EntityGolem2 extends EntityAnimal
 	{
 		super.updatePlayerActionState();
 		
-		if(entityplayer==null && playerToAttack==null){
+		if(entityplayer==null && entityToAttack==null){
 		List L=worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityPlayer.class, boundingBox.expand(4D, 3D, 4D));
 			if(!L.isEmpty()){
 				entityplayer = (Entity) L.get(0);
@@ -120,72 +108,16 @@ public class AM_EntityGolem2 extends EntityAnimal
 			entity.attackEntityFrom(this, byte0);
 		}
 	}
-	
-	/*public String getEntityTexture(){
-		if(getType()==2){
-		return "/mob/agol1.png"; 
-		}else{
-		return "/mob/agol2.png";
-		}
-	}*/
-	
-	//public int type=0;
-	//public int colo=0;
-	/*
-	public void onLivingUpdate()
-	{
-		if(isWet())
-		{
-		Dropper();
-		}
-		super.onLivingUpdate();
-	}
-	*/
-	/*
-	protected float getBlockPathWeight(int i, int j, int k)
-	{
-		if(worldObj.getBlockId(i, j - 1, k) == Block.frass.blockID)
-		{
-			return 10F;
-		} else
-		{
-			return worldObj.getLightBrightness(i, j, k) - 0.5F;
-		}
-	}*/
-	/*
-	public int getMaxSpawnedInChunk()
-	{
-		return 20;
-	}
 
-	protected void entityInit()
-	{
-		dataWatcher.addObject(16, Integer.valueOf(type));
-		dataWatcher.addObject(17, Integer.valueOf(colo));
-	}
-	
-
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound){
-		super.writeEntityToNBT(nbttagcompound);
-		nbttagcompound.setInteger("type", getType());
-		nbttagcompound.setInteger("colo", getColo());
-	}
-
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound){
-		super.readEntityFromNBT(nbttagcompound);
-		setType(nbttagcompound.getInteger("type"));
-		setColo(nbttagcompound.getInteger("colo"));
-	}
-*/
 
 	protected String getLivingSound()
 	{
-		return "mob.hzz";
+		return "automatons.hzz";
 	}
 
 	protected String getHurtSound()
 	{
-		return "mob.hzz";
+		return "automatons.hzz";
 	}
 
 	protected String getDeathSound()
@@ -193,56 +125,6 @@ public class AM_EntityGolem2 extends EntityAnimal
 		return "step.gravel";
 	}
 
-	/*public boolean interact(EntityPlayer entityplayer)
-	{
-		if(getSaddled() && !worldObj.multiplayerWorld && (riddenByEntity == null || riddenByEntity == entityplayer))
-		{
-			entityplayer.mountEntity(this);
-			return true;
-		} else
-		{
-			return false;
-		}
-	}*/
-	
-	/*
-	public boolean getCanSpawnHere(){
-		return true;
-	}
-	
-	protected void setType(int i){
-		type=i;
-		dataWatcher.updateObject(16, Integer.valueOf(i));
-
-	}
-	
-	protected int getType(){
-		return dataWatcher.getWatchableObjectInt(16);
-	}
-	
-	protected void setColo(int i){
-		colo=i;
-		dataWatcher.updateObject(17, Integer.valueOf(i));
-
-	}
-	
-	protected int getColo(){
-		return dataWatcher.getWatchableObjectInt(17);
-	}
-	
-	
-	protected int getDropItemId()
-	{
-		return Item.automatonCore.shiftedIndex;
-		/*if(fire > 0)
-		{
-			return Item.porkCooked.shiftedIndex;
-		} else
-		{
-			return Item.porkRaw.shiftedIndex;
-		}
-	}*/
-	
 	
 	protected void dropFewItems(){
 		Dropper();
@@ -258,18 +140,9 @@ public class AM_EntityGolem2 extends EntityAnimal
 			worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
 		}
 		
-		if(!worldObj.multiplayerWorld){
-			
-
+		if(!AutomatonUniversal.otherWorld(worldObj)){
 			entityDropItem(new ItemStack(AutomatonLogger.automatonCore+256, 1,0), 0.0F);
 			entityDropItem(new ItemStack(88, 1,0), 0.0F);
-			//worldObj.setBlockAndMetadataWithNotify(MathHelper.floor_double(posX),MathHelper.floor_double(posY),MathHelper.floor_double(posZ),getType(),getColo());
-			//worldObj.entityJoinedWorld(new EntityBobby(worldObj, posX, posY, posZ));
-			
-			//worldObj.entityJoinedWorld(new EntityBobby(worldObj, posX, posY, posZ));
-			
-			
-			
 			setEntityDead();
 		}
 	}

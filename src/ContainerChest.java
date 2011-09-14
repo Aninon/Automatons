@@ -15,7 +15,7 @@ public class ContainerChest extends Container
 
     public ContainerChest(IInventory iinventory, IInventory iinventory1)
     {
-        field_20125_a = iinventory1;
+        lowerChestInventory = iinventory1;
         numRows = iinventory1.getSizeInventory() / 9;
         int i = (numRows - 4) * 18;
         for(int j = 0; j < numRows; j++)
@@ -45,7 +45,7 @@ public class ContainerChest extends Container
 
     public boolean isUsableByPlayer(EntityPlayer entityplayer)
     {
-        return field_20125_a.canInteractWith(entityplayer);
+        return lowerChestInventory.canInteractWith(entityplayer);
     }
 
     public ItemStack getStackInSlot(int i)
@@ -74,6 +74,6 @@ public class ContainerChest extends Container
         return itemstack;
     }
 
-    private IInventory field_20125_a;
+    private IInventory lowerChestInventory;
     private int numRows;
 }

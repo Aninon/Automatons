@@ -17,7 +17,7 @@ public enum EnumJsonNodeType
 /*
     public static EnumJsonNodeType[] values()
     {
-        return (EnumJsonNodeType[])field_27442_h.clone();
+        return (EnumJsonNodeType[])allJsonNodeTypes.clone();
     }
 
     public static EnumJsonNodeType valueOf(String s)
@@ -38,7 +38,7 @@ public enum EnumJsonNodeType
     public static final EnumJsonNodeType FALSE;
     public static final EnumJsonNodeType NULL;
 */
-    private static final EnumJsonNodeType field_27442_h[]; /* synthetic field */
+    private static final EnumJsonNodeType allJsonNodeTypes[]; /* synthetic field */
 
     static 
     {
@@ -51,7 +51,7 @@ public enum EnumJsonNodeType
         FALSE = new EnumJsonNodeType("FALSE", 5);
         NULL = new EnumJsonNodeType("NULL", 6);
 */
-        field_27442_h = (new EnumJsonNodeType[] {
+        allJsonNodeTypes = (new EnumJsonNodeType[] {
             OBJECT, ARRAY, STRING, NUMBER, TRUE, FALSE, NULL
         });
     }

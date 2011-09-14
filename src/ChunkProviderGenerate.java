@@ -28,19 +28,18 @@ public class ChunkProviderGenerate
         unusedIntArray32x32 = new int[32][32];
         worldObj = world;
         rand = new Random(l);
-        field_912_k = new NoiseGeneratorOctaves(rand, 16); //16
-        field_911_l = new NoiseGeneratorOctaves(rand, 16);//16
+        field_912_k = new NoiseGeneratorOctaves(rand, 16);
+        field_911_l = new NoiseGeneratorOctaves(rand, 16);
         field_910_m = new NoiseGeneratorOctaves(rand, 8);
         field_909_n = new NoiseGeneratorOctaves(rand, 4);
         field_908_o = new NoiseGeneratorOctaves(rand, 4);
         field_922_a = new NoiseGeneratorOctaves(rand, 10);
-        field_921_b = new NoiseGeneratorOctaves(rand, 16);//16
+        field_921_b = new NoiseGeneratorOctaves(rand, 16);
         mobSpawnerNoise = new NoiseGeneratorOctaves(rand, 8);
     }
 
     public void generateTerrain(int i, int j, byte abyte0[], BiomeGenBase abiomegenbase[], double ad[])
     {
-	
         byte byte0 = 4;
         byte byte1 = 64;
         int k = byte0 + 1;
@@ -53,8 +52,6 @@ public class ChunkProviderGenerate
             {
                 for(int k1 = 0; k1 < 16; k1++)
                 {
-					
-					//System.out.println(((i1 + 0) * l + (j1 + 0)) * byte2 + (k1 + 0)); //abiomegenbase[].biomeName!="Taiga"){
                     double d = 0.125D;
                     double d1 = field_4180_q[((i1 + 0) * l + (j1 + 0)) * byte2 + (k1 + 0)];
                     double d2 = field_4180_q[((i1 + 0) * l + (j1 + 1)) * byte2 + (k1 + 0)];
@@ -66,7 +63,7 @@ public class ChunkProviderGenerate
                     double d8 = (field_4180_q[((i1 + 1) * l + (j1 + 1)) * byte2 + (k1 + 1)] - d4) * d;
                     for(int l1 = 0; l1 < 8; l1++)
                     {
-                        double d9 = 0.25D;//1.00D;//0.25D;
+                        double d9 = 0.25D;
                         double d10 = d1;
                         double d11 = d2;
                         double d12 = (d3 - d1) * d9;
@@ -75,7 +72,7 @@ public class ChunkProviderGenerate
                         {
                             int j2 = i2 + i1 * 4 << 11 | 0 + j1 * 4 << 7 | k1 * 8 + l1;
                             char c = '\200';
-                            double d14 = 0.25D;//1.00D;//0.25D;
+                            double d14 = 0.25D;
                             double d15 = d10;
                             double d16 = (d11 - d10) * d14;
                             for(int k2 = 0; k2 < 4; k2++)
@@ -95,9 +92,7 @@ public class ChunkProviderGenerate
                                 if(d15 > 0.0D)
                                 {
                                     l2 = Block.stone.blockID;
-									
                                 }
-								
                                 abyte0[j2] = (byte)l2;
                                 j2 += c;
                                 d15 += d16;
@@ -112,14 +107,12 @@ public class ChunkProviderGenerate
                         d3 += d7;
                         d4 += d8;
                     }
-					
 
                 }
 
             }
 
         }
-		
 
     }
 
@@ -494,10 +487,6 @@ public class ChunkProviderGenerate
         {
             l7 -= 20;
         }
-		if(biomegenbase == BiomeGenBase.tech)
-        {
-            l7 += k4 + 7;
-        }
         for(int i11 = 0; i11 < l7; i11++)
         {
             int l13 = k + rand.nextInt(16) + 8;
@@ -628,7 +617,6 @@ public class ChunkProviderGenerate
             (new WorldGenCactus()).generate(worldObj, rand, k21, j23, k24);
         }
 
-		if(biomegenbase != BiomeGenBase.tech){
         for(int l18 = 0; l18 < 50; l18++)
         {
             int l21 = k + rand.nextInt(16) + 8;
@@ -636,7 +624,6 @@ public class ChunkProviderGenerate
             int l24 = l + rand.nextInt(16) + 8;
             (new WorldGenLiquids(Block.waterMoving.blockID)).generate(worldObj, rand, l21, k23, l24);
         }
-		}
 
         for(int i19 = 0; i19 < 20; i19++)
         {

@@ -25,7 +25,7 @@ public abstract class EntityLiving extends Entity
         texture = "/mob/char.png";
         field_9355_A = true;
         field_9353_B = 0.0F;
-        field_9351_C = null;
+        entityType = null;
         field_9349_D = 1.0F;
         scoreValue = 0;
         field_9345_F = 0.0F;
@@ -930,7 +930,7 @@ public abstract class EntityLiving extends Entity
     protected String texture;
     protected boolean field_9355_A;
     protected float field_9353_B;
-    protected String field_9351_C;
+    protected String entityType;
     protected float field_9349_D;
     protected int scoreValue;
     protected float field_9345_F;

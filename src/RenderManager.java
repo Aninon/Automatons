@@ -97,7 +97,7 @@ public class RenderManager
         if(entityliving.isPlayerSleeping())
         {
             int i = world.getBlockId(MathHelper.floor_double(entityliving.posX), MathHelper.floor_double(entityliving.posY), MathHelper.floor_double(entityliving.posZ));
-            if(i == Block.blockBed.blockID)
+            if(i == Block.bed.blockID)
             {
                 int j = world.getBlockMetadata(MathHelper.floor_double(entityliving.posX), MathHelper.floor_double(entityliving.posY), MathHelper.floor_double(entityliving.posZ));
                 int k = j & 3;

@@ -23,8 +23,8 @@ public class AM_BlockBench extends Block
 	/*static int D[]={0,0};
 	static void loadSprites(){
 		D=new int[2];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/grower1.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/grower2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/grower1.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/grower2.png");
 		//blockIndexInTexture=D[0];
 		
 	}*/
@@ -76,7 +76,7 @@ public class AM_BlockBench extends Block
 			
 	
 	
-        if(world.multiplayerWorld){
+        if(AutomatonUniversal.otherWorld(world)){
         
 		//System.out.println("huh");
             return true;

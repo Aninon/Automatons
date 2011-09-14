@@ -15,7 +15,7 @@ public class BlockSnowBlock extends Block
 
     protected BlockSnowBlock(int i, int j)
     {
-        super(i, j, Material.builtSnow);
+        super(i, j, Material.craftedSnow);
         setTickOnLoad(true);
     }
 

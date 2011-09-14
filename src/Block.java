@@ -62,7 +62,7 @@ public class Block
 
     protected Block disableNeighborNotifyOnMetadataChange()
     {
-        field_28032_t[blockID] = true;
+        neighborNotifyOnMetadataChangeDisabled[blockID] = true;
         return this;
     }
 
@@ -628,7 +628,7 @@ public class Block
     public static final int lightOpacity[] = new int[256];
     public static final boolean canBlockGrass[];
     public static final int lightValue[] = new int[256];
-    public static final boolean field_28032_t[] = new boolean[256];
+    public static final boolean neighborNotifyOnMetadataChangeDisabled[] = new boolean[256];
     public static final Block stone;
     public static final BlockGrass grass;
     public static final Block dirt;
@@ -653,8 +653,8 @@ public class Block
     public static final Block blockLapis;
     public static final Block dispenser;
     public static final Block sandStone;
-    public static final Block musicBlock;
-    public static final Block blockBed;
+    public static final Block music;
+    public static final Block bed;
     public static final Block railPowered;
     public static final Block railDetector;
     public static final Block pistonStickyBase;
@@ -780,8 +780,8 @@ public class Block
         blockLapis = (new Block(22, 144, Material.rock)).setHardness(3F).setResistance(5F).setStepSound(soundStoneFootstep).setBlockName("blockLapis");
         dispenser = (new BlockDispenser(23)).setHardness(3.5F).setStepSound(soundStoneFootstep).setBlockName("dispenser").disableNeighborNotifyOnMetadataChange();
         sandStone = (new BlockSandStone(24)).setStepSound(soundStoneFootstep).setHardness(0.8F).setBlockName("sandStone");
-        musicBlock = (new BlockNote(25)).setHardness(0.8F).setBlockName("musicBlock").disableNeighborNotifyOnMetadataChange();
-        blockBed = (new BlockBed(26)).setHardness(0.2F).setBlockName("bed").disableStats().disableNeighborNotifyOnMetadataChange();
+        music = (new BlockNote(25)).setHardness(0.8F).setBlockName("musicBlock").disableNeighborNotifyOnMetadataChange();
+        bed = (new BlockBed(26)).setHardness(0.2F).setBlockName("bed").disableStats().disableNeighborNotifyOnMetadataChange();
         railPowered = (new BlockRail(27, 179, true)).setHardness(0.7F).setStepSound(soundMetalFootstep).setBlockName("goldenRail").disableNeighborNotifyOnMetadataChange();
         railDetector = (new BlockDetectorRail(28, 195)).setHardness(0.7F).setStepSound(soundMetalFootstep).setBlockName("detectorRail").disableNeighborNotifyOnMetadataChange();
         pistonStickyBase = (new BlockPistonBase(29, 106, true)).setBlockName("pistonStickyBase").disableNeighborNotifyOnMetadataChange();

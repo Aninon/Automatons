@@ -1,6 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
 
 package net.minecraft.src;
 
@@ -29,7 +26,6 @@ public class AM_EntityOmni extends EntityLiving
 		prevPosX = d;
 		prevPosY = d1;
 		prevPosZ = d2;
-		//setBotOwner(s);
 	}
 	public boolean canBreatheUnderwater()
 	{
@@ -38,31 +34,7 @@ public class AM_EntityOmni extends EntityLiving
 	
 	public void onLivingUpdate(){
 	}
-	/*protected void entityInit()
-	{
-	}*/
-	/*public String getEntityTexture()
-	{
-		switch(getSiren()){
-			case 1:return "/mob/beac1.png";
-			case 2: return "/mob/beac2.png";
-			default: return "/mob/beac.png";
-			}
-	}*/
 	
-	/*protected void entityInit(){
-		super.entityInit();
-		dataWatcher.addObject(17, ""); //owner
-		dataWatcher.addObject(18, new Integer(siren)); //health
-	}*/
-
-	
-	/*
-	protected String getLivingSound()
-	{
-		return "mob.cow";
-	}
-*/
 	protected String getHurtSound()
 	{
 		return "";
@@ -86,29 +58,16 @@ public class AM_EntityOmni extends EntityLiving
 			double d2 = rand.nextGaussian() * 0.02D;
 			worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
 		}
-		if(!worldObj.multiplayerWorld){	
+		if(!AutomatonUniversal.otherWorld(worldObj)){	
 			entityDropItem(new ItemStack(AutomatonLogger.itemOmni+256, 1,0), 0.0F);
 			setEntityDead();
 		}
 	}
-	/*
-	protected int getDropItemId()
-	{
-		return 0;
-	}*/
+
 	public void metamorph(Entity ep){
-		// cl ep = new cl();
-		
-		
-		/*Object something = "something";
-// String theType = "net.minecraft.src.EntitySquid";
-	//try(){
+
 	
-	
-	Class<?> theClass = EntitySquid.class;///Class.forName(theType);
-	Object obj = theClass.cast(something);*/
-		//}catch(ClassNotFoundException){
-		//}
+	if(!AutomatonUniversal.otherWorld(worldObj)){
 		double d=posX;
 		double d1=posY;
 		double d2=posZ;
@@ -120,9 +79,10 @@ public class AM_EntityOmni extends EntityLiving
 		ep.prevPosY = d1;
 		ep.prevPosZ = d2;
 		
-		//=posX;ep.posY=posY;ep.posZ=posZ;
 		worldObj.entityJoinedWorld(ep);
 		setEntityDead();
+		}
+		
 		//particles?
 		//if(!worldObj.multiplayerWorld){
 		//if(s=="pig"){
@@ -139,7 +99,7 @@ public class AM_EntityOmni extends EntityLiving
 	public boolean interact(EntityPlayer entityplayer)
 	{
 		
-		
+
 		
 		ItemStack itemstack = entityplayer.inventory.getCurrentItem();
 		if(itemstack != null){

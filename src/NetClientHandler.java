@@ -43,7 +43,7 @@ public class NetClientHandler extends NetHandler
     {
         disconnected = false;
         field_1210_g = false;
-        field_28118_b = new MapStorage(null);
+        mapStorage = new MapStorage(null);
         rand = new Random();
         mc = minecraft;
         Socket socket = new Socket(InetAddress.getByName(s), i);
@@ -643,12 +643,12 @@ public class NetClientHandler extends NetHandler
         } else
         if(packet103setslot.windowId == 0 && packet103setslot.itemSlot >= 36 && packet103setslot.itemSlot < 45)
         {
-            ItemStack itemstack = mc.thePlayer.inventorySlots.getSlot(packet103setslot.itemSlot).getStack();
+            ItemStack itemstack = mc.thePlayer.slots.getSlot(packet103setslot.itemSlot).getStack();
             if(packet103setslot.myItemStack != null && (itemstack == null || itemstack.stackSize < packet103setslot.myItemStack.stackSize))
             {
                 packet103setslot.myItemStack.animationsToGo = 5;
             }
-            mc.thePlayer.inventorySlots.putStackInSlot(packet103setslot.itemSlot, packet103setslot.myItemStack);
+            mc.thePlayer.slots.putStackInSlot(packet103setslot.itemSlot, packet103setslot.myItemStack);
         } else
         if(packet103setslot.windowId == mc.thePlayer.craftingInventory.windowId)
         {
@@ -661,7 +661,7 @@ public class NetClientHandler extends NetHandler
         Container container = null;
         if(packet106transaction.windowId == 0)
         {
-            container = mc.thePlayer.inventorySlots;
+            container = mc.thePlayer.slots;
         } else
         if(packet106transaction.windowId == mc.thePlayer.craftingInventory.windowId)
         {
@@ -671,11 +671,11 @@ public class NetClientHandler extends NetHandler
         {
             if(packet106transaction.field_20030_c)
             {
-                container.func_20113_a(packet106transaction.field_20028_b);
+                container.func_20113_a(packet106transaction.shortWindowId);
             } else
             {
-                container.func_20110_b(packet106transaction.field_20028_b);
-                addToSendQueue(new Packet106Transaction(packet106transaction.windowId, packet106transaction.field_20028_b, true));
+                container.func_20110_b(packet106transaction.shortWindowId);
+                addToSendQueue(new Packet106Transaction(packet106transaction.windowId, packet106transaction.shortWindowId, true));
             }
         }
     }
@@ -684,7 +684,7 @@ public class NetClientHandler extends NetHandler
     {
         if(packet104windowitems.windowId == 0)
         {
-            mc.thePlayer.inventorySlots.putStacksInSlots(packet104windowitems.itemStack);
+            mc.thePlayer.slots.putStacksInSlots(packet104windowitems.itemStack);
         } else
         if(packet104windowitems.windowId == mc.thePlayer.craftingInventory.windowId)
         {
@@ -759,7 +759,7 @@ public class NetClientHandler extends NetHandler
 
     public void processItemData(Packet131MapData packet131mapdata)
     {
-        if(packet131mapdata.itemID == Item.mapItem.shiftedIndex)
+        if(packet131mapdata.itemID == Item.map.shiftedIndex)
         {
             ItemMap.func_28013_a(packet131mapdata.uniqueID, mc.theWorld).func_28171_a(packet131mapdata.itemData);
         } else
@@ -789,6 +789,6 @@ public class NetClientHandler extends NetHandler
     private Minecraft mc;
     private WorldClient worldClient;
     private boolean field_1210_g;
-    public MapStorage field_28118_b;
+    public MapStorage mapStorage;
     Random rand;
 }

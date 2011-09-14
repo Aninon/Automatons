@@ -21,12 +21,12 @@ public class GuiAchievements extends GuiScreen
 
     public GuiAchievements(StatFileWriter statfilewriter)
     {
-        field_27121_a = 256;
-        field_27119_i = 202;
+        achievementsPaneWidth = 256;
+        achievementsPaneHeight = 202;
         field_27118_j = 0;
         field_27117_l = 0;
         field_27122_w = 0;
-        field_27120_x = statfilewriter;
+        statFileWriter = statfilewriter;
         char c = '\215';
         char c1 = '\215';
         field_27116_m = field_27114_o = field_27112_q = AchievementList.openInventory.displayColumn * 24 - c / 2 - 12;
@@ -65,8 +65,8 @@ public class GuiAchievements extends GuiScreen
     {
         if(Mouse.isButtonDown(0))
         {
-            int k = (width - field_27121_a) / 2;
-            int l = (height - field_27119_i) / 2;
+            int k = (width - achievementsPaneWidth) / 2;
+            int l = (height - achievementsPaneHeight) / 2;
             int i1 = k + 8;
             int j1 = l + 17;
             if((field_27122_w == 0 || field_27122_w == 1) && i >= i1 && i < i1 + 224 && j >= j1 && j < j1 + 155)
@@ -132,8 +132,8 @@ public class GuiAchievements extends GuiScreen
 
     protected void func_27110_k()
     {
-        int i = (width - field_27121_a) / 2;
-        int j = (height - field_27119_i) / 2;
+        int i = (width - achievementsPaneWidth) / 2;
+        int j = (height - achievementsPaneHeight) / 2;
         fontRenderer.drawString("Achievements", i + 15, j + 5, 0x404040);
     }
 
@@ -159,8 +159,8 @@ public class GuiAchievements extends GuiScreen
         }
         int i1 = mc.renderEngine.getTexture("/terrain.png");
         int j1 = mc.renderEngine.getTexture("/achievement/bg.png");
-        int k1 = (width - field_27121_a) / 2;
-        int l1 = (height - field_27119_i) / 2;
+        int k1 = (width - achievementsPaneWidth) / 2;
+        int l1 = (height - achievementsPaneHeight) / 2;
         int i2 = k1 + 16;
         int j2 = l1 + 17;
         zLevel = 0.0F;
@@ -237,8 +237,8 @@ public class GuiAchievements extends GuiScreen
             int k4 = (achievement1.parentAchievement.displayColumn * 24 - k) + 11 + i2;
             int i5 = (achievement1.parentAchievement.displayRow * 24 - l) + 11 + j2;
             int l5 = 0;
-            boolean flag = field_27120_x.hasAchievementUnlocked(achievement1);
-            boolean flag1 = field_27120_x.canUnlockAchievement(achievement1);
+            boolean flag = statFileWriter.hasAchievementUnlocked(achievement1);
+            boolean flag1 = statFileWriter.canUnlockAchievement(achievement1);
             char c = Math.sin(((double)(System.currentTimeMillis() % 600L) / 600D) * 3.1415926535897931D * 2D) <= 0.59999999999999998D ? '\202' : '\377';
             if(flag)
             {
@@ -273,12 +273,12 @@ public class GuiAchievements extends GuiScreen
             {
                 continue;
             }
-            if(field_27120_x.hasAchievementUnlocked(achievement3))
+            if(statFileWriter.hasAchievementUnlocked(achievement3))
             {
                 float f1 = 1.0F;
                 GL11.glColor4f(f1, f1, f1, 1.0F);
             } else
-            if(field_27120_x.canUnlockAchievement(achievement3))
+            if(statFileWriter.canUnlockAchievement(achievement3))
             {
                 float f2 = Math.sin(((double)(System.currentTimeMillis() % 600L) / 600D) * 3.1415926535897931D * 2D) >= 0.59999999999999998D ? 0.8F : 0.6F;
                 GL11.glColor4f(f2, f2, f2, 1.0F);
@@ -297,7 +297,7 @@ public class GuiAchievements extends GuiScreen
             {
                 drawTexturedModalRect(i6 - 2, k6 - 2, 0, 202, 26, 26);
             }
-            if(!field_27120_x.canUnlockAchievement(achievement3))
+            if(!statFileWriter.canUnlockAchievement(achievement3))
             {
                 float f4 = 0.1F;
                 GL11.glColor4f(f4, f4, f4, 1.0F);
@@ -307,7 +307,7 @@ public class GuiAchievements extends GuiScreen
             GL11.glEnable(2884 /*GL_CULL_FACE*/);
             renderitem.renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, achievement3.theItemStack, i6 + 3, k6 + 3);
             GL11.glDisable(2896 /*GL_LIGHTING*/);
-            if(!field_27120_x.canUnlockAchievement(achievement3))
+            if(!statFileWriter.canUnlockAchievement(achievement3))
             {
                 renderitem.field_27004_a = true;
             }
@@ -322,7 +322,7 @@ public class GuiAchievements extends GuiScreen
         GL11.glEnable(3042 /*GL_BLEND*/);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.renderEngine.bindTexture(j1);
-        drawTexturedModalRect(k1, l1, 0, 0, field_27121_a, field_27119_i);
+        drawTexturedModalRect(k1, l1, 0, 0, achievementsPaneWidth, achievementsPaneHeight);
         GL11.glPopMatrix();
         zLevel = 0.0F;
         GL11.glDepthFunc(515);
@@ -336,17 +336,17 @@ public class GuiAchievements extends GuiScreen
             String s1 = achievement2.getDescription();
             int k5 = i + 12;
             int j6 = j - 4;
-            if(field_27120_x.canUnlockAchievement(achievement2))
+            if(statFileWriter.canUnlockAchievement(achievement2))
             {
                 int l6 = Math.max(fontRenderer.getStringWidth(s), 120);
                 int j7 = fontRenderer.func_27277_a(s1, l6);
-                if(field_27120_x.hasAchievementUnlocked(achievement2))
+                if(statFileWriter.hasAchievementUnlocked(achievement2))
                 {
                     j7 += 12;
                 }
                 drawGradientRect(k5 - 3, j6 - 3, k5 + l6 + 3, j6 + j7 + 3 + 12, 0xc0000000, 0xc0000000);
                 fontRenderer.func_27278_a(s1, k5, j6 + 12, l6, 0xffa0a0a0);
-                if(field_27120_x.hasAchievementUnlocked(achievement2))
+                if(statFileWriter.hasAchievementUnlocked(achievement2))
                 {
                     fontRenderer.drawStringWithShadow(StatCollector.translateToLocal("achievement.taken"), k5, j6 + j7 + 4, 0xff9090ff);
                 }
@@ -360,7 +360,7 @@ public class GuiAchievements extends GuiScreen
                 drawGradientRect(k5 - 3, j6 - 3, k5 + i7 + 3, j6 + k7 + 12 + 3, 0xc0000000, 0xc0000000);
                 fontRenderer.func_27278_a(s2, k5, j6 + 12, i7, 0xff705050);
             }
-            fontRenderer.drawStringWithShadow(s, k5, j6, field_27120_x.canUnlockAchievement(achievement2) ? achievement2.getSpecial() ? -128 : -1 : achievement2.getSpecial() ? 0xff808040 : 0xff808080);
+            fontRenderer.drawStringWithShadow(s, k5, j6, statFileWriter.canUnlockAchievement(achievement2) ? achievement2.getSpecial() ? -128 : -1 : achievement2.getSpecial() ? 0xff808040 : 0xff808080);
         }
         GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
         GL11.glEnable(2896 /*GL_LIGHTING*/);
@@ -376,8 +376,8 @@ public class GuiAchievements extends GuiScreen
     private static final int field_27125_t;
     private static final int field_27124_u;
     private static final int field_27123_v;
-    protected int field_27121_a;
-    protected int field_27119_i;
+    protected int achievementsPaneWidth;
+    protected int achievementsPaneHeight;
     protected int field_27118_j;
     protected int field_27117_l;
     protected double field_27116_m;
@@ -387,7 +387,7 @@ public class GuiAchievements extends GuiScreen
     protected double field_27112_q;
     protected double field_27111_r;
     private int field_27122_w;
-    private StatFileWriter field_27120_x;
+    private StatFileWriter statFileWriter;
 
     static 
     {

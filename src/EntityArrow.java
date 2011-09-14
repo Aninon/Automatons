@@ -23,7 +23,7 @@ public class EntityArrow extends Entity
         yTile = -1;
         zTile = -1;
         inTile = 0;
-        field_28019_h = 0;
+        inData = 0;
         inGround = false;
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
@@ -38,7 +38,7 @@ public class EntityArrow extends Entity
         yTile = -1;
         zTile = -1;
         inTile = 0;
-        field_28019_h = 0;
+        inData = 0;
         inGround = false;
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
@@ -55,7 +55,7 @@ public class EntityArrow extends Entity
         yTile = -1;
         zTile = -1;
         inTile = 0;
-        field_28019_h = 0;
+        inData = 0;
         inGround = false;
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
@@ -145,7 +145,7 @@ public class EntityArrow extends Entity
         {
             int j = worldObj.getBlockId(xTile, yTile, zTile);
             int k = worldObj.getBlockMetadata(xTile, yTile, zTile);
-            if(j != inTile || k != field_28019_h)
+            if(j != inTile || k != inData)
             {
                 inGround = false;
                 motionX *= rand.nextFloat() * 0.2F;
@@ -224,7 +224,7 @@ public class EntityArrow extends Entity
                 yTile = movingobjectposition.blockY;
                 zTile = movingobjectposition.blockZ;
                 inTile = worldObj.getBlockId(xTile, yTile, zTile);
-                field_28019_h = worldObj.getBlockMetadata(xTile, yTile, zTile);
+                inData = worldObj.getBlockMetadata(xTile, yTile, zTile);
                 motionX = (float)(movingobjectposition.hitVec.xCoord - posX);
                 motionY = (float)(movingobjectposition.hitVec.yCoord - posY);
                 motionZ = (float)(movingobjectposition.hitVec.zCoord - posZ);
@@ -273,7 +273,7 @@ public class EntityArrow extends Entity
         nbttagcompound.setShort("yTile", (short)yTile);
         nbttagcompound.setShort("zTile", (short)zTile);
         nbttagcompound.setByte("inTile", (byte)inTile);
-        nbttagcompound.setByte("inData", (byte)field_28019_h);
+        nbttagcompound.setByte("inData", (byte)inData);
         nbttagcompound.setByte("shake", (byte)arrowShake);
         nbttagcompound.setByte("inGround", (byte)(inGround ? 1 : 0));
         nbttagcompound.setBoolean("player", doesArrowBelongToPlayer);
@@ -285,7 +285,7 @@ public class EntityArrow extends Entity
         yTile = nbttagcompound.getShort("yTile");
         zTile = nbttagcompound.getShort("zTile");
         inTile = nbttagcompound.getByte("inTile") & 0xff;
-        field_28019_h = nbttagcompound.getByte("inData") & 0xff;
+        inData = nbttagcompound.getByte("inData") & 0xff;
         arrowShake = nbttagcompound.getByte("shake") & 0xff;
         inGround = nbttagcompound.getByte("inGround") == 1;
         doesArrowBelongToPlayer = nbttagcompound.getBoolean("player");
@@ -314,7 +314,7 @@ public class EntityArrow extends Entity
     private int yTile;
     private int zTile;
     private int inTile;
-    private int field_28019_h;
+    private int inData;
     private boolean inGround;
     public boolean doesArrowBelongToPlayer;
     public int arrowShake;

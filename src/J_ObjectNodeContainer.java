@@ -17,7 +17,7 @@ class J_ObjectNodeContainer
     {
 //        super();
         field_27295_b = j_jsonlistenertojdomadapter;
-        field_27296_a = j_jsonobjectnodebuilder;
+        nodeBuilder = j_jsonobjectnodebuilder;
     }
 
     public void func_27290_a(J_JsonNodeBuilder j_jsonnodebuilder)
@@ -27,9 +27,9 @@ class J_ObjectNodeContainer
 
     public void func_27289_a(J_JsonFieldBuilder j_jsonfieldbuilder)
     {
-        field_27296_a.func_27237_a(j_jsonfieldbuilder);
+        nodeBuilder.func_27237_a(j_jsonfieldbuilder);
     }
 
-    final J_JsonObjectNodeBuilder field_27296_a; /* synthetic field */
+    final J_JsonObjectNodeBuilder nodeBuilder; /* synthetic field */
     final J_JsonListenerToJdomAdapter field_27295_b; /* synthetic field */
 }

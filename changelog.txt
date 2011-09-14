@@ -46,7 +46,7 @@ v0.5.8
 -may have fixed a small glitch where sliders would just stand in front of you and not push you
 -fixed a dumb visual glitch with water frass
 -fixed a little mistake where daplings would take forever to grow, they now grow about if not faster than normal saplings
--tried once again to lower the slider spawn rate, it seems to work a little better now
+-Finally found how to control slider spawn rates properly, they're generally less, but still somewhat frequent in tech biomes, they now only spawn on frass since its common enough now
 -finally renamed a few classes for mobs to their REAL names, not my initial prototyping ones
 
 v0.5.7

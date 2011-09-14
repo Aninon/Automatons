@@ -17,7 +17,7 @@ public class GuiVideoSettings extends GuiScreen
     public GuiVideoSettings(GuiScreen guiscreen, GameSettings gamesettings)
     {
         field_22107_a = "Video Settings";
-        field_22110_h = guiscreen;
+        parentGuiScreen = guiscreen;
         guiGameSettings = gamesettings;
     }
 
@@ -58,7 +58,7 @@ public class GuiVideoSettings extends GuiScreen
         if(guibutton.id == 200)
         {
             mc.gameSettings.saveOptions();
-            mc.displayGuiScreen(field_22110_h);
+            mc.displayGuiScreen(parentGuiScreen);
         }
         ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int i = scaledresolution.getScaledWidth();
@@ -73,7 +73,7 @@ public class GuiVideoSettings extends GuiScreen
         super.drawScreen(i, j, f);
     }
 
-    private GuiScreen field_22110_h;
+    private GuiScreen parentGuiScreen;
     protected String field_22107_a;
     private GameSettings guiGameSettings;
     private static EnumOptions field_22108_k[];

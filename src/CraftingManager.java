@@ -43,7 +43,7 @@ public class CraftingManager
         addRecipe(new ItemStack(Block.jukebox, 1), new Object[] {
             "###", "#X#", "###", Character.valueOf('#'), Block.planks, Character.valueOf('X'), Item.diamond
         });
-        addRecipe(new ItemStack(Block.musicBlock, 1), new Object[] {
+        addRecipe(new ItemStack(Block.music, 1), new Object[] {
             "###", "#X#", "###", Character.valueOf('#'), Block.planks, Character.valueOf('X'), Item.redstone
         });
         addRecipe(new ItemStack(Block.bookShelf, 1), new Object[] {
@@ -179,7 +179,7 @@ public class CraftingManager
         addRecipe(new ItemStack(Item.compass, 1), new Object[] {
             " # ", "#X#", " # ", Character.valueOf('#'), Item.ingotIron, Character.valueOf('X'), Item.redstone
         });
-        addRecipe(new ItemStack(Item.mapItem, 1), new Object[] {
+        addRecipe(new ItemStack(Item.map, 1), new Object[] {
             "###", "#X#", "###", Character.valueOf('#'), Item.paper, Character.valueOf('X'), Item.compass
         });
         addRecipe(new ItemStack(Block.button, 1), new Object[] {

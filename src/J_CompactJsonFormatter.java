@@ -43,7 +43,7 @@ public final class J_CompactJsonFormatter
         throws IOException
     {
         boolean flag = true;
-        switch(EnumJsonNodeTypeMappingHelper.field_27341_a[j_jsonnode.func_27218_a().ordinal()])
+        switch(EnumJsonNodeTypeMappingHelper.enumJsonNodeTypeMappingArray[j_jsonnode.func_27218_a().ordinal()])
         {
         case 1: // '\001'
             writer.append('[');

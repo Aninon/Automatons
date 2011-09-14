@@ -89,9 +89,9 @@ protected void entityInit(){
                     worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
                 }
 				
-	if(!worldObj.multiplayerWorld){
+	if(!AutomatonUniversal.otherWorld(worldObj)){
 			
-			entityDropItem(new ItemStack(mod_Automatons.itemBot, 1), 0.0F);
+			entityDropItem(new ItemStack(AutomatonLogger.itemBot+256, 1,0), 0.0F);
 			setEntityDead();
 	}
 	}
@@ -138,7 +138,7 @@ protected void entityInit(){
 
     protected int getDropItemId()
     {
-        return mod_Automatons.itemBot.shiftedIndex;
+        return AutomatonLogger.itemBot+256;
     }
 	
 	protected void fall(float f)

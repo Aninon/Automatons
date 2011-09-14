@@ -20,7 +20,7 @@ public class AM_ItemFrass extends ItemBlock
 
     public int getIconFromDamage(int i)
     {
-        return mod_Automatons.frass.getBlockTextureFromSideAndMetadata(2, i);
+        return AutomatonUniversal.blockFrass(i);
     }
 
     public int getPlacedBlockMetadata(int i)

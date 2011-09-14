@@ -44,16 +44,16 @@ public class AM_BlockHollow extends Block
 	static int D[];
 	static void loadSprites(){
 		D=new int[10];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/hollow1.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/hollow3.png");
-		D[2]=ModLoader.addOverride("/terrain.png", "/automatons/hollow4.png");
-		D[3]=ModLoader.addOverride("/terrain.png", "/automatons/hollow9.png");
-		D[4]=ModLoader.addOverride("/terrain.png", "/automatons/hollow11.png");
-		D[5]=ModLoader.addOverride("/terrain.png", "/automatons/hollow82.png");
-		D[6]=ModLoader.addOverride("/terrain.png", "/automatons/hollow2.png");
-		D[7]=ModLoader.addOverride("/terrain.png", "/automatons/hollow12.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow1.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow3.png");
+		D[2]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow4.png");
+		D[3]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow9.png");
+		D[4]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow11.png");
+		D[5]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow82.png");
+		D[6]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow2.png");
+		D[7]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow12.png");
 		D[8]=D[7];
-		D[9]=ModLoader.addOverride("/terrain.png", "/automatons/hollow13.png");
+		D[9]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/hollow13.png");
 	}
 	
 	public void onBlockRemoval(World world, int i, int j, int k)

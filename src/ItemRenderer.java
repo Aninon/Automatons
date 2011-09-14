@@ -25,7 +25,7 @@ public class ItemRenderer
         renderBlocksInstance = new RenderBlocks();
         field_20099_f = -1;
         mc = minecraft;
-        field_28131_f = new MapItemRenderer(minecraft.fontRenderer, minecraft.gameSettings, minecraft.renderEngine);
+        mapItemRenderer = new MapItemRenderer(minecraft.fontRenderer, minecraft.gameSettings, minecraft.renderEngine);
     }
 
     public void renderItem(EntityLiving entityliving, ItemStack itemstack)
@@ -159,7 +159,7 @@ public class ItemRenderer
         {
             GL11.glColor4f(f3, f3, f3, 1.0F);
         }
-        if(itemstack != null && itemstack.itemID == Item.mapItem.shiftedIndex)
+        if(itemstack != null && itemstack.itemID == Item.map.shiftedIndex)
         {
             GL11.glPushMatrix();
             float f4 = 0.8F;
@@ -222,8 +222,8 @@ public class ItemRenderer
             tessellator.addVertexWithUV(128 + byte0, 0 - byte0, 0.0D, 1.0D, 0.0D);
             tessellator.addVertexWithUV(0 - byte0, 0 - byte0, 0.0D, 0.0D, 0.0D);
             tessellator.draw();
-            MapData mapdata = Item.mapItem.func_28012_a(itemstack, mc.theWorld);
-            field_28131_f.func_28157_a(mc.thePlayer, mc.renderEngine, mapdata);
+            MapData mapdata = Item.map.func_28012_a(itemstack, mc.theWorld);
+            mapItemRenderer.func_28157_a(mc.thePlayer, mc.renderEngine, mapdata);
             GL11.glPopMatrix();
         } else
         if(itemstack != null)
@@ -477,6 +477,6 @@ public class ItemRenderer
     private float equippedProgress;
     private float prevEquippedProgress;
     private RenderBlocks renderBlocksInstance;
-    private MapItemRenderer field_28131_f;
+    private MapItemRenderer mapItemRenderer;
     private int field_20099_f;
 }

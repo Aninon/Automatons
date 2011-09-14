@@ -18,11 +18,11 @@ public class EntityLightningBolt extends EntityWeatherEffect
     public EntityLightningBolt(World world, double d, double d1, double d2)
     {
         super(world);
-        field_27029_a = 0L;
+        boltVertex = 0L;
         setLocationAndAngles(d, d1, d2, 0.0F, 0.0F);
-        field_27028_b = 2;
-        field_27029_a = rand.nextLong();
-        field_27030_c = rand.nextInt(3) + 1;
+        lightningState = 2;
+        boltVertex = rand.nextLong();
+        boltLivingTime = rand.nextInt(3) + 1;
         if(world.difficultySetting >= 2 && world.doChunksNearChunkExist(MathHelper.floor_double(d), MathHelper.floor_double(d1), MathHelper.floor_double(d2), 10))
         {
             int i = MathHelper.floor_double(d);
@@ -49,23 +49,23 @@ public class EntityLightningBolt extends EntityWeatherEffect
     public void onUpdate()
     {
         super.onUpdate();
-        if(field_27028_b == 2)
+        if(lightningState == 2)
         {
             worldObj.playSoundEffect(posX, posY, posZ, "ambient.weather.thunder", 10000F, 0.8F + rand.nextFloat() * 0.2F);
             worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 2.0F, 0.5F + rand.nextFloat() * 0.2F);
         }
-        field_27028_b--;
-        if(field_27028_b < 0)
+        lightningState--;
+        if(lightningState < 0)
         {
-            if(field_27030_c == 0)
+            if(boltLivingTime == 0)
             {
                 setEntityDead();
             } else
-            if(field_27028_b < -rand.nextInt(10))
+            if(lightningState < -rand.nextInt(10))
             {
-                field_27030_c--;
-                field_27028_b = 1;
-                field_27029_a = rand.nextLong();
+                boltLivingTime--;
+                lightningState = 1;
+                boltVertex = rand.nextLong();
                 if(worldObj.doChunksNearChunkExist(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ), 10))
                 {
                     int i = MathHelper.floor_double(posX);
@@ -78,7 +78,7 @@ public class EntityLightningBolt extends EntityWeatherEffect
                 }
             }
         }
-        if(field_27028_b >= 0)
+        if(lightningState >= 0)
         {
             double d = 3D;
             List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getBoundingBoxFromPool(posX - d, posY - d, posZ - d, posX + d, posY + 6D + d, posZ + d));
@@ -106,10 +106,10 @@ public class EntityLightningBolt extends EntityWeatherEffect
 
     public boolean isInRangeToRenderVec3D(Vec3D vec3d)
     {
-        return field_27028_b >= 0;
+        return lightningState >= 0;
     }
 
-    private int field_27028_b;
-    public long field_27029_a;
-    private int field_27030_c;
+    private int lightningState;
+    public long boltVertex;
+    private int boltLivingTime;
 }

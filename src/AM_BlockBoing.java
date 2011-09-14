@@ -16,7 +16,7 @@ public class AM_BlockBoing extends Block
 
     protected AM_BlockBoing(int i)
     {
-        super(i, Material.grassMaterial);
+        super(i, Material.grass);
         blockIndexInTexture = 250;
         //setTickOnLoad(true);
 		//slipperiness = 1.50F;
@@ -26,7 +26,7 @@ public class AM_BlockBoing extends Block
 	static int D;
 	static void loadSprites(){
 	
-		D=ModLoader.addOverride("/terrain.png", "/automatons/boing.png");
+		D=AutomatonUniversal.modOverride("/terrain.png", "/automatons/boing.png");
 		
 		//blockIndexInTexture=D;
 	}

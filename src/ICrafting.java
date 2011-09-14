@@ -13,5 +13,5 @@ public interface ICrafting
 
     public abstract void func_20159_a(Container container, int i, ItemStack itemstack);
 
-    public abstract void func_20158_a(Container container, int i, int j);
+    public abstract void updateCraftingInventoryInfo(Container container, int i, int j);
 }

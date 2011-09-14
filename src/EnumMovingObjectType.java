@@ -12,7 +12,7 @@ public enum EnumMovingObjectType
 /*
     public static EnumMovingObjectType[] values()
     {
-        return (EnumMovingObjectType[])field_21178_c.clone();
+        return (EnumMovingObjectType[])allMovingObjectTypes.clone();
     }
 
     public static EnumMovingObjectType valueOf(String s)
@@ -28,7 +28,7 @@ public enum EnumMovingObjectType
     public static final EnumMovingObjectType TILE;
     public static final EnumMovingObjectType ENTITY;
 */
-    private static final EnumMovingObjectType field_21178_c[]; /* synthetic field */
+    private static final EnumMovingObjectType allMovingObjectTypes[]; /* synthetic field */
 
     static 
     {
@@ -36,7 +36,7 @@ public enum EnumMovingObjectType
         TILE = new EnumMovingObjectType("TILE", 0);
         ENTITY = new EnumMovingObjectType("ENTITY", 1);
 */
-        field_21178_c = (new EnumMovingObjectType[] {
+        allMovingObjectTypes = (new EnumMovingObjectType[] {
             TILE, ENTITY
         });
     }

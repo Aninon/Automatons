@@ -15,7 +15,7 @@ public class AM_BlockArbor extends Block
 
     protected AM_BlockArbor(int i)
     {
-        super(i, Material.grassMaterial);
+        super(i, Material.grass);
         //blockIndexInTexture = 136;
        
 		//slipperiness = 1.50F;
@@ -24,9 +24,14 @@ public class AM_BlockArbor extends Block
 	static int D;
 	static void loadSprites(){
 		//D=new int[2];
-		D=ModLoader.addOverride("/terrain.png", "/automatons/arbor.png");
-		//D[1]=ModLoader.addOverride("/terrain.png", "/automatons/walk.png");
+		D=AutomatonUniversal.modOverride("/terrain.png", "/automatons/arbor.png");
+		//D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/walk.png");
 		
+	}
+	
+	public void onBlockRemoval(World world, int i, int j, int k)
+	{
+		world.setBlockWithNotify(i, j, k, Block.grass.blockID);
 	}
 	
 	public int colorMultiplier(IBlockAccess iblockaccess, int i, int j, int k)
@@ -38,10 +43,14 @@ public class AM_BlockArbor extends Block
     }
 	
 	
-    public int getBlockTextureFromSide(int i, int j)
+    public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l)
     {
-      
         return D; // D[0]
+    }
+	
+	public int quantityDropped(Random random)
+    {
+        return 0;
     }
 	
 	

@@ -20,7 +20,7 @@ public class AM_ItemLumo extends ItemBlock
 
     public int getIconFromDamage(int i)
     {
-        return mod_Automatons.sky.getBlockTextureFromSideAndMetadata(2, i);
+        return AutomatonUniversal.blockSky(i);
     }
 
     public int getPlacedBlockMetadata(int i)

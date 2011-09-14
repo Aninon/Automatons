@@ -14,7 +14,7 @@ public class TileEntitySign extends TileEntity
     public TileEntitySign()
     {
         lineBeingEdited = -1;
-        field_25062_c = true;
+        isEditable = true;
     }
 
     public void writeToNBT(NBTTagCompound nbttagcompound)
@@ -28,7 +28,7 @@ public class TileEntitySign extends TileEntity
 
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
-        field_25062_c = false;
+        isEditable = false;
         super.readFromNBT(nbttagcompound);
         for(int i = 0; i < 4; i++)
         {
@@ -45,5 +45,5 @@ public class TileEntitySign extends TileEntity
         "", "", "", ""
     };
     public int lineBeingEdited;
-    private boolean field_25062_c;
+    private boolean isEditable;
 }

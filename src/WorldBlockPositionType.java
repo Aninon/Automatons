@@ -14,7 +14,7 @@ class WorldBlockPositionType
     public WorldBlockPositionType(WorldClient worldclient, int i, int j, int k, int l, int i1)
     {
 //        super();
-        field_1203_g = worldclient;
+        worldClient = worldclient;
         posX = i;
         posY = j;
         posZ = k;
@@ -29,5 +29,5 @@ class WorldBlockPositionType
     int acceptCountdown;
     int blockID;
     int metadata;
-    final WorldClient field_1203_g; /* synthetic field */
+    final WorldClient worldClient; /* synthetic field */
 }

@@ -28,7 +28,7 @@ public class GuiIngame extends Gui
         updateCounter = 0;
         recordPlaying = "";
         recordPlayingUpFor = 0;
-        field_22065_l = false;
+        recordIsPlaying = false;
         prevVignetteBrightness = 1.0F;
         mc = minecraft;
     }
@@ -216,7 +216,7 @@ public class GuiIngame extends Gui
                 GL11.glEnable(3042 /*GL_BLEND*/);
                 GL11.glBlendFunc(770, 771);
                 int k4 = 0xffffff;
-                if(field_22065_l)
+                if(recordIsPlaying)
                 {
                     k4 = Color.HSBtoRGB(f2 / 50F, 0.7F, 0.6F) & 0xffffff;
                 }
@@ -418,7 +418,7 @@ public class GuiIngame extends Gui
     {
         recordPlaying = (new StringBuilder()).append("Now playing: ").append(s).toString();
         recordPlayingUpFor = 60;
-        field_22065_l = true;
+        recordIsPlaying = true;
     }
 
     public void addChatMessageTranslate(String s)
@@ -436,7 +436,7 @@ public class GuiIngame extends Gui
     private int updateCounter;
     private String recordPlaying;
     private int recordPlayingUpFor;
-    private boolean field_22065_l;
+    private boolean recordIsPlaying;
     public float damageGuiPartialTime;
     float prevVignetteBrightness;
 

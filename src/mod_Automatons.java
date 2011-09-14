@@ -55,6 +55,8 @@ public class mod_Automatons extends BaseMod
 	
 	public static Item regulator = (new AM_ItemFunctional(AutomatonLogger.regulator,3)).setIconCoord(4, 10).setItemName("regulator").setMaxStackSize(1);
 	public static Item daymaker = (new AM_ItemFunctional(AutomatonLogger.daymaker,1)).setIconCoord(4, 10).setItemName("daymaker");
+	
+	
 	public static Item techifier = (new AM_ItemFunctional(AutomatonLogger.techifier,2)).setIconCoord(4, 10).setItemName("techifier");
 	public static Item smack = (new AM_ItemSmack(AutomatonLogger.smack)).setIconCoord(4, 10).setItemName("smack");
 	public static Item naturizer = (new AM_ItemFunctional(AutomatonLogger.naturizer,4)).setIconCoord(4, 10).setItemName("naturizer");
@@ -97,10 +99,10 @@ public class mod_Automatons extends BaseMod
 	
 	
 	public static Block deployer= (new AM_BlockDeployer(AutomatonLogger.deployer)).setHardness(5f).setResistance(5F).setBlockName("deployer");
-	public static Block techPlant= (new AM_BlockTechPlant(AutomatonLogger.techPlant,ModLoader.addOverride("/terrain.png", "/automatons/techPlant.png"))).setHardness(0.1f).setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
+	public static Block techPlant= (new AM_BlockTechPlant(AutomatonLogger.techPlant,ModLoader.addOverride("/terrain.png", "/automatons/techPlant.png"))).setHardness(0f).setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
 	
 	public static Block importantBuildingThingy= (new AM_Buildo(AutomatonLogger.importantBuildingThingy)).setBlockUnbreakable().setStepSound(Block.soundGlassFootstep).setBlockName("techPlant");
-	public static Block arbor = (new AM_BlockArbor(AutomatonLogger.arbor)).setHardness(0.5f).setBlockName("arbor");
+	public static Block arbor = (new AM_BlockArbor(AutomatonLogger.arbor)).setHardness(0f).setStepSound(Block.soundGrassFootstep).setBlockName("arbor");
 	
 	
 	
@@ -211,8 +213,8 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddName(new ItemStack(stuffs,1,7), "Cybernetic Particulate");
 		ModLoader.AddName(new ItemStack(stuffs,1,8), "Plant Matter");
 		ModLoader.AddName(new ItemStack(stuffs,1,9), "Coal Dust");
-		ModLoader.AddName(new ItemStack(stuffs,1,10), "Coal Dust");
-		ModLoader.AddName(new ItemStack(stuffs,1,11), "Adaptive Bionic Conglomerate");
+		ModLoader.AddName(new ItemStack(stuffs,1,10), "Salt Petre");
+		ModLoader.AddName(new ItemStack(stuffs,1,11), "Sulfur");
 		ModLoader.AddName(new ItemStack(stuffs,1,12), "Factotum Head");
 		ModLoader.AddName(new ItemStack(stuffs,1,13), "Furnace Chunk");
 		ModLoader.AddName(new ItemStack(stuffs,1,14), "Greater Automaton Body");
@@ -276,6 +278,7 @@ public class mod_Automatons extends BaseMod
 		AM_BlockHollow.loadSprites();
 		AM_BlockLumo.loadSprites();
 		AM_BlockDeployer.loadSprites();
+		AM_BlockArbor.loadSprites();
 		//Item.itemsList[frass.blockID] = (new ItemFrass(frass.blockID - 256)).setItemName("frass");
 		
 		((AM_BlockGlow)crystal).loadSprites1();
@@ -285,7 +288,7 @@ public class mod_Automatons extends BaseMod
 		AM_BlockFrass.setAllowed();
 		
 		ModLoader.AddSpawn(AM_EntityWatcher.class, 15, EnumCreatureType.monster);
-		ModLoader.AddSpawn(AM_EntitySlider.class, 5, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntitySlider.class, 2, EnumCreatureType.creature);
 		
 		ModLoader.AddSpawn(AM_EntityChopper.class, 20, EnumCreatureType.creature);
 		ModLoader.AddSpawn(AM_EntityBobby.class, 18, EnumCreatureType.creature);
@@ -363,9 +366,11 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddShapelessRecipe(new ItemStack(duplex, 1), new Object[] {
 			crystal,crink
 		});
-		ModLoader.AddShapelessRecipe(new ItemStack(duplex, 9), new Object[] {
+		
+		
+		/*ModLoader.AddShapelessRecipe(new ItemStack(duplex, 9), new Object[] {
 			duplex
-		});
+		});*/
 		
 		ModLoader.AddShapelessRecipe(new ItemStack(guard, 1), new Object[] {
 			blaster,beacon
@@ -474,6 +479,10 @@ public class mod_Automatons extends BaseMod
 		
 		
 		
+		ModLoader.AddShapelessRecipe(new ItemStack(Item.gunpowder, 3), new Object[] {
+			new ItemStack(stuffs, 1, 10), new ItemStack(stuffs, 1, 11),new ItemStack(stuffs, 1, 9)
+		});
+		
 		
 		
 		
@@ -489,16 +498,16 @@ public class mod_Automatons extends BaseMod
 		ModLoader.AddRecipe(new ItemStack(pickTech, 50), new Object[] {
 			"##", "# ", Character.valueOf('#'), frass
 		});
-		ModLoader.AddRecipe(new ItemStack(techifier, 10), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(stuffs, 10,10), new Object[] {
 			"#", "#", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(naturizer, 10), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(stuffs, 10,9), new Object[] {
 			" #", "##", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(Block.plantRed, 64), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(arbor, 64), new Object[] {
 			"##", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(regulator, 10), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(stuffs, 10,11), new Object[] {
 			"# "," #", Character.valueOf('#'),frass
 		});
 		

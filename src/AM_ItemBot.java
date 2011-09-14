@@ -56,7 +56,7 @@ public class AM_ItemBot extends Item
             }
         }
 		
-        if(!world.multiplayerWorld)
+        if(!AutomatonUniversal.otherWorld(world))
         {
 		
 		if(N==0){

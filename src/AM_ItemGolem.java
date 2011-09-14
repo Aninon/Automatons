@@ -82,7 +82,7 @@ public class AM_ItemGolem extends Item
 			}
 		
 		
-		if(!world.multiplayerWorld)
+		if(!AutomatonUniversal.otherWorld(world))
 		{
 		if(ii!=88){
 			Block bb=Block.blocksList[ii];

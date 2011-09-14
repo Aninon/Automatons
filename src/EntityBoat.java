@@ -113,22 +113,22 @@ public class EntityBoat extends Entity
     public void setPositionAndRotation2(double d, double d1, double d2, float f, 
             float f1, int i)
     {
-        field_9393_e = d;
-        field_9392_f = d1;
-        field_9391_g = d2;
-        field_9390_h = f;
-        field_9389_i = f1;
+        boatX = d;
+        boatY = d1;
+        boatZ = d2;
+        boatYaw = f;
+        boatPitch = f1;
         field_9394_d = i + 4;
-        motionX = field_9388_j;
-        motionY = field_9387_k;
-        motionZ = field_9386_l;
+        motionX = velocityX;
+        motionY = velocityY;
+        motionZ = velocityZ;
     }
 
     public void setVelocity(double d, double d1, double d2)
     {
-        field_9388_j = motionX = d;
-        field_9387_k = motionY = d1;
-        field_9386_l = motionZ = d2;
+        velocityX = motionX = d;
+        velocityY = motionY = d1;
+        velocityZ = motionZ = d2;
     }
 
     public void onUpdate()
@@ -162,14 +162,14 @@ public class EntityBoat extends Entity
         {
             if(field_9394_d > 0)
             {
-                double d1 = posX + (field_9393_e - posX) / (double)field_9394_d;
-                double d6 = posY + (field_9392_f - posY) / (double)field_9394_d;
-                double d10 = posZ + (field_9391_g - posZ) / (double)field_9394_d;
+                double d1 = posX + (boatX - posX) / (double)field_9394_d;
+                double d6 = posY + (boatY - posY) / (double)field_9394_d;
+                double d10 = posZ + (boatZ - posZ) / (double)field_9394_d;
                 double d14;
-                for(d14 = field_9390_h - (double)rotationYaw; d14 < -180D; d14 += 360D) { }
+                for(d14 = boatYaw - (double)rotationYaw; d14 < -180D; d14 += 360D) { }
                 for(; d14 >= 180D; d14 -= 360D) { }
                 rotationYaw += d14 / (double)field_9394_d;
-                rotationPitch += (field_9389_i - (double)rotationPitch) / (double)field_9394_d;
+                rotationPitch += (boatPitch - (double)rotationPitch) / (double)field_9394_d;
                 field_9394_d--;
                 setPosition(d1, d6, d10);
                 setRotation(rotationYaw, rotationPitch);
@@ -372,12 +372,12 @@ public class EntityBoat extends Entity
     public int boatTimeSinceHit;
     public int boatRockDirection;
     private int field_9394_d;
-    private double field_9393_e;
-    private double field_9392_f;
-    private double field_9391_g;
-    private double field_9390_h;
-    private double field_9389_i;
-    private double field_9388_j;
-    private double field_9387_k;
-    private double field_9386_l;
+    private double boatX;
+    private double boatY;
+    private double boatZ;
+    private double boatYaw;
+    private double boatPitch;
+    private double velocityX;
+    private double velocityY;
+    private double velocityZ;
 }

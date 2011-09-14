@@ -232,7 +232,7 @@ public class AM_WorldGenBigFakeTree extends WorldGenerator
             ai3[j] = MathHelper.floor_double((double)(ai[j] + k) + 0.5D);
             ai3[byte1] = MathHelper.floor_double((double)ai[byte1] + (double)k * d + 0.5D);
             ai3[byte2] = MathHelper.floor_double((double)ai[byte2] + (double)k * d1 + 0.5D);
-            worldObj.setBlockAndMetadataWithNotify(ai3[0], ai3[1], ai3[2], mod_Automatons.tech.blockID,1);
+            worldObj.setBlockAndMetadataWithNotify(ai3[0], ai3[1], ai3[2], AutomatonLogger.tech,1);
         }
 
     }

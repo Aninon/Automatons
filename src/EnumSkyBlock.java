@@ -12,7 +12,7 @@ public enum EnumSkyBlock
 /*
     public static EnumSkyBlock[] values()
     {
-        return (EnumSkyBlock[])field_1721_d.clone();
+        return (EnumSkyBlock[])allSkyBlocks.clone();
     }
 
     public static EnumSkyBlock valueOf(String s)
@@ -30,7 +30,7 @@ public enum EnumSkyBlock
     public static final EnumSkyBlock Block;
 */
     public final int field_1722_c;
-    private static final EnumSkyBlock field_1721_d[]; /* synthetic field */
+    private static final EnumSkyBlock allSkyBlocks[]; /* synthetic field */
 
     static 
     {
@@ -38,7 +38,7 @@ public enum EnumSkyBlock
         Sky = new EnumSkyBlock("Sky", 0, 15);
         Block = new EnumSkyBlock("Block", 1, 0);
 */
-        field_1721_d = (new EnumSkyBlock[] {
+        allSkyBlocks = (new EnumSkyBlock[] {
             Sky, Block
         });
     }

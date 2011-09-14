@@ -1,6 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
 
 package net.minecraft.src;
 
@@ -32,8 +29,6 @@ implements IInventory
 		moveSpeed = 0.7F;
 		health = 10;
 		isImmuneToFire = true;
-		
-		//furnaceItemStacks = new ItemStack[3];
 		furnaceBurnTime = 0;
 		currentItemBurnTime = 0;
 		furnaceCookTime = 0;
@@ -85,16 +80,13 @@ implements IInventory
 
 	protected void func_31026_E() //kills wandering!
 	{
-		
 	}
 
 	public boolean interact(EntityPlayer entityplayer){
 
-		if(!worldObj.multiplayerWorld)
+		if(!AutomatonUniversal.otherWorld(worldObj))
 		{
-			//entityplayer.displayGUIChest(this);
-			ModLoader.OpenGUI(entityplayer, new AM_GuiFactotum(entityplayer.inventory,this) );
-			//entityplayer.displayGUIFurnace(this);
+		AutomatonUniversal.factotumGui(entityplayer,this);
 		}
 		return true;
 	}
@@ -165,12 +157,12 @@ implements IInventory
 
 	protected String getLivingSound(){
 		
-		return "mob.techy";
+		return "automatons.techy";
 		
 	}
 
 	protected String getHurtSound(){
-		return "mob.thunk";
+		return "automatons.thunk";
 	}
 
 	protected String getDeathSound()
@@ -196,7 +188,7 @@ implements IInventory
 			worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
 		}
 		
-		if(!worldObj.multiplayerWorld){
+		if(!AutomatonUniversal.otherWorld(worldObj)){
 			entityDropItem(new ItemStack(AutomatonLogger.itemFactotum+256, 1,0), 0.0F);
 			setEntityDead();
 		}
@@ -205,7 +197,7 @@ implements IInventory
 
 	
 	public void setEntityDead(){
-label0:
+	label0:
 		for(int i = 0; i < getSizeInventory(); i++){
 			ItemStack itemstack = getStackInSlot(i);
 			if(itemstack == null){
@@ -238,7 +230,7 @@ label0:
 	}
 
 	protected int getDropItemId(){
-		return AutomatonLogger.itemFactotum;
+		return AutomatonLogger.itemFactotum+256;
 	}
 
 	protected void updatePlayerActionState(){
@@ -265,6 +257,7 @@ label0:
 		
 		int R=worldObj.rand.nextInt(6);
 		
+		if(!AutomatonUniversal.otherWorld(worldObj)){
 			if(R==1){
 				int xe=worldObj.rand.nextInt(3)-1;
 				int ye=worldObj.rand.nextInt(3)-1;
@@ -278,7 +271,7 @@ label0:
 					worldObj.setBlockWithNotify(xi,yi,zi,Block.waterStill.blockID);
 				}
 			}
-		
+		}
 		
 		
 		
@@ -404,9 +397,6 @@ label0:
 	{
 		return dataWatcher.getWatchableObjectString(17);
 	}
-	public EntityLiving reallyGetBotOwner(){
-		return (EntityLiving) worldObj.getPlayerEntityByName(getBotOwner());
-	}
 
 	public void setBotOwner(String s)
 	{
@@ -449,7 +439,7 @@ label0:
 		{
 			furnaceBurnTime-=3;
 		}
-		if(!worldObj.multiplayerWorld)
+		if(!AutomatonUniversal.otherWorld(worldObj))
 		{
 			if(furnaceBurnTime <= 0 && canSmelt())
 			{
@@ -637,7 +627,7 @@ label0:
 			return 100;
 		} else
 		{
-			return ModLoader.AddAllFuel(i);
+			return AutomatonUniversal.addFuel(i);
 		}
 	}
 	

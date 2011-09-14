@@ -13,6 +13,11 @@ public class AM_BlockDuplex extends Block
 
     }
 	
+	public int quantityDropped(Random random)
+    {
+        return 9;
+    }
+	
 	/*public int quantityDropped(Random random)
     {
         return 0;

@@ -15,7 +15,7 @@ public class Teleporter
 
     public Teleporter()
     {
-        field_4232_a = new Random();
+        random = new Random();
     }
 
     public void func_4107_a(World world, Entity entity)
@@ -112,7 +112,7 @@ public class Teleporter
         int i1 = j;
         int j1 = k;
         int k1 = 0;
-        int l1 = field_4232_a.nextInt(4);
+        int l1 = random.nextInt(4);
         for(int i2 = i - byte0; i2 <= i + byte0; i2++)
         {
             double d1 = ((double)i2 + 0.5D) - entity.posX;
@@ -301,5 +301,5 @@ label1:
         return true;
     }
 
-    private Random field_4232_a;
+    private Random random;
 }

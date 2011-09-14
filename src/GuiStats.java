@@ -19,22 +19,22 @@ public class GuiStats extends GuiScreen
 
     public GuiStats(GuiScreen guiscreen, StatFileWriter statfilewriter)
     {
-        field_27154_i = "Select world";
-        field_27155_p = null;
-        field_27152_a = guiscreen;
-        field_27156_o = statfilewriter;
+        statsTitle = "Select world";
+        selectedSlot = null;
+        parentGui = guiscreen;
+        statFileWriter = statfilewriter;
     }
 
     public void initGui()
     {
-        field_27154_i = StatCollector.translateToLocal("gui.stats");
-        field_27151_l = new GuiSlotStatsGeneral(this);
-        field_27151_l.registerScrollButtons(controlList, 1, 1);
-        field_27150_m = new GuiSlotStatsItem(this);
-        field_27150_m.registerScrollButtons(controlList, 1, 1);
-        field_27157_n = new GuiSlotStatsBlock(this);
-        field_27157_n.registerScrollButtons(controlList, 1, 1);
-        field_27155_p = field_27151_l;
+        statsTitle = StatCollector.translateToLocal("gui.stats");
+        slotGeneral = new GuiSlotStatsGeneral(this);
+        slotGeneral.registerScrollButtons(controlList, 1, 1);
+        slotItem = new GuiSlotStatsItem(this);
+        slotItem.registerScrollButtons(controlList, 1, 1);
+        slotBlock = new GuiSlotStatsBlock(this);
+        slotBlock.registerScrollButtons(controlList, 1, 1);
+        selectedSlot = slotGeneral;
         func_27130_k();
     }
 
@@ -47,11 +47,11 @@ public class GuiStats extends GuiScreen
         controlList.add(guibutton = new GuiButton(2, width / 2 - 46, height - 52, 100, 20, stringtranslate.translateKey("stat.blocksButton")));
         GuiButton guibutton1;
         controlList.add(guibutton1 = new GuiButton(3, width / 2 + 62, height - 52, 100, 20, stringtranslate.translateKey("stat.itemsButton")));
-        if(field_27157_n.getSize() == 0)
+        if(slotBlock.getSize() == 0)
         {
             guibutton.enabled = false;
         }
-        if(field_27150_m.getSize() == 0)
+        if(slotItem.getSize() == 0)
         {
             guibutton1.enabled = false;
         }
@@ -65,29 +65,29 @@ public class GuiStats extends GuiScreen
         }
         if(guibutton.id == 0)
         {
-            mc.displayGuiScreen(field_27152_a);
+            mc.displayGuiScreen(parentGui);
         } else
         if(guibutton.id == 1)
         {
-            field_27155_p = field_27151_l;
+            selectedSlot = slotGeneral;
         } else
         if(guibutton.id == 3)
         {
-            field_27155_p = field_27150_m;
+            selectedSlot = slotItem;
         } else
         if(guibutton.id == 2)
         {
-            field_27155_p = field_27157_n;
+            selectedSlot = slotBlock;
         } else
         {
-            field_27155_p.actionPerformed(guibutton);
+            selectedSlot.actionPerformed(guibutton);
         }
     }
 
     public void drawScreen(int i, int j, float f)
     {
-        field_27155_p.drawScreen(i, j, f);
-        drawCenteredString(fontRenderer, field_27154_i, width / 2, 20, 0xffffff);
+        selectedSlot.drawScreen(i, j, f);
+        drawCenteredString(fontRenderer, statsTitle, width / 2, 20, 0xffffff);
         super.drawScreen(i, j, f);
     }
 
@@ -99,7 +99,7 @@ public class GuiStats extends GuiScreen
         GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GL11.glPopMatrix();
-        field_27153_j.drawItemIntoGui(fontRenderer, mc.renderEngine, k, 0, Item.itemsList[k].getIconFromDamage(0), i + 2, j + 2);
+        renderItem.drawItemIntoGui(fontRenderer, mc.renderEngine, k, 0, Item.itemsList[k].getIconFromDamage(0), i + 2, j + 2);
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(32826 /*GL_RESCALE_NORMAL_EXT*/);
     }
@@ -135,7 +135,7 @@ public class GuiStats extends GuiScreen
 
     static StatFileWriter func_27142_c(GuiStats guistats)
     {
-        return guistats.field_27156_o;
+        return guistats.statFileWriter;
     }
 
     static FontRenderer func_27140_d(GuiStats guistats)
@@ -218,13 +218,13 @@ public class GuiStats extends GuiScreen
         guistats.func_27138_c(i, j, k);
     }
 
-    private static RenderItem field_27153_j = new RenderItem();
-    protected GuiScreen field_27152_a;
-    protected String field_27154_i;
-    private GuiSlotStatsGeneral field_27151_l;
-    private GuiSlotStatsItem field_27150_m;
-    private GuiSlotStatsBlock field_27157_n;
-    private StatFileWriter field_27156_o;
-    private GuiSlot field_27155_p;
+    private static RenderItem renderItem = new RenderItem();
+    protected GuiScreen parentGui;
+    protected String statsTitle;
+    private GuiSlotStatsGeneral slotGeneral;
+    private GuiSlotStatsItem slotItem;
+    private GuiSlotStatsBlock slotBlock;
+    private StatFileWriter statFileWriter;
+    private GuiSlot selectedSlot;
 
 }

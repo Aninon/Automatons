@@ -19,10 +19,10 @@ public class Packet27Position extends Packet
     public void readPacketData(DataInputStream datainputstream)
         throws IOException
     {
-        field_22039_a = datainputstream.readFloat();
-        field_22038_b = datainputstream.readFloat();
-        field_22041_e = datainputstream.readFloat();
-        field_22040_f = datainputstream.readFloat();
+        strafeMovement = datainputstream.readFloat();
+        fowardMovement = datainputstream.readFloat();
+        pitchRotation = datainputstream.readFloat();
+        yawRotation = datainputstream.readFloat();
         field_22043_c = datainputstream.readBoolean();
         field_22042_d = datainputstream.readBoolean();
     }
@@ -30,10 +30,10 @@ public class Packet27Position extends Packet
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
-        dataoutputstream.writeFloat(field_22039_a);
-        dataoutputstream.writeFloat(field_22038_b);
-        dataoutputstream.writeFloat(field_22041_e);
-        dataoutputstream.writeFloat(field_22040_f);
+        dataoutputstream.writeFloat(strafeMovement);
+        dataoutputstream.writeFloat(fowardMovement);
+        dataoutputstream.writeFloat(pitchRotation);
+        dataoutputstream.writeFloat(yawRotation);
         dataoutputstream.writeBoolean(field_22043_c);
         dataoutputstream.writeBoolean(field_22042_d);
     }
@@ -48,10 +48,10 @@ public class Packet27Position extends Packet
         return 18;
     }
 
-    private float field_22039_a;
-    private float field_22038_b;
+    private float strafeMovement;
+    private float fowardMovement;
     private boolean field_22043_c;
     private boolean field_22042_d;
-    private float field_22041_e;
-    private float field_22040_f;
+    private float pitchRotation;
+    private float yawRotation;
 }

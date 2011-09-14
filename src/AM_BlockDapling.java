@@ -24,7 +24,7 @@ public class AM_BlockDapling extends Block
 
     public void updateTick(World world, int i, int j, int k, Random random)
     {
-        if(world.multiplayerWorld)
+        if(AutomatonUniversal.otherWorld(world))
         {
             return;
         }

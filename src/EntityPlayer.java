@@ -33,13 +33,13 @@ public abstract class EntityPlayer extends EntityLiving
         inPortal = false;
         damageRemainder = 0;
         fishEntity = null;
-        inventorySlots = new ContainerPlayer(inventory, !world.multiplayerWorld);
-        craftingInventory = inventorySlots;
+        slots = new ContainerPlayer(inventory, !world.multiplayerWorld);
+        craftingInventory = slots;
         yOffset = 1.62F;
         ChunkCoordinates chunkcoordinates = world.getSpawnPoint();
-        setLocationAndAngles((double)chunkcoordinates.x + 0.5D, chunkcoordinates.y + 1, (double)chunkcoordinates.z + 0.5D, 0.0F, 0.0F);
+        setLocationAndAngles((double)chunkcoordinates.posX + 0.5D, chunkcoordinates.posY + 1, (double)chunkcoordinates.posZ + 0.5D, 0.0F, 0.0F);
         health = 20;
-        field_9351_C = "humanoid";
+        entityType = "humanoid";
         field_9353_B = 180F;
         fireResistance = 20;
         texture = "/mob/char.png";
@@ -84,7 +84,7 @@ public abstract class EntityPlayer extends EntityLiving
         if(!worldObj.multiplayerWorld && craftingInventory != null && !craftingInventory.isUsableByPlayer(this))
         {
             closeScreen();
-            craftingInventory = inventorySlots;
+            craftingInventory = slots;
         }
         field_20066_r = field_20063_u;
         field_20065_s = field_20062_v;
@@ -134,7 +134,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     protected void closeScreen()
     {
-        craftingInventory = inventorySlots;
+        craftingInventory = slots;
     }
 
     public void updateCloak()
@@ -363,9 +363,9 @@ public abstract class EntityPlayer extends EntityLiving
         nbttagcompound.setShort("SleepTimer", (short)sleepTimer);
         if(playerSpawnCoordinate != null)
         {
-            nbttagcompound.setInteger("SpawnX", playerSpawnCoordinate.x);
-            nbttagcompound.setInteger("SpawnY", playerSpawnCoordinate.y);
-            nbttagcompound.setInteger("SpawnZ", playerSpawnCoordinate.z);
+            nbttagcompound.setInteger("SpawnX", playerSpawnCoordinate.posX);
+            nbttagcompound.setInteger("SpawnY", playerSpawnCoordinate.posY);
+            nbttagcompound.setInteger("SpawnZ", playerSpawnCoordinate.posZ);
         }
     }
 
@@ -580,7 +580,7 @@ public abstract class EntityPlayer extends EntityLiving
     public void setEntityDead()
     {
         super.setEntityDead();
-        inventorySlots.onCraftGuiClosed(this);
+        slots.onCraftGuiClosed(this);
         if(craftingInventory != null)
         {
             craftingInventory.onCraftGuiClosed(this);
@@ -686,15 +686,15 @@ public abstract class EntityPlayer extends EntityLiving
         resetHeight();
         ChunkCoordinates chunkcoordinates = bedChunkCoordinates;
         ChunkCoordinates chunkcoordinates1 = bedChunkCoordinates;
-        if(chunkcoordinates != null && worldObj.getBlockId(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z) == Block.blockBed.blockID)
+        if(chunkcoordinates != null && worldObj.getBlockId(chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ) == Block.bed.blockID)
         {
-            BlockBed.setBedOccupied(worldObj, chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z, false);
-            ChunkCoordinates chunkcoordinates2 = BlockBed.getNearestEmptyChunkCoordinates(worldObj, chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z, 0);
+            BlockBed.setBedOccupied(worldObj, chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ, false);
+            ChunkCoordinates chunkcoordinates2 = BlockBed.getNearestEmptyChunkCoordinates(worldObj, chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ, 0);
             if(chunkcoordinates2 == null)
             {
-                chunkcoordinates2 = new ChunkCoordinates(chunkcoordinates.x, chunkcoordinates.y + 1, chunkcoordinates.z);
+                chunkcoordinates2 = new ChunkCoordinates(chunkcoordinates.posX, chunkcoordinates.posY + 1, chunkcoordinates.posZ);
             }
-            setPosition((float)chunkcoordinates2.x + 0.5F, (float)chunkcoordinates2.y + yOffset + 0.1F, (float)chunkcoordinates2.z + 0.5F);
+            setPosition((float)chunkcoordinates2.posX + 0.5F, (float)chunkcoordinates2.posY + yOffset + 0.1F, (float)chunkcoordinates2.posZ + 0.5F);
         }
         sleeping = false;
         if(!worldObj.multiplayerWorld && flag1)
@@ -716,22 +716,22 @@ public abstract class EntityPlayer extends EntityLiving
 
     private boolean isInBed()
     {
-        return worldObj.getBlockId(bedChunkCoordinates.x, bedChunkCoordinates.y, bedChunkCoordinates.z) == Block.blockBed.blockID;
+        return worldObj.getBlockId(bedChunkCoordinates.posX, bedChunkCoordinates.posY, bedChunkCoordinates.posZ) == Block.bed.blockID;
     }
 
     public static ChunkCoordinates func_25060_a(World world, ChunkCoordinates chunkcoordinates)
     {
         IChunkProvider ichunkprovider = world.getIChunkProvider();
-        ichunkprovider.prepareChunk(chunkcoordinates.x - 3 >> 4, chunkcoordinates.z - 3 >> 4);
-        ichunkprovider.prepareChunk(chunkcoordinates.x + 3 >> 4, chunkcoordinates.z - 3 >> 4);
-        ichunkprovider.prepareChunk(chunkcoordinates.x - 3 >> 4, chunkcoordinates.z + 3 >> 4);
-        ichunkprovider.prepareChunk(chunkcoordinates.x + 3 >> 4, chunkcoordinates.z + 3 >> 4);
-        if(world.getBlockId(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z) != Block.blockBed.blockID)
+        ichunkprovider.prepareChunk(chunkcoordinates.posX - 3 >> 4, chunkcoordinates.posZ - 3 >> 4);
+        ichunkprovider.prepareChunk(chunkcoordinates.posX + 3 >> 4, chunkcoordinates.posZ - 3 >> 4);
+        ichunkprovider.prepareChunk(chunkcoordinates.posX - 3 >> 4, chunkcoordinates.posZ + 3 >> 4);
+        ichunkprovider.prepareChunk(chunkcoordinates.posX + 3 >> 4, chunkcoordinates.posZ + 3 >> 4);
+        if(world.getBlockId(chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ) != Block.bed.blockID)
         {
             return null;
         } else
         {
-            ChunkCoordinates chunkcoordinates1 = BlockBed.getNearestEmptyChunkCoordinates(world, chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z, 0);
+            ChunkCoordinates chunkcoordinates1 = BlockBed.getNearestEmptyChunkCoordinates(world, chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ, 0);
             return chunkcoordinates1;
         }
     }
@@ -740,7 +740,7 @@ public abstract class EntityPlayer extends EntityLiving
     {
         if(bedChunkCoordinates != null)
         {
-            int i = worldObj.getBlockMetadata(bedChunkCoordinates.x, bedChunkCoordinates.y, bedChunkCoordinates.z);
+            int i = worldObj.getBlockMetadata(bedChunkCoordinates.posX, bedChunkCoordinates.posY, bedChunkCoordinates.posZ);
             int j = BlockBed.getDirectionFromMetadata(i);
             switch(j)
             {
@@ -937,7 +937,7 @@ public abstract class EntityPlayer extends EntityLiving
     }
 
     public InventoryPlayer inventory;
-    public Container inventorySlots;
+    public Container slots;
     public Container craftingInventory;
     public byte field_9371_f;
     public int score;

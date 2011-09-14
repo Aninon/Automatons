@@ -1,6 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
 
 package net.minecraft.src;
 
@@ -21,7 +18,7 @@ public class AM_EntityArborist extends EntityAnimal
         setSize(0.9F, 0.9F);
 		health=5;
 		
-		System.out.println("HI I SPAWNED, LOL");
+		//System.out.println("HI I SPAWNED, LOL");
     }
 	public AM_EntityArborist(World world, double d, double d1, double d2){
         this(world);
@@ -35,14 +32,61 @@ public class AM_EntityArborist extends EntityAnimal
         setPathToEntity(null);    
         
     }
-/*	public void onLivingUpdate()
+	
+	
+	/*
+	public boolean canBePushed()
     {
-        if(isWet())
-        {
-           setEntityDead();
-        }
-        super.onLivingUpdate();
+        return false;
+    }
+	
+	public boolean canBeCollidedWith()
+    {
+        return false;
     }*/
+	
+	int num=0;
+	int tip=100;
+	public void onLivingUpdate()
+    {
+       
+	   
+	   if(!AutomatonUniversal.otherWorld(worldObj)){
+	   if(num>tip){
+	   num=0;
+	   tip=worldObj.rand.nextInt(8)*100 +200;
+	   
+	   EntitySheep ep = new EntitySheep(worldObj);
+	   double d=posX;
+		double d1=posY;
+		double d2=posZ;
+		ep.setPosition(d, d1 + (double)yOffset, d2);
+		ep.motionX = 0.0D;
+		ep.motionY = 0.0D;
+		ep.motionZ = 0.0D;
+		ep.prevPosX = d;
+		ep.prevPosY = d1;
+		ep.prevPosZ = d2;
+		
+		ep.setTarget(this);
+	   
+	   //System.out.println("here comes a sheep");
+	   
+	     worldObj.entityJoinedWorld(ep);
+	   
+	   }else{
+	   num++;
+	   }
+	   
+	   
+	   
+	   
+	   }
+	   
+	   
+	   
+        super.onLivingUpdate();
+    }
 	
 	/*
 	protected float getBlockPathWeight(int i, int j, int k)
@@ -55,6 +99,8 @@ public class AM_EntityArborist extends EntityAnimal
             return worldObj.getLightBrightness(i, j, k) - 0.5F;
         }
     }*/
+	
+	
 	
 	public int getMaxSpawnedInChunk()
     {
@@ -85,17 +131,17 @@ public class AM_EntityArborist extends EntityAnimal
 	
     protected String getLivingSound()
     {
-        return "mob.beep";
+        return "automatons.beep";
     }
 
     protected String getHurtSound()
     {
-        return "mob.clank";
+        return "automatons.clank";
     }
 
     protected String getDeathSound()
     {
-        return "mob.botdie";
+        return "automatons.botdie";
     }
 
     /*public boolean interact(EntityPlayer entityplayer)
@@ -141,7 +187,7 @@ public class AM_EntityArborist extends EntityAnimal
                     worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
                 }
 				
-	if(!worldObj.multiplayerWorld){
+	if(!AutomatonUniversal.otherWorld(worldObj)){
 			
 			int R=rand.nextInt(2);
 			if(R==0){

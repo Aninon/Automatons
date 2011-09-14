@@ -24,7 +24,7 @@ public class WorldClient extends World
         entitySpawnQueue = new HashSet();
         sendQueue = netclienthandler;
         setSpawnPoint(new ChunkCoordinates(8, 64, 8));
-        field_28108_z = netclienthandler.field_28118_b;
+        mapStorage = netclienthandler.mapStorage;
     }
 
     public void tick()
@@ -248,9 +248,9 @@ public class WorldClient extends World
         {
             return;
         }
-        if(field_27168_F > 0)
+        if(lastLightningBolt > 0)
         {
-            field_27168_F--;
+            lastLightningBolt--;
         }
         prevRainingStrength = rainingStrength;
         if(worldInfo.getRaining())

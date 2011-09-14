@@ -26,7 +26,9 @@ public class AM_ItemSmack extends Item
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
     {
 
+	
 		itemstack.damageItem(10, entityplayer);
+		
 		List L=world.getEntitiesWithinAABBExcludingEntity(entityplayer,entityplayer.boundingBox.expand(6D, 3D, 6D));
 		
 		if(!L.isEmpty()){
@@ -37,13 +39,17 @@ public class AM_ItemSmack extends Item
 			}
 		}
 		}
+		
         return itemstack;
     }
 	public void POW(EntityLiving entity, EntityLiving me){
 	
 	
-	
-	
+	World worldObj=me.worldObj;
+	worldObj.playSoundAtEntity(me, "mob.clank", 1.0F, 1.0F );
+	if(AutomatonUniversal.otherWorld(worldObj)){
+	return;
+	}
     
         if(entity.riddenByEntity == me || entity.ridingEntity == me)
         {
@@ -72,7 +78,7 @@ public class AM_ItemSmack extends Item
             d1 *= 1.0F; //- entityCollisionReduction;
             me.addVelocity(-d, 0.0D, -d1);
             entity.addVelocity(f, 0.75D, f1);
-			me.worldObj.playSoundAtEntity(me, "mob.clank", 1.0F, 1.0F );
+			
 			//entity.posY+=5;
         }
 

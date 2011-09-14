@@ -21,7 +21,7 @@ public class EntityLavaFX extends EntityFX
         motionY = rand.nextFloat() * 0.4F + 0.05F;
         particleRed = particleGreen = particleBlue = 1.0F;
         particleScale *= rand.nextFloat() * 2.0F + 0.2F;
-        field_674_a = particleScale;
+        lavaParticleScale = particleScale;
         particleMaxAge = (int)(16D / (Math.random() * 0.80000000000000004D + 0.20000000000000001D));
         noClip = false;
         particleTextureIndex = 49;
@@ -35,7 +35,7 @@ public class EntityLavaFX extends EntityFX
     public void renderParticle(Tessellator tessellator, float f, float f1, float f2, float f3, float f4, float f5)
     {
         float f6 = ((float)particleAge + f) / (float)particleMaxAge;
-        particleScale = field_674_a * (1.0F - f6 * f6);
+        particleScale = lavaParticleScale * (1.0F - f6 * f6);
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
@@ -65,5 +65,5 @@ public class EntityLavaFX extends EntityFX
         }
     }
 
-    private float field_674_a;
+    private float lavaParticleScale;
 }

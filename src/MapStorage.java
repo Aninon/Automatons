@@ -20,7 +20,7 @@ public class MapStorage
         loadedDataMap = new HashMap();
         loadedDataList = new ArrayList();
         idCounts = new HashMap();
-        field_28191_a = isavehandler;
+        saveHandler = isavehandler;
         loadIdCounts();
     }
 
@@ -31,11 +31,11 @@ public class MapStorage
         {
             return mapdatabase;
         }
-        if(field_28191_a != null)
+        if(saveHandler != null)
         {
             try
             {
-                File file = field_28191_a.func_28113_a(s);
+                File file = saveHandler.func_28113_a(s);
                 if(file != null && file.exists())
                 {
                     try
@@ -99,13 +99,13 @@ public class MapStorage
 
     private void saveData(MapDataBase mapdatabase)
     {
-        if(field_28191_a == null)
+        if(saveHandler == null)
         {
             return;
         }
         try
         {
-            File file = field_28191_a.func_28113_a(mapdatabase.field_28168_a);
+            File file = saveHandler.func_28113_a(mapdatabase.field_28168_a);
             if(file != null)
             {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
@@ -128,11 +128,11 @@ public class MapStorage
         try
         {
             idCounts.clear();
-            if(field_28191_a == null)
+            if(saveHandler == null)
             {
                 return;
             }
-            File file = field_28191_a.func_28113_a("idcounts");
+            File file = saveHandler.func_28113_a("idcounts");
             if(file != null && file.exists())
             {
                 DataInputStream datainputstream = new DataInputStream(new FileInputStream(file));
@@ -175,13 +175,13 @@ public class MapStorage
             Short _tmp = short2;
         }
         idCounts.put(s, short1);
-        if(field_28191_a == null)
+        if(saveHandler == null)
         {
             return short1.shortValue();
         }
         try
         {
-            File file = field_28191_a.func_28113_a("idcounts");
+            File file = saveHandler.func_28113_a("idcounts");
             if(file != null)
             {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
@@ -205,7 +205,7 @@ public class MapStorage
         return short1.shortValue();
     }
 
-    private ISaveHandler field_28191_a;
+    private ISaveHandler saveHandler;
     private Map loadedDataMap;
     private List loadedDataList;
     private Map idCounts;

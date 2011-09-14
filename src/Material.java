@@ -40,7 +40,7 @@ public class Material
 
     private Material setIsTranslucent()
     {
-        isOpaque = true;
+        isTranslucent = true;
         return this;
     }
 
@@ -74,7 +74,7 @@ public class Material
 
     public boolean getIsTranslucent()
     {
-        if(isOpaque)
+        if(isTranslucent)
         {
             return false;
         } else
@@ -106,7 +106,7 @@ public class Material
     }
 
     public static final Material air;
-    public static final Material grassMaterial;
+    public static final Material grass;
     public static final Material ground;
     public static final Material wood;
     public static final Material rock;
@@ -122,20 +122,20 @@ public class Material
     public static final Material circuits;
     public static final Material glass;
     public static final Material tnt;
-    public static final Material unusedMaterial;
+    public static final Material unused;
     public static final Material ice;
     public static final Material snow;
-    public static final Material builtSnow;
+    public static final Material craftedSnow;
     public static final Material cactus;
     public static final Material clay;
     public static final Material pumpkin;
     public static final Material portal;
     public static final Material cakeMaterial;
-    public static final Material webMaterial;
-    public static final Material pistonMaterial;
+    public static final Material web;
+    public static final Material piston;
     private boolean canBurn;
     private boolean groundCover;
-    private boolean isOpaque;
+    private boolean isTranslucent;
     public final MapColor materialMapColor;
     private boolean canHarvest;
     private int mobilityFlag;
@@ -143,7 +143,7 @@ public class Material
     static 
     {
         air = new MaterialTransparent(MapColor.airColor);
-        grassMaterial = new Material(MapColor.grassColor);
+        grass = new Material(MapColor.grassColor);
         ground = new Material(MapColor.dirtColor);
         wood = (new Material(MapColor.woodColor)).setBurning();
         rock = (new Material(MapColor.stoneColor)).setNoHarvest();
@@ -159,16 +159,16 @@ public class Material
         circuits = (new MaterialLogic(MapColor.airColor)).setNoPushMobility();
         glass = (new Material(MapColor.airColor)).setIsTranslucent();
         tnt = (new Material(MapColor.tntColor)).setBurning().setIsTranslucent();
-        unusedMaterial = (new Material(MapColor.foliageColor)).setNoPushMobility();
+        unused = (new Material(MapColor.foliageColor)).setNoPushMobility();
         ice = (new Material(MapColor.iceColor)).setIsTranslucent();
         snow = (new MaterialLogic(MapColor.snowColor)).setIsGroundCover().setIsTranslucent().setNoHarvest().setNoPushMobility();
-        builtSnow = (new Material(MapColor.snowColor)).setNoHarvest();
+        craftedSnow = (new Material(MapColor.snowColor)).setNoHarvest();
         cactus = (new Material(MapColor.foliageColor)).setIsTranslucent().setNoPushMobility();
         clay = new Material(MapColor.clayColor);
         pumpkin = (new Material(MapColor.foliageColor)).setNoPushMobility();
         portal = (new MaterialPortal(MapColor.airColor)).setImmovableMobility();
         cakeMaterial = (new Material(MapColor.airColor)).setNoPushMobility();
-        webMaterial = (new Material(MapColor.clothColor)).setNoHarvest().setNoPushMobility();
-        pistonMaterial = (new Material(MapColor.stoneColor)).setImmovableMobility();
+        web = (new Material(MapColor.clothColor)).setNoHarvest().setNoPushMobility();
+        piston = (new Material(MapColor.stoneColor)).setImmovableMobility();
     }
 }

@@ -29,7 +29,7 @@ public class RenderLightningBolt extends Render
         double ad1[] = new double[8];
         double d3 = 0.0D;
         double d4 = 0.0D;
-        Random random = new Random(entitylightningbolt.field_27029_a);
+        Random random = new Random(entitylightningbolt.boltVertex);
         for(int j = 7; j >= 0; j--)
         {
             ad[j] = d3;
@@ -40,7 +40,7 @@ public class RenderLightningBolt extends Render
 
         for(int i = 0; i < 4; i++)
         {
-            Random random1 = new Random(entitylightningbolt.field_27029_a);
+            Random random1 = new Random(entitylightningbolt.boltVertex);
             for(int k = 0; k < 3; k++)
             {
                 int l = 7;

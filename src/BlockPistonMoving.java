@@ -16,7 +16,7 @@ public class BlockPistonMoving extends BlockContainer
 
     public BlockPistonMoving(int i)
     {
-        super(i, Material.pistonMaterial);
+        super(i, Material.piston);
         setHardness(-1F);
     }
 

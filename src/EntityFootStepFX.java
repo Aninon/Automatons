@@ -18,7 +18,7 @@ public class EntityFootStepFX extends EntityFX
         super(world, d, d1, d2, 0.0D, 0.0D, 0.0D);
         field_27018_a = 0;
         field_27020_o = 0;
-        field_27019_p = renderengine;
+        currentFootSteps = renderengine;
         motionX = motionY = motionZ = 0.0D;
         field_27020_o = 200;
     }
@@ -39,7 +39,7 @@ public class EntityFootStepFX extends EntityFX
         float f10 = (float)(posY - interpPosY);
         float f11 = (float)(posZ - interpPosZ);
         float f12 = worldObj.getLightBrightness(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ));
-        field_27019_p.bindTexture(field_27019_p.getTexture("/misc/footprint.png"));
+        currentFootSteps.bindTexture(currentFootSteps.getTexture("/misc/footprint.png"));
         GL11.glEnable(3042 /*GL_BLEND*/);
         GL11.glBlendFunc(770, 771);
         tessellator.startDrawingQuads();
@@ -69,5 +69,5 @@ public class EntityFootStepFX extends EntityFX
 
     private int field_27018_a;
     private int field_27020_o;
-    private RenderEngine field_27019_p;
+    private RenderEngine currentFootSteps;
 }

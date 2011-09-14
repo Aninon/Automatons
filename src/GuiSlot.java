@@ -26,7 +26,7 @@ public abstract class GuiSlot
         height = j;
         top = k;
         bottom = l;
-        posZ = i1;
+        slotHeight = i1;
         right = i;
     }
 
@@ -53,7 +53,7 @@ public abstract class GuiSlot
 
     protected int getContentHeight()
     {
-        return getSize() * posZ + field_27261_r;
+        return getSize() * slotHeight + field_27261_r;
     }
 
     protected abstract void drawBackground();
@@ -77,7 +77,7 @@ public abstract class GuiSlot
         int k = width / 2 - 110;
         int l = width / 2 + 110;
         int i1 = ((j - top - field_27261_r) + (int)amountScrolled) - 4;
-        int j1 = i1 / posZ;
+        int j1 = i1 / slotHeight;
         if(i >= k && i <= l && j1 >= 0 && i1 >= 0 && j1 < getSize())
         {
             return j1;
@@ -118,13 +118,13 @@ public abstract class GuiSlot
         }
         if(guibutton.id == scrollUpButtonID)
         {
-            amountScrolled -= (posZ * 2) / 3;
+            amountScrolled -= (slotHeight * 2) / 3;
             initialClickY = -2F;
             bindAmountScrolled();
         } else
         if(guibutton.id == scrollDownButtonID)
         {
-            amountScrolled += (posZ * 2) / 3;
+            amountScrolled += (slotHeight * 2) / 3;
             initialClickY = -2F;
             bindAmountScrolled();
         }
@@ -146,7 +146,7 @@ public abstract class GuiSlot
                     int j1 = width / 2 - 110;
                     int k1 = width / 2 + 110;
                     int i2 = ((j - top - field_27261_r) + (int)amountScrolled) - 4;
-                    int k2 = i2 / posZ;
+                    int k2 = i2 / slotHeight;
                     if(i >= j1 && i <= k1 && k2 >= 0 && i2 >= 0 && k2 < k)
                     {
                         boolean flag1 = k2 == selectedElement && System.currentTimeMillis() - lastClicked < 250L;
@@ -224,8 +224,8 @@ public abstract class GuiSlot
         }
         for(int l2 = 0; l2 < k; l2++)
         {
-            int j3 = j2 + l2 * posZ + field_27261_r;
-            int i4 = posZ - 4;
+            int j3 = j2 + l2 * slotHeight + field_27261_r;
+            int i4 = slotHeight - 4;
             if(j3 > bottom || j3 + i4 < top)
             {
                 continue;
@@ -347,7 +347,7 @@ public abstract class GuiSlot
     protected final int bottom;
     private final int right;
     private final int left = 0;
-    protected final int posZ;
+    protected final int slotHeight;
     private int scrollUpButtonID;
     private int scrollDownButtonID;
     private float initialClickY;

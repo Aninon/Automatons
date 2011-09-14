@@ -23,7 +23,7 @@ public enum EnumOptions
 /*
     public static EnumOptions[] values()
     {
-        return (EnumOptions[])field_20141_n.clone();
+        return (EnumOptions[])allOptions.clone();
     }
 
     public static EnumOptions valueOf(String s)
@@ -92,7 +92,7 @@ public enum EnumOptions
     private final boolean enumFloat;
     private final boolean enumBoolean;
     private final String enumString;
-    private static final EnumOptions field_20141_n[]; /* synthetic field */
+    private static final EnumOptions allOptions[]; /* synthetic field */
 
     static 
     {
@@ -111,7 +111,7 @@ public enum EnumOptions
         AMBIENT_OCCLUSION = new EnumOptions("AMBIENT_OCCLUSION", 11, "options.ao", false, true);
         GUI_SCALE = new EnumOptions("GUI_SCALE", 12, "options.guiScale", false, false);
 */
-        field_20141_n = (new EnumOptions[] {
+        allOptions = (new EnumOptions[] {
             MUSIC, SOUND, INVERT_MOUSE, SENSITIVITY, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, FRAMERATE_LIMIT, DIFFICULTY, 
             GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE
         });

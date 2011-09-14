@@ -16,7 +16,7 @@ public class RegionFile
 
     public RegionFile(File file)
     {
-        field_22214_h = 0L;
+        lastModified = 0L;
         fileName = file;
         debugln((new StringBuilder()).append("REGION LOAD ").append(fileName).toString());
         sizeDelta = 0;
@@ -24,7 +24,7 @@ public class RegionFile
         {
             if(file.exists())
             {
-                field_22214_h = file.lastModified();
+                lastModified = file.lastModified();
             }
             dataFile = new RandomAccessFile(file, "rw");
             if(dataFile.length() < 4096L)
@@ -77,7 +77,7 @@ public class RegionFile
             for(int k1 = 0; k1 < 1024; k1++)
             {
                 int i2 = dataFile.readInt();
-                field_22217_e[k1] = i2;
+                chunkTimestamps[k1] = i2;
             }
 
         }
@@ -311,7 +311,7 @@ public class RegionFile
     private void func_22208_b(int i, int j, int k)
         throws IOException
     {
-        field_22217_e[i + j * 32] = k;
+        chunkTimestamps[i + j * 32] = k;
         dataFile.seek(4096 + (i + j * 32) * 4);
         dataFile.writeInt(k);
     }
@@ -326,9 +326,9 @@ public class RegionFile
     private final File fileName;
     private RandomAccessFile dataFile;
     private final int offsets[] = new int[1024];
-    private final int field_22217_e[] = new int[1024];
+    private final int chunkTimestamps[] = new int[1024];
     private ArrayList sectorFree;
     private int sizeDelta;
-    private long field_22214_h;
+    private long lastModified;
 
 }

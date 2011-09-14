@@ -20,7 +20,7 @@ public class AM_ItemComplex extends ItemBlock
 
     public int getIconFromDamage(int i)
     {
-        return mod_Automatons.tech.getBlockTextureFromSideAndMetadata(2, i);
+        return AutomatonUniversal.blockTech(i);
     }
 
     public int getPlacedBlockMetadata(int i)

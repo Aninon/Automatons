@@ -1,6 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
 
 package net.minecraft.src;
 
@@ -8,6 +5,13 @@ package net.minecraft.src;
 // Referenced classes of package net.minecraft.src:
 //            EntityLiving, MathHelper, AxisAlignedBB, World, 
 //            Block
+
+
+/*&#$
+field_703_S:field_386_ba
+field_704_R:field_9141_bd
+field_705_Q:field_9142_bc
+&#$*/
 
 public class AM_EntityFlying2 extends EntityCreature
 {

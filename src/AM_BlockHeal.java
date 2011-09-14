@@ -15,7 +15,7 @@ public class AM_BlockHeal extends Block
 
     protected AM_BlockHeal(int i)
     {
-        super(i, Material.grassMaterial);
+        super(i, Material.grass);
         blockIndexInTexture = 130;
         setTickOnLoad(true);
 		//slipperiness = 1.50F;
@@ -24,7 +24,7 @@ public class AM_BlockHeal extends Block
 	static int D;
 	static void loadSprites(){
 	
-		D=ModLoader.addOverride("/terrain.png", "/automatons/thing.png");
+		D=AutomatonUniversal.modOverride("/terrain.png", "/automatons/thing.png");
 		
 		//blockIndexInTexture=D;
 	}
@@ -136,7 +136,7 @@ public class AM_BlockHeal extends Block
 	if(l<14){
 	world.setBlockAndMetadataWithNotify(i,j,k,blockID,l+1);
 	}
-       /* if(world.multiplayerWorld)
+       /* if(AutomatonUniversal.otherWorld(world))
         {
             return;
         }

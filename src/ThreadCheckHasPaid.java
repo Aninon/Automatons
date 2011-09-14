@@ -17,14 +17,14 @@ public class ThreadCheckHasPaid extends Thread
     public ThreadCheckHasPaid(Minecraft minecraft)
     {
 //        super();
-        field_28146_a = minecraft;
+        mc = minecraft;
     }
 
     public void run()
     {
         try
         {
-            HttpURLConnection httpurlconnection = (HttpURLConnection)(new URL((new StringBuilder()).append("https://login.minecraft.net/session?name=").append(field_28146_a.session.username).append("&session=").append(field_28146_a.session.sessionId).toString())).openConnection();
+            HttpURLConnection httpurlconnection = (HttpURLConnection)(new URL((new StringBuilder()).append("https://login.minecraft.net/session?name=").append(mc.session.username).append("&session=").append(mc.session.sessionId).toString())).openConnection();
             httpurlconnection.connect();
             if(httpurlconnection.getResponseCode() == 400)
             {
@@ -38,5 +38,5 @@ public class ThreadCheckHasPaid extends Thread
         }
     }
 
-    final Minecraft field_28146_a; /* synthetic field */
+    final Minecraft mc; /* synthetic field */
 }

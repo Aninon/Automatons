@@ -19,7 +19,7 @@ public class Packet106Transaction extends Packet
     public Packet106Transaction(int i, short word0, boolean flag)
     {
         windowId = i;
-        field_20028_b = word0;
+        shortWindowId = word0;
         field_20030_c = flag;
     }
 
@@ -32,7 +32,7 @@ public class Packet106Transaction extends Packet
         throws IOException
     {
         windowId = datainputstream.readByte();
-        field_20028_b = datainputstream.readShort();
+        shortWindowId = datainputstream.readShort();
         field_20030_c = datainputstream.readByte() != 0;
     }
 
@@ -40,7 +40,7 @@ public class Packet106Transaction extends Packet
         throws IOException
     {
         dataoutputstream.writeByte(windowId);
-        dataoutputstream.writeShort(field_20028_b);
+        dataoutputstream.writeShort(shortWindowId);
         dataoutputstream.writeByte(field_20030_c ? 1 : 0);
     }
 
@@ -50,6 +50,6 @@ public class Packet106Transaction extends Packet
     }
 
     public int windowId;
-    public short field_20028_b;
+    public short shortWindowId;
     public boolean field_20030_c;
 }

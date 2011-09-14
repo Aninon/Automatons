@@ -15,7 +15,7 @@ public enum EnumOS2
 /*
     public static EnumOS2[] values()
     {
-        return (EnumOS2[])field_6511_f.clone();
+        return (EnumOS2[])allOSes.clone();
     }
 
     public static EnumOS2 valueOf(String s)
@@ -34,7 +34,7 @@ public enum EnumOS2
     public static final EnumOS2 macos;
     public static final EnumOS2 unknown;
 */
-    private static final EnumOS2 field_6511_f[]; /* synthetic field */
+    private static final EnumOS2 allOSes[]; /* synthetic field */
 
     static 
     {
@@ -45,7 +45,7 @@ public enum EnumOS2
         macos = new EnumOS2("macos", 3);
         unknown = new EnumOS2("unknown", 4);
 */
-        field_6511_f = (new EnumOS2[] {
+        allOSes = (new EnumOS2[] {
             linux, solaris, windows, macos, unknown
         });
     }

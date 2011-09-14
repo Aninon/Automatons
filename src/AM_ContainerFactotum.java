@@ -59,24 +59,33 @@ public class AM_ContainerFactotum extends Container
         }
 
     }
+	
+	/*
+	public void onCraftGuiOpened(ICrafting icrafting)
+    {
+        super.onCraftGuiOpened(icrafting);
+        icrafting.updateCraftingInventoryInfo(this, 0, furnace.furnaceCookTime);
+        icrafting.updateCraftingInventoryInfo(this, 1, furnace.furnaceBurnTime);
+        icrafting.updateCraftingInventoryInfo(this, 2, furnace.currentItemBurnTime);
+    }*/
 
     public void updateCraftingResults()
     {
         super.updateCraftingResults();
-        for(int i = 0; i < field_20121_g.size(); i++)
+        for(int i = 0; i < crafters.size(); i++)
         {
-            ICrafting icrafting = (ICrafting)field_20121_g.get(i);
+            ICrafting icrafting = (ICrafting)crafters.get(i);
             if(cookTime != furnace.furnaceCookTime)
             {
-                icrafting.func_20158_a(this, 0, furnace.furnaceCookTime);
+                icrafting.updateCraftingInventoryInfo(this, 0, furnace.furnaceCookTime);
             }
             if(burnTime != furnace.furnaceBurnTime)
             {
-                icrafting.func_20158_a(this, 1, furnace.furnaceBurnTime);
+                icrafting.updateCraftingInventoryInfo(this, 1, furnace.furnaceBurnTime);
             }
             if(itemBurnTime != furnace.currentItemBurnTime)
             {
-                icrafting.func_20158_a(this, 2, furnace.currentItemBurnTime);
+                icrafting.updateCraftingInventoryInfo(this, 2, furnace.currentItemBurnTime);
             }
         }
 

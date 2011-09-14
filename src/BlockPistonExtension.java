@@ -16,7 +16,7 @@ public class BlockPistonExtension extends Block
 
     public BlockPistonExtension(int i, int j)
     {
-        super(i, j, Material.pistonMaterial);
+        super(i, j, Material.piston);
         field_31053_a = -1;
         setStepSound(soundStoneFootstep);
         setHardness(0.5F);

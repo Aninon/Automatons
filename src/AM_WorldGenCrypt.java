@@ -118,7 +118,7 @@ public class AM_WorldGenCrypt extends WorldGenerator
 		}
 	}
 	private void struct(World world,int O, int height,int width,int length, int i, int j, int k){
-		int b=mod_Automatons.tech.blockID;
+		int b=AutomatonLogger.tech;
 	
 		int w2=width/2;
 		int l2=length/2;

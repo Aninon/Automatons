@@ -15,7 +15,7 @@ class ThreadStatSyncherSend extends Thread
     ThreadStatSyncherSend(StatsSyncher statssyncher, Map map)
     {
 //        super();
-        field_27232_b = statssyncher;
+        syncher = statssyncher;
         field_27233_a = map;
     }
 
@@ -23,7 +23,7 @@ class ThreadStatSyncherSend extends Thread
     {
         try
         {
-            StatsSyncher.func_27412_a(field_27232_b, field_27233_a, StatsSyncher.func_27414_e(field_27232_b), StatsSyncher.func_27417_f(field_27232_b), StatsSyncher.func_27419_g(field_27232_b));
+            StatsSyncher.func_27412_a(syncher, field_27233_a, StatsSyncher.func_27414_e(syncher), StatsSyncher.func_27417_f(syncher), StatsSyncher.func_27419_g(syncher));
         }
         catch(Exception exception)
         {
@@ -31,10 +31,10 @@ class ThreadStatSyncherSend extends Thread
         }
         finally
         {
-            StatsSyncher.func_27416_a(field_27232_b, false);
+            StatsSyncher.func_27416_a(syncher, false);
         }
     }
 
     final Map field_27233_a; /* synthetic field */
-    final StatsSyncher field_27232_b; /* synthetic field */
+    final StatsSyncher syncher; /* synthetic field */
 }

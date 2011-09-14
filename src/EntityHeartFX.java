@@ -27,7 +27,7 @@ public class EntityHeartFX extends EntityFX
         motionY += 0.10000000000000001D;
         particleScale *= 0.75F;
         particleScale *= f;
-        field_25022_a = particleScale;
+        particleScaleOverTime = particleScale;
         particleMaxAge = 16;
         noClip = false;
         particleTextureIndex = 80;
@@ -44,7 +44,7 @@ public class EntityHeartFX extends EntityFX
         {
             f6 = 1.0F;
         }
-        particleScale = field_25022_a * f6;
+        particleScale = particleScaleOverTime * f6;
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
@@ -73,5 +73,5 @@ public class EntityHeartFX extends EntityFX
         }
     }
 
-    float field_25022_a;
+    float particleScaleOverTime;
 }

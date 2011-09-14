@@ -98,9 +98,9 @@ public class AM_BlockCrink extends Block
 	static int D[];
 	static void loadSprites(){
 		D=new int[3];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/crink.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/crink2.png");
-		D[2]=ModLoader.addOverride("/terrain.png", "/automatons/crink3.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/crink.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/crink2.png");
+		D[2]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/crink3.png");
 		
 	}
 	

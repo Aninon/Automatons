@@ -51,7 +51,7 @@ public class AM_ItemBeacon extends Item
             }
         }
 		
-        if(!world.multiplayerWorld)
+        if(!AutomatonUniversal.otherWorld(world))
         {
             world.entityJoinedWorld(new AM_EntityBeacon(world, (float)i + 0.5F, (float)j, (float)k + 0.5F,entityplayer.username));
         }

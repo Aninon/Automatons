@@ -33,7 +33,7 @@ public class AM_EntityLaser extends Entity
 
     public boolean isInRangeToRenderDist(double d)
     {
-        double d1 = boundingBox.getAverageEdgeLength() * 4D;
+        double d1 = AutomatonUniversal.anotherAxisFunc(boundingBox);
         d1 *= 64D;
         return d < d1 * d1;
     }
@@ -137,7 +137,7 @@ public class AM_EntityLaser extends Entity
             }
             float f2 = 0.3F;
             AxisAlignedBB axisalignedbb = entity1.boundingBox.expand(f2, f2, f2);
-            MovingObjectPosition movingobjectposition1 = axisalignedbb.func_1169_a(vec3d, vec3d1);
+            MovingObjectPosition movingobjectposition1 = AutomatonUniversal.axisFunc(axisalignedbb,vec3d,vec3d1);
             if(movingobjectposition1 == null)
             {
                 continue;
@@ -156,7 +156,7 @@ public class AM_EntityLaser extends Entity
         }
         if(movingobjectposition != null)
         {
-            if(!worldObj.multiplayerWorld)
+            if(!AutomatonUniversal.otherWorld(worldObj))
             {
                 if(movingobjectposition.entityHit != null)
                 {

@@ -62,7 +62,7 @@ public class EntityMob extends EntityCreature
             }
             if(entity != this)
             {
-                playerToAttack = entity;
+                entityToAttack = entity;
             }
             return true;
         } else

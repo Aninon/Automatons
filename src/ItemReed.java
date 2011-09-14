@@ -15,7 +15,7 @@ public class ItemReed extends Item
     public ItemReed(int i, Block block)
     {
         super(i);
-        field_320_a = block.blockID;
+        spawnID = block.blockID;
     }
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
@@ -54,13 +54,13 @@ public class ItemReed extends Item
         {
             return false;
         }
-        if(world.canBlockBePlacedAt(field_320_a, i, j, k, false, l))
+        if(world.canBlockBePlacedAt(spawnID, i, j, k, false, l))
         {
-            Block block = Block.blocksList[field_320_a];
-            if(world.setBlockWithNotify(i, j, k, field_320_a))
+            Block block = Block.blocksList[spawnID];
+            if(world.setBlockWithNotify(i, j, k, spawnID))
             {
-                Block.blocksList[field_320_a].onBlockPlaced(world, i, j, k, l);
-                Block.blocksList[field_320_a].onBlockPlacedBy(world, i, j, k, entityplayer);
+                Block.blocksList[spawnID].onBlockPlaced(world, i, j, k, l);
+                Block.blocksList[spawnID].onBlockPlacedBy(world, i, j, k, entityplayer);
                 world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.func_1145_d(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
                 itemstack.stackSize--;
             }
@@ -68,5 +68,5 @@ public class ItemReed extends Item
         return true;
     }
 
-    private int field_320_a;
+    private int spawnID;
 }

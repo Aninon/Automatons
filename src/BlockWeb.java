@@ -15,7 +15,7 @@ public class BlockWeb extends Block
 
     public BlockWeb(int i, int j)
     {
-        super(i, j, Material.webMaterial);
+        super(i, j, Material.web);
     }
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)

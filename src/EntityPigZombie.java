@@ -27,7 +27,7 @@ public class EntityPigZombie extends EntityZombie
 
     public void onUpdate()
     {
-        moveSpeed = playerToAttack == null ? 0.5F : 0.95F;
+        moveSpeed = entityToAttack == null ? 0.5F : 0.95F;
         if(randomSoundDelay > 0 && --randomSoundDelay == 0)
         {
             worldObj.playSoundAtEntity(this, "mob.zombiepig.zpigangry", getSoundVolume() * 2.0F, ((rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F) * 1.8F);
@@ -90,7 +90,7 @@ public class EntityPigZombie extends EntityZombie
 
     private void becomeAngryAt(Entity entity)
     {
-        playerToAttack = entity;
+        entityToAttack = entity;
         angerLevel = 400 + rand.nextInt(400);
         randomSoundDelay = rand.nextInt(40);
     }

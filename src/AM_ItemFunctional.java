@@ -74,7 +74,7 @@ public class AM_ItemFunctional extends Item
 	 public boolean onBlockDestroyed(ItemStack itemstack, int i, int j, int k, int l, EntityLiving entityliving)
     {
 	World world = entityliving.worldObj;
-	if(!world.multiplayerWorld){
+	if(!AutomatonUniversal.otherWorld(world)){
 			if(world.getWorldTime()>13500){
 				world.setWorldTime(0);
 			}else{

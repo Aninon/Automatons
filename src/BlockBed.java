@@ -71,7 +71,7 @@ public class BlockBed extends Block
                 if(entityplayer2.isPlayerSleeping())
                 {
                     ChunkCoordinates chunkcoordinates = entityplayer2.bedChunkCoordinates;
-                    if(chunkcoordinates.x == i && chunkcoordinates.y == j && chunkcoordinates.z == k)
+                    if(chunkcoordinates.posX == i && chunkcoordinates.posY == j && chunkcoordinates.posZ == k)
                     {
                         entityplayer1 = entityplayer2;
                     }

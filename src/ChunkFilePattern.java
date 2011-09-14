@@ -22,7 +22,7 @@ class ChunkFilePattern
 
     public boolean accept(File file, String s)
     {
-        Matcher matcher = field_22189_a.matcher(s);
+        Matcher matcher = dataFilenamePattern.matcher(s);
         return matcher.matches();
     }
 
@@ -31,6 +31,6 @@ class ChunkFilePattern
         this();
     }
 
-    public static final Pattern field_22189_a = Pattern.compile("c\\.(-?[0-9a-z]+)\\.(-?[0-9a-z]+)\\.dat");
+    public static final Pattern dataFilenamePattern = Pattern.compile("c\\.(-?[0-9a-z]+)\\.(-?[0-9a-z]+)\\.dat");
 
 }

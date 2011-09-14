@@ -13,7 +13,7 @@ public enum EnumMobType
 /*
     public static EnumMobType[] values()
     {
-        return (EnumMobType[])field_1340_d.clone();
+        return (EnumMobType[])allMobTypes.clone();
     }
 
     public static EnumMobType valueOf(String s)
@@ -30,7 +30,7 @@ public enum EnumMobType
     public static final EnumMobType mobs;
     public static final EnumMobType players;
 */
-    private static final EnumMobType field_1340_d[]; /* synthetic field */
+    private static final EnumMobType allMobTypes[]; /* synthetic field */
 
     static 
     {
@@ -39,7 +39,7 @@ public enum EnumMobType
         mobs = new EnumMobType("mobs", 1);
         players = new EnumMobType("players", 2);
 */
-        field_1340_d = (new EnumMobType[] {
+        allMobTypes = (new EnumMobType[] {
             everything, mobs, players
         });
     }

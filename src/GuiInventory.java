@@ -18,8 +18,8 @@ public class GuiInventory extends GuiContainer
 
     public GuiInventory(EntityPlayer entityplayer)
     {
-        super(entityplayer.inventorySlots);
-        field_948_f = true;
+        super(entityplayer.slots);
+        allowUserInput = true;
         entityplayer.addStat(AchievementList.openInventory, 1);
     }
 

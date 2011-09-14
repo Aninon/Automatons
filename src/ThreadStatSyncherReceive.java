@@ -15,20 +15,20 @@ class ThreadStatSyncherReceive extends Thread
     ThreadStatSyncherReceive(StatsSyncher statssyncher)
     {
 //        super();
-        field_27231_a = statssyncher;
+        syncher = statssyncher;
     }
 
     public void run()
     {
         try
         {
-            if(StatsSyncher.func_27422_a(field_27231_a) != null)
+            if(StatsSyncher.func_27422_a(syncher) != null)
             {
-                StatsSyncher.func_27412_a(field_27231_a, StatsSyncher.func_27422_a(field_27231_a), StatsSyncher.func_27423_b(field_27231_a), StatsSyncher.func_27411_c(field_27231_a), StatsSyncher.func_27413_d(field_27231_a));
+                StatsSyncher.func_27412_a(syncher, StatsSyncher.func_27422_a(syncher), StatsSyncher.func_27423_b(syncher), StatsSyncher.func_27411_c(syncher), StatsSyncher.func_27413_d(syncher));
             } else
-            if(StatsSyncher.func_27423_b(field_27231_a).exists())
+            if(StatsSyncher.func_27423_b(syncher).exists())
             {
-                StatsSyncher.func_27421_a(field_27231_a, StatsSyncher.func_27409_a(field_27231_a, StatsSyncher.func_27423_b(field_27231_a), StatsSyncher.func_27411_c(field_27231_a), StatsSyncher.func_27413_d(field_27231_a)));
+                StatsSyncher.func_27421_a(syncher, StatsSyncher.func_27409_a(syncher, StatsSyncher.func_27423_b(syncher), StatsSyncher.func_27411_c(syncher), StatsSyncher.func_27413_d(syncher)));
             }
         }
         catch(Exception exception)
@@ -37,9 +37,9 @@ class ThreadStatSyncherReceive extends Thread
         }
         finally
         {
-            StatsSyncher.func_27416_a(field_27231_a, false);
+            StatsSyncher.func_27416_a(syncher, false);
         }
     }
 
-    final StatsSyncher field_27231_a; /* synthetic field */
+    final StatsSyncher syncher; /* synthetic field */
 }

@@ -16,17 +16,17 @@ public class EntityPickupFX extends EntityFX
     public EntityPickupFX(World world, Entity entity, Entity entity1, float f)
     {
         super(world, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ);
-        field_678_p = 0;
-        field_677_q = 0;
+        age = 0;
+        maxAge = 0;
         field_675_a = entity;
         field_679_o = entity1;
-        field_677_q = 3;
+        maxAge = 3;
         field_676_r = f;
     }
 
     public void renderParticle(Tessellator tessellator, float f, float f1, float f2, float f3, float f4, float f5)
     {
-        float f6 = ((float)field_678_p + f) / (float)field_677_q;
+        float f6 = ((float)age + f) / (float)maxAge;
         f6 *= f6;
         double d = field_675_a.posX;
         double d1 = field_675_a.posY;
@@ -50,8 +50,8 @@ public class EntityPickupFX extends EntityFX
 
     public void onUpdate()
     {
-        field_678_p++;
-        if(field_678_p == field_677_q)
+        age++;
+        if(age == maxAge)
         {
             setEntityDead();
         }
@@ -64,7 +64,7 @@ public class EntityPickupFX extends EntityFX
 
     private Entity field_675_a;
     private Entity field_679_o;
-    private int field_678_p;
-    private int field_677_q;
+    private int age;
+    private int maxAge;
     private float field_676_r;
 }

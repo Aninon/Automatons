@@ -145,7 +145,7 @@ public class EntityWolf extends EntityAnimal
                 setWolfSitting(true);
             }
         } else
-        if(playerToAttack == null && !hasPath() && !isWolfTamed() && worldObj.rand.nextInt(100) == 0)
+        if(entityToAttack == null && !hasPath() && !isWolfTamed() && worldObj.rand.nextInt(100) == 0)
         {
             List list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntitySheep.class, AxisAlignedBB.getBoundingBoxFromPool(posX, posY, posZ, posX + 1.0D, posY + 1.0D, posZ + 1.0D).expand(16D, 4D, 16D));
             if(!list.isEmpty())
@@ -339,7 +339,7 @@ public class EntityWolf extends EntityAnimal
                 if(entity instanceof EntityPlayer)
                 {
                     setWolfAngry(true);
-                    playerToAttack = entity;
+                    entityToAttack = entity;
                 }
                 if((entity instanceof EntityArrow) && ((EntityArrow)entity).owner != null)
                 {
@@ -357,9 +357,9 @@ public class EntityWolf extends EntityAnimal
                         }
                         Entity entity1 = (Entity)iterator.next();
                         EntityWolf entitywolf = (EntityWolf)entity1;
-                        if(!entitywolf.isWolfTamed() && entitywolf.playerToAttack == null)
+                        if(!entitywolf.isWolfTamed() && entitywolf.entityToAttack == null)
                         {
-                            entitywolf.playerToAttack = entity;
+                            entitywolf.entityToAttack = entity;
                             if(entity instanceof EntityPlayer)
                             {
                                 entitywolf.setWolfAngry(true);
@@ -374,7 +374,7 @@ public class EntityWolf extends EntityAnimal
                 {
                     return true;
                 }
-                playerToAttack = entity;
+                entityToAttack = entity;
             }
             return true;
         } else

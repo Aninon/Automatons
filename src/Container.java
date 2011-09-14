@@ -15,11 +15,11 @@ public abstract class Container
 
     public Container()
     {
-        field_20123_d = new ArrayList();
+        inventoryItemStacks = new ArrayList();
         slots = new ArrayList();
         windowId = 0;
         field_20917_a = 0;
-        field_20121_g = new ArrayList();
+        crafters = new ArrayList();
         field_20918_b = new HashSet();
     }
 
@@ -27,7 +27,7 @@ public abstract class Container
     {
         slot.slotNumber = slots.size();
         slots.add(slot);
-        field_20123_d.add(null);
+        inventoryItemStacks.add(null);
     }
 
     public void updateCraftingResults()
@@ -35,16 +35,16 @@ public abstract class Container
         for(int i = 0; i < slots.size(); i++)
         {
             ItemStack itemstack = ((Slot)slots.get(i)).getStack();
-            ItemStack itemstack1 = (ItemStack)field_20123_d.get(i);
+            ItemStack itemstack1 = (ItemStack)inventoryItemStacks.get(i);
             if(ItemStack.areItemStacksEqual(itemstack1, itemstack))
             {
                 continue;
             }
             itemstack1 = itemstack != null ? itemstack.copy() : null;
-            field_20123_d.set(i, itemstack1);
-            for(int j = 0; j < field_20121_g.size(); j++)
+            inventoryItemStacks.set(i, itemstack1);
+            for(int j = 0; j < crafters.size(); j++)
             {
-                ((ICrafting)field_20121_g.get(j)).func_20159_a(this, i, itemstack1);
+                ((ICrafting)crafters.get(j)).func_20159_a(this, i, itemstack1);
             }
 
         }
@@ -321,10 +321,10 @@ public abstract class Container
         }
     }
 
-    public List field_20123_d;
+    public List inventoryItemStacks;
     public List slots;
     public int windowId;
     private short field_20917_a;
-    protected List field_20121_g;
+    protected List crafters;
     private Set field_20918_b;
 }

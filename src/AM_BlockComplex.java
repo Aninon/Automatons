@@ -23,11 +23,11 @@ public class AM_BlockComplex extends Block
 	static int D[];
 	static void loadSprites(){
 		D=new int[5];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/tech.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/tree.png");
-		D[2]=ModLoader.addOverride("/terrain.png", "/automatons/wallo.png");
-		D[3]=ModLoader.addOverride("/terrain.png", "/automatons/bwop.png");
-		D[4]=ModLoader.addOverride("/terrain.png", "/automatons/tech2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/tech.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/tree.png");
+		D[2]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/wallo.png");
+		D[3]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/bwop.png");
+		D[4]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/tech2.png");
 		
 	}
 

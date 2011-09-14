@@ -17,13 +17,13 @@ public class GuiRenameWorld extends GuiScreen
 
     public GuiRenameWorld(GuiScreen guiscreen, String s)
     {
-        field_22112_a = guiscreen;
-        field_22113_i = s;
+        parentGuiScreen = guiscreen;
+        worldName = s;
     }
 
     public void updateScreen()
     {
-        field_22114_h.updateCursorCounter();
+        theGuiTextField.updateCursorCounter();
     }
 
     public void initGui()
@@ -34,11 +34,11 @@ public class GuiRenameWorld extends GuiScreen
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, stringtranslate.translateKey("selectWorld.renameButton")));
         controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
         ISaveFormat isaveformat = mc.getSaveLoader();
-        WorldInfo worldinfo = isaveformat.func_22173_b(field_22113_i);
+        WorldInfo worldinfo = isaveformat.func_22173_b(worldName);
         String s = worldinfo.getWorldName();
-        field_22114_h = new GuiTextField(this, fontRenderer, width / 2 - 100, 60, 200, 20, s);
-        field_22114_h.isFocused = true;
-        field_22114_h.setMaxStringLength(32);
+        theGuiTextField = new GuiTextField(this, fontRenderer, width / 2 - 100, 60, 200, 20, s);
+        theGuiTextField.isFocused = true;
+        theGuiTextField.setMaxStringLength(32);
     }
 
     public void onGuiClosed()
@@ -54,20 +54,20 @@ public class GuiRenameWorld extends GuiScreen
         }
         if(guibutton.id == 1)
         {
-            mc.displayGuiScreen(field_22112_a);
+            mc.displayGuiScreen(parentGuiScreen);
         } else
         if(guibutton.id == 0)
         {
             ISaveFormat isaveformat = mc.getSaveLoader();
-            isaveformat.func_22170_a(field_22113_i, field_22114_h.getText().trim());
-            mc.displayGuiScreen(field_22112_a);
+            isaveformat.func_22170_a(worldName, theGuiTextField.getText().trim());
+            mc.displayGuiScreen(parentGuiScreen);
         }
     }
 
     protected void keyTyped(char c, int i)
     {
-        field_22114_h.textboxKeyTyped(c, i);
-        ((GuiButton)controlList.get(0)).enabled = field_22114_h.getText().trim().length() > 0;
+        theGuiTextField.textboxKeyTyped(c, i);
+        ((GuiButton)controlList.get(0)).enabled = theGuiTextField.getText().trim().length() > 0;
         if(c == '\r')
         {
             actionPerformed((GuiButton)controlList.get(0));
@@ -77,7 +77,7 @@ public class GuiRenameWorld extends GuiScreen
     protected void mouseClicked(int i, int j, int k)
     {
         super.mouseClicked(i, j, k);
-        field_22114_h.mouseClicked(i, j, k);
+        theGuiTextField.mouseClicked(i, j, k);
     }
 
     public void drawScreen(int i, int j, float f)
@@ -86,11 +86,11 @@ public class GuiRenameWorld extends GuiScreen
         drawDefaultBackground();
         drawCenteredString(fontRenderer, stringtranslate.translateKey("selectWorld.renameTitle"), width / 2, (height / 4 - 60) + 20, 0xffffff);
         drawString(fontRenderer, stringtranslate.translateKey("selectWorld.enterName"), width / 2 - 100, 47, 0xa0a0a0);
-        field_22114_h.drawTextBox();
+        theGuiTextField.drawTextBox();
         super.drawScreen(i, j, f);
     }
 
-    private GuiScreen field_22112_a;
-    private GuiTextField field_22114_h;
-    private final String field_22113_i;
+    private GuiScreen parentGuiScreen;
+    private GuiTextField theGuiTextField;
+    private final String worldName;
 }

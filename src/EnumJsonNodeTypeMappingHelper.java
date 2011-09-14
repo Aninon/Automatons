@@ -11,44 +11,44 @@ package net.minecraft.src;
 class EnumJsonNodeTypeMappingHelper
 {
 
-    static final int field_27341_a[]; /* synthetic field */
+    static final int enumJsonNodeTypeMappingArray[]; /* synthetic field */
 
     static 
     {
-        field_27341_a = new int[EnumJsonNodeType.values().length];
+        enumJsonNodeTypeMappingArray = new int[EnumJsonNodeType.values().length];
         try
         {
-            field_27341_a[EnumJsonNodeType.ARRAY.ordinal()] = 1;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.ARRAY.ordinal()] = 1;
         }
         catch(NoSuchFieldError nosuchfielderror) { }
         try
         {
-            field_27341_a[EnumJsonNodeType.OBJECT.ordinal()] = 2;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.OBJECT.ordinal()] = 2;
         }
         catch(NoSuchFieldError nosuchfielderror1) { }
         try
         {
-            field_27341_a[EnumJsonNodeType.STRING.ordinal()] = 3;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.STRING.ordinal()] = 3;
         }
         catch(NoSuchFieldError nosuchfielderror2) { }
         try
         {
-            field_27341_a[EnumJsonNodeType.NUMBER.ordinal()] = 4;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.NUMBER.ordinal()] = 4;
         }
         catch(NoSuchFieldError nosuchfielderror3) { }
         try
         {
-            field_27341_a[EnumJsonNodeType.FALSE.ordinal()] = 5;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.FALSE.ordinal()] = 5;
         }
         catch(NoSuchFieldError nosuchfielderror4) { }
         try
         {
-            field_27341_a[EnumJsonNodeType.TRUE.ordinal()] = 6;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.TRUE.ordinal()] = 6;
         }
         catch(NoSuchFieldError nosuchfielderror5) { }
         try
         {
-            field_27341_a[EnumJsonNodeType.NULL.ordinal()] = 7;
+            enumJsonNodeTypeMappingArray[EnumJsonNodeType.NULL.ordinal()] = 7;
         }
         catch(NoSuchFieldError nosuchfielderror6) { }
     }

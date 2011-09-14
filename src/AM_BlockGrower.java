@@ -32,8 +32,8 @@ public class AM_BlockGrower extends Block
 		
 		
 		D=new int[2];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/grower1.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/grower2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/grower1.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/grower2.png");
 		//blockIndexInTexture=D[0];
 		
 	}

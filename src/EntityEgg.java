@@ -19,12 +19,12 @@ public class EntityEgg extends Entity
     public EntityEgg(World world)
     {
         super(world);
-        field_20056_b = -1;
-        field_20055_c = -1;
-        field_20054_d = -1;
-        field_20053_e = 0;
-        field_20052_f = false;
-        field_20057_a = 0;
+        xTile = -1;
+        yTile = -1;
+        zTile = -1;
+        inTile = 0;
+        inGround = false;
+        shake = 0;
         field_20049_i = 0;
         setSize(0.25F, 0.25F);
     }
@@ -43,12 +43,12 @@ public class EntityEgg extends Entity
     public EntityEgg(World world, EntityLiving entityliving)
     {
         super(world);
-        field_20056_b = -1;
-        field_20055_c = -1;
-        field_20054_d = -1;
-        field_20053_e = 0;
-        field_20052_f = false;
-        field_20057_a = 0;
+        xTile = -1;
+        yTile = -1;
+        zTile = -1;
+        inTile = 0;
+        inGround = false;
+        shake = 0;
         field_20049_i = 0;
         field_20051_g = entityliving;
         setSize(0.25F, 0.25F);
@@ -68,12 +68,12 @@ public class EntityEgg extends Entity
     public EntityEgg(World world, double d, double d1, double d2)
     {
         super(world);
-        field_20056_b = -1;
-        field_20055_c = -1;
-        field_20054_d = -1;
-        field_20053_e = 0;
-        field_20052_f = false;
-        field_20057_a = 0;
+        xTile = -1;
+        yTile = -1;
+        zTile = -1;
+        inTile = 0;
+        inGround = false;
+        shake = 0;
         field_20049_i = 0;
         field_20050_h = 0;
         setSize(0.25F, 0.25F);
@@ -122,16 +122,16 @@ public class EntityEgg extends Entity
         lastTickPosY = posY;
         lastTickPosZ = posZ;
         super.onUpdate();
-        if(field_20057_a > 0)
+        if(shake > 0)
         {
-            field_20057_a--;
+            shake--;
         }
-        if(field_20052_f)
+        if(inGround)
         {
-            int i = worldObj.getBlockId(field_20056_b, field_20055_c, field_20054_d);
-            if(i != field_20053_e)
+            int i = worldObj.getBlockId(xTile, yTile, zTile);
+            if(i != inTile)
             {
-                field_20052_f = false;
+                inGround = false;
                 motionX *= rand.nextFloat() * 0.2F;
                 motionY *= rand.nextFloat() * 0.2F;
                 motionZ *= rand.nextFloat() * 0.2F;
@@ -251,27 +251,27 @@ public class EntityEgg extends Entity
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
-        nbttagcompound.setShort("xTile", (short)field_20056_b);
-        nbttagcompound.setShort("yTile", (short)field_20055_c);
-        nbttagcompound.setShort("zTile", (short)field_20054_d);
-        nbttagcompound.setByte("inTile", (byte)field_20053_e);
-        nbttagcompound.setByte("shake", (byte)field_20057_a);
-        nbttagcompound.setByte("inGround", (byte)(field_20052_f ? 1 : 0));
+        nbttagcompound.setShort("xTile", (short)xTile);
+        nbttagcompound.setShort("yTile", (short)yTile);
+        nbttagcompound.setShort("zTile", (short)zTile);
+        nbttagcompound.setByte("inTile", (byte)inTile);
+        nbttagcompound.setByte("shake", (byte)shake);
+        nbttagcompound.setByte("inGround", (byte)(inGround ? 1 : 0));
     }
 
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
-        field_20056_b = nbttagcompound.getShort("xTile");
-        field_20055_c = nbttagcompound.getShort("yTile");
-        field_20054_d = nbttagcompound.getShort("zTile");
-        field_20053_e = nbttagcompound.getByte("inTile") & 0xff;
-        field_20057_a = nbttagcompound.getByte("shake") & 0xff;
-        field_20052_f = nbttagcompound.getByte("inGround") == 1;
+        xTile = nbttagcompound.getShort("xTile");
+        yTile = nbttagcompound.getShort("yTile");
+        zTile = nbttagcompound.getShort("zTile");
+        inTile = nbttagcompound.getByte("inTile") & 0xff;
+        shake = nbttagcompound.getByte("shake") & 0xff;
+        inGround = nbttagcompound.getByte("inGround") == 1;
     }
 
     public void onCollideWithPlayer(EntityPlayer entityplayer)
     {
-        if(field_20052_f && field_20051_g == entityplayer && field_20057_a <= 0 && entityplayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow, 1)))
+        if(inGround && field_20051_g == entityplayer && shake <= 0 && entityplayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow, 1)))
         {
             worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityplayer.onItemPickup(this, 1);
@@ -284,12 +284,12 @@ public class EntityEgg extends Entity
         return 0.0F;
     }
 
-    private int field_20056_b;
-    private int field_20055_c;
-    private int field_20054_d;
-    private int field_20053_e;
-    private boolean field_20052_f;
-    public int field_20057_a;
+    private int xTile;
+    private int yTile;
+    private int zTile;
+    private int inTile;
+    private boolean inGround;
+    public int shake;
     private EntityLiving field_20051_g;
     private int field_20050_h;
     private int field_20049_i;

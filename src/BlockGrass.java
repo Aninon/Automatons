@@ -15,7 +15,7 @@ public class BlockGrass extends Block
 
     protected BlockGrass(int i)
     {
-        super(i, Material.grassMaterial);
+        super(i, Material.grass);
         blockIndexInTexture = 3;
         setTickOnLoad(true);
     }
@@ -31,7 +31,7 @@ public class BlockGrass extends Block
             return 2;
         }
         Material material = iblockaccess.getBlockMaterial(i, j + 1, k);
-        return material != Material.snow && material != Material.builtSnow ? 3 : 68;
+        return material != Material.snow && material != Material.craftedSnow ? 3 : 68;
     }
 
     public int colorMultiplier(IBlockAccess iblockaccess, int i, int j, int k)

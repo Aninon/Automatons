@@ -26,7 +26,7 @@ public class AM_WorldGenTower extends WorldGenerator
 		for(int n=0;n<h;n++){
 			world.setBlockWithNotify(i, j+n, k, 1);
 		}
-		world.setBlockWithNotify(i,j+h,k,mod_Automatons.glowy.blockID);
+		world.setBlockWithNotify(i,j+h,k,AutomatonLogger.glowy);
 	}
 
         return true;

@@ -145,7 +145,7 @@ public static void Frassify(World world,EntityPlayer entity){
 	
 	
 	//entity.rayTrace(10d,1f);
-	Vec3D vs = entity.getPosition(1f);
+	Vec3D vs = Vec3D.createVector(entity.posX, entity.posY, entity.posZ);//Vec3D vs = entity.getPosition(1f);
     Vec3D vp = entity.getLook(1f);
 	
 	int D=3;

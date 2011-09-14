@@ -15,16 +15,16 @@ public class ChunkCoordinates
 
     public ChunkCoordinates(int i, int j, int k)
     {
-        x = i;
-        y = j;
-        z = k;
+        posX = i;
+        posY = j;
+        posZ = k;
     }
 
     public ChunkCoordinates(ChunkCoordinates chunkcoordinates)
     {
-        x = chunkcoordinates.x;
-        y = chunkcoordinates.y;
-        z = chunkcoordinates.z;
+        posX = chunkcoordinates.posX;
+        posY = chunkcoordinates.posY;
+        posZ = chunkcoordinates.posZ;
     }
 
     public boolean equals(Object obj)
@@ -35,37 +35,37 @@ public class ChunkCoordinates
         } else
         {
             ChunkCoordinates chunkcoordinates = (ChunkCoordinates)obj;
-            return x == chunkcoordinates.x && y == chunkcoordinates.y && z == chunkcoordinates.z;
+            return posX == chunkcoordinates.posX && posY == chunkcoordinates.posY && posZ == chunkcoordinates.posZ;
         }
     }
 
     public int hashCode()
     {
-        return x + z << 8 + y << 16;
+        return posX + posZ << 8 + posY << 16;
     }
 
     public int compareChunkCoordinate(ChunkCoordinates chunkcoordinates)
     {
-        if(y == chunkcoordinates.y)
+        if(posY == chunkcoordinates.posY)
         {
-            if(z == chunkcoordinates.z)
+            if(posZ == chunkcoordinates.posZ)
             {
-                return x - chunkcoordinates.x;
+                return posX - chunkcoordinates.posX;
             } else
             {
-                return z - chunkcoordinates.z;
+                return posZ - chunkcoordinates.posZ;
             }
         } else
         {
-            return y - chunkcoordinates.y;
+            return posY - chunkcoordinates.posY;
         }
     }
 
     public double getSqDistanceTo(int i, int j, int k)
     {
-        int l = x - i;
-        int i1 = y - j;
-        int j1 = z - k;
+        int l = posX - i;
+        int i1 = posY - j;
+        int j1 = posZ - k;
         return Math.sqrt(l * l + i1 * i1 + j1 * j1);
     }
 
@@ -74,7 +74,7 @@ public class ChunkCoordinates
         return compareChunkCoordinate((ChunkCoordinates)obj);
     }
 
-    public int x;
-    public int y;
-    public int z;
+    public int posX;
+    public int posY;
+    public int posZ;
 }

@@ -15,8 +15,8 @@ public class AM_BlockDeployer extends Block
 	
 	static void loadSprites(){
 		D=new int[2];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/deployer.png"); 
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/deployer2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/deployer.png"); 
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/deployer2.png");
 		
 	}
 	

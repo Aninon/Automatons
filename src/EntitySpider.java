@@ -64,7 +64,7 @@ public class EntitySpider extends EntityMob
         float f1 = getEntityBrightness(1.0F);
         if(f1 > 0.5F && rand.nextInt(100) == 0)
         {
-            playerToAttack = null;
+            entityToAttack = null;
             return;
         }
         if(f > 2.0F && f < 6F && rand.nextInt(10) == 0)

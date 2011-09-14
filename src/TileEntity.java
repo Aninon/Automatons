@@ -113,17 +113,17 @@ public class TileEntity
 
     public boolean func_31006_g()
     {
-        return field_31007_h;
+        return tileEntityInvalid;
     }
 
     public void func_31005_i()
     {
-        field_31007_h = true;
+        tileEntityInvalid = true;
     }
 
     public void func_31004_j()
     {
-        field_31007_h = false;
+        tileEntityInvalid = false;
     }
 
     static Class _mthclass$(String s)
@@ -144,7 +144,7 @@ public class TileEntity
     public int xCoord;
     public int yCoord;
     public int zCoord;
-    protected boolean field_31007_h;
+    protected boolean tileEntityInvalid;
 
     static 
     {

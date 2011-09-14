@@ -42,38 +42,38 @@ public class AM_EntitySlider extends EntityAnimal
 	
 	public int getMaxSpawnedInChunk()
     {
-        return 1;
+        return 5;
     }
 	
 	   protected void updatePlayerActionState()
     {
         hasAttacked = isMovementCeased();
         float f = 16F;
-        if(playerToAttack == null)
+        if(entityToAttack == null)
         {
-            playerToAttack = findPlayerToAttack();
-            if(playerToAttack != null)
+            entityToAttack = findPlayerToAttack();
+            if(entityToAttack != null)
             {
-                pathToEntity = worldObj.getPathToEntity(this, playerToAttack, f);
+                pathToEntity = worldObj.getPathToEntity(this, entityToAttack, f);
             }
         } else
-        if(!playerToAttack.isEntityAlive())
+        if(!entityToAttack.isEntityAlive())
         {
-            playerToAttack = null;
+            entityToAttack = null;
         } else
         {
-            float f1 = playerToAttack.getDistanceToEntity(this);
-            if(canEntityBeSeen(playerToAttack))
+            float f1 = entityToAttack.getDistanceToEntity(this);
+            if(canEntityBeSeen(entityToAttack))
             {
-                attackEntity(playerToAttack, f1);
+                attackEntity(entityToAttack, f1);
             } else
             {
-                attackBlockedEntity(playerToAttack, f1);
+                attackBlockedEntity(entityToAttack, f1);
             }
         }
-        if(!hasAttacked && playerToAttack != null && (pathToEntity == null || rand.nextInt(20) == 0))
+        if(!hasAttacked && entityToAttack != null && (pathToEntity == null || rand.nextInt(20) == 0))
         {
-            pathToEntity = worldObj.getPathToEntity(this, playerToAttack, f);
+            pathToEntity = worldObj.getPathToEntity(this, entityToAttack, f);
         } else
         if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || rand.nextInt(80) == 0))
         {
@@ -123,10 +123,10 @@ public class AM_EntitySlider extends EntityAnimal
                 f3 = -30F;
             }
             rotationYaw += f3;
-            if(hasAttacked && playerToAttack != null)
+            if(hasAttacked && entityToAttack != null)
             {
-                double d4 = playerToAttack.posX - posX;
-                double d5 = playerToAttack.posZ - posZ;
+                double d4 = entityToAttack.posX - posX;
+                double d5 = entityToAttack.posZ - posZ;
                 float f5 = rotationYaw;
                 rotationYaw = (float)((Math.atan2(d5, d4) * 180D) / 3.1415927410125732D) - 90F;
                 float f4 = (((f5 - rotationYaw) + 90F) * 3.141593F) / 180F;
@@ -138,9 +138,9 @@ public class AM_EntitySlider extends EntityAnimal
                 isJumping = true;
             }
         }
-        if(playerToAttack != null)
+        if(entityToAttack != null)
         {
-            faceEntity(playerToAttack, 30F, 30F);
+            faceEntity(entityToAttack, 30F, 30F);
         }
         if(isCollidedHorizontally && !hasPath())
         {
@@ -196,7 +196,7 @@ public class AM_EntitySlider extends EntityAnimal
                     worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
                 }
 	
-	if(!worldObj.multiplayerWorld){
+	if(!AutomatonUniversal.otherWorld(worldObj)){
 			int R=rand.nextInt(4);
 			if(R==1){
 			entityDropItem(new ItemStack(AutomatonLogger.boing, 1,0), 0.0F);
@@ -217,27 +217,22 @@ public class AM_EntitySlider extends EntityAnimal
         }
         super.onLivingUpdate();
     }
-	/*
+
 	public boolean getCanSpawnHere(){
-	int i = MathHelper.floor_double(posX);
+
+        int i = MathHelper.floor_double(posX);
         int j = MathHelper.floor_double(boundingBox.minY);
         int k = MathHelper.floor_double(posZ);
-	int l=worldObj.getBlockId(i, j-1, k);
-	if(l==2||l==AutomatonLogger.frass || l==AutomatonLogger.frass2){
-	return true;
-	}
-		return false;
-	}*/
-	
-	public boolean getCanSpawnHere(){
-		return true;
+		int bb=worldObj.getBlockId(i, j - 1, k);
+        return  (bb== AutomatonLogger.frass || bb== AutomatonLogger.frass2);
+    
 	}
 	
 
     public void onUpdate()
     {
         super.onUpdate();
-        if(!worldObj.multiplayerWorld && worldObj.difficultySetting == 0)
+        if(!AutomatonUniversal.otherWorld(worldObj) && worldObj.difficultySetting == 0)
         {
             setEntityDead();
         }
@@ -265,7 +260,7 @@ public class AM_EntitySlider extends EntityAnimal
             }
             if(entity != this)
             {
-                playerToAttack = entity;
+                entityToAttack = entity;
             }
             return true;
         } else
@@ -325,17 +320,17 @@ public class AM_EntitySlider extends EntityAnimal
 
     protected String getLivingSound()
     {
-        return "mob.crank";
+        return "automatons.crank";
     }
 
     protected String getHurtSound()
     {
-        return "mob.clank";
+        return "automatons.clank";
     }
 
     protected String getDeathSound()
     {
-        return "mob.botdie";
+        return "automatons.botdie";
     }
 
     protected int getDropItemId()

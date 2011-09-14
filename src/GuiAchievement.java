@@ -22,20 +22,20 @@ public class GuiAchievement extends Gui
 
     public void queueTakenAchievement(Achievement achievement)
     {
-        field_25085_d = StatCollector.translateToLocal("achievement.get");
-        field_25084_e = achievement.statName;
-        field_25083_f = System.currentTimeMillis();
+        achievementGetLocalText = StatCollector.translateToLocal("achievement.get");
+        achievementStatName = achievement.statName;
+        achievementTime = System.currentTimeMillis();
         theAchievement = achievement;
-        field_27103_i = false;
+        haveAchiement = false;
     }
 
     public void queueAchievementInformation(Achievement achievement)
     {
-        field_25085_d = achievement.statName;
-        field_25084_e = achievement.getDescription();
-        field_25083_f = System.currentTimeMillis() - 2500L;
+        achievementGetLocalText = achievement.statName;
+        achievementStatName = achievement.getDescription();
+        achievementTime = System.currentTimeMillis() - 2500L;
         theAchievement = achievement;
-        field_27103_i = true;
+        haveAchiement = true;
     }
 
     private void updateAchievementWindowScale()
@@ -76,14 +76,14 @@ public class GuiAchievement extends Gui
             GL11.glDepthMask(true);
             GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
         }
-        if(theAchievement == null || field_25083_f == 0L)
+        if(theAchievement == null || achievementTime == 0L)
         {
             return;
         }
-        double d = (double)(System.currentTimeMillis() - field_25083_f) / 3000D;
-        if(!field_27103_i && !field_27103_i && (d < 0.0D || d > 1.0D))
+        double d = (double)(System.currentTimeMillis() - achievementTime) / 3000D;
+        if(!haveAchiement && !haveAchiement && (d < 0.0D || d > 1.0D))
         {
-            field_25083_f = 0L;
+            achievementTime = 0L;
             return;
         }
         updateAchievementWindowScale();
@@ -110,13 +110,13 @@ public class GuiAchievement extends Gui
         GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, k);
         GL11.glDisable(2896 /*GL_LIGHTING*/);
         drawTexturedModalRect(i, j, 96, 202, 160, 32);
-        if(field_27103_i)
+        if(haveAchiement)
         {
-            theGame.fontRenderer.func_27278_a(field_25084_e, i + 30, j + 7, 120, -1);
+            theGame.fontRenderer.func_27278_a(achievementStatName, i + 30, j + 7, 120, -1);
         } else
         {
-            theGame.fontRenderer.drawString(field_25085_d, i + 30, j + 7, -256);
-            theGame.fontRenderer.drawString(field_25084_e, i + 30, j + 18, -1);
+            theGame.fontRenderer.drawString(achievementGetLocalText, i + 30, j + 7, -256);
+            theGame.fontRenderer.drawString(achievementStatName, i + 30, j + 18, -1);
         }
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
@@ -135,10 +135,10 @@ public class GuiAchievement extends Gui
     private Minecraft theGame;
     private int achievementWindowWidth;
     private int achievementWindowHeight;
-    private String field_25085_d;
-    private String field_25084_e;
+    private String achievementGetLocalText;
+    private String achievementStatName;
     private Achievement theAchievement;
-    private long field_25083_f;
+    private long achievementTime;
     private RenderItem itemRender;
-    private boolean field_27103_i;
+    private boolean haveAchiement;
 }

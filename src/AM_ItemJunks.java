@@ -27,8 +27,8 @@ public class AM_ItemJunks extends Item
 	public void loadSprites(){
 	textur=new int[16];
 	
-	textur[0]=ModLoader.addOverride("/gui/items.png", "/automatons/frag.png");
-	textur[1]=ModLoader.addOverride("/gui/items.png", "/automatons/automatonBod.png");
+	textur[0]=0;//ModLoader.addOverride("/gui/items.png", "/automatons/frag.png");
+	textur[1]=1;//ModLoader.addOverride("/gui/items.png", "/automatons/automatonBod.png");
 	/*textur[2]=ModLoader.addOverride("/gui/items.png", "/automatons/automatonHead.png");
 	textur[3]=ModLoader.addOverride("/gui/items.png", "/automatons/automatonLeg.png");
 	textur[4]=ModLoader.addOverride("/gui/items.png", "/automatons/rod.png");

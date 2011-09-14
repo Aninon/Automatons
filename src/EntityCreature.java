@@ -28,35 +28,35 @@ public class EntityCreature extends EntityLiving
     {
         hasAttacked = isMovementCeased();
         float f = 16F;
-        if(playerToAttack == null)
+        if(entityToAttack == null)
         {
-            playerToAttack = findPlayerToAttack();
-            if(playerToAttack != null)
+            entityToAttack = findPlayerToAttack();
+            if(entityToAttack != null)
             {
-                pathToEntity = worldObj.getPathToEntity(this, playerToAttack, f);
+                pathToEntity = worldObj.getPathToEntity(this, entityToAttack, f);
             }
         } else
-        if(!playerToAttack.isEntityAlive())
+        if(!entityToAttack.isEntityAlive())
         {
-            playerToAttack = null;
+            entityToAttack = null;
         } else
         {
-            float f1 = playerToAttack.getDistanceToEntity(this);
-            if(canEntityBeSeen(playerToAttack))
+            float f1 = entityToAttack.getDistanceToEntity(this);
+            if(canEntityBeSeen(entityToAttack))
             {
-                attackEntity(playerToAttack, f1);
+                attackEntity(entityToAttack, f1);
             } else
             {
-                attackBlockedEntity(playerToAttack, f1);
+                attackBlockedEntity(entityToAttack, f1);
             }
         }
-        if(!hasAttacked && playerToAttack != null && (pathToEntity == null || rand.nextInt(20) == 0))
+        if(!hasAttacked && entityToAttack != null && (pathToEntity == null || rand.nextInt(20) == 0))
         {
-            pathToEntity = worldObj.getPathToEntity(this, playerToAttack, f);
+            pathToEntity = worldObj.getPathToEntity(this, entityToAttack, f);
         } else
         if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || rand.nextInt(80) == 0))
         {
-            func_31026_E();
+            func_31021_B();
         }
         int i = MathHelper.floor_double(boundingBox.minY + 0.5D);
         boolean flag = isInWater();
@@ -102,10 +102,10 @@ public class EntityCreature extends EntityLiving
                 f3 = -30F;
             }
             rotationYaw += f3;
-            if(hasAttacked && playerToAttack != null)
+            if(hasAttacked && entityToAttack != null)
             {
-                double d4 = playerToAttack.posX - posX;
-                double d5 = playerToAttack.posZ - posZ;
+                double d4 = entityToAttack.posX - posX;
+                double d5 = entityToAttack.posZ - posZ;
                 float f5 = rotationYaw;
                 rotationYaw = (float)((Math.atan2(d5, d4) * 180D) / 3.1415927410125732D) - 90F;
                 float f4 = (((f5 - rotationYaw) + 90F) * 3.141593F) / 180F;
@@ -117,9 +117,9 @@ public class EntityCreature extends EntityLiving
                 isJumping = true;
             }
         }
-        if(playerToAttack != null)
+        if(entityToAttack != null)
         {
-            faceEntity(playerToAttack, 30F, 30F);
+            faceEntity(entityToAttack, 30F, 30F);
         }
         if(isCollidedHorizontally && !hasPath())
         {
@@ -131,7 +131,7 @@ public class EntityCreature extends EntityLiving
         }
     }
 
-    protected void func_31026_E()
+    protected void func_31021_B()
     {
         boolean flag = false;
         int i = -1;
@@ -198,15 +198,15 @@ public class EntityCreature extends EntityLiving
 
     public Entity getTarget()
     {
-        return playerToAttack;
+        return entityToAttack;
     }
 
     public void setTarget(Entity entity)
     {
-        playerToAttack = entity;
+        entityToAttack = entity;
     }
 
     private PathEntity pathToEntity;
-    protected Entity playerToAttack;
+    protected Entity entityToAttack;
     protected boolean hasAttacked;
 }

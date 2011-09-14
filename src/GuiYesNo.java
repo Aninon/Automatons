@@ -17,15 +17,15 @@ public class GuiYesNo extends GuiScreen
         parentScreen = guiscreen;
         message1 = s;
         message2 = s1;
-        field_22106_k = s2;
-        field_22105_l = s3;
+        buttonText1 = s2;
+        buttonText2 = s3;
         worldNumber = i;
     }
 
     public void initGui()
     {
-        controlList.add(new GuiSmallButton(0, (width / 2 - 155) + 0, height / 6 + 96, field_22106_k));
-        controlList.add(new GuiSmallButton(1, (width / 2 - 155) + 160, height / 6 + 96, field_22105_l));
+        controlList.add(new GuiSmallButton(0, (width / 2 - 155) + 0, height / 6 + 96, buttonText1));
+        controlList.add(new GuiSmallButton(1, (width / 2 - 155) + 160, height / 6 + 96, buttonText2));
     }
 
     protected void actionPerformed(GuiButton guibutton)
@@ -44,7 +44,7 @@ public class GuiYesNo extends GuiScreen
     private GuiScreen parentScreen;
     private String message1;
     private String message2;
-    private String field_22106_k;
-    private String field_22105_l;
+    private String buttonText1;
+    private String buttonText2;
     private int worldNumber;
 }

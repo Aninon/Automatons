@@ -14,7 +14,7 @@ class ThreadCloseConnection extends Thread
     ThreadCloseConnection(NetworkManager networkmanager)
     {
 //        super();
-        field_28109_a = networkmanager;
+        networkManager = networkmanager;
     }
 
     public void run()
@@ -22,10 +22,10 @@ class ThreadCloseConnection extends Thread
         try
         {
             Thread.sleep(2000L);
-            if(NetworkManager.isRunning(field_28109_a))
+            if(NetworkManager.isRunning(networkManager))
             {
-                NetworkManager.getWriteThread(field_28109_a).interrupt();
-                field_28109_a.networkShutdown("disconnect.closed", new Object[0]);
+                NetworkManager.getWriteThread(networkManager).interrupt();
+                networkManager.networkShutdown("disconnect.closed", new Object[0]);
             }
         }
         catch(Exception exception)
@@ -34,5 +34,5 @@ class ThreadCloseConnection extends Thread
         }
     }
 
-    final NetworkManager field_28109_a; /* synthetic field */
+    final NetworkManager networkManager; /* synthetic field */
 }

@@ -20,26 +20,26 @@ public class StatsSyncher
         field_27436_c = null;
         field_27427_l = 0;
         field_27426_m = 0;
-        field_27434_e = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append("_unsent.dat").toString());
-        field_27433_f = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append(".dat").toString());
-        field_27430_i = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append("_unsent.old").toString());
-        field_27429_j = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append(".old").toString());
-        field_27432_g = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append("_unsent.tmp").toString());
-        field_27431_h = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append(".tmp").toString());
+        unsentDataFile = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append("_unsent.dat").toString());
+        dataFile = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append(".dat").toString());
+        unsentOldFile = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append("_unsent.old").toString());
+        oldFile = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append(".old").toString());
+        unsentTempFile = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append("_unsent.tmp").toString());
+        tempFile = new File(file, (new StringBuilder()).append("stats_").append(session.username.toLowerCase()).append(".tmp").toString());
         if(!session.username.toLowerCase().equals(session.username))
         {
-            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append("_unsent.dat").toString(), field_27434_e);
-            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append(".dat").toString(), field_27433_f);
-            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append("_unsent.old").toString(), field_27430_i);
-            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append(".old").toString(), field_27429_j);
-            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append("_unsent.tmp").toString(), field_27432_g);
-            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append(".tmp").toString(), field_27431_h);
+            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append("_unsent.dat").toString(), unsentDataFile);
+            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append(".dat").toString(), dataFile);
+            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append("_unsent.old").toString(), unsentOldFile);
+            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append(".old").toString(), oldFile);
+            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append("_unsent.tmp").toString(), unsentTempFile);
+            func_28214_a(file, (new StringBuilder()).append("stats_").append(session.username).append(".tmp").toString(), tempFile);
         }
-        field_27435_d = statfilewriter;
-        field_27428_k = session;
-        if(field_27434_e.exists())
+        statFileWriter = statfilewriter;
+        theSession = session;
+        if(unsentDataFile.exists())
         {
-            statfilewriter.func_27179_a(func_27415_a(field_27434_e, field_27432_g, field_27430_i));
+            statfilewriter.func_27179_a(func_27415_a(unsentDataFile, unsentTempFile, unsentOldFile));
         }
         beginReceiveStats();
     }
@@ -114,7 +114,7 @@ public class StatsSyncher
         PrintWriter printwriter = new PrintWriter(new FileWriter(file1, false));
         try
         {
-            printwriter.print(StatFileWriter.func_27185_a(field_27428_k.username, "local", map));
+            printwriter.print(StatFileWriter.func_27185_a(theSession.username, "local", map));
         }
         finally
         {
@@ -176,7 +176,7 @@ public class StatsSyncher
         isBusy = true;
         try
         {
-            func_27410_a(map, field_27434_e, field_27432_g, field_27430_i);
+            func_27410_a(map, unsentDataFile, unsentTempFile, unsentOldFile);
         }
         catch(Exception exception)
         {
@@ -205,12 +205,12 @@ public class StatsSyncher
         }
         if(field_27436_c != null)
         {
-            field_27435_d.func_27187_c(field_27436_c);
+            statFileWriter.func_27187_c(field_27436_c);
             field_27436_c = null;
         }
         if(field_27437_b != null)
         {
-            field_27435_d.func_27180_b(field_27437_b);
+            statFileWriter.func_27180_b(field_27437_b);
             field_27437_b = null;
         }
     }
@@ -222,17 +222,17 @@ public class StatsSyncher
 
     static File func_27423_b(StatsSyncher statssyncher)
     {
-        return statssyncher.field_27433_f;
+        return statssyncher.dataFile;
     }
 
     static File func_27411_c(StatsSyncher statssyncher)
     {
-        return statssyncher.field_27431_h;
+        return statssyncher.tempFile;
     }
 
     static File func_27413_d(StatsSyncher statssyncher)
     {
-        return statssyncher.field_27429_j;
+        return statssyncher.oldFile;
     }
 
     static void func_27412_a(StatsSyncher statssyncher, Map map, File file, File file1, File file2)
@@ -258,30 +258,30 @@ public class StatsSyncher
 
     static File func_27414_e(StatsSyncher statssyncher)
     {
-        return statssyncher.field_27434_e;
+        return statssyncher.unsentDataFile;
     }
 
     static File func_27417_f(StatsSyncher statssyncher)
     {
-        return statssyncher.field_27432_g;
+        return statssyncher.unsentTempFile;
     }
 
     static File func_27419_g(StatsSyncher statssyncher)
     {
-        return statssyncher.field_27430_i;
+        return statssyncher.unsentOldFile;
     }
 
     private volatile boolean isBusy;
     private volatile Map field_27437_b;
     private volatile Map field_27436_c;
-    private StatFileWriter field_27435_d;
-    private File field_27434_e;
-    private File field_27433_f;
-    private File field_27432_g;
-    private File field_27431_h;
-    private File field_27430_i;
-    private File field_27429_j;
-    private Session field_27428_k;
+    private StatFileWriter statFileWriter;
+    private File unsentDataFile;
+    private File dataFile;
+    private File unsentTempFile;
+    private File tempFile;
+    private File unsentOldFile;
+    private File oldFile;
+    private Session theSession;
     private int field_27427_l;
     private int field_27426_m;
 }

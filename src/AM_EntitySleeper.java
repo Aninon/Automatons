@@ -130,10 +130,10 @@ public class AM_EntitySleeper extends EntityLiving
 			worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
 		}
 		
-		if(!worldObj.multiplayerWorld){
+		if(!AutomatonUniversal.otherWorld(worldObj)){
 			
 			
-			entityDropItem(new ItemStack(mod_Automatons.stuffs, 1,0), 0.0F);
+			entityDropItem(new ItemStack(AutomatonLogger.stuffs+256, 1,0), 0.0F);
 
 			setEntityDead();
 		}

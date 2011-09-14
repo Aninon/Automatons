@@ -83,17 +83,17 @@ public class AM_EntityBobby extends EntityCreature
 	
     protected String getLivingSound()
     {
-        return "mob.beep";
+        return "automatons.beep";
     }
 
     protected String getHurtSound()
     {
-        return "mob.clank";
+        return "automatons.clank";
     }
 
     protected String getDeathSound()
     {
-        return "mob.botdie";
+        return "automatons.botdie";
     }
 
     /*public boolean interact(EntityPlayer entityplayer)
@@ -139,14 +139,14 @@ public class AM_EntityBobby extends EntityCreature
                     worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
                 }
 				
-	if(!worldObj.multiplayerWorld){
+	if(!AutomatonUniversal.otherWorld(worldObj)){
 			
 			int R=rand.nextInt(2);
 			if(R==0){
 			
 			
 			//List list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityBobby.class, boundingBox.expand(24D, 3D, 24D));
-			if(worldObj.countEntities(net.minecraft.src.AM_EntityBobby.class)<50){
+			if(worldObj.countEntities(AM_EntityBobby.class)<50){
 			worldObj.entityJoinedWorld(new AM_EntityBobby(worldObj, posX, posY, posZ));
 		   
 			worldObj.entityJoinedWorld(new AM_EntityBobby(worldObj, posX, posY, posZ));

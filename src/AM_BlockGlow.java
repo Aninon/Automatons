@@ -32,8 +32,8 @@ public class AM_BlockGlow extends Block
 	public void loadSprites1(){
 	
 		D=new int[2];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/crystal1.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/crystal2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/crystal1.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/crystal2.png");
 		blockIndexInTexture=D[0];
 		
 		
@@ -43,8 +43,8 @@ public class AM_BlockGlow extends Block
 	}
 	public void loadSprites2(){
 		D=new int[2];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/glowy1.png");
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/glowy2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/glowy1.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/glowy2.png");
 		blockIndexInTexture=D[0];
 		
 		

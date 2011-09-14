@@ -1007,7 +1007,7 @@ public abstract class Minecraft
                 currentScreen.updateScreen();
             }
         }
-        if(currentScreen == null || currentScreen.field_948_f)
+        if(currentScreen == null || currentScreen.allowUserInput)
         {
             do
             {
@@ -1398,20 +1398,20 @@ public abstract class Minecraft
         ChunkCoordinates chunkcoordinates = theWorld.getSpawnPoint();
         if(thePlayer != null)
         {
-            chunkcoordinates.x = (int)thePlayer.posX;
-            chunkcoordinates.z = (int)thePlayer.posZ;
+            chunkcoordinates.posX = (int)thePlayer.posX;
+            chunkcoordinates.posZ = (int)thePlayer.posZ;
         }
         if(ichunkprovider instanceof ChunkProviderLoadOrGenerate)
         {
             ChunkProviderLoadOrGenerate chunkproviderloadorgenerate = (ChunkProviderLoadOrGenerate)ichunkprovider;
-            chunkproviderloadorgenerate.setCurrentChunkOver(chunkcoordinates.x >> 4, chunkcoordinates.z >> 4);
+            chunkproviderloadorgenerate.setCurrentChunkOver(chunkcoordinates.posX >> 4, chunkcoordinates.posZ >> 4);
         }
         for(int k = -c; k <= c; k += 16)
         {
             for(int l = -c; l <= c; l += 16)
             {
                 loadingScreen.setLoadingProgress((i++ * 100) / j);
-                theWorld.getBlockId(chunkcoordinates.x + k, 64, chunkcoordinates.z + l);
+                theWorld.getBlockId(chunkcoordinates.posX + k, 64, chunkcoordinates.posZ + l);
                 while(theWorld.updatingLighting()) ;
             }
 
@@ -1504,7 +1504,7 @@ public abstract class Minecraft
         if(ichunkprovider instanceof ChunkProviderLoadOrGenerate)
         {
             ChunkProviderLoadOrGenerate chunkproviderloadorgenerate = (ChunkProviderLoadOrGenerate)ichunkprovider;
-            chunkproviderloadorgenerate.setCurrentChunkOver(chunkcoordinates1.x >> 4, chunkcoordinates1.z >> 4);
+            chunkproviderloadorgenerate.setCurrentChunkOver(chunkcoordinates1.posX >> 4, chunkcoordinates1.posZ >> 4);
         }
         theWorld.setSpawnLocation();
         theWorld.updateEntityList();
@@ -1522,7 +1522,7 @@ public abstract class Minecraft
         if(flag1)
         {
             thePlayer.setPlayerSpawnCoordinate(chunkcoordinates);
-            thePlayer.setLocationAndAngles((float)chunkcoordinates1.x + 0.5F, (float)chunkcoordinates1.y + 0.1F, (float)chunkcoordinates1.z + 0.5F, 0.0F, 0.0F);
+            thePlayer.setLocationAndAngles((float)chunkcoordinates1.posX + 0.5F, (float)chunkcoordinates1.posY + 0.1F, (float)chunkcoordinates1.posZ + 0.5F, 0.0F, 0.0F);
         }
         playerController.flipPlayer(thePlayer);
         theWorld.spawnPlayerWithLoadedChunks(thePlayer);

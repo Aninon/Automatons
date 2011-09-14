@@ -55,7 +55,7 @@ public class AM_ItemAutomaton extends Item
             }
         }
 		
-        if(!world.multiplayerWorld)
+        if(!AutomatonUniversal.otherWorld(world))
         {
 		if(bool){
             world.entityJoinedWorld(new AM_EntityWorker(world, (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F,entityplayer.username));

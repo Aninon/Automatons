@@ -20,7 +20,7 @@ public class GuiChest extends GuiContainer
         inventoryRows = 0;
         upperChestInventory = iinventory;
         lowerChestInventory = iinventory1;
-        field_948_f = false;
+        allowUserInput = false;
         char c = '\336';
         int i = c - 108;
         inventoryRows = iinventory1.getSizeInventory() / 9;

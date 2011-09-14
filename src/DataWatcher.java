@@ -129,9 +129,9 @@ public class DataWatcher
 
         case 6: // '\006'
             ChunkCoordinates chunkcoordinates = (ChunkCoordinates)watchableobject.getObject();
-            dataoutputstream.writeInt(chunkcoordinates.x);
-            dataoutputstream.writeInt(chunkcoordinates.y);
-            dataoutputstream.writeInt(chunkcoordinates.z);
+            dataoutputstream.writeInt(chunkcoordinates.posX);
+            dataoutputstream.writeInt(chunkcoordinates.posY);
+            dataoutputstream.writeInt(chunkcoordinates.posZ);
             break;
         }
     }

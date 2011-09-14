@@ -223,17 +223,17 @@ public class AM_EntityChopper extends AM_EntityFlying2
 	
     protected String getLivingSound()
     {
-        return "mob.beep";
+        return "automatons.beep";
     }
 
     protected String getHurtSound()
     {
-        return "mob.clank";
+        return "automatons.clank";
     }
 
     protected String getDeathSound()
     {
-        return "mob.botdie";
+        return "automatons.botdie";
     }
 
     protected int getDropItemId()

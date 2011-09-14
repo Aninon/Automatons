@@ -43,7 +43,7 @@ public class CanvasIsomPreview extends Canvas
     {
         String s1 = System.getProperty("user.home", ".");
         File file;
-        switch(OsMap.field_1193_a[getOs().ordinal()])
+        switch(OsMap.allOSes[getOs().ordinal()])
         {
         case 1: // '\001'
         case 2: // '\002'
@@ -276,7 +276,7 @@ public class CanvasIsomPreview extends Canvas
         if(worldObj != null)
         {
             ChunkCoordinates chunkcoordinates = worldObj.getSpawnPoint();
-            graphics2d.translate(-(chunkcoordinates.x + chunkcoordinates.z), -(-chunkcoordinates.x + chunkcoordinates.z) + 64);
+            graphics2d.translate(-(chunkcoordinates.posX + chunkcoordinates.posZ), -(-chunkcoordinates.posX + chunkcoordinates.posZ) + 64);
         }
         Rectangle rectangle = graphics2d.getClipBounds();
         graphics2d.setColor(new Color(0xff101020));

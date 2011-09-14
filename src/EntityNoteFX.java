@@ -30,7 +30,7 @@ public class EntityNoteFX extends EntityFX
         particleBlue = MathHelper.sin(((float)d3 + 0.6666667F) * 3.141593F * 2.0F) * 0.65F + 0.35F;
         particleScale *= 0.75F;
         particleScale *= f;
-        field_21065_a = particleScale;
+        noteParticleScale = particleScale;
         particleMaxAge = 6;
         noClip = false;
         particleTextureIndex = 64;
@@ -47,7 +47,7 @@ public class EntityNoteFX extends EntityFX
         {
             f6 = 1.0F;
         }
-        particleScale = field_21065_a * f6;
+        particleScale = noteParticleScale * f6;
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
@@ -76,5 +76,5 @@ public class EntityNoteFX extends EntityFX
         }
     }
 
-    float field_21065_a;
+    float noteParticleScale;
 }

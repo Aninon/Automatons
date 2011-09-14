@@ -17,13 +17,13 @@ public class MapItemRenderer
 
     public MapItemRenderer(FontRenderer fontrenderer, GameSettings gamesettings, RenderEngine renderengine)
     {
-        field_28159_a = new int[16384 /*GL_LIGHT0*/];
-        field_28161_c = gamesettings;
-        field_28160_d = fontrenderer;
-        field_28158_b = renderengine.allocateAndSetupTexture(new BufferedImage(128, 128, 2));
+        intArray = new int[16384 /*GL_LIGHT0*/];
+        gameSettings = gamesettings;
+        fontRenderer = fontrenderer;
+        bufferedImage = renderengine.allocateAndSetupTexture(new BufferedImage(128, 128, 2));
         for(int i = 0; i < 16384 /*GL_LIGHT0*/; i++)
         {
-            field_28159_a[i] = 0;
+            intArray[i] = 0;
         }
 
     }
@@ -35,7 +35,7 @@ public class MapItemRenderer
             byte byte0 = mapdata.field_28176_f[i];
             if(byte0 / 4 == 0)
             {
-                field_28159_a[i] = (i + i / 128 & 1) * 8 + 16 << 24;
+                intArray[i] = (i + i / 128 & 1) * 8 + 16 << 24;
                 continue;
             }
             int l = MapColor.mapColorArray[byte0 / 4].colorValue;
@@ -52,7 +52,7 @@ public class MapItemRenderer
             int j1 = ((l >> 16 & 0xff) * c) / 255;
             int k1 = ((l >> 8 & 0xff) * c) / 255;
             int l1 = ((l & 0xff) * c) / 255;
-            if(field_28161_c.anaglyph)
+            if(gameSettings.anaglyph)
             {
                 int i2 = (j1 * 30 + k1 * 59 + l1 * 11) / 100;
                 int j2 = (j1 * 30 + k1 * 70) / 100;
@@ -61,15 +61,15 @@ public class MapItemRenderer
                 k1 = j2;
                 l1 = k2;
             }
-            field_28159_a[i] = 0xff000000 | j1 << 16 | k1 << 8 | l1;
+            intArray[i] = 0xff000000 | j1 << 16 | k1 << 8 | l1;
         }
 
-        renderengine.createTextureFromBytes(field_28159_a, 128, 128, field_28158_b);
+        renderengine.createTextureFromBytes(intArray, 128, 128, bufferedImage);
         int j = 0;
         int k = 0;
         Tessellator tessellator = Tessellator.instance;
         float f = 0.0F;
-        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, field_28158_b);
+        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, bufferedImage);
         GL11.glEnable(3042 /*GL_BLEND*/);
         GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
         tessellator.startDrawingQuads();
@@ -104,12 +104,12 @@ public class MapItemRenderer
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, 0.0F, -0.04F);
         GL11.glScalef(1.0F, 1.0F, 1.0F);
-        field_28160_d.drawString(mapdata.field_28168_a, j, k, 0xff000000);
+        fontRenderer.drawString(mapdata.field_28168_a, j, k, 0xff000000);
         GL11.glPopMatrix();
     }
 
-    private int field_28159_a[];
-    private int field_28158_b;
-    private GameSettings field_28161_c;
-    private FontRenderer field_28160_d;
+    private int intArray[];
+    private int bufferedImage;
+    private GameSettings gameSettings;
+    private FontRenderer fontRenderer;
 }

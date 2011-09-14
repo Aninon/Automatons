@@ -17,7 +17,7 @@ public class EntityDiggingFX extends EntityFX
     {
         super(world, d, d1, d2, d3, d4, d5);
         field_32001_o = 0;
-        field_4082_a = block;
+        blockInstance = block;
         particleTextureIndex = block.getBlockTextureFromSideAndMetadata(0, j);
         particleGravity = block.blockParticleGravity;
         particleRed = particleGreen = particleBlue = 0.6F;
@@ -27,12 +27,12 @@ public class EntityDiggingFX extends EntityFX
 
     public EntityDiggingFX func_4041_a(int i, int j, int k)
     {
-        if(field_4082_a == Block.grass)
+        if(blockInstance == Block.grass)
         {
             return this;
         } else
         {
-            int l = field_4082_a.colorMultiplier(worldObj, i, j, k);
+            int l = blockInstance.colorMultiplier(worldObj, i, j, k);
             particleRed *= (float)(l >> 16 & 0xff) / 255F;
             particleGreen *= (float)(l >> 8 & 0xff) / 255F;
             particleBlue *= (float)(l & 0xff) / 255F;
@@ -63,6 +63,6 @@ public class EntityDiggingFX extends EntityFX
         tessellator.addVertexWithUV((f11 + f1 * f10) - f4 * f10, f12 - f2 * f10, (f13 + f3 * f10) - f5 * f10, f7, f9);
     }
 
-    private Block field_4082_a;
+    private Block blockInstance;
     private int field_32001_o;
 }

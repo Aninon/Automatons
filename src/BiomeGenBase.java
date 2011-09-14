@@ -33,8 +33,6 @@ public class BiomeGenBase
         spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntitySkeleton.class, 10));
         spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityCreeper.class, 10));
         spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntitySlime.class, 10));
-
-		
         spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntitySheep.class, 12));
         spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityPig.class, 10));
         spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityChicken.class, 10));
@@ -105,14 +103,8 @@ public class BiomeGenBase
         return biomeLookupTable[i + j * 64];
     }
 
-    public static BiomeGenBase getBiome(float f, float f1) //temp, humidity
+    public static BiomeGenBase getBiome(float f, float f1)
     {
-
-	if(AutomatonLogger.allTech==1){
-		
-		return tech;
-	}
-	
         f1 *= f;
         if(f < 0.1F)
         {
@@ -123,10 +115,6 @@ public class BiomeGenBase
             if(f < 0.5F)
             {
                 return tundra;
-            }
-			if(f < 0.7F)
-            {
-                return tech;
             }
             if(f < 0.95F)
             {
@@ -221,7 +209,6 @@ public class BiomeGenBase
     public static final BiomeGenBase seasonalForest = (new BiomeGenBase()).setColor(0x9be023).setBiomeName("Seasonal Forest");
     public static final BiomeGenBase forest = (new BiomeGenForest()).setColor(0x56621).setBiomeName("Forest").func_4124_a(0x4eba31);
     public static final BiomeGenBase savanna = (new BiomeGenDesert()).setColor(0xd9e023).setBiomeName("Savanna");
-	
     public static final BiomeGenBase shrubland = (new BiomeGenBase()).setColor(0xa1ad20).setBiomeName("Shrubland");
     public static final BiomeGenBase taiga = (new BiomeGenTaiga()).setColor(0x2eb153).setBiomeName("Taiga").setEnableSnow().func_4124_a(0x7bb731);
     public static final BiomeGenBase desert = (new BiomeGenDesert()).setColor(0xfa9418).setBiomeName("Desert").setDisableRain();
@@ -230,10 +217,6 @@ public class BiomeGenBase
     public static final BiomeGenBase tundra = (new BiomeGenBase()).setColor(0x57ebf9).setBiomeName("Tundra").setEnableSnow().func_4124_a(0xc4d339);
     public static final BiomeGenBase hell = (new BiomeGenHell()).setColor(0xff0000).setBiomeName("Hell").setDisableRain();
     public static final BiomeGenBase sky = (new BiomeGenSky()).setColor(0x8080ff).setBiomeName("Sky").setDisableRain();
-	
-	public static final BiomeGenBase tech = (new AM_BiomeGenTech()).setColor(0xFFFB00).setBiomeName("Tech").func_4124_a(0xFFFFFF).setDisableRain();
-	
-	
     public String biomeName;
     public int color;
     public byte topBlock;

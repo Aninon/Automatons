@@ -17,27 +17,27 @@ class ChunkFile
 
     public ChunkFile(File file)
     {
-        field_22326_a = file;
-        Matcher matcher = ChunkFilePattern.field_22189_a.matcher(file.getName());
+        chunkFile = file;
+        Matcher matcher = ChunkFilePattern.dataFilenamePattern.matcher(file.getName());
         if(matcher.matches())
         {
-            field_22325_b = Integer.parseInt(matcher.group(1), 36);
-            field_22327_c = Integer.parseInt(matcher.group(2), 36);
+            xChunk = Integer.parseInt(matcher.group(1), 36);
+            yChunk = Integer.parseInt(matcher.group(2), 36);
         } else
         {
-            field_22325_b = 0;
-            field_22327_c = 0;
+            xChunk = 0;
+            yChunk = 0;
         }
     }
 
     public int func_22322_a(ChunkFile chunkfile)
     {
-        int i = field_22325_b >> 5;
-        int j = chunkfile.field_22325_b >> 5;
+        int i = xChunk >> 5;
+        int j = chunkfile.xChunk >> 5;
         if(i == j)
         {
-            int k = field_22327_c >> 5;
-            int l = chunkfile.field_22327_c >> 5;
+            int k = yChunk >> 5;
+            int l = chunkfile.yChunk >> 5;
             return k - l;
         } else
         {
@@ -47,17 +47,17 @@ class ChunkFile
 
     public File func_22324_a()
     {
-        return field_22326_a;
+        return chunkFile;
     }
 
     public int func_22323_b()
     {
-        return field_22325_b;
+        return xChunk;
     }
 
     public int func_22321_c()
     {
-        return field_22327_c;
+        return yChunk;
     }
 
     public int compareTo(Object obj)
@@ -65,7 +65,7 @@ class ChunkFile
         return func_22322_a((ChunkFile)obj);
     }
 
-    private final File field_22326_a;
-    private final int field_22325_b;
-    private final int field_22327_c;
+    private final File chunkFile;
+    private final int xChunk;
+    private final int yChunk;
 }

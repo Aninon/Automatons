@@ -24,7 +24,7 @@ public class AM_ItemBlaster extends Item
         //if(entityplayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex))
         //{
             world.playSoundAtEntity(entityplayer, "mob.fwoom", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
-            if(!world.multiplayerWorld)
+            if(!AutomatonUniversal.otherWorld(world))
             {
 			
 			

@@ -1,6 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
 
 package net.minecraft.src;
 
@@ -17,8 +14,6 @@ import java.util.*;
 //isWet() = func_27008_Y()
 //setTarget( = setEntityToAttack(
 //hasCurrentTarget() = func_25021_O()
-//getIsWolfsFavoriteMeat()=func_25010_k()
-//func_25026_x=func_25018_n_
 //isMovementCeased=func_25026_u
 //func_31026_E =func_31021_B  wander
 public class AM_EntityWorker extends EntityCreature
@@ -37,9 +32,7 @@ public class AM_EntityWorker extends EntityCreature
 		invNum=0;
 		invType=0;
 		invDamage=0;
-		hy=-1;
-		//System.out.println("automaton "+getEntityString());
-		
+		hy=-1;	
 		
 	}
 	public AM_EntityWorker(World world, double d, double d1, double d2,String s){
@@ -56,25 +49,13 @@ public class AM_EntityWorker extends EntityCreature
 		
 	}
 	
-	protected void func_31026_E() //kills wandering!
+	protected void func_31021_B() //kills wandering!
 	{
 		if(getMode()!=1){
-			super.func_31026_E();
+			super.func_31021_B();
 		}
 	}
-	/*
-	@Override
-	protected float getBlockPathWeight(int i, int j, int k){
-	
-		if(worldObj.getBlockId(i, j - 1, k) == Block.cobblestone.blockID){
-			return 100F;
-		} else{
-			//return worldObj.getLightBrightness(i, j, k) - 0.5F;
-			return -100.0F;
-		}
-		//return (float) j;
-	}
-*/
+
 	protected void entityInit(){
 		super.entityInit();
 		dataWatcher.addObject(16, new Integer(mode));//mode
@@ -82,7 +63,6 @@ public class AM_EntityWorker extends EntityCreature
 		dataWatcher.addObject(18, new Integer(invType));//state
 		dataWatcher.addObject(19, new Integer(trigger));//state
 		dataWatcher.addObject(20, ""); //dstring
-		//dataWatcher.addObject(18, new Integer(health)); //health
 	}
 
 
@@ -126,7 +106,6 @@ public class AM_EntityWorker extends EntityCreature
 		} else
 		{
 			nbttagcompound.setString("Owner", getBotOwner());
-			//System.out.println("owned");
 		}
 		
 		nbttagcompound.setTag("Dest", newIntNBTList(new int[] {
@@ -162,13 +141,7 @@ public class AM_EntityWorker extends EntityCreature
 	}
 
 	protected String getLivingSound(){
-		
-		/* if(isWolfAngry())
-		{
-			return "mob.wolf.growl";
-		}*/
-		
-		return "mob.beep";
+		return "automatons.beep";
 		
 	}
 
@@ -200,7 +173,7 @@ public class AM_EntityWorker extends EntityCreature
 			worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
 		}
 		
-		if(!worldObj.multiplayerWorld){
+		if(!AutomatonUniversal.otherWorld(worldObj)){
 			showHeartsOrSmokeFX(false);
 			entityDropItem(new ItemStack(AutomatonLogger.automaton+256, 1,0), 0.0F);
 			dropInventory();
@@ -223,9 +196,8 @@ public class AM_EntityWorker extends EntityCreature
 
 
 	protected void updatePlayerActionState(){
-		//&& ridingEntity == null
 		super.updatePlayerActionState();
-		if(!worldObj.multiplayerWorld)
+		if(!AutomatonUniversal.otherWorld(worldObj))
 		{
 			if(entityplayer==null){
 				entityplayer = worldObj.getPlayerEntityByName(getBotOwner());
@@ -236,7 +208,7 @@ public class AM_EntityWorker extends EntityCreature
 					beaconCheck();
 				}
 
-				if(getMode()==1 && !hasPath() ){ //isWolfTamed() 
+				if(getMode()==1 && !hasPath() ){
 					mode1(entityplayer);
 				}else if(getMode()==2 && getInventoryType()!=0){
 					mode2(entityplayer);
@@ -316,24 +288,12 @@ public class AM_EntityWorker extends EntityCreature
 					}
 				}
 			}else if(getState()==1){
-				/*int xo=MathHelper.floor_double(posX);
-				int yo=MathHelper.floor_double(posY)-1;
-				int zo=MathHelper.floor_double(posZ);*/
-				/*if(worldObj.getBlockId(xo,yo,zo)==getInventoryType()){
-					setState(2);
-				}else if(getInventoryType()==3){
-					if(worldObj.getBlockId(xo,yo,zo)==2){
-						setState(2);dX=xo;dY=yo;dZ=zo;
-					}
-				}else{
-					setState(0);
-				}*/
+
 				if(getDistance(dX,dY,dZ)<2){
 					setState(2);
 				}else{
 					if(lastResortDig()){
 						setState(2);
-						//System.out.println("last resort good");
 					}else{
 						setState(0);
 					}
@@ -361,10 +321,8 @@ public class AM_EntityWorker extends EntityCreature
 					Block bb=Block.blocksList[getInventoryType()];
 					
 					if(dd>=bb.getHardness()*30){
-						//harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l)
-						worldObj.setBlockWithNotify(dX,dY,dZ,0);
-						//worldObj.markBlockNeedsUpdate(dX,dY,dZ);
 						
+						worldObj.setBlockWithNotify(dX,dY,dZ,0);
 						EntityItem entityitem = new EntityItem(worldObj, dX,dY,dZ, new ItemStack(bb.idDropped(0,worldObj.rand),1,0));
 						entityitem.delayBeforeCanPickup = 10;
 						worldObj.entityJoinedWorld(entityitem);
@@ -383,7 +341,6 @@ public class AM_EntityWorker extends EntityCreature
 		int yo=MathHelper.floor_double(posY);
 		int zo=MathHelper.floor_double(posZ);
 		
-		//System.out.println((rand.nextInt(3)-1)+"block: "+worldObj.getBlockId(xo,yo-1,zo));
 		if(derp(xo,yo+1,zo)){
 			dX=xo;dY=yo+1;dZ=zo;
 			return true;
@@ -403,9 +360,7 @@ public class AM_EntityWorker extends EntityCreature
 			dX=xo;dY=yo-1;dZ=zo;
 			return true;
 		}
-		
 		return false;
-		
 	}
 	
 	private boolean derp(int xo,int yo,int zo){
@@ -430,20 +385,16 @@ public class AM_EntityWorker extends EntityCreature
 			if(worldObj.getBlockId(xo,yo,zo)==54){
 				dX=xo;dY=yo;dZ=zo;
 				setState(1);
-				//System.out.println("gotta chest: "+xo);
 			}
 			
 		}else if(!hasPath()&&getState()==1) {
 			if(worldObj.getBlockId(dX,dY,dZ)==54){
-				//gotoSpot(dX,dY,dZ,16F);
-				//setState(2);
-				//setTarget(null);
+
 				int num=getInventoryNum();
 				if(itemGet==null || itemGet.isDead){
 					itemGet=findStuff();
 					if(itemGet!=null && num<64){
 						getPathy(itemGet);
-						//System.out.println("goin!");
 					}else if(num>0){
 						setState(2);
 					}
@@ -454,8 +405,7 @@ public class AM_EntityWorker extends EntityCreature
 						itemGet=null;
 					}
 				}
-				
-				
+
 			}else{
 				setState(0);
 			}
@@ -520,27 +470,13 @@ public class AM_EntityWorker extends EntityCreature
 
 	public void onLivingUpdate(){
 		super.onLivingUpdate();
-		/*looksWithInterest = false;
-		if(hasCurrentTarget() && !hasPath() ) {//!isWolfAngry()
-			Entity entity = getCurrentTarget();
-			if(entity instanceof EntityPlayer){
-				EntityPlayer entityplayer = (EntityPlayer)entity;
-				ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-				if(itemstack != null) {
-					if((Item.itemsList[itemstack.itemID] instanceof ItemFood)){
-						looksWithInterest = ((ItemFood)Item.itemsList[itemstack.itemID]).getIsWolfsFavoriteMeat();
-					}
-				}
-			}
-		}*/
+
 
 		if(getT()==1){
-			//System.out.println("d");
-			if(worldObj.multiplayerWorld && renew){
+			if(AutomatonUniversal.otherWorld(worldObj) && renew){
 				
 				renew=false;
 				String s=getD();
-				//System.out.println(s);
 				if(s!=""){
 					int ii=s.indexOf(",");
 					
@@ -556,7 +492,7 @@ public class AM_EntityWorker extends EntityCreature
 			}
 			//System.out.println("digg??: "+dX +","+dY+","+dZ+"  :  "+MathHelper.floor_double(posX)+","+MathHelper.floor_double(posY-1)+","+MathHelper.floor_double(posZ));
 			dig(dX,dY,dZ);
-		}else if(worldObj.multiplayerWorld  && getT()==2){
+		}else if(AutomatonUniversal.otherWorld(worldObj)  && getT()==2){
 			if(renew){
 				renew=false;
 				worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
@@ -571,7 +507,7 @@ public class AM_EntityWorker extends EntityCreature
 		if(isWet()){
 			if(isEntityAlive()){
 				Dropper();
-				//health=0;
+				
 			}
 		}
 	}
@@ -742,7 +678,7 @@ public class AM_EntityWorker extends EntityCreature
 			if(itemstack != null){
 				if((itemstack.itemID>=1 && itemstack.itemID<=4) || (itemstack.itemID>=12 && itemstack.itemID<=22))
 				{
-					if(!worldObj.multiplayerWorld)
+					if(!AutomatonUniversal.otherWorld(worldObj))
 					{
 						setMode(2);
 						setInventoryType(itemstack.itemID);
@@ -751,7 +687,7 @@ public class AM_EntityWorker extends EntityCreature
 					return true;
 				}else if(itemstack.itemID == Item.shovelStone.shiftedIndex)
 				{
-					if(!worldObj.multiplayerWorld)
+					if(!AutomatonUniversal.otherWorld(worldObj))
 					{
 						setMode(3);
 					}
@@ -759,7 +695,7 @@ public class AM_EntityWorker extends EntityCreature
 					return true;
 				}else if(itemstack.itemID == 54) //Item.stick.shiftedIndex
 				{
-					if(!worldObj.multiplayerWorld)
+					if(!AutomatonUniversal.otherWorld(worldObj))
 					{
 						setMode(4);
 					}
@@ -767,7 +703,7 @@ public class AM_EntityWorker extends EntityCreature
 					return true;
 					
 				}else if(itemstack.itemID==Item.redstone.shiftedIndex){
-					if(!worldObj.multiplayerWorld)
+					if(!AutomatonUniversal.otherWorld(worldObj))
 					{
 						setMode(2);
 						setInventoryType(Block.oreRedstone.blockID);
@@ -775,7 +711,7 @@ public class AM_EntityWorker extends EntityCreature
 					modeSwap();
 					return true;
 				}else if(itemstack.itemID==Item.coal.shiftedIndex){
-					if(!worldObj.multiplayerWorld)
+					if(!AutomatonUniversal.otherWorld(worldObj))
 					{
 						setMode(2);
 						setInventoryType(Block.oreCoal.blockID);
@@ -784,7 +720,7 @@ public class AM_EntityWorker extends EntityCreature
 					return true;
 					
 				}
-				if(!worldObj.multiplayerWorld){
+				if(!AutomatonUniversal.otherWorld(worldObj)){
 					if(getMode()!=0){
 						setMode(0);
 					}else{
@@ -798,7 +734,7 @@ public class AM_EntityWorker extends EntityCreature
 			
 			
 			
-			if(!worldObj.multiplayerWorld){
+			if(!AutomatonUniversal.otherWorld(worldObj)){
 				if(getMode()!=0){
 					setMode(0);
 				}else{
@@ -817,72 +753,14 @@ public class AM_EntityWorker extends EntityCreature
 
 	void showHeartsOrSmokeFX(boolean flag)
 	{
-		String s = "heart";
-		if(!flag)
-		{
-			s = "smoke";
-		}
-		for(int i = 0; i < 7; i++)
-		{
-			double d = rand.nextGaussian() * 0.02D;
-			double d1 = rand.nextGaussian() * 0.02D;
-			double d2 = rand.nextGaussian() * 0.02D;
-			worldObj.spawnParticle(s, (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + 0.5D + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
-		}
-
+		AutomatonUniversal.poof(worldObj,posX,posY,posZ);
 	}
 	
 	private void dig(int x, int y,int z)
 	{
-		
-		int ii=worldObj.getBlockId(x,y,z);
-		if(ii>0){
-			String s = "type"+ii; //smoke
-			
-			
-			
-			for(int i = 0; i < 3; i++)
-			{
-				double d = (x + (double)(rand.nextFloat() ));
-				double d1 = y + 0.5D + (double)(rand.nextFloat());//rand.nextGaussian() * 0.02D;
-				double d2 = (z + (double)(rand.nextFloat() ));//rand.nextGaussian() * 0.02D;
-				
-				//worldObj.spawnParticle(s,  , , , d, d1, d2);
-			
-				//int type=Integer.parseInt(s.substring(4,s.length()));
-		
-				int type=ii;
-				effectRenderer.addEffect(new EntityDiggingFX(worldObj, d, d1, d2, 0.0D, 0.0D, 0.0D, Block.blocksList[type], 0, 0)); //0=l,0=metadata
-			
-			
-			}
-		}
+		AutomatonUniversal.dig(worldObj,x,y,z);
+	}
 
-	}
-	
-	public EffectRenderer effectRenderer=ModLoader.getMinecraftInstance().effectRenderer;;
-	/*
-	public void handleHealthUpdate(byte byte0)
-	{
-		if(byte0 == 7)
-		{
-			showHeartsOrSmokeFX(true);
-		} else
-		if(byte0 == 6)
-		{
-			showHeartsOrSmokeFX(false);
-		} else
-		if(byte0 == 8)
-		{
-			field_25052_g = true;
-			//timeWolfIsShaking = 0.0F;
-			//prevTimeWolfIsShaking = 0.0F;
-		} else
-		{
-			super.handleHealthUpdate(byte0);
-		}
-	}
-*/
 	public int getMaxSpawnedInChunk()
 	{
 		return 8;
@@ -907,7 +785,7 @@ public class AM_EntityWorker extends EntityCreature
 	}
 	
 	protected int getMode(){
-		return dataWatcher.getWatchableObjectInt(16);
+		return AutomatonUniversal.getInt(dataWatcher,16);
 	}
 	
 	protected void setState(int i){
@@ -952,7 +830,7 @@ public class AM_EntityWorker extends EntityCreature
 		dataWatcher.updateObject(18, Integer.valueOf(i));
 	}
 	public int getInventoryType(){
-		return dataWatcher.getWatchableObjectInt(18);
+		return AutomatonUniversal.getInt(dataWatcher,18);
 	}
 	public void setInventoryNum(int i){
 		invNum=i;
@@ -1007,7 +885,7 @@ public class AM_EntityWorker extends EntityCreature
 	}
 	
 	protected int getT(){
-		return dataWatcher.getWatchableObjectInt(19);
+		return AutomatonUniversal.getInt(dataWatcher,19);
 	}
 	protected void setT(int i){
 		trigger=i;

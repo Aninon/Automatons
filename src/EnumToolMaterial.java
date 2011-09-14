@@ -15,7 +15,7 @@ public enum EnumToolMaterial
 /*
     public static EnumToolMaterial[] values()
     {
-        return (EnumToolMaterial[])field_21209_j.clone();
+        return (EnumToolMaterial[])allToolMaterials.clone();
     }
 
     public static EnumToolMaterial valueOf(String s)
@@ -62,7 +62,7 @@ public enum EnumToolMaterial
     private final int maxUses;
     private final float efficiencyOnProperMaterial;
     private final int damageVsEntity;
-    private static final EnumToolMaterial field_21209_j[]; /* synthetic field */
+    private static final EnumToolMaterial allToolMaterials[]; /* synthetic field */
 
     static 
     {
@@ -73,7 +73,7 @@ public enum EnumToolMaterial
         EMERALD = new EnumToolMaterial("EMERALD", 3, 3, 1561, 8F, 3);
         GOLD = new EnumToolMaterial("GOLD", 4, 0, 32, 12F, 0);
 */
-        field_21209_j = (new EnumToolMaterial[] {
+        allToolMaterials = (new EnumToolMaterial[] {
             WOOD, STONE, IRON, EMERALD, GOLD
         });
     }

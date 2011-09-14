@@ -22,7 +22,7 @@ public class GuiMultiplayer extends GuiScreen
 
     public void updateScreen()
     {
-        field_22111_h.updateCursorCounter();
+        serverTextField.updateCursorCounter();
     }
 
     public void initGui()
@@ -34,9 +34,9 @@ public class GuiMultiplayer extends GuiScreen
         controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
         String s = mc.gameSettings.lastServer.replaceAll("_", ":");
         ((GuiButton)controlList.get(0)).enabled = s.length() > 0;
-        field_22111_h = new GuiTextField(this, fontRenderer, width / 2 - 100, (height / 4 - 10) + 50 + 18, 200, 20, s);
-        field_22111_h.isFocused = true;
-        field_22111_h.setMaxStringLength(128);
+        serverTextField = new GuiTextField(this, fontRenderer, width / 2 - 100, (height / 4 - 10) + 50 + 18, 200, 20, s);
+        serverTextField.isFocused = true;
+        serverTextField.setMaxStringLength(128);
     }
 
     public void onGuiClosed()
@@ -56,7 +56,7 @@ public class GuiMultiplayer extends GuiScreen
         } else
         if(guibutton.id == 0)
         {
-            String s = field_22111_h.getText().trim();
+            String s = serverTextField.getText().trim();
             mc.gameSettings.lastServer = s.replaceAll(":", "_");
             mc.gameSettings.saveOptions();
             String as[] = s.split(":");
@@ -103,18 +103,18 @@ public class GuiMultiplayer extends GuiScreen
 
     protected void keyTyped(char c, int i)
     {
-        field_22111_h.textboxKeyTyped(c, i);
+        serverTextField.textboxKeyTyped(c, i);
         if(c == '\r')
         {
             actionPerformed((GuiButton)controlList.get(0));
         }
-        ((GuiButton)controlList.get(0)).enabled = field_22111_h.getText().length() > 0;
+        ((GuiButton)controlList.get(0)).enabled = serverTextField.getText().length() > 0;
     }
 
     protected void mouseClicked(int i, int j, int k)
     {
         super.mouseClicked(i, j, k);
-        field_22111_h.mouseClicked(i, j, k);
+        serverTextField.mouseClicked(i, j, k);
     }
 
     public void drawScreen(int i, int j, float f)
@@ -125,10 +125,10 @@ public class GuiMultiplayer extends GuiScreen
         drawString(fontRenderer, stringtranslate.translateKey("multiplayer.info1"), width / 2 - 140, (height / 4 - 60) + 60 + 0, 0xa0a0a0);
         drawString(fontRenderer, stringtranslate.translateKey("multiplayer.info2"), width / 2 - 140, (height / 4 - 60) + 60 + 9, 0xa0a0a0);
         drawString(fontRenderer, stringtranslate.translateKey("multiplayer.ipinfo"), width / 2 - 140, (height / 4 - 60) + 60 + 36, 0xa0a0a0);
-        field_22111_h.drawTextBox();
+        serverTextField.drawTextBox();
         super.drawScreen(i, j, f);
     }
 
     private GuiScreen parentScreen;
-    private GuiTextField field_22111_h;
+    private GuiTextField serverTextField;
 }

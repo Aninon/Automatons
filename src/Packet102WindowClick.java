@@ -23,7 +23,7 @@ public class Packet102WindowClick extends Packet
         mouseClick = k;
         itemStack = itemstack;
         action = word0;
-        field_27050_f = flag;
+        holdingShift = flag;
     }
 
     public void processPacket(NetHandler nethandler)
@@ -38,7 +38,7 @@ public class Packet102WindowClick extends Packet
         inventorySlot = datainputstream.readShort();
         mouseClick = datainputstream.readByte();
         action = datainputstream.readShort();
-        field_27050_f = datainputstream.readBoolean();
+        holdingShift = datainputstream.readBoolean();
         short word0 = datainputstream.readShort();
         if(word0 >= 0)
         {
@@ -58,7 +58,7 @@ public class Packet102WindowClick extends Packet
         dataoutputstream.writeShort(inventorySlot);
         dataoutputstream.writeByte(mouseClick);
         dataoutputstream.writeShort(action);
-        dataoutputstream.writeBoolean(field_27050_f);
+        dataoutputstream.writeBoolean(holdingShift);
         if(itemStack == null)
         {
             dataoutputstream.writeShort(-1);
@@ -80,5 +80,5 @@ public class Packet102WindowClick extends Packet
     public int mouseClick;
     public short action;
     public ItemStack itemStack;
-    public boolean field_27050_f;
+    public boolean holdingShift;
 }

@@ -62,8 +62,8 @@ public class TextureCompassFX extends TextureFX
         if(mc.theWorld != null && mc.thePlayer != null)
         {
             ChunkCoordinates chunkcoordinates = mc.theWorld.getSpawnPoint();
-            double d2 = (double)chunkcoordinates.x - mc.thePlayer.posX;
-            double d4 = (double)chunkcoordinates.z - mc.thePlayer.posZ;
+            double d2 = (double)chunkcoordinates.posX - mc.thePlayer.posX;
+            double d4 = (double)chunkcoordinates.posZ - mc.thePlayer.posZ;
             d = ((double)(mc.thePlayer.rotationYaw - 90F) * 3.1415926535897931D) / 180D - Math.atan2(d4, d2);
             if(mc.theWorld.worldProvider.isNether)
             {

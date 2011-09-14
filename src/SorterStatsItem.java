@@ -17,8 +17,8 @@ class SorterStatsItem
     SorterStatsItem(GuiSlotStatsItem guislotstatsitem, GuiStats guistats)
     {
 //        super();
-        field_27372_b = guislotstatsitem;
-        field_27373_a = guistats;
+        slotStatsItemGUI = guislotstatsitem;
+        statsGUI = guistats;
     }
 
     public int func_27371_a(StatCrafting statcrafting, StatCrafting statcrafting1)
@@ -27,17 +27,17 @@ class SorterStatsItem
         int j = statcrafting1.func_25072_b();
         StatBase statbase = null;
         StatBase statbase1 = null;
-        if(field_27372_b.field_27271_e == 0)
+        if(slotStatsItemGUI.field_27271_e == 0)
         {
             statbase = StatList.objectBreakStats[i];
             statbase1 = StatList.objectBreakStats[j];
         } else
-        if(field_27372_b.field_27271_e == 1)
+        if(slotStatsItemGUI.field_27271_e == 1)
         {
             statbase = StatList.objectCraftStats[i];
             statbase1 = StatList.objectCraftStats[j];
         } else
-        if(field_27372_b.field_27271_e == 2)
+        if(slotStatsItemGUI.field_27271_e == 2)
         {
             statbase = StatList.objectUseStats[i];
             statbase1 = StatList.objectUseStats[j];
@@ -52,11 +52,11 @@ class SorterStatsItem
             {
                 return -1;
             }
-            int k = GuiStats.func_27142_c(field_27372_b.field_27275_a).writeStat(statbase);
-            int l = GuiStats.func_27142_c(field_27372_b.field_27275_a).writeStat(statbase1);
+            int k = GuiStats.func_27142_c(slotStatsItemGUI.field_27275_a).writeStat(statbase);
+            int l = GuiStats.func_27142_c(slotStatsItemGUI.field_27275_a).writeStat(statbase1);
             if(k != l)
             {
-                return (k - l) * field_27372_b.field_27270_f;
+                return (k - l) * slotStatsItemGUI.field_27270_f;
             }
         }
         return i - j;
@@ -67,6 +67,6 @@ class SorterStatsItem
         return func_27371_a((StatCrafting)obj, (StatCrafting)obj1);
     }
 
-    final GuiStats field_27373_a; /* synthetic field */
-    final GuiSlotStatsItem field_27372_b; /* synthetic field */
+    final GuiStats statsGUI; /* synthetic field */
+    final GuiSlotStatsItem slotStatsItemGUI; /* synthetic field */
 }

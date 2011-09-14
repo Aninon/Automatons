@@ -34,7 +34,7 @@ public class EntityReddustFX extends EntityFX
         particleBlue = ((float)(Math.random() * 0.20000000298023224D) + 0.8F) * f3 * f4;
         particleScale *= 0.75F;
         particleScale *= f;
-        field_673_a = particleScale;
+        reddustParticleScale = particleScale;
         particleMaxAge = (int)(8D / (Math.random() * 0.80000000000000004D + 0.20000000000000001D));
         particleMaxAge *= f;
         noClip = false;
@@ -51,7 +51,7 @@ public class EntityReddustFX extends EntityFX
         {
             f6 = 1.0F;
         }
-        particleScale = field_673_a * f6;
+        particleScale = reddustParticleScale * f6;
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
@@ -81,5 +81,5 @@ public class EntityReddustFX extends EntityFX
         }
     }
 
-    float field_673_a;
+    float reddustParticleScale;
 }

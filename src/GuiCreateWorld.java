@@ -18,7 +18,7 @@ public class GuiCreateWorld extends GuiScreen
 
     public GuiCreateWorld(GuiScreen guiscreen)
     {
-        field_22131_a = guiscreen;
+        parentGuiScreen = guiscreen;
     }
 
     public void updateScreen()
@@ -78,7 +78,7 @@ public class GuiCreateWorld extends GuiScreen
         }
         if(guibutton.id == 1)
         {
-            mc.displayGuiScreen(field_22131_a);
+            mc.displayGuiScreen(parentGuiScreen);
         } else
         if(guibutton.id == 0)
         {
@@ -162,7 +162,7 @@ public class GuiCreateWorld extends GuiScreen
         }
     }
 
-    private GuiScreen field_22131_a;
+    private GuiScreen parentGuiScreen;
     private GuiTextField textboxWorldName;
     private GuiTextField textboxSeed;
     private String folderName;

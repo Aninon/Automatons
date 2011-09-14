@@ -127,9 +127,9 @@ public final class SpawnerAnimals
                                             float var29 = (float)var24 + 0.5F;
                                             if(var0.getClosestPlayer((double)var27, (double)var28, (double)var29, 24.0D) == null)
                                             {
-                                                float var30 = var27 - (float)var35.x;
-                                                float var31 = var28 - (float)var35.y;
-                                                float var32 = var29 - (float)var35.z;
+                                                float var30 = var27 - (float)var35.posX;
+                                                float var31 = var28 - (float)var35.posY;
+                                                float var32 = var29 - (float)var35.posZ;
                                                 float var33 = var30 * var30 + var31 * var31 + var32 * var32;
                                                 if(var33 >= 576.0F)
                                                 {
@@ -268,9 +268,9 @@ public final class SpawnerAnimals
                                     {
                                         chunkcoordinates = new ChunkCoordinates(j, j1 + 1, k);
                                     }
-                                    entityliving.setLocationAndAngles((float)chunkcoordinates.x + 0.5F, chunkcoordinates.y, (float)chunkcoordinates.z + 0.5F, 0.0F, 0.0F);
+                                    entityliving.setLocationAndAngles((float)chunkcoordinates.posX + 0.5F, chunkcoordinates.posY, (float)chunkcoordinates.posZ + 0.5F, 0.0F, 0.0F);
                                     world.entityJoinedWorld(entityliving);
-                                    creatureSpecificInit(entityliving, world, (float)chunkcoordinates.x + 0.5F, chunkcoordinates.y, (float)chunkcoordinates.z + 0.5F);
+                                    creatureSpecificInit(entityliving, world, (float)chunkcoordinates.posX + 0.5F, chunkcoordinates.posY, (float)chunkcoordinates.posZ + 0.5F);
                                     entityplayer.wakeUpPlayer(true, false, false);
                                     entityliving.playLivingSound();
                                     flag = true;

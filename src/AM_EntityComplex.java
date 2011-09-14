@@ -89,7 +89,7 @@ public class AM_EntityComplex extends EntityAnimal
     }
 	protected float getBlockPathWeight(int i, int j, int k)
     {
-        if(worldObj.getBlockId(i, j - 1, k) == mod_Automatons.frass.blockID)
+        if(worldObj.getBlockId(i, j - 1, k) == AutomatonLogger.frass)
         {
             return 10F;
         } else
@@ -100,11 +100,6 @@ public class AM_EntityComplex extends EntityAnimal
 	
 	public boolean attackEntityFrom(Entity entity, int i)
     {
-	
-		//counter=0;
-		//if(ridingEntity!=null){
-		//ridingEntity.mountEntity(this);
-		//}
 		
 		super.attackEntityFrom(entity,i);
 		return true;

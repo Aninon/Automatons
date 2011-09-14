@@ -24,7 +24,7 @@ class ChunkFolderPattern
     {
         if(file.isDirectory())
         {
-            Matcher matcher = field_22392_a.matcher(file.getName());
+            Matcher matcher = folderRegexPattern.matcher(file.getName());
             return matcher.matches();
         } else
         {
@@ -37,6 +37,6 @@ class ChunkFolderPattern
         this();
     }
 
-    public static final Pattern field_22392_a = Pattern.compile("[0-9a-z]|([0-9a-z][0-9a-z])");
+    public static final Pattern folderRegexPattern = Pattern.compile("[0-9a-z]|([0-9a-z][0-9a-z])");
 
 }

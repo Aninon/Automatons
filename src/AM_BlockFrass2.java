@@ -15,7 +15,7 @@ public class AM_BlockFrass2 extends Block
 
     protected AM_BlockFrass2(int i)
     {
-        super(i, Material.grassMaterial);
+        super(i, Material.grass);
         setTickOnLoad(true);
 		//slipperiness = 1.50F;
     }
@@ -37,7 +37,7 @@ public class AM_BlockFrass2 extends Block
 	
 	public void updateTick(World world, int i, int j, int k, Random random)
     {
-        if(world.multiplayerWorld)
+        if(AutomatonUniversal.otherWorld(world))
         {
             return;
         }

@@ -54,7 +54,7 @@ public class AutomatonLogger {
 	public static int deployer=112;
 	public static int techPlant=113;
 	public static int importantBuildingThingy=114;
-	public static int arbor=115;
+	public static int arbor=117;
 	
 	
 	public static int worker=58;

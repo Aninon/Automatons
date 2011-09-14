@@ -30,7 +30,7 @@ public class EntitySmokeFX extends EntityFX
         particleRed = particleGreen = particleBlue = (float)(Math.random() * 0.30000001192092896D);
         particleScale *= 0.75F;
         particleScale *= f;
-        field_671_a = particleScale;
+        smokeParticleScale = particleScale;
         particleMaxAge = (int)(8D / (Math.random() * 0.80000000000000004D + 0.20000000000000001D));
         particleMaxAge *= f;
         noClip = false;
@@ -47,7 +47,7 @@ public class EntitySmokeFX extends EntityFX
         {
             f6 = 1.0F;
         }
-        particleScale = field_671_a * f6;
+        particleScale = smokeParticleScale * f6;
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
@@ -78,5 +78,5 @@ public class EntitySmokeFX extends EntityFX
         }
     }
 
-    float field_671_a;
+    float smokeParticleScale;
 }

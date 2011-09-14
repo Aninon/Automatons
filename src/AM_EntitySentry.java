@@ -94,7 +94,7 @@ public class AM_EntitySentry extends EntityCreature
 
 	protected String getLivingSound(){
 		
-		return "mob.techy";
+		return "automatons.techy";
 		
 	}
 
@@ -125,7 +125,7 @@ public class AM_EntitySentry extends EntityCreature
 			worldObj.spawnParticle("explode", (posX + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(rand.nextFloat() * height), (posZ + (double)(rand.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
 		}
 		
-		if(!worldObj.multiplayerWorld){
+		if(!AutomatonUniversal.otherWorld(worldObj)){
 			entityDropItem(new ItemStack(AutomatonLogger.biter+256, 1,0), 0.0F);
 			setEntityDead();
 		}
@@ -152,7 +152,7 @@ public class AM_EntitySentry extends EntityCreature
 			float f = entityplayer.getDistanceToEntity(this);
 			if(f > 7F){
 				
-				if(playerToAttack!=null && f>14f){
+				if(entityToAttack!=null && f>14f){
 					setTarget(null);
 					getPathOrWalkableBlock(entityplayer, f);
 				}else{
@@ -162,7 +162,7 @@ public class AM_EntitySentry extends EntityCreature
 			
 			
 			if(!hasPath()){
-				if(playerToAttack == null){ // && playerToAttack == null
+				if(entityToAttack == null){ // && entityToAttack == null
 					
 
 					List list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityMob.class, boundingBox.expand(16D, 3D, 16D));
@@ -184,7 +184,7 @@ public class AM_EntitySentry extends EntityCreature
 				}else{
 					setTarget(null);
 					getPathOrWalkableBlock(entityplayer, 8f);//System.out.println("is puppy lost?");
-					//setPathToEntity(worldObj.getPathToEntity(this, playerToAttack, 16f));
+					//setPathToEntity(worldObj.getPathToEntity(this, entityToAttack, 16f));
 				}
 			}
 			
@@ -204,7 +204,7 @@ public class AM_EntitySentry extends EntityCreature
 				okay=false;
 			}else if(ent1 instanceof EntityWolf){
 				EntityWolf ew= (EntityWolf)ent1;
-				okay=ew.isWolfAngry();
+				okay=AutomatonUniversal.angrywolf(ew);
 			}
 			
 			if(okay){
@@ -328,18 +328,9 @@ public class AM_EntitySentry extends EntityCreature
 		}
 		
 	}
-
-	
-
-	
-	
-	
 	public String getBotOwner()
 	{
 		return dataWatcher.getWatchableObjectString(17);
-	}
-	public EntityLiving reallyGetBotOwner(){
-		return (EntityLiving) worldObj.getPlayerEntityByName(getBotOwner());
 	}
 
 	public void setBotOwner(String s)

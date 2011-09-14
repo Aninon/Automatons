@@ -21,7 +21,7 @@ public class GuiScreen extends Gui
     public GuiScreen()
     {
         controlList = new ArrayList();
-        field_948_f = false;
+        allowUserInput = false;
         selectedButton = null;
     }
 
@@ -197,7 +197,7 @@ public class GuiScreen extends Gui
     public int width;
     public int height;
     protected List controlList;
-    public boolean field_948_f;
+    public boolean allowUserInput;
     protected FontRenderer fontRenderer;
     public GuiParticle guiParticles;
     private GuiButton selectedButton;

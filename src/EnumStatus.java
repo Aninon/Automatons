@@ -15,7 +15,7 @@ public enum EnumStatus
 /*
     public static EnumStatus[] values()
     {
-        return (EnumStatus[])field_25204_f.clone();
+        return (EnumStatus[])allStatuses.clone();
     }
 
     public static EnumStatus valueOf(String s)
@@ -34,7 +34,7 @@ public enum EnumStatus
     public static final EnumStatus TOO_FAR_AWAY;
     public static final EnumStatus OTHER_PROBLEM;
 */
-    private static final EnumStatus field_25204_f[]; /* synthetic field */
+    private static final EnumStatus allStatuses[]; /* synthetic field */
 
     static 
     {
@@ -45,7 +45,7 @@ public enum EnumStatus
         TOO_FAR_AWAY = new EnumStatus("TOO_FAR_AWAY", 3);
         OTHER_PROBLEM = new EnumStatus("OTHER_PROBLEM", 4);
 */
-        field_25204_f = (new EnumStatus[] {
+        allStatuses = (new EnumStatus[] {
             OK, NOT_POSSIBLE_HERE, NOT_POSSIBLE_NOW, TOO_FAR_AWAY, OTHER_PROBLEM
         });
     }

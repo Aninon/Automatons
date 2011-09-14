@@ -230,7 +230,7 @@ public class EntityRenderer
             if(!mc.gameSettings.debugCamEnable)
             {
                 int i = mc.theWorld.getBlockId(MathHelper.floor_double(entityliving.posX), MathHelper.floor_double(entityliving.posY), MathHelper.floor_double(entityliving.posZ));
-                if(i == Block.blockBed.blockID)
+                if(i == Block.bed.blockID)
                 {
                     int j = mc.theWorld.getBlockMetadata(MathHelper.floor_double(entityliving.posX), MathHelper.floor_double(entityliving.posY), MathHelper.floor_double(entityliving.posZ));
                     int k = j & 3;

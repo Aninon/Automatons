@@ -21,12 +21,15 @@ public class AM_ItemWerg extends Item
 
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-	
+	/*
 	for(int x=0;x<100;x++){
 	for(int z=0;z<100;z++){
 	world.setBlock(100+i+x,j,k+z,AutomatonLogger.importantBuildingThingy);
 	}
 	}
+	*/
+	
+	
 	
 	/*
 	int W=7;//M*M;
@@ -82,7 +85,7 @@ public class AM_ItemWerg extends Item
 	
 	
 	
-	if(!world.multiplayerWorld){
+	if(!AutomatonUniversal.otherWorld(world)){
 			if(world.getWorldTime()>13500){
 				world.setWorldTime(0);
 			}else{
@@ -97,13 +100,13 @@ public class AM_ItemWerg extends Item
 	
 	
 	
-/*	//world.setBlock(i, j, k, 0);
-	for(int i=0;i<100;i++){
-        world.entityJoinedWorld(new AM_EntityRemnant(world,ep.posX+30,ep.posY,ep.posZ ));
-		}
+	//world.setBlock(i, j, k, 0);
+	//for(int i=0;i<100;i++){
+        world.entityJoinedWorld(new AM_EntityArborist(world,ep.posX,ep.posY,ep.posZ ));
+		//}
 	
 	
-	*/
+	
 	
 	
 	

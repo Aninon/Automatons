@@ -36,13 +36,13 @@ public class World
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
         loadedTileEntityList = new ArrayList();
-        field_30900_E = new ArrayList();
+        addedTileEntityList = new ArrayList();
         playerEntities = new ArrayList();
         weatherEffects = new ArrayList();
         field_1019_F = 0xffffffL;
         skylightSubtracted = 0;
         updateLCG = (new Random()).nextInt();
-        field_27168_F = 0;
+        lastLightningBolt = 0;
         field_27172_i = 0;
         editingBlocks = false;
         lockTimestamp = System.currentTimeMillis();
@@ -61,7 +61,7 @@ public class World
         saveHandler = isavehandler;
         worldInfo = new WorldInfo(l, s);
         worldProvider = worldprovider;
-        field_28108_z = new MapStorage(isavehandler);
+        mapStorage = new MapStorage(isavehandler);
         worldprovider.registerWorld(this);
         chunkProvider = getChunkProvider();
         calculateInitialSkylight();
@@ -77,13 +77,13 @@ public class World
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
         loadedTileEntityList = new ArrayList();
-        field_30900_E = new ArrayList();
+        addedTileEntityList = new ArrayList();
         playerEntities = new ArrayList();
         weatherEffects = new ArrayList();
         field_1019_F = 0xffffffL;
         skylightSubtracted = 0;
         updateLCG = (new Random()).nextInt();
-        field_27168_F = 0;
+        lastLightningBolt = 0;
         field_27172_i = 0;
         editingBlocks = false;
         lockTimestamp = System.currentTimeMillis();
@@ -102,7 +102,7 @@ public class World
         lockTimestamp = world.lockTimestamp;
         saveHandler = world.saveHandler;
         worldInfo = new WorldInfo(world.worldInfo);
-        field_28108_z = new MapStorage(saveHandler);
+        mapStorage = new MapStorage(saveHandler);
         worldProvider = worldprovider;
         worldprovider.registerWorld(this);
         chunkProvider = getChunkProvider();
@@ -124,13 +124,13 @@ public class World
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
         loadedTileEntityList = new ArrayList();
-        field_30900_E = new ArrayList();
+        addedTileEntityList = new ArrayList();
         playerEntities = new ArrayList();
         weatherEffects = new ArrayList();
         field_1019_F = 0xffffffL;
         skylightSubtracted = 0;
         updateLCG = (new Random()).nextInt();
-        field_27168_F = 0;
+        lastLightningBolt = 0;
         field_27172_i = 0;
         editingBlocks = false;
         lockTimestamp = System.currentTimeMillis();
@@ -147,7 +147,7 @@ public class World
         field_1012_M = new ArrayList();
         multiplayerWorld = false;
         saveHandler = isavehandler;
-        field_28108_z = new MapStorage(isavehandler);
+        mapStorage = new MapStorage(isavehandler);
         worldInfo = isavehandler.loadWorldInfo();
         isNewWorld = worldInfo == null;
         if(worldprovider != null)
@@ -276,7 +276,7 @@ public class World
     {
         checkSessionLock();
         saveHandler.saveWorldInfoAndPlayer(worldInfo, playerEntities);
-        field_28108_z.saveAllData();
+        mapStorage.saveAllData();
     }
 
     public boolean func_650_a(int i)
@@ -453,7 +453,7 @@ public class World
         if(setBlockMetadata(i, j, k, l))
         {
             int i1 = getBlockId(i, j, k);
-            if(Block.field_28032_t[i1 & 0xff])
+            if(Block.neighborNotifyOnMetadataChangeDisabled[i1 & 0xff])
             {
                 notifyBlockChange(i, j, k, i1);
             } else
@@ -1389,7 +1389,7 @@ public class World
             releaseEntitySkin(entity2);
         }
 
-        field_31055_L = true;
+        scanningTileEntities = true;
         Iterator iterator = loadedTileEntityList.iterator();
         do
         {
@@ -1412,10 +1412,10 @@ public class World
                 }
             }
         } while(true);
-        field_31055_L = false;
-        if(!field_30900_E.isEmpty())
+        scanningTileEntities = false;
+        if(!addedTileEntityList.isEmpty())
         {
-            Iterator iterator1 = field_30900_E.iterator();
+            Iterator iterator1 = addedTileEntityList.iterator();
             do
             {
                 if(!iterator1.hasNext())
@@ -1437,15 +1437,15 @@ public class World
                     markBlockNeedsUpdate(tileentity1.xCoord, tileentity1.yCoord, tileentity1.zCoord);
                 }
             } while(true);
-            field_30900_E.clear();
+            addedTileEntityList.clear();
         }
     }
 
     public void func_31054_a(Collection collection)
     {
-        if(field_31055_L)
+        if(scanningTileEntities)
         {
-            field_30900_E.addAll(collection);
+            addedTileEntityList.addAll(collection);
         } else
         {
             loadedTileEntityList.addAll(collection);
@@ -1842,12 +1842,12 @@ public class World
     {
         if(!tileentity.func_31006_g())
         {
-            if(field_31055_L)
+            if(scanningTileEntities)
             {
                 tileentity.xCoord = i;
                 tileentity.yCoord = j;
                 tileentity.zCoord = k;
-                field_30900_E.add(tileentity);
+                addedTileEntityList.add(tileentity);
             } else
             {
                 loadedTileEntityList.add(tileentity);
@@ -1863,7 +1863,7 @@ public class World
     public void removeBlockTileEntity(int i, int j, int k)
     {
         TileEntity tileentity = getBlockTileEntity(i, j, k);
-        if(tileentity != null && field_31055_L)
+        if(tileentity != null && scanningTileEntities)
         {
             tileentity.func_31005_i();
         } else
@@ -2070,9 +2070,9 @@ public class World
         {
             return;
         }
-        if(field_27168_F > 0)
+        if(lastLightningBolt > 0)
         {
-            field_27168_F--;
+            lastLightningBolt--;
         }
         int i = worldInfo.getThunderTime();
         if(i <= 0)
@@ -2214,7 +2214,7 @@ public class World
                 if(canBlockBeRainedOn(i3, i5, i4))
                 {
                     addWeatherEffect(new EntityLightningBolt(this, i3, i5, i4));
-                    field_27168_F = 2;
+                    lastLightningBolt = 2;
                 }
             }
             if(rand.nextInt(16) == 0)
@@ -2654,7 +2654,7 @@ public class World
 
     public void setSpawnPoint(ChunkCoordinates chunkcoordinates)
     {
-        worldInfo.setSpawn(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z);
+        worldInfo.setSpawn(chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ);
     }
 
     public void joinEntityInSurroundings(Entity entity)
@@ -2864,17 +2864,17 @@ public class World
 
     public void setItemData(String s, MapDataBase mapdatabase)
     {
-        field_28108_z.setData(s, mapdatabase);
+        mapStorage.setData(s, mapdatabase);
     }
 
     public MapDataBase loadItemData(Class class1, String s)
     {
-        return field_28108_z.loadData(class1, s);
+        return mapStorage.loadData(class1, s);
     }
 
     public int getUniqueDataId(String s)
     {
-        return field_28108_z.getUniqueDataId(s);
+        return mapStorage.getUniqueDataId(s);
     }
 
     public void playAuxSFX(int i, int j, int k, int l, int i1)
@@ -2898,18 +2898,18 @@ public class World
     private TreeSet scheduledTickTreeSet;
     private Set scheduledTickSet;
     public List loadedTileEntityList;
-    private List field_30900_E;
+    private List addedTileEntityList;
     public List playerEntities;
     public List weatherEffects;
     private long field_1019_F;
     public int skylightSubtracted;
     protected int updateLCG;
-    protected final int field_9436_h = 0x3c6ef35f;
+    protected final int DIST_HASH_MAGIC = 0x3c6ef35f;
     protected float prevRainingStrength;
     protected float rainingStrength;
     protected float prevThunderingStrength;
     protected float thunderingStrength;
-    protected int field_27168_F;
+    protected int lastLightningBolt;
     public int field_27172_i;
     public boolean editingBlocks;
     private long lockTimestamp;
@@ -2924,9 +2924,9 @@ public class World
     protected WorldInfo worldInfo;
     public boolean findingSpawnPoint;
     private boolean allPlayersSleeping;
-    public MapStorage field_28108_z;
+    public MapStorage mapStorage;
     private ArrayList collidingBoundingBoxes;
-    private boolean field_31055_L;
+    private boolean scanningTileEntities;
     private int lightingUpdatesCounter;
     private boolean spawnHostileMobs;
     private boolean spawnPeacefulMobs;

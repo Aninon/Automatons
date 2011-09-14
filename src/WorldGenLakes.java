@@ -15,7 +15,7 @@ public class WorldGenLakes extends WorldGenerator
 
     public WorldGenLakes(int i)
     {
-        field_15235_a = i;
+        blockIndex = i;
     }
 
     public boolean generate(World world, Random random, int i, int j, int k)
@@ -71,7 +71,7 @@ public class WorldGenLakes extends WorldGenerator
                     {
                         return false;
                     }
-                    if(j3 < 4 && !material.isSolid() && world.getBlockId(i + j1, j + j3, k + j2) != field_15235_a)
+                    if(j3 < 4 && !material.isSolid() && world.getBlockId(i + j1, j + j3, k + j2) != blockIndex)
                     {
                         return false;
                     }
@@ -89,7 +89,7 @@ public class WorldGenLakes extends WorldGenerator
                 {
                     if(aflag[(k1 * 16 + k2) * 8 + k3])
                     {
-                        world.setBlock(i + k1, j + k3, k + k2, k3 < 4 ? field_15235_a : 0);
+                        world.setBlock(i + k1, j + k3, k + k2, k3 < 4 ? blockIndex : 0);
                     }
                 }
 
@@ -113,7 +113,7 @@ public class WorldGenLakes extends WorldGenerator
 
         }
 
-        if(Block.blocksList[field_15235_a].blockMaterial == Material.lava)
+        if(Block.blocksList[blockIndex].blockMaterial == Material.lava)
         {
             for(int i2 = 0; i2 < 16; i2++)
             {
@@ -136,5 +136,5 @@ public class WorldGenLakes extends WorldGenerator
         return true;
     }
 
-    private int field_15235_a;
+    private int blockIndex;
 }

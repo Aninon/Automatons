@@ -15,7 +15,7 @@ public class AM_BlockFrass extends Block
 
 	protected AM_BlockFrass(int i)
 	{
-		super(i, Material.grassMaterial);
+		super(i, Material.grass);
 		setTickOnLoad(true);
 	}
 
@@ -38,6 +38,7 @@ public class AM_BlockFrass extends Block
 		blocks[40]=6;
 		blocks[83]=6;
 		blocks[81]=6;
+		blocks[86]=6;
 		
 		blocks[6]=8;
 		blocks[59]=6;
@@ -64,28 +65,28 @@ public class AM_BlockFrass extends Block
 			//10 air
 	}
 	
-	public static int max=84;
+	public static int max=88;
 	public static int blocks[]=new int[max];
 	
 	static int D[];
 	static void loadSprites(){
 		D=new int[10];
-		D[0]=ModLoader.addOverride("/terrain.png", "/automatons/frass1.png"); //clay
-		D[1]=ModLoader.addOverride("/terrain.png", "/automatons/frass2.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass1.png"); //clay
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass2.png");
 		D[2]=72; 
 		
-		D[3]=ModLoader.addOverride("/terrain.png", "/automatons/frass3.png"); //desert
-		D[4]=ModLoader.addOverride("/terrain.png", "/automatons/frass4.png");
+		D[3]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass3.png"); //desert
+		D[4]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass4.png");
 		D[5]=18;
 		
-		D[7]=ModLoader.addOverride("/terrain.png", "/automatons/frass7.png"); //dirt
-		D[8]=ModLoader.addOverride("/terrain.png", "/automatons/frass6.png");
+		D[7]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass7.png"); //dirt
+		D[8]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass6.png");
 		D[9]=2;
 		
 		
-		//D[6]=ModLoader.addOverride("/terrain.png", "/automatons/frass5.png");
+		//D[6]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frass5.png");
 		
-		D[6]=ModLoader.addOverride("/terrain.png", "/automatons/frassn.png");
+		D[6]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/frassn.png");
 		
 	}
 
@@ -123,7 +124,7 @@ public class AM_BlockFrass extends Block
 	
 	
 	public void updateTick(World world, int i, int j, int k, Random random){
-		if(world.multiplayerWorld){
+		if(AutomatonUniversal.otherWorld(world)){
 			return;
 		}
 		
@@ -227,7 +228,7 @@ public class AM_BlockFrass extends Block
 	int t=world.getBlockId(i,j-1,k);
 	world.setBlock(i,j,k,0);
 	if(t!=AutomatonLogger.frass){
-		world.setBlockAndMetadata(i, j-1, k,AutomatonLogger.frass,3);
+		world.setBlockAndMetadataWithNotify(i, j-1, k,AutomatonLogger.frass,3);
 	}
 	world.setBlockWithNotify(i, j, k,AutomatonLogger.grower);
 	
@@ -237,7 +238,7 @@ public class AM_BlockFrass extends Block
 	int t=world.getBlockId(i,j-1,k);
 	world.setBlock(i,j,k,0);
 	if(t!=AutomatonLogger.frass){
-		world.setBlockAndMetadata(i, j-1, k,AutomatonLogger.frass,3);
+		world.setBlockAndMetadataWithNotify(i, j-1, k,AutomatonLogger.frass,3);
 	}
 	world.setBlockWithNotify(i, j, k,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));
 	
@@ -259,9 +260,9 @@ public class AM_BlockFrass extends Block
 	
 
 		if(F==6){
-			world.setBlock(i, j+1, k,AutomatonLogger.grower);
+			world.setBlockWithNotify(i, j+1, k,AutomatonLogger.grower);
 		}else if (F==8){
-			world.setBlock(i, j+1, k,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));
+			world.setBlockWithNotify(i, j+1, k,((random.nextInt(3)==0)?AutomatonLogger.dapling:AutomatonLogger.techPlant));
 		}
 	
 	}

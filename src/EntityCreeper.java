@@ -79,7 +79,7 @@ public class EntityCreeper extends EntityMob
             }
         }
         super.onUpdate();
-        if(playerToAttack == null && timeSinceIgnited > 0)
+        if(entityToAttack == null && timeSinceIgnited > 0)
         {
             setCreeperState(-1);
             timeSinceIgnited--;

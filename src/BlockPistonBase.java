@@ -17,7 +17,7 @@ public class BlockPistonBase extends Block
 
     public BlockPistonBase(int i, int j, boolean flag)
     {
-        super(i, j, Material.pistonMaterial);
+        super(i, j, Material.piston);
         isSticky = flag;
         setStepSound(soundStoneFootstep);
         setHardness(0.5F);
@@ -75,7 +75,7 @@ public class BlockPistonBase extends Block
 
     public void onNeighborBlockChange(World world, int i, int j, int k, int l)
     {
-        if(!world.multiplayerWorld && !field_31048_b)
+        if(!world.multiplayerWorld && !ignoreUpdates)
         {
             func_31043_h(world, i, j, k);
         }
@@ -164,7 +164,7 @@ public class BlockPistonBase extends Block
 
     public void playBlock(World world, int i, int j, int k, int l, int i1)
     {
-        field_31048_b = true;
+        ignoreUpdates = true;
         int j1 = i1;
         if(l == 0)
         {
@@ -208,9 +208,9 @@ public class BlockPistonBase extends Block
                 }
                 if(!flag && j2 > 0 && canPushBlock(j2, world, k1, l1, i2, false) && (Block.blocksList[j2].getMobilityFlag() == 0 || j2 == Block.pistonBase.blockID || j2 == Block.pistonStickyBase.blockID))
                 {
-                    field_31048_b = false;
+                    ignoreUpdates = false;
                     world.setBlockWithNotify(k1, l1, i2, 0);
-                    field_31048_b = true;
+                    ignoreUpdates = true;
                     i += PistonBlockTextures.offsetsXForSide[j1];
                     j += PistonBlockTextures.offsetsYForSide[j1];
                     k += PistonBlockTextures.offsetsZForSide[j1];
@@ -219,19 +219,19 @@ public class BlockPistonBase extends Block
                 } else
                 if(!flag)
                 {
-                    field_31048_b = false;
+                    ignoreUpdates = false;
                     world.setBlockWithNotify(i + PistonBlockTextures.offsetsXForSide[j1], j + PistonBlockTextures.offsetsYForSide[j1], k + PistonBlockTextures.offsetsZForSide[j1], 0);
-                    field_31048_b = true;
+                    ignoreUpdates = true;
                 }
             } else
             {
-                field_31048_b = false;
+                ignoreUpdates = false;
                 world.setBlockWithNotify(i + PistonBlockTextures.offsetsXForSide[j1], j + PistonBlockTextures.offsetsYForSide[j1], k + PistonBlockTextures.offsetsZForSide[j1], 0);
-                field_31048_b = true;
+                ignoreUpdates = true;
             }
             world.playSoundEffect((double)i + 0.5D, (double)j + 0.5D, (double)k + 0.5D, "tile.piston.in", 0.5F, world.rand.nextFloat() * 0.15F + 0.6F);
         }
-        field_31048_b = false;
+        ignoreUpdates = false;
     }
 
     public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k)
@@ -464,5 +464,5 @@ public class BlockPistonBase extends Block
     }
 
     private boolean isSticky;
-    private boolean field_31048_b;
+    private boolean ignoreUpdates;
 }

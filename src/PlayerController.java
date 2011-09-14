@@ -135,7 +135,7 @@ public class PlayerController
     public void func_20086_a(int i, EntityPlayer entityplayer)
     {
         entityplayer.craftingInventory.onCraftGuiClosed(entityplayer);
-        entityplayer.craftingInventory = entityplayer.inventorySlots;
+        entityplayer.craftingInventory = entityplayer.slots;
     }
 
     protected final Minecraft mc;
