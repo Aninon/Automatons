@@ -22,7 +22,10 @@ public abstract class TileEntitySpecialRenderer
     protected void bindTextureByName(String s)
     {
         RenderEngine renderengine = tileEntityRenderer.renderEngine;
-        renderengine.bindTexture(renderengine.getTexture(s));
+        if(renderengine != null)
+        {
+            renderengine.bindTexture(renderengine.getTexture(s));
+        }
     }
 
     public void setTileEntityRenderer(TileEntityRenderer tileentityrenderer)

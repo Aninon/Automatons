@@ -12,12 +12,13 @@ import java.util.List;
 public class BiomeGenHell extends BiomeGenBase
 {
 
-    public BiomeGenHell()
+    public BiomeGenHell(int i)
     {
+        super(i);
         spawnableMonsterList.clear();
         spawnableCreatureList.clear();
         spawnableWaterCreatureList.clear();
-        spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityGhast.class, 10));
-        spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityPigZombie.class, 10));
+        spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityGhast.class, 10, 4, 4));
+        spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityPigZombie.class, 10, 4, 4));
     }
 }

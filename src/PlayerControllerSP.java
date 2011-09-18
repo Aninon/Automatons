@@ -31,6 +31,11 @@ public class PlayerControllerSP extends PlayerController
         entityplayer.rotationYaw = -180F;
     }
 
+    public boolean shouldDrawHUD()
+    {
+        return true;
+    }
+
     public boolean sendBlockRemoved(int i, int j, int k, int l)
     {
         int i1 = mc.theWorld.getBlockId(i, j, k);
@@ -56,6 +61,10 @@ public class PlayerControllerSP extends PlayerController
 
     public void clickBlock(int i, int j, int k, int l)
     {
+        if(!mc.thePlayer.func_35190_e(i, j, k))
+        {
+            return;
+        }
         mc.theWorld.onBlockHit(mc.thePlayer, i, j, k, l);
         int i1 = mc.theWorld.getBlockId(i, j, k);
         if(i1 > 0 && curBlockDamage == 0.0F)
@@ -84,6 +93,10 @@ public class PlayerControllerSP extends PlayerController
         if(i == curBlockX && j == curBlockY && k == curBlockZ)
         {
             int i1 = mc.theWorld.getBlockId(i, j, k);
+            if(!mc.thePlayer.func_35190_e(i, j, k))
+            {
+                return;
+            }
             if(i1 == 0)
             {
                 return;
@@ -92,7 +105,7 @@ public class PlayerControllerSP extends PlayerController
             curBlockDamage += block.blockStrength(mc.thePlayer);
             if(field_1069_h % 4F == 0.0F && block != null)
             {
-                mc.sndManager.playSound(block.stepSound.func_1145_d(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.getVolume() + 1.0F) / 8F, block.stepSound.getPitch() * 0.5F);
+                mc.sndManager.playSound(block.stepSound.stepSoundDir2(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.getVolume() + 1.0F) / 8F, block.stepSound.getPitch() * 0.5F);
             }
             field_1069_h++;
             if(curBlockDamage >= 1.0F)
@@ -138,10 +151,37 @@ public class PlayerControllerSP extends PlayerController
         super.func_717_a(world);
     }
 
+    public EntityPlayer createPlayer(World world)
+    {
+        EntityPlayer entityplayer = super.createPlayer(world);
+        return entityplayer;
+    }
+
     public void updateController()
     {
         prevBlockDamage = curBlockDamage;
         mc.sndManager.playRandomMusicIfReady();
+    }
+
+    public boolean sendPlaceBlock(EntityPlayer entityplayer, World world, ItemStack itemstack, int i, int j, int k, int l)
+    {
+        int i1 = world.getBlockId(i, j, k);
+        if(i1 > 0 && Block.blocksList[i1].blockActivated(world, i, j, k, entityplayer))
+        {
+            return true;
+        }
+        if(itemstack == null)
+        {
+            return false;
+        } else
+        {
+            return itemstack.useItem(entityplayer, world, i, j, k, l);
+        }
+    }
+
+    public boolean func_35642_f()
+    {
+        return true;
     }
 
     private int curBlockX;

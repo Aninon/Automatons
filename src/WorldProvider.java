@@ -6,9 +6,9 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            WorldChunkManager, ChunkProviderGenerate, World, Block, 
-//            MathHelper, Vec3D, WorldProviderHell, WorldProviderSurface, 
-//            WorldProviderSky, IChunkProvider
+//            WorldChunkManager, ChunkProviderGenerate, World, WorldInfo, 
+//            Block, BlockGrass, MathHelper, Vec3D, 
+//            WorldProviderHell, WorldProviderSurface, WorldProviderSky, IChunkProvider
 
 public abstract class WorldProvider
 {
@@ -32,7 +32,7 @@ public abstract class WorldProvider
 
     protected void generateLightBrightnessTable()
     {
-        float f = 0.05F;
+        float f = 0.0F;
         for(int i = 0; i <= 15; i++)
         {
             float f1 = 1.0F - (float)i / 15F;
@@ -48,13 +48,13 @@ public abstract class WorldProvider
 
     public IChunkProvider getChunkProvider()
     {
-        return new ChunkProviderGenerate(worldObj, worldObj.getRandomSeed());
+        return new ChunkProviderGenerate(worldObj, worldObj.getRandomSeed(), worldObj.getWorldInfo().func_35917_r());
     }
 
     public boolean canCoordinateBeSpawn(int i, int j)
     {
         int k = worldObj.getFirstUncoveredBlock(i, j);
-        return k == Block.sand.blockID;
+        return k == Block.grass.blockID;
     }
 
     public float calculateCelestialAngle(long l, float f)
@@ -142,7 +142,8 @@ public abstract class WorldProvider
 
     public float getCloudHeight()
     {
-        return 108F;
+        worldObj.getClass();
+        return 128F;
     }
 
     public boolean func_28112_c()

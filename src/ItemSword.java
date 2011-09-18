@@ -7,7 +7,8 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            Item, EnumToolMaterial, Block, ItemStack, 
-//            EntityLiving, Entity
+//            EnumAction, EntityPlayer, EntityLiving, Entity, 
+//            World
 
 public class ItemSword extends Item
 {
@@ -45,6 +46,22 @@ public class ItemSword extends Item
     public boolean isFull3D()
     {
         return true;
+    }
+
+    public EnumAction func_35412_b(ItemStack itemstack)
+    {
+        return EnumAction.block;
+    }
+
+    public int func_35411_c(ItemStack itemstack)
+    {
+        return 0x11940;
+    }
+
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
+    {
+        entityplayer.func_35199_b(itemstack, func_35411_c(itemstack));
+        return itemstack;
     }
 
     public boolean canHarvestBlock(Block block)

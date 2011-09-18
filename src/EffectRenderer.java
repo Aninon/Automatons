@@ -89,10 +89,12 @@ public class EffectRenderer
             }
             GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, j);
             Tessellator tessellator = Tessellator.instance;
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             tessellator.startDrawingQuads();
             for(int k = 0; k < fxLayers[i].size(); k++)
             {
                 EntityFX entityfx = (EntityFX)fxLayers[i].get(k);
+                tessellator.func_35835_b(entityfx.func_35115_a(f));
                 entityfx.renderParticle(tessellator, f, f1, f5, f2, f3, f4);
             }
 
@@ -103,6 +105,11 @@ public class EffectRenderer
 
     public void func_1187_b(Entity entity, float f)
     {
+        float f1 = MathHelper.cos((entity.rotationYaw * 3.141593F) / 180F);
+        float f2 = MathHelper.sin((entity.rotationYaw * 3.141593F) / 180F);
+        float f3 = -f2 * MathHelper.sin((entity.rotationPitch * 3.141593F) / 180F);
+        float f4 = f1 * MathHelper.sin((entity.rotationPitch * 3.141593F) / 180F);
+        float f5 = MathHelper.cos((entity.rotationPitch * 3.141593F) / 180F);
         byte byte0 = 3;
         if(fxLayers[byte0].size() == 0)
         {
@@ -112,7 +119,8 @@ public class EffectRenderer
         for(int i = 0; i < fxLayers[byte0].size(); i++)
         {
             EntityFX entityfx = (EntityFX)fxLayers[byte0].get(i);
-            entityfx.renderParticle(tessellator, f, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+            tessellator.func_35835_b(entityfx.func_35115_a(f));
+            entityfx.renderParticle(tessellator, f, f1, f5, f2, f3, f4);
         }
 
     }

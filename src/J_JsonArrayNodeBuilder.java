@@ -17,17 +17,17 @@ public final class J_JsonArrayNodeBuilder
     {
     }
 
-    public J_JsonArrayNodeBuilder func_27240_a(J_JsonNodeBuilder j_jsonnodebuilder)
+    public J_JsonArrayNodeBuilder withElement(J_JsonNodeBuilder j_jsonnodebuilder)
     {
-        field_27242_a.add(j_jsonnodebuilder);
+        elementBuilders.add(j_jsonnodebuilder);
         return this;
     }
 
-    public J_JsonRootNode func_27241_a()
+    public J_JsonRootNode build()
     {
         LinkedList linkedlist = new LinkedList();
         J_JsonNodeBuilder j_jsonnodebuilder;
-        for(Iterator iterator = field_27242_a.iterator(); iterator.hasNext(); linkedlist.add(j_jsonnodebuilder.func_27234_b()))
+        for(Iterator iterator = elementBuilders.iterator(); iterator.hasNext(); linkedlist.add(j_jsonnodebuilder.buildNode()))
         {
             j_jsonnodebuilder = (J_JsonNodeBuilder)iterator.next();
         }
@@ -35,10 +35,10 @@ public final class J_JsonArrayNodeBuilder
         return J_JsonNodeFactories.func_27309_a(linkedlist);
     }
 
-    public J_JsonNode func_27234_b()
+    public J_JsonNode buildNode()
     {
-        return func_27241_a();
+        return build();
     }
 
-    private final List field_27242_a = new LinkedList();
+    private final List elementBuilders = new LinkedList();
 }

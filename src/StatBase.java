@@ -20,12 +20,12 @@ public class StatBase
         isIndependent = false;
         statId = i;
         statName = s;
-        field_26902_a = istattype;
+        type = istattype;
     }
 
     public StatBase(int i, String s)
     {
-        this(i, s, field_27087_i);
+        this(i, s, simpleStatType);
     }
 
     public StatBase initIndependentStat()
@@ -55,7 +55,7 @@ public class StatBase
 
     public String func_27084_a(int i)
     {
-        return field_26902_a.format(i);
+        return type.format(i);
     }
 
     public String toString()
@@ -63,29 +63,29 @@ public class StatBase
         return statName;
     }
 
-    static NumberFormat func_27083_i()
+    static NumberFormat getNumberFormat()
     {
-        return field_26903_b;
+        return numberFormat;
     }
 
-    static DecimalFormat func_27081_j()
+    static DecimalFormat getDecimalFormat()
     {
-        return field_26904_c;
+        return decimalFormat;
     }
 
     public final int statId;
     public final String statName;
     public boolean isIndependent;
     public String statGuid;
-    private final IStatType field_26902_a;
-    private static NumberFormat field_26903_b;
-    public static IStatType field_27087_i = new StatTypeSimple();
-    private static DecimalFormat field_26904_c = new DecimalFormat("########0.00");
-    public static IStatType field_27086_j = new StatTypeTime();
-    public static IStatType field_27085_k = new StatTypeDistance();
+    private final IStatType type;
+    private static NumberFormat numberFormat;
+    public static IStatType simpleStatType = new StatTypeSimple();
+    private static DecimalFormat decimalFormat = new DecimalFormat("########0.00");
+    public static IStatType timeStatType = new StatTypeTime();
+    public static IStatType distanceStatType = new StatTypeDistance();
 
     static 
     {
-        field_26903_b = NumberFormat.getIntegerInstance(Locale.US);
+        numberFormat = NumberFormat.getIntegerInstance(Locale.US);
     }
 }

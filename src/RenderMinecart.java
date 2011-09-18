@@ -71,23 +71,27 @@ public class RenderMinecart extends Render
             loadTexture("/terrain.png");
             float f5 = 0.75F;
             GL11.glScalef(f5, f5, f5);
-            GL11.glTranslatef(0.0F, 0.3125F, 0.0F);
-            GL11.glRotatef(90F, 0.0F, 1.0F, 0.0F);
             if(entityminecart.minecartType == 1)
             {
+                GL11.glTranslatef(-0.5F, 0.0F, 0.5F);
+                GL11.glRotatef(90F, 0.0F, 1.0F, 0.0F);
                 (new RenderBlocks()).renderBlockOnInventory(Block.chest, 0, entityminecart.getEntityBrightness(f1));
+                GL11.glRotatef(-90F, 0.0F, 1.0F, 0.0F);
+                GL11.glTranslatef(0.5F, 0.0F, -0.5F);
             } else
             if(entityminecart.minecartType == 2)
             {
+                GL11.glTranslatef(0.0F, 0.3125F, 0.0F);
+                GL11.glRotatef(90F, 0.0F, 1.0F, 0.0F);
                 (new RenderBlocks()).renderBlockOnInventory(Block.stoneOvenIdle, 0, entityminecart.getEntityBrightness(f1));
+                GL11.glRotatef(-90F, 0.0F, 1.0F, 0.0F);
+                GL11.glTranslatef(0.0F, -0.3125F, 0.0F);
             }
-            GL11.glRotatef(-90F, 0.0F, 1.0F, 0.0F);
-            GL11.glTranslatef(0.0F, -0.3125F, 0.0F);
             GL11.glScalef(1.0F / f5, 1.0F / f5, 1.0F / f5);
         }
         loadTexture("/item/cart.png");
         GL11.glScalef(-1F, -1F, 1.0F);
-        modelMinecart.render(0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        modelMinecart.render(entityminecart, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GL11.glPopMatrix();
     }
 

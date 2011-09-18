@@ -56,7 +56,7 @@ public class BlockFarmland extends Block
     {
         if(random.nextInt(5) == 0)
         {
-            if(isWaterNearby(world, i, j, k) || world.canBlockBeRainedOn(i, j + 1, k))
+            if(isWaterNearby(world, i, j, k) || world.canLightningStrikeAt(i, j + 1, k))
             {
                 world.setBlockMetadataWithNotify(i, j, k, 7);
             } else
@@ -89,7 +89,8 @@ public class BlockFarmland extends Block
         {
             for(int j1 = k - l; j1 <= k + l; j1++)
             {
-                if(world.getBlockId(i1, j + 1, j1) == Block.crops.blockID)
+                int k1 = world.getBlockId(i1, j + 1, j1);
+                if(k1 == Block.crops.blockID || k1 == Block.field_35283_bu.blockID || k1 == Block.field_35284_bt.blockID)
                 {
                     return true;
                 }

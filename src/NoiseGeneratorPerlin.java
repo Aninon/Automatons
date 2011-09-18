@@ -119,7 +119,7 @@ public class NoiseGeneratorPerlin extends NoiseGenerator
             double d12 = 1.0D / d6;
             for(int i4 = 0; i4 < i; i4++)
             {
-                double d14 = (d + (double)i4) * d3 + xCoord;
+                double d14 = d + (double)i4 * d3 + xCoord;
                 int j4 = (int)d14;
                 if(d14 < (double)j4)
                 {
@@ -130,7 +130,7 @@ public class NoiseGeneratorPerlin extends NoiseGenerator
                 double d17 = d14 * d14 * d14 * (d14 * (d14 * 6D - 15D) + 10D);
                 for(int l4 = 0; l4 < k; l4++)
                 {
-                    double d19 = (d2 + (double)l4) * d5 + zCoord;
+                    double d19 = d2 + (double)l4 * d5 + zCoord;
                     int j5 = (int)d19;
                     if(d19 < (double)j5)
                     {
@@ -168,7 +168,7 @@ public class NoiseGeneratorPerlin extends NoiseGenerator
         double d18 = 0.0D;
         for(int i5 = 0; i5 < i; i5++)
         {
-            double d20 = (d + (double)i5) * d3 + xCoord;
+            double d20 = d + (double)i5 * d3 + xCoord;
             int k5 = (int)d20;
             if(d20 < (double)k5)
             {
@@ -179,7 +179,7 @@ public class NoiseGeneratorPerlin extends NoiseGenerator
             double d22 = d20 * d20 * d20 * (d20 * (d20 * 6D - 15D) + 10D);
             for(int j6 = 0; j6 < k; j6++)
             {
-                double d24 = (d2 + (double)j6) * d5 + zCoord;
+                double d24 = d2 + (double)j6 * d5 + zCoord;
                 int k6 = (int)d24;
                 if(d24 < (double)k6)
                 {
@@ -190,7 +190,7 @@ public class NoiseGeneratorPerlin extends NoiseGenerator
                 double d25 = d24 * d24 * d24 * (d24 * (d24 * 6D - 15D) + 10D);
                 for(int i7 = 0; i7 < j; i7++)
                 {
-                    double d26 = (d1 + (double)i7) * d4 + yCoord;
+                    double d26 = d1 + (double)i7 * d4 + yCoord;
                     int j7 = (int)d26;
                     if(d26 < (double)j7)
                     {

@@ -23,7 +23,7 @@ public class SaveHandlerMP
         return null;
     }
 
-    public void func_22150_b()
+    public void checkSessionLock()
     {
     }
 

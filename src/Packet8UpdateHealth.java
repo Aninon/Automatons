@@ -20,12 +20,16 @@ public class Packet8UpdateHealth extends Packet
         throws IOException
     {
         healthMP = datainputstream.readShort();
+        field_35231_b = datainputstream.readShort();
+        field_35232_c = datainputstream.readFloat();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
         dataoutputstream.writeShort(healthMP);
+        dataoutputstream.writeShort(field_35231_b);
+        dataoutputstream.writeFloat(field_35232_c);
     }
 
     public void processPacket(NetHandler nethandler)
@@ -35,8 +39,10 @@ public class Packet8UpdateHealth extends Packet
 
     public int getPacketSize()
     {
-        return 2;
+        return 8;
     }
 
     public int healthMP;
+    public int field_35231_b;
+    public float field_35232_c;
 }

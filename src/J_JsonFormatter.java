@@ -11,5 +11,5 @@ package net.minecraft.src;
 public interface J_JsonFormatter
 {
 
-    public abstract String func_27327_a(J_JsonRootNode j_jsonrootnode);
+    public abstract String format(J_JsonRootNode j_jsonrootnode);
 }

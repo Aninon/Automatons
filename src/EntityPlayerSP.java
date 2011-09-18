@@ -9,12 +9,15 @@ import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
 //            EntityPlayer, MouseFilter, Session, MovementInput, 
-//            AchievementList, StatFileWriter, GuiAchievement, World, 
-//            SoundManager, AxisAlignedBB, NBTTagCompound, GuiEditSign, 
-//            GuiChest, GuiCrafting, GuiFurnace, GuiDispenser, 
-//            EntityPickupFX, EffectRenderer, InventoryPlayer, GuiIngame, 
-//            StatBase, Achievement, MathHelper, TileEntitySign, 
-//            IInventory, TileEntityFurnace, TileEntityDispenser, Entity
+//            PlayerController, AchievementList, StatFileWriter, GuiAchievement, 
+//            World, SoundManager, Potion, PotionEffect, 
+//            AxisAlignedBB, FoodStats, PlayerCapabilities, ItemStack, 
+//            Item, NBTTagCompound, GuiEditSign, GuiChest, 
+//            GuiCrafting, GuiFurnace, GuiDispenser, EntityCrit2FX, 
+//            EffectRenderer, EntityPickupFX, InventoryPlayer, DamageSource, 
+//            GuiIngame, StatBase, Achievement, MathHelper, 
+//            TileEntitySign, IInventory, TileEntityFurnace, TileEntityDispenser, 
+//            Entity
 
 public class EntityPlayerSP extends EntityPlayer
 {
@@ -22,6 +25,8 @@ public class EntityPlayerSP extends EntityPlayer
     public EntityPlayerSP(Minecraft minecraft, World world, Session session, int i)
     {
         super(world);
+        field_35224_c = 0;
+        field_35221_d = 0;
         field_21903_bJ = new MouseFilter();
         field_21904_bK = new MouseFilter();
         field_21902_bL = new MouseFilter();
@@ -39,16 +44,42 @@ public class EntityPlayerSP extends EntityPlayer
         super.moveEntity(d, d1, d2);
     }
 
-    public void updatePlayerActionState()
+    public void updateEntityActionState()
     {
-        super.updatePlayerActionState();
+        super.updateEntityActionState();
         moveStrafing = movementInput.moveStrafe;
         moveForward = movementInput.moveForward;
         isJumping = movementInput.jump;
+        field_35226_aq = field_35222_e;
+        field_35225_ar = field_35223_ap;
+        field_35223_ap += (double)(rotationPitch - field_35223_ap) * 0.5D;
+        field_35222_e += (double)(rotationYaw - field_35222_e) * 0.5D;
     }
 
     public void onLivingUpdate()
     {
+        if(field_35221_d > 0)
+        {
+            field_35221_d--;
+            if(field_35221_d == 0)
+            {
+                func_35113_c(false);
+            }
+        }
+        if(field_35224_c > 0)
+        {
+            field_35224_c--;
+        }
+        if(mc.playerController.func_35643_e())
+        {
+            posX = posZ = 0.5D;
+            posX = 0.0D;
+            posZ = 0.0D;
+            rotationYaw = (float)ticksExisted / 12F;
+            rotationPitch = 10F;
+            posY = 68.5D;
+            return;
+        }
         if(!mc.statFileWriter.hasAchievementUnlocked(AchievementList.openInventory))
         {
             mc.guiAchievement.queueAchievementInformation(AchievementList.openInventory);
@@ -81,6 +112,14 @@ public class EntityPlayerSP extends EntityPlayer
             }
             inPortal = false;
         } else
+        if(func_35160_a(Potion.field_35684_k) && func_35167_b(Potion.field_35684_k).func_35802_b() > 60)
+        {
+            timeInPortal += 0.006666667F;
+            if(timeInPortal > 1.0F)
+            {
+                timeInPortal = 1.0F;
+            }
+        } else
         {
             if(timeInPortal > 0.0F)
             {
@@ -95,7 +134,16 @@ public class EntityPlayerSP extends EntityPlayer
         {
             timeUntilPortal--;
         }
+        boolean flag = movementInput.jump;
+        float f = 0.8F;
+        boolean flag1 = movementInput.moveForward >= f;
         movementInput.updatePlayerMoveState(this);
+        if(func_35196_Z())
+        {
+            movementInput.moveStrafe *= 0.2F;
+            movementInput.moveForward *= 0.2F;
+            field_35224_c = 0;
+        }
         if(movementInput.sneak && ySize < 0.2F)
         {
             ySize = 0.2F;
@@ -104,17 +152,73 @@ public class EntityPlayerSP extends EntityPlayer
         pushOutOfBlocks(posX - (double)width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double)width * 0.34999999999999998D);
         pushOutOfBlocks(posX + (double)width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double)width * 0.34999999999999998D);
         pushOutOfBlocks(posX + (double)width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ + (double)width * 0.34999999999999998D);
+        boolean flag2 = (float)func_35191_at().func_35765_a() > 6F;
+        if(onGround && !flag1 && movementInput.moveForward >= f && !func_35117_Q() && flag2 && !func_35196_Z())
+        {
+            if(field_35224_c == 0)
+            {
+                field_35224_c = 7;
+            } else
+            {
+                func_35113_c(true);
+                field_35224_c = 0;
+            }
+        }
+        if(func_35117_Q() && (movementInput.moveForward < f || isCollidedHorizontally || !flag2))
+        {
+            func_35113_c(false);
+        }
+        if(field_35212_aW.field_35758_c && !flag && movementInput.jump)
+        {
+            if(field_35216_aw == 0)
+            {
+                field_35216_aw = 7;
+            } else
+            {
+                field_35212_aW.field_35757_b = !field_35212_aW.field_35757_b;
+                field_35216_aw = 0;
+            }
+        }
+        if(field_35212_aW.field_35757_b)
+        {
+            if(movementInput.sneak)
+            {
+                motionY -= 0.14999999999999999D;
+            }
+            if(movementInput.jump)
+            {
+                motionY += 0.14999999999999999D;
+            }
+        }
         super.onLivingUpdate();
+        if(onGround && field_35212_aW.field_35757_b)
+        {
+            field_35212_aW.field_35757_b = false;
+        }
     }
 
-    public void resetPlayerKeyState()
+    public float func_35220_u_()
     {
-        movementInput.resetKeyState();
-    }
-
-    public void handleKeyPress(int i, boolean flag)
-    {
-        movementInput.checkKeyForMovementInput(i, flag);
+        float f = 1.0F;
+        if(field_35212_aW.field_35757_b)
+        {
+            f *= 1.1F;
+        }
+        f *= ((field_35169_bv * func_35166_t_()) / field_35215_ba + 1.0F) / 2.0F;
+        if(func_35196_Z() && func_35195_X().itemID == Item.bow.shiftedIndex)
+        {
+            int i = func_35192_aa();
+            float f1 = (float)i / 20F;
+            if(f1 > 1.0F)
+            {
+                f1 = 1.0F;
+            } else
+            {
+                f1 *= f1;
+            }
+            f *= 1.0F - f1 * 0.15F;
+        }
+        return f;
     }
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
@@ -160,6 +264,11 @@ public class EntityPlayerSP extends EntityPlayer
         mc.displayGuiScreen(new GuiDispenser(inventory, tileentitydispenser));
     }
 
+    public void func_35200_b(Entity entity)
+    {
+        mc.effectRenderer.addEffect(new EntityCrit2FX(mc.theWorld, entity));
+    }
+
     public void onItemPickup(Entity entity, int i)
     {
         mc.effectRenderer.addEffect(new EntityPickupFX(mc.theWorld, entity, this, -0.5F));
@@ -194,7 +303,7 @@ public class EntityPlayerSP extends EntityPlayer
             field_9346_af = j;
             prevHealth = health;
             heartsLife = heartsHalvesLife;
-            damageEntity(j);
+            b(DamageSource.field_35547_j, j);
             hurtTime = maxHurtTime = 10;
         }
     }
@@ -297,8 +406,33 @@ public class EntityPlayerSP extends EntityPlayer
         return false;
     }
 
+    public void func_35113_c(boolean flag)
+    {
+        super.func_35113_c(flag);
+        if(!flag)
+        {
+            field_35221_d = 0;
+        } else
+        {
+            field_35221_d = 600;
+        }
+    }
+
+    public void func_35219_c(int i, int j, int k)
+    {
+        field_35211_aX = i;
+        field_35209_aZ = j;
+        field_35210_aY = k;
+    }
+
     public MovementInput movementInput;
     protected Minecraft mc;
+    protected int field_35224_c;
+    public int field_35221_d;
+    public float field_35222_e;
+    public float field_35223_ap;
+    public float field_35226_aq;
+    public float field_35225_ar;
     private MouseFilter field_21903_bJ;
     private MouseFilter field_21904_bK;
     private MouseFilter field_21902_bL;

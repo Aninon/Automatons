@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, EntityPainting, World, ItemStack, 
-//            EntityPlayer
+//            Item, EntityPlayer, EntityPainting, World, 
+//            ItemStack
 
 public class ItemPainting extends Item
 {
@@ -39,6 +39,10 @@ public class ItemPainting extends Item
         if(l == 5)
         {
             byte0 = 3;
+        }
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
         }
         EntityPainting entitypainting = new EntityPainting(world, i, j, k, byte0);
         if(entitypainting.canStay())

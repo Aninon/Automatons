@@ -120,17 +120,17 @@ public class StatFileWriter
         {
             String s1 = "local";
             StringBuilder stringbuilder = new StringBuilder();
-            J_JsonRootNode j_jsonrootnode = (new J_JdomParser()).func_27367_a(s);
-            List list = j_jsonrootnode.func_27217_b(new Object[] {
+            J_JsonRootNode j_jsonrootnode = (new J_JdomParser()).parse(s);
+            List list = j_jsonrootnode.getArrayNode(new Object[] {
                 "stats-change"
             });
             for(Iterator iterator = list.iterator(); iterator.hasNext();)
             {
                 J_JsonNode j_jsonnode = (J_JsonNode)iterator.next();
-                Map map = j_jsonnode.func_27214_c();
+                Map map = j_jsonnode.getFields();
                 java.util.Map.Entry entry = (java.util.Map.Entry)map.entrySet().iterator().next();
-                int i = Integer.parseInt(((J_JsonStringNode)entry.getKey()).func_27216_b());
-                int j = Integer.parseInt(((J_JsonNode)entry.getValue()).func_27216_b());
+                int i = Integer.parseInt(((J_JsonStringNode)entry.getKey()).getText());
+                int j = Integer.parseInt(((J_JsonNode)entry.getValue()).getText());
                 StatBase statbase = StatList.func_27361_a(i);
                 if(statbase == null)
                 {
@@ -145,7 +145,7 @@ public class StatFileWriter
 
             MD5String md5string = new MD5String(s1);
             String s2 = md5string.func_27369_a(stringbuilder.toString());
-            if(!s2.equals(j_jsonrootnode.func_27213_a(new Object[] {
+            if(!s2.equals(j_jsonrootnode.getStringValue(new Object[] {
     "checksum"
 })))
             {

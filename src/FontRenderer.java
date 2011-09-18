@@ -224,15 +224,15 @@ public class FontRenderer
         return i;
     }
 
-    public void func_27278_a(String s, int i, int j, int k, int l)
+    public void drawSplitString(String s, int i, int j, int k, int l)
     {
         String as[] = s.split("\n");
         if(as.length > 1)
         {
             for(int i1 = 0; i1 < as.length; i1++)
             {
-                func_27278_a(as[i1], i, j, k, l);
-                j += func_27277_a(as[i1], k);
+                drawSplitString(as[i1], i, j, k, l);
+                j += splitStringWidth(as[i1], k);
             }
 
             return;
@@ -266,7 +266,7 @@ public class FontRenderer
         } while(true);
     }
 
-    public int func_27277_a(String s, int i)
+    public int splitStringWidth(String s, int i)
     {
         String as[] = s.split("\n");
         if(as.length > 1)
@@ -274,7 +274,7 @@ public class FontRenderer
             int j = 0;
             for(int k = 0; k < as.length; k++)
             {
-                j += func_27277_a(as[k], i);
+                j += splitStringWidth(as[k], i);
             }
 
             return j;

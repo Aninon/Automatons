@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, Block, World, ItemStack, 
-//            StepSound, EntityPlayer
+//            Item, Block, World, EntityPlayer, 
+//            ItemStack, StepSound
 
 public class ItemReed extends Item
 {
@@ -20,10 +20,12 @@ public class ItemReed extends Item
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-        if(world.getBlockId(i, j, k) == Block.snow.blockID)
+        int i1 = world.getBlockId(i, j, k);
+        if(i1 == Block.snow.blockID)
         {
             l = 0;
         } else
+        if(i1 != Block.field_35278_bv.blockID)
         {
             if(l == 0)
             {
@@ -50,6 +52,10 @@ public class ItemReed extends Item
                 i++;
             }
         }
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
+        }
         if(itemstack.stackSize == 0)
         {
             return false;
@@ -59,9 +65,12 @@ public class ItemReed extends Item
             Block block = Block.blocksList[spawnID];
             if(world.setBlockWithNotify(i, j, k, spawnID))
             {
-                Block.blocksList[spawnID].onBlockPlaced(world, i, j, k, l);
-                Block.blocksList[spawnID].onBlockPlacedBy(world, i, j, k, entityplayer);
-                world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.func_1145_d(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                if(world.getBlockId(i, j, k) == spawnID)
+                {
+                    Block.blocksList[spawnID].onBlockPlaced(world, i, j, k, l);
+                    Block.blocksList[spawnID].onBlockPlacedBy(world, i, j, k, entityplayer);
+                }
+                world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.stepSoundDir2(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
                 itemstack.stackSize--;
             }
         }

@@ -25,7 +25,6 @@ public enum EnumToolMaterial
 */
     private EnumToolMaterial(String s, int i, int j, int k, float f, int l)
     {
-//        super(s, i);
         harvestLevel = j;
         maxUses = k;
         efficiencyOnProperMaterial = f;
@@ -62,19 +61,18 @@ public enum EnumToolMaterial
     private final int maxUses;
     private final float efficiencyOnProperMaterial;
     private final int damageVsEntity;
-    private static final EnumToolMaterial allToolMaterials[]; /* synthetic field */
-
+//    private static final EnumToolMaterial allToolMaterials[]; /* synthetic field */
+/*
     static 
     {
-/*
         WOOD = new EnumToolMaterial("WOOD", 0, 0, 59, 2.0F, 0);
         STONE = new EnumToolMaterial("STONE", 1, 1, 131, 4F, 1);
         IRON = new EnumToolMaterial("IRON", 2, 2, 250, 6F, 2);
         EMERALD = new EnumToolMaterial("EMERALD", 3, 3, 1561, 8F, 3);
         GOLD = new EnumToolMaterial("GOLD", 4, 0, 32, 12F, 0);
-*/
         allToolMaterials = (new EnumToolMaterial[] {
             WOOD, STONE, IRON, EMERALD, GOLD
         });
     }
+*/
 }

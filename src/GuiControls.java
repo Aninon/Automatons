@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
 //            GuiScreen, StringTranslate, GameSettings, GuiSmallButton, 
-//            GuiButton
+//            GuiButton, KeyBinding
 
 public class GuiControls extends GuiScreen
 {
@@ -57,6 +57,20 @@ public class GuiControls extends GuiScreen
         }
     }
 
+    protected void mouseClicked(int i, int j, int k)
+    {
+        if(buttonId >= 0)
+        {
+            options.setKeyBinding(buttonId, -100 + k);
+            ((GuiButton)controlList.get(buttonId)).displayString = options.getOptionDisplayString(buttonId);
+            buttonId = -1;
+            KeyBinding.func_35961_b();
+        } else
+        {
+            super.mouseClicked(i, j, k);
+        }
+    }
+
     protected void keyTyped(char c, int i)
     {
         if(buttonId >= 0)
@@ -64,6 +78,7 @@ public class GuiControls extends GuiScreen
             options.setKeyBinding(buttonId, i);
             ((GuiButton)controlList.get(buttonId)).displayString = options.getOptionDisplayString(buttonId);
             buttonId = -1;
+            KeyBinding.func_35961_b();
         } else
         {
             super.keyTyped(c, i);
@@ -77,6 +92,27 @@ public class GuiControls extends GuiScreen
         int k = func_20080_j();
         for(int l = 0; l < options.keyBindings.length; l++)
         {
+            boolean flag = false;
+            for(int i1 = 0; i1 < options.keyBindings.length; i1++)
+            {
+                if(i1 != l && options.keyBindings[l].keyCode == options.keyBindings[i1].keyCode)
+                {
+                    flag = true;
+                }
+            }
+
+            int j1 = l;
+            if(buttonId == l)
+            {
+                ((GuiButton)controlList.get(j1)).displayString = "\247f> \247e??? \247f<";
+            } else
+            if(flag)
+            {
+                ((GuiButton)controlList.get(j1)).displayString = (new StringBuilder()).append("\247c").append(options.getOptionDisplayString(j1)).toString();
+            } else
+            {
+                ((GuiButton)controlList.get(j1)).displayString = options.getOptionDisplayString(j1);
+            }
             drawString(fontRenderer, options.getKeyBindingDescription(l), k + (l % 2) * 160 + 70 + 6, height / 6 + 24 * (l >> 1) + 7, -1);
         }
 

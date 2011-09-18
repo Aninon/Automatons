@@ -19,15 +19,15 @@ public class TexturedQuad
         nVertices = apositiontexturevertex.length;
     }
 
-    public TexturedQuad(PositionTextureVertex apositiontexturevertex[], int i, int j, int k, int l)
+    public TexturedQuad(PositionTextureVertex apositiontexturevertex[], int i, int j, int k, int l, float f, float f1)
     {
         this(apositiontexturevertex);
-        float f = 0.0015625F;
-        float f1 = 0.003125F;
-        apositiontexturevertex[0] = apositiontexturevertex[0].setTexturePosition((float)k / 64F - f, (float)j / 32F + f1);
-        apositiontexturevertex[1] = apositiontexturevertex[1].setTexturePosition((float)i / 64F + f, (float)j / 32F + f1);
-        apositiontexturevertex[2] = apositiontexturevertex[2].setTexturePosition((float)i / 64F + f, (float)l / 32F - f1);
-        apositiontexturevertex[3] = apositiontexturevertex[3].setTexturePosition((float)k / 64F - f, (float)l / 32F - f1);
+        float f2 = 0.1F / f;
+        float f3 = 0.1F / f1;
+        apositiontexturevertex[0] = apositiontexturevertex[0].setTexturePosition((float)k / f - f2, (float)j / f1 + f3);
+        apositiontexturevertex[1] = apositiontexturevertex[1].setTexturePosition((float)i / f + f2, (float)j / f1 + f3);
+        apositiontexturevertex[2] = apositiontexturevertex[2].setTexturePosition((float)i / f + f2, (float)l / f1 - f3);
+        apositiontexturevertex[3] = apositiontexturevertex[3].setTexturePosition((float)k / f - f2, (float)l / f1 - f3);
     }
 
     public void flipFace()

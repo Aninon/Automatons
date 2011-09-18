@@ -31,22 +31,22 @@ final class J_JsonNumberNode extends J_JsonNode
         }
     }
 
-    public EnumJsonNodeType func_27218_a()
+    public EnumJsonNodeType getType()
     {
         return EnumJsonNodeType.NUMBER;
     }
 
-    public String func_27216_b()
+    public String getText()
     {
         return field_27225_b;
     }
 
-    public Map func_27214_c()
+    public Map getFields()
     {
         throw new IllegalStateException("Attempt to get fields on a JsonNode without fields.");
     }
 
-    public List func_27215_d()
+    public List getElements()
     {
         throw new IllegalStateException("Attempt to get elements on a JsonNode without elements.");
     }

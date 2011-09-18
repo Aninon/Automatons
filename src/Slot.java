@@ -66,7 +66,7 @@ public class Slot
     }
 
     private final int slotIndex;
-    private final IInventory inventory;
+    public final IInventory inventory;
     public int slotNumber;
     public int xDisplayPosition;
     public int yDisplayPosition;

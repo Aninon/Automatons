@@ -21,19 +21,19 @@ public class Packet40EntityMetadata extends Packet
         throws IOException
     {
         entityId = datainputstream.readInt();
-        field_21048_b = DataWatcher.readWatchableObjects(datainputstream);
+        metadata = DataWatcher.readWatchableObjects(datainputstream);
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
         dataoutputstream.writeInt(entityId);
-        DataWatcher.writeObjectsInListToStream(field_21048_b, dataoutputstream);
+        DataWatcher.writeObjectsInListToStream(metadata, dataoutputstream);
     }
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_21148_a(this);
+        nethandler.handleEntityMetadata(this);
     }
 
     public int getPacketSize()
@@ -43,9 +43,9 @@ public class Packet40EntityMetadata extends Packet
 
     public List func_21047_b()
     {
-        return field_21048_b;
+        return metadata;
     }
 
     public int entityId;
-    private List field_21048_b;
+    private List metadata;
 }

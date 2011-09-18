@@ -19,6 +19,11 @@ public class ScreenShotHelper
 
     public static String saveScreenshot(File file, int i, int j)
     {
+        return func_35879_a(file, null, i, j);
+    }
+
+    public static String func_35879_a(File file, String s, int i, int j)
+    {
         try
         {
             File file1 = new File(file, "screenshots");
@@ -37,9 +42,15 @@ public class ScreenShotHelper
             buffer.clear();
             GL11.glReadPixels(0, 0, i, j, 6407 /*GL_RGB*/, 5121 /*GL_UNSIGNED_BYTE*/, buffer);
             buffer.clear();
-            String s = (new StringBuilder()).append("").append(dateFormat.format(new Date())).toString();
+            String s1 = (new StringBuilder()).append("").append(dateFormat.format(new Date())).toString();
             File file2;
-            for(int k = 1; (file2 = new File(file1, (new StringBuilder()).append(s).append(k != 1 ? (new StringBuilder()).append("_").append(k).toString() : "").append(".png").toString())).exists(); k++) { }
+            if(s == null)
+            {
+                for(int k = 1; (file2 = new File(file1, (new StringBuilder()).append(s1).append(k != 1 ? (new StringBuilder()).append("_").append(k).toString() : "").append(".png").toString())).exists(); k++) { }
+            } else
+            {
+                file2 = new File(file1, s);
+            }
             buffer.get(pixelData);
             for(int l = 0; l < i; l++)
             {

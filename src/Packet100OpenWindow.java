@@ -26,7 +26,7 @@ public class Packet100OpenWindow extends Packet
     {
         windowId = datainputstream.readByte();
         inventoryType = datainputstream.readByte();
-        windowTitle = datainputstream.readUTF();
+        windowTitle = readString(datainputstream, 16);
         slotsCount = datainputstream.readByte();
     }
 
@@ -35,7 +35,7 @@ public class Packet100OpenWindow extends Packet
     {
         dataoutputstream.writeByte(windowId);
         dataoutputstream.writeByte(inventoryType);
-        dataoutputstream.writeUTF(windowTitle);
+        writeString(windowTitle, dataoutputstream);
         dataoutputstream.writeByte(slotsCount);
     }
 

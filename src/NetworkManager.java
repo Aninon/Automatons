@@ -200,7 +200,7 @@ public class NetworkManager
             timeSinceLastRead = 0;
         }
         Packet packet;
-        for(int i = 100; !readPackets.isEmpty() && i-- >= 0; packet.processPacket(netHandler))
+        for(int i = 1000; !readPackets.isEmpty() && i-- >= 0; packet.processPacket(netHandler))
         {
             packet = (Packet)readPackets.remove(0);
         }

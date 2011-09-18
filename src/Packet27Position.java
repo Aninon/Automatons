@@ -24,7 +24,7 @@ public class Packet27Position extends Packet
         pitchRotation = datainputstream.readFloat();
         yawRotation = datainputstream.readFloat();
         field_22043_c = datainputstream.readBoolean();
-        field_22042_d = datainputstream.readBoolean();
+        isInJump = datainputstream.readBoolean();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
@@ -35,12 +35,12 @@ public class Packet27Position extends Packet
         dataoutputstream.writeFloat(pitchRotation);
         dataoutputstream.writeFloat(yawRotation);
         dataoutputstream.writeBoolean(field_22043_c);
-        dataoutputstream.writeBoolean(field_22042_d);
+        dataoutputstream.writeBoolean(isInJump);
     }
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_22185_a(this);
+        nethandler.handlePosition(this);
     }
 
     public int getPacketSize()
@@ -51,7 +51,7 @@ public class Packet27Position extends Packet
     private float strafeMovement;
     private float fowardMovement;
     private boolean field_22043_c;
-    private boolean field_22042_d;
+    private boolean isInJump;
     private float pitchRotation;
     private float yawRotation;
 }

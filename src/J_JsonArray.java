@@ -14,25 +14,25 @@ final class J_JsonArray extends J_JsonRootNode
 
     J_JsonArray(Iterable iterable)
     {
-        field_27221_a = func_27220_a(iterable);
+        elements = asList(iterable);
     }
 
-    public EnumJsonNodeType func_27218_a()
+    public EnumJsonNodeType getType()
     {
         return EnumJsonNodeType.ARRAY;
     }
 
-    public List func_27215_d()
+    public List getElements()
     {
-        return new ArrayList(field_27221_a);
+        return new ArrayList(elements);
     }
 
-    public String func_27216_b()
+    public String getText()
     {
         throw new IllegalStateException("Attempt to get text on a JsonNode without text.");
     }
 
-    public Map func_27214_c()
+    public Map getFields()
     {
         throw new IllegalStateException("Attempt to get fields on a JsonNode without fields.");
     }
@@ -49,24 +49,24 @@ final class J_JsonArray extends J_JsonRootNode
         } else
         {
             J_JsonArray j_jsonarray = (J_JsonArray)obj;
-            return field_27221_a.equals(j_jsonarray.field_27221_a);
+            return elements.equals(j_jsonarray.elements);
         }
     }
 
     public int hashCode()
     {
-        return field_27221_a.hashCode();
+        return elements.hashCode();
     }
 
     public String toString()
     {
-        return (new StringBuilder()).append("JsonArray elements:[").append(field_27221_a).append("]").toString();
+        return (new StringBuilder()).append("JsonArray elements:[").append(elements).append("]").toString();
     }
 
-    private static List func_27220_a(Iterable iterable)
+    private static List asList(Iterable iterable)
     {
         return new J_JsonNodeList(iterable);
     }
 
-    private final List field_27221_a;
+    private final List elements;
 }

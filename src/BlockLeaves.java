@@ -22,6 +22,13 @@ public class BlockLeaves extends BlockLeavesBase
         setTickOnLoad(true);
     }
 
+    public int func_35274_i()
+    {
+        double d = 0.5D;
+        double d1 = 1.0D;
+        return ColorizerFoliage.getFoliageColor(d, d1);
+    }
+
     public int getRenderColor(int i)
     {
         if((i & 1) == 1)
@@ -49,9 +56,8 @@ public class BlockLeaves extends BlockLeavesBase
             return ColorizerFoliage.getFoliageColorBirch();
         } else
         {
-            iblockaccess.getWorldChunkManager().func_4069_a(i, k, 1, 1);
-            double d = iblockaccess.getWorldChunkManager().temperature[0];
-            double d1 = iblockaccess.getWorldChunkManager().humidity[0];
+            double d = iblockaccess.getWorldChunkManager().func_35554_b(i, k);
+            double d1 = iblockaccess.getWorldChunkManager().func_35558_c(i, k);
             return ColorizerFoliage.getFoliageColor(d, d1);
         }
     }
@@ -90,7 +96,7 @@ public class BlockLeaves extends BlockLeavesBase
             return;
         }
         int l = world.getBlockMetadata(i, j, k);
-        if((l & 8) != 0)
+        if((l & 8) != 0 && (l & 4) == 0)
         {
             byte byte0 = 4;
             int i1 = byte0 + 1;

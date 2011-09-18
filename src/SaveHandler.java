@@ -58,7 +58,7 @@ public class SaveHandler
         return saveDirectory;
     }
 
-    public void func_22150_b()
+    public void checkSessionLock()
     {
         try
         {

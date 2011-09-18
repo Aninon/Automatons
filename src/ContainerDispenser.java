@@ -4,17 +4,18 @@
 
 package net.minecraft.src;
 
+import java.util.List;
 
 // Referenced classes of package net.minecraft.src:
-//            Container, Slot, TileEntityDispenser, IInventory, 
-//            EntityPlayer
+//            Container, Slot, TileEntityDispenser, ItemStack, 
+//            IInventory, EntityPlayer
 
 public class ContainerDispenser extends Container
 {
 
     public ContainerDispenser(IInventory iinventory, TileEntityDispenser tileentitydispenser)
     {
-        field_21149_a = tileentitydispenser;
+        tileEntityDispenser = tileentitydispenser;
         for(int i = 0; i < 3; i++)
         {
             for(int l = 0; l < 3; l++)
@@ -40,10 +41,47 @@ public class ContainerDispenser extends Container
 
     }
 
-    public boolean isUsableByPlayer(EntityPlayer entityplayer)
+    public boolean canInteractWith(EntityPlayer entityplayer)
     {
-        return field_21149_a.canInteractWith(entityplayer);
+        return tileEntityDispenser.canInteractWith(entityplayer);
     }
 
-    private TileEntityDispenser field_21149_a;
+    public ItemStack getStackInSlot(int i)
+    {
+        ItemStack itemstack = null;
+        Slot slot = (Slot)inventorySlots.get(i);
+        if(slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            if(i < 9)
+            {
+                if(!func_28125_a(itemstack1, 9, 45, true))
+                {
+                    return null;
+                }
+            } else
+            if(!func_28125_a(itemstack1, 0, 9, false))
+            {
+                return null;
+            }
+            if(itemstack1.stackSize == 0)
+            {
+                slot.putStack(null);
+            } else
+            {
+                slot.onSlotChanged();
+            }
+            if(itemstack1.stackSize != itemstack.stackSize)
+            {
+                slot.onPickupFromSlot(itemstack1);
+            } else
+            {
+                return null;
+            }
+        }
+        return itemstack;
+    }
+
+    private TileEntityDispenser tileEntityDispenser;
 }

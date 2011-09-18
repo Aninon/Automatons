@@ -36,7 +36,7 @@ public class InventoryCrafting
         }
     }
 
-    public ItemStack func_21103_b(int i, int j)
+    public ItemStack getStackInRowAndColumn(int i, int j)
     {
         if(i < 0 || i >= inventoryWidth)
         {
@@ -95,6 +95,14 @@ public class InventoryCrafting
     public boolean canInteractWith(EntityPlayer entityplayer)
     {
         return true;
+    }
+
+    public void func_35142_x_()
+    {
+    }
+
+    public void func_35141_y_()
+    {
     }
 
     private ItemStack stackList[];

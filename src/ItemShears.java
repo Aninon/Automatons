@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, Block, BlockLeaves, ItemStack, 
-//            EntityLiving
+//            Item, Block, BlockLeaves, BlockTallGrass, 
+//            ItemStack, EntityLiving
 
 public class ItemShears extends Item
 {
@@ -21,11 +21,14 @@ public class ItemShears extends Item
 
     public boolean onBlockDestroyed(ItemStack itemstack, int i, int j, int k, int l, EntityLiving entityliving)
     {
-        if(i == Block.leaves.blockID || i == Block.web.blockID)
+        if(i == Block.leaves.blockID || i == Block.web.blockID || i == Block.tallGrass.blockID || i == Block.field_35278_bv.blockID)
         {
             itemstack.damageItem(1, entityliving);
+            return true;
+        } else
+        {
+            return super.onBlockDestroyed(itemstack, i, j, k, l, entityliving);
         }
-        return super.onBlockDestroyed(itemstack, i, j, k, l, entityliving);
     }
 
     public boolean canHarvestBlock(Block block)

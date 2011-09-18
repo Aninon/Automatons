@@ -8,9 +8,9 @@ package net.minecraft.src;
 interface J_Functor
 {
 
-    public abstract boolean func_27058_a(Object obj);
+    public abstract boolean matchsNode(Object obj);
 
-    public abstract Object func_27059_b(Object obj);
+    public abstract Object applyTo(Object obj);
 
-    public abstract String func_27060_a();
+    public abstract String shortForm();
 }

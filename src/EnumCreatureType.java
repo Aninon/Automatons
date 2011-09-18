@@ -26,7 +26,6 @@ public enum EnumCreatureType
 */
     private EnumCreatureType(String s, int i, Class class1, int j, Material material, boolean flag)
     {
-//        super(s, i);
         creatureClass = class1;
         maxNumberOfCreature = j;
         creatureMaterial = material;
@@ -61,17 +60,16 @@ public enum EnumCreatureType
     private final int maxNumberOfCreature;
     private final Material creatureMaterial;
     private final boolean isPeacefulCreature;
-    private static final EnumCreatureType allCreatureTypes[]; /* synthetic field */
-
+//    private static final EnumCreatureType allCreatureTypes[]; /* synthetic field */
+/*
     static 
     {
-/*
         monster = new EnumCreatureType("monster", 0, net.minecraft.src.IMob.class, 70, Material.air, false);
         creature = new EnumCreatureType("creature", 1, net.minecraft.src.EntityAnimal.class, 15, Material.air, true);
         waterCreature = new EnumCreatureType("waterCreature", 2, net.minecraft.src.EntityWaterMob.class, 5, Material.water, true);
-*/
         allCreatureTypes = (new EnumCreatureType[] {
             monster, creature, waterCreature
         });
     }
+*/
 }

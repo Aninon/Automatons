@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Block, World, Material, TileEntity
+//            Block, World, TileEntity, Material
 
 public abstract class BlockContainer extends Block
 {
@@ -14,13 +14,13 @@ public abstract class BlockContainer extends Block
     protected BlockContainer(int i, Material material)
     {
         super(i, material);
-        isBlockContainer[i] = true;
+        isBlockContainer[blockID] = true;
     }
 
     protected BlockContainer(int i, int j, Material material)
     {
         super(i, j, material);
-        isBlockContainer[i] = true;
+        isBlockContainer[blockID] = true;
     }
 
     public void onBlockAdded(World world, int i, int j, int k)
@@ -35,5 +35,15 @@ public abstract class BlockContainer extends Block
         world.removeBlockTileEntity(i, j, k);
     }
 
-    protected abstract TileEntity getBlockEntity();
+    public abstract TileEntity getBlockEntity();
+
+    public void playBlock(World world, int i, int j, int k, int l, int i1)
+    {
+        super.playBlock(world, i, j, k, l, i1);
+        TileEntity tileentity = world.getBlockTileEntity(i, j, k);
+        if(tileentity != null)
+        {
+            tileentity.func_35143_b(l, i1);
+        }
+    }
 }

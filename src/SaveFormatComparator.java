@@ -9,12 +9,14 @@ public class SaveFormatComparator
     implements Comparable
 {
 
-    public SaveFormatComparator(String s, String s1, long l, long l1, boolean flag)
+    public SaveFormatComparator(String s, String s1, long l, long l1, int i, 
+            boolean flag)
     {
         fileName = s;
         displayName = s1;
         field_22169_c = l;
         field_22168_d = l1;
+        field_35720_f = i;
         field_22167_e = flag;
     }
 
@@ -58,6 +60,11 @@ public class SaveFormatComparator
         }
     }
 
+    public int func_35719_f()
+    {
+        return field_35720_f;
+    }
+
     public int compareTo(Object obj)
     {
         return func_22160_a((SaveFormatComparator)obj);
@@ -68,4 +75,5 @@ public class SaveFormatComparator
     private final long field_22169_c;
     private final long field_22168_d;
     private final boolean field_22167_e;
+    private final int field_35720_f;
 }

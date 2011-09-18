@@ -13,7 +13,6 @@ class WorldBlockPositionType
 
     public WorldBlockPositionType(WorldClient worldclient, int i, int j, int k, int l, int i1)
     {
-//        super();
         worldClient = worldclient;
         posX = i;
         posY = j;

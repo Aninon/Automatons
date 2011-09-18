@@ -7,7 +7,8 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            Block, Item, StatList, EntityPlayer, 
-//            NBTTagCompound, World, Entity, EntityLiving
+//            NBTTagCompound, World, Entity, EntityLiving, 
+//            EnumAction
 
 public final class ItemStack
 {
@@ -50,10 +51,16 @@ public final class ItemStack
         itemDamage = k;
     }
 
-    public ItemStack(NBTTagCompound nbttagcompound)
+    public static ItemStack func_35864_a(NBTTagCompound nbttagcompound)
+    {
+        ItemStack itemstack = new ItemStack();
+        itemstack.readFromNBT(nbttagcompound);
+        return itemstack.getItem() == null ? null : itemstack;
+    }
+
+    private ItemStack()
     {
         stackSize = 0;
-        readFromNBT(nbttagcompound);
     }
 
     public ItemStack splitStack(int i)
@@ -90,6 +97,11 @@ public final class ItemStack
     public ItemStack useItemRightClick(World world, EntityPlayer entityplayer)
     {
         return getItem().onItemRightClick(this, world, entityplayer);
+    }
+
+    public ItemStack func_35863_b(World world, EntityPlayer entityplayer)
+    {
+        return getItem().func_35413_b(this, world, entityplayer);
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
@@ -282,6 +294,21 @@ public final class ItemStack
     public boolean isStackEqual(ItemStack itemstack)
     {
         return itemID == itemstack.itemID && stackSize == itemstack.stackSize && itemDamage == itemstack.itemDamage;
+    }
+
+    public int func_35866_m()
+    {
+        return getItem().func_35411_c(this);
+    }
+
+    public EnumAction func_35865_n()
+    {
+        return getItem().func_35412_b(this);
+    }
+
+    public void func_35862_a(World world, EntityPlayer entityplayer, int i)
+    {
+        getItem().func_35414_a(this, world, entityplayer, i);
     }
 
     public int stackSize;

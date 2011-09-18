@@ -116,7 +116,7 @@ public class RenderCreeper extends RenderLiving
         return func_27006_a((EntityCreeper)entityliving, i, f);
     }
 
-    protected boolean func_27005_b(EntityLiving entityliving, int i, float f)
+    protected boolean inheritRenderPass(EntityLiving entityliving, int i, float f)
     {
         return func_27007_b((EntityCreeper)entityliving, i, f);
     }

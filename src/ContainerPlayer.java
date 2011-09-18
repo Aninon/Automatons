@@ -78,7 +78,7 @@ public class ContainerPlayer extends Container
 
     }
 
-    public boolean isUsableByPlayer(EntityPlayer entityplayer)
+    public boolean canInteractWith(EntityPlayer entityplayer)
     {
         return true;
     }
@@ -86,25 +86,35 @@ public class ContainerPlayer extends Container
     public ItemStack getStackInSlot(int i)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)slots.get(i);
+        Slot slot = (Slot)inventorySlots.get(i);
         if(slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
             if(i == 0)
             {
-                func_28125_a(itemstack1, 9, 45, true);
+                if(!func_28125_a(itemstack1, 9, 45, true))
+                {
+                    return null;
+                }
             } else
             if(i >= 9 && i < 36)
             {
-                func_28125_a(itemstack1, 36, 45, false);
+                if(!func_28125_a(itemstack1, 36, 45, false))
+                {
+                    return null;
+                }
             } else
             if(i >= 36 && i < 45)
             {
-                func_28125_a(itemstack1, 9, 36, false);
+                if(!func_28125_a(itemstack1, 9, 36, false))
+                {
+                    return null;
+                }
             } else
+            if(!func_28125_a(itemstack1, 9, 45, false))
             {
-                func_28125_a(itemstack1, 9, 45, false);
+                return null;
             }
             if(itemstack1.stackSize == 0)
             {

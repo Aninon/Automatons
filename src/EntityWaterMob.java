@@ -4,11 +4,12 @@
 
 package net.minecraft.src;
 
+import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            EntityCreature, World, NBTTagCompound
+//            EntityCreature, World, NBTTagCompound, EntityPlayer
 
-public class EntityWaterMob extends EntityCreature
+public abstract class EntityWaterMob extends EntityCreature
 {
 
     public EntityWaterMob(World world)
@@ -39,5 +40,10 @@ public class EntityWaterMob extends EntityCreature
     public int getTalkInterval()
     {
         return 120;
+    }
+
+    protected int a(EntityPlayer entityplayer)
+    {
+        return 1 + worldObj.rand.nextInt(3);
     }
 }

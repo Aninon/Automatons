@@ -18,7 +18,7 @@ public class RenderFish extends Render
     {
     }
 
-    public void func_4011_a(EntityFish entityfish, double d, double d1, double d2, 
+    public void doRenderFish(EntityFish entityfish, double d, double d1, double d2, 
             float f, float f1)
     {
         GL11.glPushMatrix();
@@ -97,6 +97,6 @@ public class RenderFish extends Render
     public void doRender(Entity entity, double d, double d1, double d2, 
             float f, float f1)
     {
-        func_4011_a((EntityFish)entity, d, d1, d2, f, f1);
+        doRenderFish((EntityFish)entity, d, d1, d2, f, f1);
     }
 }

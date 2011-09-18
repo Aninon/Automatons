@@ -103,4 +103,13 @@ public class EntitySpider extends EntityMob
     {
         return isCollidedHorizontally;
     }
+
+    public void func_35112_o()
+    {
+    }
+
+    public float func_35188_k_()
+    {
+        return 1.0F;
+    }
 }

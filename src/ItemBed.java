@@ -44,6 +44,10 @@ public class ItemBed extends Item
         {
             byte0 = 1;
         }
+        if(!entityplayer.func_35190_e(i, j, k) || !entityplayer.func_35190_e(i + byte0, j, k + byte1))
+        {
+            return false;
+        }
         if(world.isAirBlock(i, j, k) && world.isAirBlock(i + byte0, j, k + byte1) && world.isBlockNormalCube(i, j - 1, k) && world.isBlockNormalCube(i + byte0, j - 1, k + byte1))
         {
             world.setBlockAndMetadataWithNotify(i, j, k, blockbed.blockID, i1);

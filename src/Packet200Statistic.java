@@ -18,21 +18,21 @@ public class Packet200Statistic extends Packet
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_27245_a(this);
+        nethandler.handleStatistic(this);
     }
 
     public void readPacketData(DataInputStream datainputstream)
         throws IOException
     {
-        field_27052_a = datainputstream.readInt();
-        field_27051_b = datainputstream.readByte();
+        statisticId = datainputstream.readInt();
+        amount = datainputstream.readByte();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
-        dataoutputstream.writeInt(field_27052_a);
-        dataoutputstream.writeByte(field_27051_b);
+        dataoutputstream.writeInt(statisticId);
+        dataoutputstream.writeByte(amount);
     }
 
     public int getPacketSize()
@@ -40,6 +40,6 @@ public class Packet200Statistic extends Packet
         return 6;
     }
 
-    public int field_27052_a;
-    public int field_27051_b;
+    public int statisticId;
+    public int amount;
 }

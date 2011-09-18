@@ -26,6 +26,8 @@ public class FurnaceRecipes
         addSmelting(Block.oreDiamond.blockID, new ItemStack(Item.diamond));
         addSmelting(Block.sand.blockID, new ItemStack(Block.glass));
         addSmelting(Item.porkRaw.shiftedIndex, new ItemStack(Item.porkCooked));
+        addSmelting(Item.field_35417_bj.shiftedIndex, new ItemStack(Item.field_35418_bk));
+        addSmelting(Item.field_35419_bl.shiftedIndex, new ItemStack(Item.field_35420_bm));
         addSmelting(Item.fishRaw.shiftedIndex, new ItemStack(Item.fishCooked));
         addSmelting(Block.cobblestone.blockID, new ItemStack(Block.stone));
         addSmelting(Item.clay.shiftedIndex, new ItemStack(Item.brick));

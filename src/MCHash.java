@@ -4,6 +4,8 @@
 
 package net.minecraft.src;
 
+import java.util.HashSet;
+import java.util.Set;
 
 // Referenced classes of package net.minecraft.src:
 //            MCHashEntry
@@ -13,6 +15,7 @@ public class MCHash
 
     public MCHash()
     {
+        field_35861_f = new HashSet();
         threshold = 12;
         slots = new MCHashEntry[16];
     }
@@ -42,8 +45,28 @@ public class MCHash
         return null;
     }
 
+    public boolean func_35858_b(int i)
+    {
+        return func_35859_c(i) != null;
+    }
+
+    final MCHashEntry func_35859_c(int i)
+    {
+        int j = computeHash(i);
+        for(MCHashEntry mchashentry = slots[getSlotIndex(j, slots.length)]; mchashentry != null; mchashentry = mchashentry.nextEntry)
+        {
+            if(mchashentry.hashEntry == i)
+            {
+                return mchashentry;
+            }
+        }
+
+        return null;
+    }
+
     public void addKey(int i, Object obj)
     {
+        field_35861_f.add(Integer.valueOf(i));
         int j = computeHash(i);
         int k = getSlotIndex(j, slots.length);
         for(MCHashEntry mchashentry = slots[k]; mchashentry != null; mchashentry = mchashentry.nextEntry)
@@ -102,6 +125,7 @@ public class MCHash
 
     public Object removeObject(int i)
     {
+        field_35861_f.remove(Integer.valueOf(i));
         MCHashEntry mchashentry = removeEntry(i);
         return mchashentry != null ? mchashentry.valueEntry : null;
     }
@@ -157,6 +181,11 @@ public class MCHash
         }
     }
 
+    public Set func_35860_b()
+    {
+        return field_35861_f;
+    }
+
     static int getHash(int i)
     {
         return computeHash(i);
@@ -167,4 +196,5 @@ public class MCHash
     private int threshold;
     private final float growFactor = 0.75F;
     private volatile transient int versionStamp;
+    private Set field_35861_f;
 }

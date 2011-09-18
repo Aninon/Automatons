@@ -27,6 +27,7 @@ public class EntityGhast extends EntityFlying
         texture = "/mob/ghast.png";
         setSize(4F, 4F);
         isImmuneToFire = true;
+        field_35171_bJ = 5;
     }
 
     protected void entityInit()
@@ -42,7 +43,7 @@ public class EntityGhast extends EntityFlying
         texture = byte0 != 1 ? "/mob/ghast.png" : "/mob/ghast_fire.png";
     }
 
-    protected void updatePlayerActionState()
+    protected void updateEntityActionState()
     {
         if(!worldObj.multiplayerWorld && worldObj.difficultySetting == 0)
         {

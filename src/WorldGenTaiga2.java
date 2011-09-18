@@ -19,53 +19,77 @@ public class WorldGenTaiga2 extends WorldGenerator
 
     public boolean generate(World world, Random random, int i, int j, int k)
     {
-        int l = random.nextInt(4) + 6;
-        int i1 = 1 + random.nextInt(2);
-        int j1 = l - i1;
-        int k1 = 2 + random.nextInt(2);
-        boolean flag = true;
-        if(j < 1 || j + l + 1 > 128)
+        int l;
+        int i1;
+        int j1;
+        int k1;
+        boolean flag;
+label0:
         {
+            l = random.nextInt(4) + 6;
+            i1 = 1 + random.nextInt(2);
+            j1 = l - i1;
+            k1 = 2 + random.nextInt(2);
+            flag = true;
+            if(j >= 1)
+            {
+                world.getClass();
+                if(j + l + 1 <= 128)
+                {
+                    break label0;
+                }
+            }
             return false;
         }
-        for(int l1 = j; l1 <= j + 1 + l && flag; l1++)
+label1:
         {
-            int j2 = 1;
-            if(l1 - j < i1)
+            for(int l1 = j; l1 <= j + 1 + l && flag; l1++)
             {
-                j2 = 0;
-            } else
-            {
-                j2 = k1;
-            }
-            for(int l2 = i - j2; l2 <= i + j2 && flag; l2++)
-            {
-                for(int j3 = k - j2; j3 <= k + j2 && flag; j3++)
+                int j2 = 1;
+                if(l1 - j < i1)
                 {
-                    if(l1 >= 0 && l1 < 128)
+                    j2 = 0;
+                } else
+                {
+                    j2 = k1;
+                }
+                for(int l2 = i - j2; l2 <= i + j2 && flag; l2++)
+                {
+                    for(int j3 = k - j2; j3 <= k + j2 && flag; j3++)
                     {
-                        int k3 = world.getBlockId(l2, l1, j3);
-                        if(k3 != 0 && k3 != Block.leaves.blockID)
+                        if(l1 >= 0)
                         {
-                            flag = false;
+                            world.getClass();
+                            if(l1 < 128)
+                            {
+                                int k3 = world.getBlockId(l2, l1, j3);
+                                if(k3 != 0 && k3 != Block.leaves.blockID)
+                                {
+                                    flag = false;
+                                }
+                                continue;
+                            }
                         }
-                    } else
-                    {
                         flag = false;
                     }
+
                 }
 
             }
 
-        }
-
-        if(!flag)
-        {
-            return false;
-        }
-        int i2 = world.getBlockId(i, j - 1, k);
-        if(i2 != Block.grass.blockID && i2 != Block.dirt.blockID || j >= 128 - l - 1)
-        {
+            if(!flag)
+            {
+                return false;
+            }
+            int i2 = world.getBlockId(i, j - 1, k);
+            if(i2 == Block.grass.blockID || i2 == Block.dirt.blockID)
+            {
+                world.getClass();
+                if(j < 128 - l - 1)
+                {
+                    break label1;
+                }
+            }
             return false;
         }
         world.setBlock(i, j - 1, k, Block.dirt.blockID);

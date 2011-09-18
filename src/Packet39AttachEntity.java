@@ -37,7 +37,7 @@ public class Packet39AttachEntity extends Packet
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_6497_a(this);
+        nethandler.handleAttachEntity(this);
     }
 
     public int entityId;

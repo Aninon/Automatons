@@ -16,16 +16,16 @@ class RegionFileChunkBuffer extends ByteArrayOutputStream
     {
         super(8096);
         regionFile = regionfile;
-        field_22283_b = i;
-        field_22285_c = j;
+        chunkX = i;
+        chunkZ = j;
     }
 
     public void close()
     {
-        regionFile.write(field_22283_b, field_22285_c, buf, count);
+        regionFile.write(chunkX, chunkZ, buf, count);
     }
 
-    private int field_22283_b;
-    private int field_22285_c;
+    private int chunkX;
+    private int chunkZ;
     final RegionFile regionFile; /* synthetic field */
 }

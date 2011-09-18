@@ -38,158 +38,181 @@ public class ChunkProviderHell
         byte byte0 = 4;
         byte byte1 = 32;
         int k = byte0 + 1;
-        byte byte2 = 17;
-        int l = byte0 + 1;
-        field_4163_o = func_4057_a(field_4163_o, i * byte0, 0, j * byte0, k, byte2, l);
-        for(int i1 = 0; i1 < byte0; i1++)
+        worldObj.getClass();
+        int l = 128 / 8 + 1;
+        int i1 = byte0 + 1;
+        field_4163_o = func_4057_a(field_4163_o, i * byte0, 0, j * byte0, k, l, i1);
+label0:
+        for(int j1 = 0; j1 < byte0; j1++)
         {
-            for(int j1 = 0; j1 < byte0; j1++)
+            int k1 = 0;
+            do
             {
-                for(int k1 = 0; k1 < 16; k1++)
+label1:
                 {
-                    double d = 0.125D;
-                    double d1 = field_4163_o[((i1 + 0) * l + (j1 + 0)) * byte2 + (k1 + 0)];
-                    double d2 = field_4163_o[((i1 + 0) * l + (j1 + 1)) * byte2 + (k1 + 0)];
-                    double d3 = field_4163_o[((i1 + 1) * l + (j1 + 0)) * byte2 + (k1 + 0)];
-                    double d4 = field_4163_o[((i1 + 1) * l + (j1 + 1)) * byte2 + (k1 + 0)];
-                    double d5 = (field_4163_o[((i1 + 0) * l + (j1 + 0)) * byte2 + (k1 + 1)] - d1) * d;
-                    double d6 = (field_4163_o[((i1 + 0) * l + (j1 + 1)) * byte2 + (k1 + 1)] - d2) * d;
-                    double d7 = (field_4163_o[((i1 + 1) * l + (j1 + 0)) * byte2 + (k1 + 1)] - d3) * d;
-                    double d8 = (field_4163_o[((i1 + 1) * l + (j1 + 1)) * byte2 + (k1 + 1)] - d4) * d;
-                    for(int l1 = 0; l1 < 8; l1++)
+                    if(k1 >= byte0)
                     {
-                        double d9 = 0.25D;
-                        double d10 = d1;
-                        double d11 = d2;
-                        double d12 = (d3 - d1) * d9;
-                        double d13 = (d4 - d2) * d9;
-                        for(int i2 = 0; i2 < 4; i2++)
+                        continue label0;
+                    }
+                    int l1 = 0;
+                    do
+                    {
+                        worldObj.getClass();
+                        if(l1 >= 128 / 8)
                         {
-                            int j2 = i2 + i1 * 4 << 11 | 0 + j1 * 4 << 7 | k1 * 8 + l1;
-                            char c = '\200';
-                            double d14 = 0.25D;
-                            double d15 = d10;
-                            double d16 = (d11 - d10) * d14;
-                            for(int k2 = 0; k2 < 4; k2++)
+                            break label1;
+                        }
+                        double d = 0.125D;
+                        double d1 = field_4163_o[((j1 + 0) * i1 + (k1 + 0)) * l + (l1 + 0)];
+                        double d2 = field_4163_o[((j1 + 0) * i1 + (k1 + 1)) * l + (l1 + 0)];
+                        double d3 = field_4163_o[((j1 + 1) * i1 + (k1 + 0)) * l + (l1 + 0)];
+                        double d4 = field_4163_o[((j1 + 1) * i1 + (k1 + 1)) * l + (l1 + 0)];
+                        double d5 = (field_4163_o[((j1 + 0) * i1 + (k1 + 0)) * l + (l1 + 1)] - d1) * d;
+                        double d6 = (field_4163_o[((j1 + 0) * i1 + (k1 + 1)) * l + (l1 + 1)] - d2) * d;
+                        double d7 = (field_4163_o[((j1 + 1) * i1 + (k1 + 0)) * l + (l1 + 1)] - d3) * d;
+                        double d8 = (field_4163_o[((j1 + 1) * i1 + (k1 + 1)) * l + (l1 + 1)] - d4) * d;
+                        for(int i2 = 0; i2 < 8; i2++)
+                        {
+                            double d9 = 0.25D;
+                            double d10 = d1;
+                            double d11 = d2;
+                            double d12 = (d3 - d1) * d9;
+                            double d13 = (d4 - d2) * d9;
+                            for(int j2 = 0; j2 < 4; j2++)
                             {
-                                int l2 = 0;
-                                if(k1 * 8 + l1 < byte1)
+                                worldObj.getClass();
+                                worldObj.getClass();
+                                int k2 = j2 + j1 * 4 << 11 | 0 + k1 * 4 << 7 | l1 * 8 + i2;
+                                worldObj.getClass();
+                                int l2 = 1 << 7;
+                                double d14 = 0.25D;
+                                double d15 = d10;
+                                double d16 = (d11 - d10) * d14;
+                                for(int i3 = 0; i3 < 4; i3++)
                                 {
-                                    l2 = Block.lavaStill.blockID;
+                                    int j3 = 0;
+                                    if(l1 * 8 + i2 < byte1)
+                                    {
+                                        j3 = Block.lavaStill.blockID;
+                                    }
+                                    if(d15 > 0.0D)
+                                    {
+                                        j3 = Block.netherrack.blockID;
+                                    }
+                                    abyte0[k2] = (byte)j3;
+                                    k2 += l2;
+                                    d15 += d16;
                                 }
-                                if(d15 > 0.0D)
-                                {
-                                    l2 = Block.netherrack.blockID;
-                                }
-                                abyte0[j2] = (byte)l2;
-                                j2 += c;
-                                d15 += d16;
+
+                                d10 += d12;
+                                d11 += d13;
                             }
 
-                            d10 += d12;
-                            d11 += d13;
+                            d1 += d5;
+                            d2 += d6;
+                            d3 += d7;
+                            d4 += d8;
                         }
 
-                        d1 += d5;
-                        d2 += d6;
-                        d3 += d7;
-                        d4 += d8;
-                    }
-
+                        l1++;
+                    } while(true);
                 }
-
-            }
-
+                k1++;
+            } while(true);
         }
 
     }
 
     public void func_4058_b(int i, int j, byte abyte0[])
     {
-        byte byte0 = 64;
+        worldObj.getClass();
+        int k = 128 - 64;
         double d = 0.03125D;
-        field_4162_p = field_4166_l.generateNoiseOctaves(field_4162_p, i * 16, j * 16, 0.0D, 16, 16, 1, d, d, 1.0D);
-        gravelNoise = field_4166_l.generateNoiseOctaves(gravelNoise, i * 16, 109.0134D, j * 16, 16, 1, 16, d, 1.0D, d);
-        field_4160_r = field_4165_m.generateNoiseOctaves(field_4160_r, i * 16, j * 16, 0.0D, 16, 16, 1, d * 2D, d * 2D, d * 2D);
-        for(int k = 0; k < 16; k++)
+        field_4162_p = field_4166_l.generateNoiseOctaves(field_4162_p, i * 16, j * 16, 0, 16, 16, 1, d, d, 1.0D);
+        gravelNoise = field_4166_l.generateNoiseOctaves(gravelNoise, i * 16, 109, j * 16, 16, 1, 16, d, 1.0D, d);
+        field_4160_r = field_4165_m.generateNoiseOctaves(field_4160_r, i * 16, j * 16, 0, 16, 16, 1, d * 2D, d * 2D, d * 2D);
+        for(int l = 0; l < 16; l++)
         {
-            for(int l = 0; l < 16; l++)
+            for(int i1 = 0; i1 < 16; i1++)
             {
-                boolean flag = field_4162_p[k + l * 16] + hellRNG.nextDouble() * 0.20000000000000001D > 0.0D;
-                boolean flag1 = gravelNoise[k + l * 16] + hellRNG.nextDouble() * 0.20000000000000001D > 0.0D;
-                int i1 = (int)(field_4160_r[k + l * 16] / 3D + 3D + hellRNG.nextDouble() * 0.25D);
-                int j1 = -1;
+                boolean flag = field_4162_p[l + i1 * 16] + hellRNG.nextDouble() * 0.20000000000000001D > 0.0D;
+                boolean flag1 = gravelNoise[l + i1 * 16] + hellRNG.nextDouble() * 0.20000000000000001D > 0.0D;
+                int j1 = (int)(field_4160_r[l + i1 * 16] / 3D + 3D + hellRNG.nextDouble() * 0.25D);
+                int k1 = -1;
+                byte byte0 = (byte)Block.netherrack.blockID;
                 byte byte1 = (byte)Block.netherrack.blockID;
-                byte byte2 = (byte)Block.netherrack.blockID;
-                for(int k1 = 127; k1 >= 0; k1--)
+                worldObj.getClass();
+                for(int l1 = 127; l1 >= 0; l1--)
                 {
-                    int l1 = (l * 16 + k) * 128 + k1;
-                    if(k1 >= 127 - hellRNG.nextInt(5))
+                    worldObj.getClass();
+                    int i2 = (i1 * 16 + l) * 128 + l1;
+                    worldObj.getClass();
+                    if(l1 >= 127 - hellRNG.nextInt(5))
                     {
-                        abyte0[l1] = (byte)Block.bedrock.blockID;
+                        abyte0[i2] = (byte)Block.bedrock.blockID;
                         continue;
                     }
-                    if(k1 <= 0 + hellRNG.nextInt(5))
+                    if(l1 <= 0 + hellRNG.nextInt(5))
                     {
-                        abyte0[l1] = (byte)Block.bedrock.blockID;
+                        abyte0[i2] = (byte)Block.bedrock.blockID;
                         continue;
                     }
-                    byte byte3 = abyte0[l1];
-                    if(byte3 == 0)
+                    byte byte2 = abyte0[i2];
+                    if(byte2 == 0)
                     {
-                        j1 = -1;
+                        k1 = -1;
                         continue;
                     }
-                    if(byte3 != Block.netherrack.blockID)
+                    if(byte2 != Block.netherrack.blockID)
                     {
                         continue;
                     }
-                    if(j1 == -1)
+                    if(k1 == -1)
                     {
-                        if(i1 <= 0)
+                        if(j1 <= 0)
                         {
-                            byte1 = 0;
-                            byte2 = (byte)Block.netherrack.blockID;
-                        } else
-                        if(k1 >= byte0 - 4 && k1 <= byte0 + 1)
-                        {
+                            byte0 = 0;
                             byte1 = (byte)Block.netherrack.blockID;
-                            byte2 = (byte)Block.netherrack.blockID;
+                        } else
+                        if(l1 >= k - 4 && l1 <= k + 1)
+                        {
+                            byte0 = (byte)Block.netherrack.blockID;
+                            byte1 = (byte)Block.netherrack.blockID;
                             if(flag1)
                             {
-                                byte1 = (byte)Block.gravel.blockID;
+                                byte0 = (byte)Block.gravel.blockID;
                             }
                             if(flag1)
                             {
-                                byte2 = (byte)Block.netherrack.blockID;
+                                byte1 = (byte)Block.netherrack.blockID;
+                            }
+                            if(flag)
+                            {
+                                byte0 = (byte)Block.slowSand.blockID;
                             }
                             if(flag)
                             {
                                 byte1 = (byte)Block.slowSand.blockID;
                             }
-                            if(flag)
-                            {
-                                byte2 = (byte)Block.slowSand.blockID;
-                            }
                         }
-                        if(k1 < byte0 && byte1 == 0)
+                        if(l1 < k && byte0 == 0)
                         {
-                            byte1 = (byte)Block.lavaStill.blockID;
+                            byte0 = (byte)Block.lavaStill.blockID;
                         }
-                        j1 = i1;
-                        if(k1 >= byte0 - 1)
+                        k1 = j1;
+                        if(l1 >= k - 1)
                         {
-                            abyte0[l1] = byte1;
+                            abyte0[i2] = byte0;
                         } else
                         {
-                            abyte0[l1] = byte2;
+                            abyte0[i2] = byte1;
                         }
                         continue;
                     }
-                    if(j1 > 0)
+                    if(k1 > 0)
                     {
-                        j1--;
-                        abyte0[l1] = byte2;
+                        k1--;
+                        abyte0[i2] = byte1;
                     }
                 }
 
@@ -199,7 +222,7 @@ public class ChunkProviderHell
 
     }
 
-    public Chunk prepareChunk(int i, int j)
+    public Chunk loadChunk(int i, int j)
     {
         return provideChunk(i, j);
     }
@@ -207,10 +230,11 @@ public class ChunkProviderHell
     public Chunk provideChunk(int i, int j)
     {
         hellRNG.setSeed((long)i * 0x4f9939f508L + (long)j * 0x1ef1565bd5L);
-        byte abyte0[] = new byte[32768];
+        worldObj.getClass();
+        byte abyte0[] = new byte[16 * 128 * 16];
         func_4059_a(i, j, abyte0);
         func_4058_b(i, j, abyte0);
-        field_4159_s.func_867_a(this, worldObj, i, j, abyte0);
+        field_4159_s.generate(this, worldObj, i, j, abyte0);
         Chunk chunk = new Chunk(worldObj, abyte0, i, j);
         return chunk;
     }
@@ -344,7 +368,8 @@ public class ChunkProviderHell
         for(int i1 = 0; i1 < 8; i1++)
         {
             int k1 = k + hellRNG.nextInt(16) + 8;
-            int i3 = hellRNG.nextInt(120) + 4;
+            worldObj.getClass();
+            int i3 = hellRNG.nextInt(128 - 8) + 4;
             int k4 = l + hellRNG.nextInt(16) + 8;
             (new WorldGenHellLava(Block.lavaMoving.blockID)).generate(worldObj, hellRNG, k1, i3, k4);
         }
@@ -353,7 +378,8 @@ public class ChunkProviderHell
         for(int l1 = 0; l1 < j1; l1++)
         {
             int j3 = k + hellRNG.nextInt(16) + 8;
-            int l4 = hellRNG.nextInt(120) + 4;
+            worldObj.getClass();
+            int l4 = hellRNG.nextInt(128 - 8) + 4;
             int i6 = l + hellRNG.nextInt(16) + 8;
             (new WorldGenFire()).generate(worldObj, hellRNG, j3, l4, i6);
         }
@@ -362,7 +388,8 @@ public class ChunkProviderHell
         for(int i2 = 0; i2 < j1; i2++)
         {
             int k3 = k + hellRNG.nextInt(16) + 8;
-            int i5 = hellRNG.nextInt(120) + 4;
+            worldObj.getClass();
+            int i5 = hellRNG.nextInt(128 - 8) + 4;
             int j6 = l + hellRNG.nextInt(16) + 8;
             (new WorldGenGlowStone1()).generate(worldObj, hellRNG, k3, i5, j6);
         }
@@ -370,6 +397,7 @@ public class ChunkProviderHell
         for(int j2 = 0; j2 < 10; j2++)
         {
             int l3 = k + hellRNG.nextInt(16) + 8;
+            worldObj.getClass();
             int j5 = hellRNG.nextInt(128);
             int k6 = l + hellRNG.nextInt(16) + 8;
             (new WorldGenGlowStone2()).generate(worldObj, hellRNG, l3, j5, k6);
@@ -378,6 +406,7 @@ public class ChunkProviderHell
         if(hellRNG.nextInt(1) == 0)
         {
             int k2 = k + hellRNG.nextInt(16) + 8;
+            worldObj.getClass();
             int i4 = hellRNG.nextInt(128);
             int k5 = l + hellRNG.nextInt(16) + 8;
             (new WorldGenFlowers(Block.mushroomBrown.blockID)).generate(worldObj, hellRNG, k2, i4, k5);
@@ -385,6 +414,7 @@ public class ChunkProviderHell
         if(hellRNG.nextInt(1) == 0)
         {
             int l2 = k + hellRNG.nextInt(16) + 8;
+            worldObj.getClass();
             int j4 = hellRNG.nextInt(128);
             int l5 = l + hellRNG.nextInt(16) + 8;
             (new WorldGenFlowers(Block.mushroomRed.blockID)).generate(worldObj, hellRNG, l2, j4, l5);

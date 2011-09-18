@@ -8,7 +8,8 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            EntityMob, DataWatcher, NBTTagCompound, World, 
-//            EntitySkeleton, Item, Entity, EntityLightningBolt
+//            DamageSource, EntitySkeleton, Item, Entity, 
+//            EntityLightningBolt
 
 public class EntityCreeper extends EntityMob
 {
@@ -100,10 +101,10 @@ public class EntityCreeper extends EntityMob
         return "mob.creeperdeath";
     }
 
-    public void onDeath(Entity entity)
+    public void onDeath(DamageSource damagesource)
     {
-        super.onDeath(entity);
-        if(entity instanceof EntitySkeleton)
+        super.onDeath(damagesource);
+        if(damagesource.func_35532_a() instanceof EntitySkeleton)
         {
             dropItem(Item.record13.shiftedIndex + rand.nextInt(2), 1);
         }

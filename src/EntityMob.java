@@ -7,10 +7,11 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            EntityCreature, IMob, World, Entity, 
-//            AxisAlignedBB, MathHelper, EnumSkyBlock, NBTTagCompound
+//            EntityCreature, IMob, World, DamageSource, 
+//            Entity, AxisAlignedBB, MathHelper, EnumSkyBlock, 
+//            NBTTagCompound
 
-public class EntityMob extends EntityCreature
+public abstract class EntityMob extends EntityCreature
     implements IMob
 {
 
@@ -19,6 +20,7 @@ public class EntityMob extends EntityCreature
         super(world);
         attackStrength = 2;
         health = 20;
+        field_35171_bJ = 5;
     }
 
     public void onLivingUpdate()
@@ -52,10 +54,11 @@ public class EntityMob extends EntityCreature
         }
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-        if(super.attackEntityFrom(entity, i))
+        if(super.attackEntityFrom(damagesource, i))
         {
+            Entity entity = damagesource.func_35532_a();
             if(riddenByEntity == entity || ridingEntity == entity)
             {
                 return true;
@@ -71,12 +74,17 @@ public class EntityMob extends EntityCreature
         }
     }
 
+    protected boolean func_35175_b(Entity entity)
+    {
+        return entity.attackEntityFrom(DamageSource.func_35525_a(this), attackStrength);
+    }
+
     protected void attackEntity(Entity entity, float f)
     {
         if(attackTime <= 0 && f < 2.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
         {
             attackTime = 20;
-            entity.attackEntityFrom(this, attackStrength);
+            func_35175_b(entity);
         }
     }
 
@@ -105,7 +113,7 @@ public class EntityMob extends EntityCreature
             return false;
         }
         int l = worldObj.getBlockLightValue(i, j, k);
-        if(worldObj.func_27160_B())
+        if(worldObj.getIsThundering())
         {
             int i1 = worldObj.skylightSubtracted;
             worldObj.skylightSubtracted = 10;

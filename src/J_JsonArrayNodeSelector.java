@@ -16,19 +16,19 @@ final class J_JsonArrayNodeSelector extends J_LeafFunctor
     {
     }
 
-    public boolean func_27074_a(J_JsonNode j_jsonnode)
+    public boolean matchsNode_(J_JsonNode j_jsonnode)
     {
-        return EnumJsonNodeType.ARRAY == j_jsonnode.func_27218_a();
+        return EnumJsonNodeType.ARRAY == j_jsonnode.getType();
     }
 
-    public String func_27060_a()
+    public String shortForm()
     {
         return "A short form array";
     }
 
-    public List func_27075_b(J_JsonNode j_jsonnode)
+    public List typeSafeApplyTo(J_JsonNode j_jsonnode)
     {
-        return j_jsonnode.func_27215_d();
+        return j_jsonnode.getElements();
     }
 
     public String toString()
@@ -36,13 +36,13 @@ final class J_JsonArrayNodeSelector extends J_LeafFunctor
         return "an array";
     }
 
-    public Object func_27063_c(Object obj)
+    public Object typeSafeApplyTo(Object obj)
     {
-        return func_27075_b((J_JsonNode)obj);
+        return typeSafeApplyTo((J_JsonNode)obj);
     }
 
-    public boolean func_27058_a(Object obj)
+    public boolean matchsNode(Object obj)
     {
-        return func_27074_a((J_JsonNode)obj);
+        return matchsNode_((J_JsonNode)obj);
     }
 }

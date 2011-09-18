@@ -22,8 +22,8 @@ import javax.imageio.ImageIO;
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
-//            GLAllocation, TexturePackList, TexturePackBase, GameSettings, 
-//            ThreadDownloadImageData, TextureFX, ImageBuffer
+//            MCHash, GLAllocation, TexturePackList, TexturePackBase, 
+//            GameSettings, ThreadDownloadImageData, TextureFX, ImageBuffer
 
 public class RenderEngine
 {
@@ -32,9 +32,9 @@ public class RenderEngine
     {
         textureMap = new HashMap();
         field_28151_c = new HashMap();
-        textureNameToImageMap = new HashMap();
+        textureNameToImageMap = new MCHash();
         singleIntBuffer = GLAllocation.createDirectIntBuffer(1);
-        imageData = GLAllocation.createDirectByteBuffer(0x100000);
+        imageData = GLAllocation.createDirectByteBuffer(0x1000000);
         textureList = new ArrayList();
         urlToImageDataMap = new HashMap();
         clampTexture = false;
@@ -74,7 +74,9 @@ public class RenderEngine
             if(s.startsWith("%blur%"))
             {
                 blurTexture = true;
+                clampTexture = true;
                 ai1 = getImageContentsAndAllocate(readTextureImage(texturepackbase.getResourceAsStream(s.substring(6))));
+                clampTexture = false;
                 blurTexture = false;
             } else
             {
@@ -145,6 +147,14 @@ public class RenderEngine
                 setupTexture(readTextureImage(texturepackbase.getResourceAsStream(s.substring(6))), i);
                 blurTexture = false;
             } else
+            if(s.startsWith("%blurclamp%"))
+            {
+                blurTexture = true;
+                clampTexture = true;
+                setupTexture(readTextureImage(texturepackbase.getResourceAsStream(s.substring(11))), i);
+                blurTexture = false;
+                clampTexture = false;
+            } else
             {
                 InputStream inputstream = texturepackbase.getResourceAsStream(s);
                 if(inputstream == null)
@@ -158,9 +168,9 @@ public class RenderEngine
             textureMap.put(s, Integer.valueOf(i));
             return i;
         }
-        catch(IOException ioexception)
+        catch(Exception exception)
         {
-            ioexception.printStackTrace();
+            exception.printStackTrace();
         }
         GLAllocation.generateTextureNames(singleIntBuffer);
         int j = singleIntBuffer.get(0);
@@ -189,7 +199,7 @@ public class RenderEngine
         GLAllocation.generateTextureNames(singleIntBuffer);
         int i = singleIntBuffer.get(0);
         setupTexture(bufferedimage, i);
-        textureNameToImageMap.put(Integer.valueOf(i), bufferedimage);
+        textureNameToImageMap.addKey(i, bufferedimage);
         return i;
     }
 
@@ -332,7 +342,7 @@ public class RenderEngine
 
     public void deleteTexture(int i)
     {
-        textureNameToImageMap.remove(Integer.valueOf(i));
+        textureNameToImageMap.removeObject(i);
         singleIntBuffer.clear();
         singleIntBuffer.put(i);
         singleIntBuffer.flip();
@@ -539,10 +549,10 @@ label1:
         TexturePackBase texturepackbase = texturePack.selectedTexturePack;
         int i;
         BufferedImage bufferedimage;
-        for(Iterator iterator = textureNameToImageMap.keySet().iterator(); iterator.hasNext(); setupTexture(bufferedimage, i))
+        for(Iterator iterator = textureNameToImageMap.func_35860_b().iterator(); iterator.hasNext(); setupTexture(bufferedimage, i))
         {
             i = ((Integer)iterator.next()).intValue();
-            bufferedimage = (BufferedImage)textureNameToImageMap.get(Integer.valueOf(i));
+            bufferedimage = (BufferedImage)textureNameToImageMap.lookup(i);
         }
 
         for(Iterator iterator1 = urlToImageDataMap.values().iterator(); iterator1.hasNext();)
@@ -570,6 +580,12 @@ label1:
                 {
                     blurTexture = true;
                     bufferedimage1 = readTextureImage(texturepackbase.getResourceAsStream(s.substring(6)));
+                } else
+                if(s.startsWith("%blurclamp%"))
+                {
+                    blurTexture = true;
+                    clampTexture = true;
+                    bufferedimage1 = readTextureImage(texturepackbase.getResourceAsStream(s.substring(11)));
                 } else
                 {
                     bufferedimage1 = readTextureImage(texturepackbase.getResourceAsStream(s));
@@ -643,14 +659,14 @@ label1:
     public static boolean useMipmaps = false;
     private HashMap textureMap;
     private HashMap field_28151_c;
-    private HashMap textureNameToImageMap;
+    private MCHash textureNameToImageMap;
     private IntBuffer singleIntBuffer;
     private ByteBuffer imageData;
     private java.util.List textureList;
     private Map urlToImageDataMap;
     private GameSettings options;
-    private boolean clampTexture;
-    private boolean blurTexture;
+    public boolean clampTexture;
+    public boolean blurTexture;
     private TexturePackList texturePack;
     private BufferedImage missingTextureImage;
 

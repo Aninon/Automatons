@@ -23,7 +23,7 @@ public class RegionFileCache
     {
         File file1 = new File(file, "region");
         File file2 = new File(file1, (new StringBuilder()).append("r.").append(i >> 5).append(".").append(j >> 5).append(".mcr").toString());
-        Reference reference = (Reference)cache.get(file2);
+        Reference reference = (Reference)regionsByFilename.get(file2);
         if(reference != null)
         {
             RegionFile regionfile = (RegionFile)reference.get();
@@ -36,18 +36,18 @@ public class RegionFileCache
         {
             file1.mkdirs();
         }
-        if(cache.size() >= 256)
+        if(regionsByFilename.size() >= 256)
         {
-            dumpChunkMapCache();
+            clearRegionFileReferences();
         }
         RegionFile regionfile1 = new RegionFile(file2);
-        cache.put(file2, new SoftReference(regionfile1));
+        regionsByFilename.put(file2, new SoftReference(regionfile1));
         return regionfile1;
     }
 
-    public static synchronized void dumpChunkMapCache()
+    public static synchronized void clearRegionFileReferences()
     {
-        Iterator iterator = cache.values().iterator();
+        Iterator iterator = regionsByFilename.values().iterator();
         do
         {
             if(!iterator.hasNext())
@@ -60,7 +60,7 @@ public class RegionFileCache
                 RegionFile regionfile = (RegionFile)reference.get();
                 if(regionfile != null)
                 {
-                    regionfile.func_22196_b();
+                    regionfile.close();
                 }
             }
             catch(IOException ioexception)
@@ -68,13 +68,13 @@ public class RegionFileCache
                 ioexception.printStackTrace();
             }
         } while(true);
-        cache.clear();
+        regionsByFilename.clear();
     }
 
     public static int getSizeDelta(File file, int i, int j)
     {
         RegionFile regionfile = createOrLoadRegionFile(file, i, j);
-        return regionfile.func_22209_a();
+        return regionfile.getSizeDelta();
     }
 
     public static DataInputStream getChunkInputStream(File file, int i, int j)
@@ -89,6 +89,6 @@ public class RegionFileCache
         return regionfile.getChunkDataOutputStream(i & 0x1f, j & 0x1f);
     }
 
-    private static final Map cache = new HashMap();
+    private static final Map regionsByFilename = new HashMap();
 
 }

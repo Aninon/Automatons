@@ -7,7 +7,7 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            MaterialTransparent, MapColor, MaterialLiquid, MaterialLogic, 
-//            MaterialPortal
+//            MaterialPortal, MaterialWeb
 
 public class Material
 {
@@ -44,13 +44,13 @@ public class Material
         return this;
     }
 
-    private Material setNoHarvest()
+    protected Material setNoHarvest()
     {
         canHarvest = false;
         return this;
     }
 
-    private Material setBurning()
+    protected Material setBurning()
     {
         canBurn = true;
         return this;
@@ -72,7 +72,7 @@ public class Material
         return groundCover;
     }
 
-    public boolean getIsTranslucent()
+    public boolean getIsOpaque()
     {
         if(isTranslucent)
         {
@@ -115,6 +115,7 @@ public class Material
     public static final Material lava;
     public static final Material leaves;
     public static final Material plants;
+    public static final Material field_35495_k;
     public static final Material sponge;
     public static final Material cloth;
     public static final Material fire;
@@ -152,6 +153,7 @@ public class Material
         lava = (new MaterialLiquid(MapColor.tntColor)).setNoPushMobility();
         leaves = (new Material(MapColor.foliageColor)).setBurning().setIsTranslucent().setNoPushMobility();
         plants = (new MaterialLogic(MapColor.foliageColor)).setNoPushMobility();
+        field_35495_k = (new MaterialLogic(MapColor.foliageColor)).setBurning().setNoPushMobility().setIsGroundCover();
         sponge = new Material(MapColor.clothColor);
         cloth = (new Material(MapColor.clothColor)).setBurning();
         fire = (new MaterialTransparent(MapColor.airColor)).setNoPushMobility();
@@ -168,7 +170,7 @@ public class Material
         pumpkin = (new Material(MapColor.foliageColor)).setNoPushMobility();
         portal = (new MaterialPortal(MapColor.airColor)).setImmovableMobility();
         cakeMaterial = (new Material(MapColor.airColor)).setNoPushMobility();
-        web = (new Material(MapColor.clothColor)).setNoHarvest().setNoPushMobility();
+        web = (new MaterialWeb(MapColor.clothColor)).setNoHarvest().setNoPushMobility();
         piston = (new Material(MapColor.stoneColor)).setImmovableMobility();
     }
 }

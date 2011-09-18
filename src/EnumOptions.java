@@ -11,15 +11,17 @@ public enum EnumOptions
     SOUND("SOUND", 1, "options.sound", true, false),
     INVERT_MOUSE("INVERT_MOUSE", 2, "options.invertMouse", false, true),
     SENSITIVITY("SENSITIVITY", 3, "options.sensitivity", true, false),
-    RENDER_DISTANCE("RENDER_DISTANCE", 4, "options.renderDistance", false, false),
-    VIEW_BOBBING("VIEW_BOBBING", 5, "options.viewBobbing", false, true),
-    ANAGLYPH("ANAGLYPH", 6, "options.anaglyph", false, true),
-    ADVANCED_OPENGL("ADVANCED_OPENGL", 7, "options.advancedOpengl", false, true),
-    FRAMERATE_LIMIT("FRAMERATE_LIMIT", 8, "options.framerateLimit", false, false),
-    DIFFICULTY("DIFFICULTY", 9, "options.difficulty", false, false),
-    GRAPHICS("GRAPHICS", 10, "options.graphics", false, false),
-    AMBIENT_OCCLUSION("AMBIENT_OCCLUSION", 11, "options.ao", false, true),
-    GUI_SCALE("GUI_SCALE", 12, "options.guiScale", false, false);
+    FOV("FOV", 4, "options.fov", true, false),
+    GAMMA("GAMMA", 5, "options.gamma", true, false),
+    RENDER_DISTANCE("RENDER_DISTANCE", 6, "options.renderDistance", false, false),
+    VIEW_BOBBING("VIEW_BOBBING", 7, "options.viewBobbing", false, true),
+    ANAGLYPH("ANAGLYPH", 8, "options.anaglyph", false, true),
+    ADVANCED_OPENGL("ADVANCED_OPENGL", 9, "options.advancedOpengl", false, true),
+    FRAMERATE_LIMIT("FRAMERATE_LIMIT", 10, "options.framerateLimit", false, false),
+    DIFFICULTY("DIFFICULTY", 11, "options.difficulty", false, false),
+    GRAPHICS("GRAPHICS", 12, "options.graphics", false, false),
+    AMBIENT_OCCLUSION("AMBIENT_OCCLUSION", 13, "options.ao", false, true),
+    GUI_SCALE("GUI_SCALE", 14, "options.guiScale", false, false);
 /*
     public static EnumOptions[] values()
     {
@@ -49,7 +51,6 @@ public enum EnumOptions
 
     private EnumOptions(String s, int i, String s1, boolean flag, boolean flag1)
     {
-//        super(s, i);
         enumString = s1;
         enumFloat = flag;
         enumBoolean = flag1;
@@ -79,6 +80,8 @@ public enum EnumOptions
     public static final EnumOptions SOUND;
     public static final EnumOptions INVERT_MOUSE;
     public static final EnumOptions SENSITIVITY;
+    public static final EnumOptions FOV;
+    public static final EnumOptions GAMMA;
     public static final EnumOptions RENDER_DISTANCE;
     public static final EnumOptions VIEW_BOBBING;
     public static final EnumOptions ANAGLYPH;
@@ -92,28 +95,29 @@ public enum EnumOptions
     private final boolean enumFloat;
     private final boolean enumBoolean;
     private final String enumString;
-    private static final EnumOptions allOptions[]; /* synthetic field */
-
+//    private static final EnumOptions allOptions[]; /* synthetic field */
+/*
     static 
     {
-/*
         MUSIC = new EnumOptions("MUSIC", 0, "options.music", true, false);
         SOUND = new EnumOptions("SOUND", 1, "options.sound", true, false);
         INVERT_MOUSE = new EnumOptions("INVERT_MOUSE", 2, "options.invertMouse", false, true);
         SENSITIVITY = new EnumOptions("SENSITIVITY", 3, "options.sensitivity", true, false);
-        RENDER_DISTANCE = new EnumOptions("RENDER_DISTANCE", 4, "options.renderDistance", false, false);
-        VIEW_BOBBING = new EnumOptions("VIEW_BOBBING", 5, "options.viewBobbing", false, true);
-        ANAGLYPH = new EnumOptions("ANAGLYPH", 6, "options.anaglyph", false, true);
-        ADVANCED_OPENGL = new EnumOptions("ADVANCED_OPENGL", 7, "options.advancedOpengl", false, true);
-        FRAMERATE_LIMIT = new EnumOptions("FRAMERATE_LIMIT", 8, "options.framerateLimit", false, false);
-        DIFFICULTY = new EnumOptions("DIFFICULTY", 9, "options.difficulty", false, false);
-        GRAPHICS = new EnumOptions("GRAPHICS", 10, "options.graphics", false, false);
-        AMBIENT_OCCLUSION = new EnumOptions("AMBIENT_OCCLUSION", 11, "options.ao", false, true);
-        GUI_SCALE = new EnumOptions("GUI_SCALE", 12, "options.guiScale", false, false);
-*/
+        FOV = new EnumOptions("FOV", 4, "options.fov", true, false);
+        GAMMA = new EnumOptions("GAMMA", 5, "options.gamma", true, false);
+        RENDER_DISTANCE = new EnumOptions("RENDER_DISTANCE", 6, "options.renderDistance", false, false);
+        VIEW_BOBBING = new EnumOptions("VIEW_BOBBING", 7, "options.viewBobbing", false, true);
+        ANAGLYPH = new EnumOptions("ANAGLYPH", 8, "options.anaglyph", false, true);
+        ADVANCED_OPENGL = new EnumOptions("ADVANCED_OPENGL", 9, "options.advancedOpengl", false, true);
+        FRAMERATE_LIMIT = new EnumOptions("FRAMERATE_LIMIT", 10, "options.framerateLimit", false, false);
+        DIFFICULTY = new EnumOptions("DIFFICULTY", 11, "options.difficulty", false, false);
+        GRAPHICS = new EnumOptions("GRAPHICS", 12, "options.graphics", false, false);
+        AMBIENT_OCCLUSION = new EnumOptions("AMBIENT_OCCLUSION", 13, "options.ao", false, true);
+        GUI_SCALE = new EnumOptions("GUI_SCALE", 14, "options.guiScale", false, false);
         allOptions = (new EnumOptions[] {
-            MUSIC, SOUND, INVERT_MOUSE, SENSITIVITY, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, FRAMERATE_LIMIT, DIFFICULTY, 
-            GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE
+            MUSIC, SOUND, INVERT_MOUSE, SENSITIVITY, FOV, GAMMA, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, 
+            FRAMERATE_LIMIT, DIFFICULTY, GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE
         });
     }
+*/
 }

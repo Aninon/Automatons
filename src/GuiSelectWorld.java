@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 // Referenced classes of package net.minecraft.src:
 //            GuiScreen, StringTranslate, GuiWorldSlot, ISaveFormat, 
 //            SaveFormatComparator, MathHelper, GuiButton, GuiYesNo, 
-//            GuiCreateWorld, GuiRenameWorld, PlayerControllerSP
+//            GuiCreateWorld, GuiRenameWorld, PlayerControllerSP, PlayerControllerTest
 
 public class GuiSelectWorld extends GuiScreen
 {
@@ -22,6 +22,7 @@ public class GuiSelectWorld extends GuiScreen
     {
         screenTitle = "Select world";
         selected = false;
+        field_35316_k = new String[2];
         parentScreen = guiscreen;
     }
 
@@ -31,6 +32,8 @@ public class GuiSelectWorld extends GuiScreen
         screenTitle = stringtranslate.translateKey("selectWorld.title");
         field_22098_o = stringtranslate.translateKey("selectWorld.world");
         field_22097_p = stringtranslate.translateKey("selectWorld.conversion");
+        field_35316_k[0] = stringtranslate.translateKey("gameMode.survival");
+        field_35316_k[1] = stringtranslate.translateKey("gameMode.creative");
         loadSaves();
         worldSlotContainer = new GuiWorldSlot(this);
         worldSlotContainer.registerScrollButtons(controlList, 4, 5);
@@ -124,13 +127,20 @@ public class GuiSelectWorld extends GuiScreen
             return;
         }
         selected = true;
-        mc.playerController = new PlayerControllerSP(mc);
+        int j = ((SaveFormatComparator)saveList.get(i)).func_35719_f();
+        if(j == 0)
+        {
+            mc.playerController = new PlayerControllerSP(mc);
+        } else
+        {
+            mc.playerController = new PlayerControllerTest(mc);
+        }
         String s = getSaveFileName(i);
         if(s == null)
         {
             s = (new StringBuilder()).append("World").append(i).toString();
         }
-        mc.startWorld(s, getSaveName(i), 0L);
+        mc.startWorld(s, getSaveName(i), null);
         mc.displayGuiScreen(null);
     }
 
@@ -202,6 +212,11 @@ public class GuiSelectWorld extends GuiScreen
         return guiselectworld.field_22097_p;
     }
 
+    static String[] func_35315_i(GuiSelectWorld guiselectworld)
+    {
+        return guiselectworld.field_35316_k;
+    }
+
     private final DateFormat dateFormatter = new SimpleDateFormat();
     protected GuiScreen parentScreen;
     protected String screenTitle;
@@ -211,6 +226,7 @@ public class GuiSelectWorld extends GuiScreen
     private GuiWorldSlot worldSlotContainer;
     private String field_22098_o;
     private String field_22097_p;
+    private String field_35316_k[];
     private boolean deleting;
     private GuiButton buttonRename;
     private GuiButton buttonSelect;

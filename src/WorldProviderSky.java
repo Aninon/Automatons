@@ -19,7 +19,7 @@ public class WorldProviderSky extends WorldProvider
 
     public void registerWorldChunkManager()
     {
-        worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.sky, 0.5D, 0.0D);
+        worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.sky, 0.5F, 0.0F);
         worldType = 1;
     }
 

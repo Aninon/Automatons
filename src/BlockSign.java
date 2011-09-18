@@ -81,7 +81,7 @@ public class BlockSign extends BlockContainer
         return false;
     }
 
-    protected TileEntity getBlockEntity()
+    public TileEntity getBlockEntity()
     {
         try
         {

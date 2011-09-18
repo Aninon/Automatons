@@ -18,29 +18,29 @@ public abstract class J_JsonNode
     {
     }
 
-    public abstract EnumJsonNodeType func_27218_a();
+    public abstract EnumJsonNodeType getType();
 
-    public abstract String func_27216_b();
+    public abstract String getText();
 
-    public abstract Map func_27214_c();
+    public abstract Map getFields();
 
-    public abstract List func_27215_d();
+    public abstract List getElements();
 
-    public final String func_27213_a(Object aobj[])
+    public final String getStringValue(Object aobj[])
     {
-        return (String)func_27219_a(J_JsonNodeSelectors.func_27349_a(aobj), this, aobj);
+        return (String)wrapExceptionsFor(J_JsonNodeSelectors.func_27349_a(aobj), this, aobj);
     }
 
-    public final List func_27217_b(Object aobj[])
+    public final List getArrayNode(Object aobj[])
     {
-        return (List)func_27219_a(J_JsonNodeSelectors.func_27346_b(aobj), this, aobj);
+        return (List)wrapExceptionsFor(J_JsonNodeSelectors.func_27346_b(aobj), this, aobj);
     }
 
-    private Object func_27219_a(J_JsonNodeSelector j_jsonnodeselector, J_JsonNode j_jsonnode, Object aobj[])
+    private Object wrapExceptionsFor(J_JsonNodeSelector j_jsonnodeselector, J_JsonNode j_jsonnode, Object aobj[])
     {
         try
         {
-            return j_jsonnodeselector.func_27357_b(j_jsonnode);
+            return j_jsonnodeselector.getValue(j_jsonnode);
         }
         catch(J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException j_jsonnodedoesnotmatchchainedjsonnodeselectorexception)
         {

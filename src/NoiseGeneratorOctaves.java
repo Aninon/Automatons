@@ -7,7 +7,7 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            NoiseGenerator, NoiseGeneratorPerlin
+//            NoiseGenerator, NoiseGeneratorPerlin, MathHelper
 
 public class NoiseGeneratorOctaves extends NoiseGenerator
 {
@@ -36,26 +36,36 @@ public class NoiseGeneratorOctaves extends NoiseGenerator
         return d2;
     }
 
-    public double[] generateNoiseOctaves(double ad[], double d, double d1, double d2, 
-            int i, int j, int k, double d3, double d4, 
-            double d5)
+    public double[] generateNoiseOctaves(double ad[], int i, int j, int k, int l, int i1, int j1, 
+            double d, double d1, double d2)
     {
         if(ad == null)
         {
-            ad = new double[i * j * k];
+            ad = new double[l * i1 * j1];
         } else
         {
-            for(int l = 0; l < ad.length; l++)
+            for(int k1 = 0; k1 < ad.length; k1++)
             {
-                ad[l] = 0.0D;
+                ad[k1] = 0.0D;
             }
 
         }
-        double d6 = 1.0D;
-        for(int i1 = 0; i1 < field_1191_b; i1++)
+        double d3 = 1.0D;
+        for(int l1 = 0; l1 < field_1191_b; l1++)
         {
-            generatorCollection[i1].func_805_a(ad, d, d1, d2, i, j, k, d3 * d6, d4 * d6, d5 * d6, d6);
-            d6 /= 2D;
+            double d4 = (double)i * d3 * d;
+            double d5 = (double)j * d3 * d1;
+            double d6 = (double)k * d3 * d2;
+            long l2 = MathHelper.func_35599_c(d4);
+            long l3 = MathHelper.func_35599_c(d6);
+            d4 -= l2;
+            d6 -= l3;
+            l2 %= 0x1000000L;
+            l3 %= 0x1000000L;
+            d4 += l2;
+            d6 += l3;
+            generatorCollection[l1].func_805_a(ad, d4, d5, d6, l, i1, j1, d * d3, d1 * d3, d2 * d3, d3);
+            d3 /= 2D;
         }
 
         return ad;
@@ -64,7 +74,7 @@ public class NoiseGeneratorOctaves extends NoiseGenerator
     public double[] func_4109_a(double ad[], int i, int j, int k, int l, double d, 
             double d1, double d2)
     {
-        return generateNoiseOctaves(ad, i, 10D, j, k, 1, l, d, 1.0D, d1);
+        return generateNoiseOctaves(ad, i, 10, j, k, 1, l, d, 1.0D, d1);
     }
 
     private NoiseGeneratorPerlin generatorCollection[];

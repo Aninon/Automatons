@@ -16,7 +16,7 @@ public final class J_JdomParser
     {
     }
 
-    public J_JsonRootNode func_27366_a(Reader reader)
+    public J_JsonRootNode Parse(Reader reader)
         throws J_InvalidSyntaxException, IOException
     {
         J_JsonListenerToJdomAdapter j_jsonlistenertojdomadapter = new J_JsonListenerToJdomAdapter();
@@ -24,13 +24,13 @@ public final class J_JdomParser
         return j_jsonlistenertojdomadapter.func_27208_a();
     }
 
-    public J_JsonRootNode func_27367_a(String s)
+    public J_JsonRootNode parse(String s)
         throws J_InvalidSyntaxException
     {
         J_JsonRootNode j_jsonrootnode;
         try
         {
-            j_jsonrootnode = func_27366_a(new StringReader(s));
+            j_jsonrootnode = Parse(new StringReader(s));
         }
         catch(IOException ioexception)
         {

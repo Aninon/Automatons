@@ -5,10 +5,11 @@
 package net.minecraft.src;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 // Referenced classes of package net.minecraft.src:
-//            EntityFX, Entity, MathHelper, World, 
-//            RenderManager, Tessellator
+//            EntityFX, Entity, MathHelper, RenderManager, 
+//            World, Tessellator
 
 public class EntityPickupFX extends EntityFX
 {
@@ -40,11 +41,14 @@ public class EntityPickupFX extends EntityFX
         int i = MathHelper.floor_double(d6);
         int j = MathHelper.floor_double(d7 + (double)(yOffset / 2.0F));
         int k = MathHelper.floor_double(d8);
-        float f7 = worldObj.getLightBrightness(i, j, k);
+        int l = func_35115_a(f);
+        int i1 = l % 0x10000;
+        int j1 = l / 0x10000;
+        GL13.glMultiTexCoord2f(33985 /*GL_TEXTURE1_ARB*/, (float)i1 / 1.0F, (float)j1 / 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         d6 -= interpPosX;
         d7 -= interpPosY;
         d8 -= interpPosZ;
-        GL11.glColor4f(f7, f7, f7, 1.0F);
         RenderManager.instance.renderEntityWithPosYaw(field_675_a, (float)d6, (float)d7, (float)d8, field_675_a.rotationYaw, f);
     }
 

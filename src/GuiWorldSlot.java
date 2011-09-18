@@ -70,6 +70,9 @@ class GuiWorldSlot extends GuiSlot
         if(saveformatcomparator.func_22161_d())
         {
             s2 = (new StringBuilder()).append(GuiSelectWorld.func_22088_h(parentWorldGui)).append(" ").append(s2).toString();
+        } else
+        {
+            s2 = GuiSelectWorld.func_35315_i(parentWorldGui)[saveformatcomparator.func_35719_f()];
         }
         parentWorldGui.drawString(parentWorldGui.fontRenderer, s, j + 2, k + 1, 0xffffff);
         parentWorldGui.drawString(parentWorldGui.fontRenderer, s1, j + 2, k + 12, 0x808080);

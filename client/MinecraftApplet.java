@@ -32,9 +32,8 @@ public class MinecraftApplet extends Applet
         }
         mc = new MinecraftAppletImpl(this, this, mcCanvas, this, getWidth(), getHeight(), flag);
         mc.minecraftUri = getDocumentBase().getHost();
-        if(getDocumentBase().getPort() > 0)
-        {
-            mc.minecraftUri += ":" + getDocumentBase().getPort();
+        if(this.getDocumentBase().getPort() > 0) {
+            this.mc.minecraftUri = this.mc.minecraftUri + ":" + this.getDocumentBase().getPort();
         }
         if(getParameter("username") != null && getParameter("sessionid") != null)
         {

@@ -17,7 +17,7 @@ final class J_JsonNumberNodeBuilder
         field_27239_a = J_JsonNodeFactories.func_27311_b(s);
     }
 
-    public J_JsonNode func_27234_b()
+    public J_JsonNode buildNode()
     {
         return field_27239_a;
     }

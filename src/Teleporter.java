@@ -18,20 +18,20 @@ public class Teleporter
         random = new Random();
     }
 
-    public void func_4107_a(World world, Entity entity)
+    public void placeInPortal(World world, Entity entity)
     {
-        if(func_4106_b(world, entity))
+        if(placeInExistingPortal(world, entity))
         {
             return;
         } else
         {
-            func_4108_c(world, entity);
-            func_4106_b(world, entity);
+            createPortal(world, entity);
+            placeInExistingPortal(world, entity);
             return;
         }
     }
 
-    public boolean func_4106_b(World world, Entity entity)
+    public boolean placeInExistingPortal(World world, Entity entity)
     {
         char c = '\200';
         double d = -1D;
@@ -46,7 +46,8 @@ public class Teleporter
             for(int j2 = i1 - c; j2 <= i1 + c; j2++)
             {
                 double d3 = ((double)j2 + 0.5D) - entity.posZ;
-                for(int k2 = 127; k2 >= 0; k2--)
+                world.getClass();
+                for(int k2 = 128 - 1; k2 >= 0; k2--)
                 {
                     if(world.getBlockId(j1, k2, j2) != Block.portal.blockID)
                     {
@@ -101,7 +102,7 @@ public class Teleporter
         }
     }
 
-    public boolean func_4108_c(World world, Entity entity)
+    public boolean createPortal(World world, Entity entity)
     {
         byte byte0 = 16;
         double d = -1D;
@@ -119,7 +120,8 @@ public class Teleporter
             for(int j3 = k - byte0; j3 <= k + byte0; j3++)
             {
                 double d3 = ((double)j3 + 0.5D) - entity.posZ;
-                for(int k4 = 127; k4 >= 0; k4--)
+                world.getClass();
+                for(int k4 = 128 - 1; k4 >= 0; k4--)
                 {
                     if(!world.isAirBlock(i2, k4, j3))
                     {
@@ -181,13 +183,14 @@ label0:
                 for(int k3 = k - byte0; k3 <= k + byte0; k3++)
                 {
                     double d4 = ((double)k3 + 0.5D) - entity.posZ;
-                    for(int l4 = 127; l4 >= 0; l4--)
+                    world.getClass();
+                    for(int l4 = 128 - 1; l4 >= 0; l4--)
                     {
                         if(!world.isAirBlock(j2, l4, k3))
                         {
                             continue;
                         }
-                        for(; world.isAirBlock(j2, l4 - 1, k3); l4--) { }
+                        for(; l4 > 0 && world.isAirBlock(j2, l4 - 1, k3); l4--) { }
 label1:
                         for(int l5 = l1; l5 < l1 + 2; l5++)
                         {
@@ -244,9 +247,11 @@ label1:
             {
                 i1 = 70;
             }
-            if(i1 > 118)
+            world.getClass();
+            if(i1 > 128 - 10)
             {
-                i1 = 118;
+                world.getClass();
+                i1 = 128 - 10;
             }
             i3 = i1;
             for(int i5 = -1; i5 <= 1; i5++)

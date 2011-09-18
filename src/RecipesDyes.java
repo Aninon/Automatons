@@ -20,7 +20,7 @@ public class RecipesDyes
     {
         for(int i = 0; i < 16; i++)
         {
-            craftingmanager.addShapelessRecipe(new ItemStack(Block.cloth, 1, BlockCloth.func_21035_d(i)), new Object[] {
+            craftingmanager.addShapelessRecipe(new ItemStack(Block.cloth, 1, BlockCloth.getDyeFromBlock(i)), new Object[] {
                 new ItemStack(Item.dyePowder, 1, i), new ItemStack(Item.itemsList[Block.cloth.blockID], 1, 0)
             });
         }

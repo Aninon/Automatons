@@ -30,8 +30,16 @@ class GuiTexturePackSlot extends GuiSlot
     protected void elementClicked(int i, boolean flag)
     {
         List list = GuiTexturePacks.func_22119_c(parentTexturePackGui).texturePackList.availableTexturePacks();
-        GuiTexturePacks.func_22122_d(parentTexturePackGui).texturePackList.setTexturePack((TexturePackBase)list.get(i));
-        GuiTexturePacks.func_22117_e(parentTexturePackGui).renderEngine.refreshTextures();
+        try
+        {
+            GuiTexturePacks.func_22122_d(parentTexturePackGui).texturePackList.setTexturePack((TexturePackBase)list.get(i));
+            GuiTexturePacks.func_22117_e(parentTexturePackGui).renderEngine.refreshTextures();
+        }
+        catch(Exception exception)
+        {
+            GuiTexturePacks.func_35307_f(parentTexturePackGui).texturePackList.setTexturePack((TexturePackBase)list.get(0));
+            GuiTexturePacks.func_35308_g(parentTexturePackGui).renderEngine.refreshTextures();
+        }
     }
 
     protected boolean isSelected(int i)

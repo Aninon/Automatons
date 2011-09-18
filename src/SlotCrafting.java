@@ -59,7 +59,7 @@ public class SlotCrafting extends Slot
         {
             thePlayer.addStat(AchievementList.buildSword, 1);
         }
-        ModLoader.TakenFromCrafting(thePlayer, itemstack);
+        ModLoader.TakenFromCrafting(thePlayer, itemstack, craftMatrix);
         for(int i = 0; i < craftMatrix.getSizeInventory(); i++)
         {
             ItemStack itemstack1 = craftMatrix.getStackInSlot(i);

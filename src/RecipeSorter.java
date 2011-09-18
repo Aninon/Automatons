@@ -15,7 +15,6 @@ class RecipeSorter
 
     RecipeSorter(CraftingManager craftingmanager)
     {
-//        super();
         craftingManager = craftingmanager;
     }
 

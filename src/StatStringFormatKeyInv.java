@@ -16,7 +16,6 @@ public class StatStringFormatKeyInv
 
     public StatStringFormatKeyInv(Minecraft minecraft)
     {
-//        super();
         mc = minecraft;
     }
 

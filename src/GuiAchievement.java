@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
 //            Gui, RenderItem, StatCollector, Achievement, 
-//            ScaledResolution, RenderHelper, FontRenderer, RenderEngine
+//            ScaledResolution, RenderEngine, FontRenderer, RenderHelper
 
 public class GuiAchievement extends Gui
 {
@@ -61,21 +61,6 @@ public class GuiAchievement extends Gui
 
     public void updateAchievementWindow()
     {
-        if(Minecraft.hasPaidCheckTime > 0L)
-        {
-            GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
-            GL11.glDepthMask(false);
-            RenderHelper.disableStandardItemLighting();
-            updateAchievementWindowScale();
-            String s = "Minecraft Beta 1.7.3   Unlicensed Copy :(";
-            String s1 = "(Or logged in from another location)";
-            String s2 = "Purchase at minecraft.net";
-            theGame.fontRenderer.drawStringWithShadow(s, 2, 2, 0xffffff);
-            theGame.fontRenderer.drawStringWithShadow(s1, 2, 11, 0xffffff);
-            theGame.fontRenderer.drawStringWithShadow(s2, 2, 20, 0xffffff);
-            GL11.glDepthMask(true);
-            GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
-        }
         if(theAchievement == null || achievementTime == 0L)
         {
             return;
@@ -112,7 +97,7 @@ public class GuiAchievement extends Gui
         drawTexturedModalRect(i, j, 96, 202, 160, 32);
         if(haveAchiement)
         {
-            theGame.fontRenderer.func_27278_a(achievementStatName, i + 30, j + 7, 120, -1);
+            theGame.fontRenderer.drawSplitString(achievementStatName, i + 30, j + 7, 120, -1);
         } else
         {
             theGame.fontRenderer.drawString(achievementGetLocalText, i + 30, j + 7, -256);

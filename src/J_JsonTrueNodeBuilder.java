@@ -16,7 +16,7 @@ final class J_JsonTrueNodeBuilder
     {
     }
 
-    public J_JsonNode func_27234_b()
+    public J_JsonNode buildNode()
     {
         return J_JsonNodeFactories.func_27313_b();
     }

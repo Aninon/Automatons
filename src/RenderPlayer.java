@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 //            ItemStack, ItemArmor, ModelRenderer, EntityPlayerSP, 
 //            RenderManager, Tessellator, FontRenderer, Item, 
 //            Block, RenderBlocks, ItemRenderer, MathHelper, 
-//            EntityLiving, Entity
+//            EnumAction, EntityLiving, Entity
 
 public class RenderPlayer extends RenderLiving
 {
@@ -124,6 +124,7 @@ public class RenderPlayer extends RenderLiving
 
     protected void renderSpecials(EntityPlayer entityplayer, float f)
     {
+        super.renderEquippedItems(entityplayer, f);
         ItemStack itemstack = entityplayer.inventory.armorItemInSlot(3);
         if(itemstack != null && itemstack.getItem().shiftedIndex < 256)
         {
@@ -224,6 +225,16 @@ public class RenderPlayer extends RenderLiving
                     GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                     GL11.glTranslatef(0.0F, -0.125F, 0.0F);
                 }
+                if(entityplayer.func_35205_Y() > 0)
+                {
+                    EnumAction enumaction = itemstack1.func_35865_n();
+                    if(enumaction == EnumAction.block)
+                    {
+                        GL11.glTranslatef(0.05F, 0.0F, -0.1F);
+                        GL11.glRotatef(-60F, 0.0F, 1.0F, 0.0F);
+                        GL11.glRotatef(-20F, 1.0F, 0.0F, 0.0F);
+                    }
+                }
                 GL11.glTranslatef(0.0F, 0.1875F, 0.0F);
                 GL11.glScalef(f4, -f4, f4);
                 GL11.glRotatef(-100F, 1.0F, 0.0F, 0.0F);
@@ -259,14 +270,14 @@ public class RenderPlayer extends RenderLiving
     {
         if(entityplayer.isEntityAlive() && entityplayer.isPlayerSleeping())
         {
-            super.func_22012_b(entityplayer, d + (double)entityplayer.field_22063_x, d1 + (double)entityplayer.field_22062_y, d2 + (double)entityplayer.field_22061_z);
+            super.renderLivingAt(entityplayer, d + (double)entityplayer.field_22063_x, d1 + (double)entityplayer.field_22062_y, d2 + (double)entityplayer.field_22061_z);
         } else
         {
-            super.func_22012_b(entityplayer, d, d1, d2);
+            super.renderLivingAt(entityplayer, d, d1, d2);
         }
     }
 
-    protected void func_22017_a(EntityPlayer entityplayer, float f, float f1, float f2)
+    protected void rotatePlayer(EntityPlayer entityplayer, float f, float f1, float f2)
     {
         if(entityplayer.isEntityAlive() && entityplayer.isPlayerSleeping())
         {
@@ -301,10 +312,10 @@ public class RenderPlayer extends RenderLiving
 
     protected void rotateCorpse(EntityLiving entityliving, float f, float f1, float f2)
     {
-        func_22017_a((EntityPlayer)entityliving, f, f1, f2);
+        rotatePlayer((EntityPlayer)entityliving, f, f1, f2);
     }
 
-    protected void func_22012_b(EntityLiving entityliving, double d, double d1, double d2)
+    protected void renderLivingAt(EntityLiving entityliving, double d, double d1, double d2)
     {
         func_22016_b((EntityPlayer)entityliving, d, d1, d2);
     }

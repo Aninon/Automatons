@@ -23,14 +23,14 @@ public class GuiAchievements extends GuiScreen
     {
         achievementsPaneWidth = 256;
         achievementsPaneHeight = 202;
-        field_27118_j = 0;
-        field_27117_l = 0;
-        field_27122_w = 0;
+        mouseX = 0;
+        mouseY = 0;
+        isMouseButtonDown = 0;
         statFileWriter = statfilewriter;
         char c = '\215';
         char c1 = '\215';
-        field_27116_m = field_27114_o = field_27112_q = AchievementList.openInventory.displayColumn * 24 - c / 2 - 12;
-        field_27115_n = field_27113_p = field_27111_r = AchievementList.openInventory.displayRow * 24 - c1 / 2;
+        field_27116_m = guiMapX = field_27112_q = AchievementList.openInventory.displayColumn * 24 - c / 2 - 12;
+        field_27115_n = guiMapY = field_27111_r = AchievementList.openInventory.displayRow * 24 - c1 / 2;
     }
 
     public void initGui()
@@ -69,43 +69,43 @@ public class GuiAchievements extends GuiScreen
             int l = (height - achievementsPaneHeight) / 2;
             int i1 = k + 8;
             int j1 = l + 17;
-            if((field_27122_w == 0 || field_27122_w == 1) && i >= i1 && i < i1 + 224 && j >= j1 && j < j1 + 155)
+            if((isMouseButtonDown == 0 || isMouseButtonDown == 1) && i >= i1 && i < i1 + 224 && j >= j1 && j < j1 + 155)
             {
-                if(field_27122_w == 0)
+                if(isMouseButtonDown == 0)
                 {
-                    field_27122_w = 1;
+                    isMouseButtonDown = 1;
                 } else
                 {
-                    field_27114_o -= i - field_27118_j;
-                    field_27113_p -= j - field_27117_l;
-                    field_27112_q = field_27116_m = field_27114_o;
-                    field_27111_r = field_27115_n = field_27113_p;
+                    guiMapX -= i - mouseX;
+                    guiMapY -= j - mouseY;
+                    field_27112_q = field_27116_m = guiMapX;
+                    field_27111_r = field_27115_n = guiMapY;
                 }
-                field_27118_j = i;
-                field_27117_l = j;
+                mouseX = i;
+                mouseY = j;
             }
-            if(field_27112_q < (double)field_27126_s)
+            if(field_27112_q < (double)guiMapTop)
             {
-                field_27112_q = field_27126_s;
+                field_27112_q = guiMapTop;
             }
-            if(field_27111_r < (double)field_27125_t)
+            if(field_27111_r < (double)guiMapLeft)
             {
-                field_27111_r = field_27125_t;
+                field_27111_r = guiMapLeft;
             }
-            if(field_27112_q >= (double)field_27124_u)
+            if(field_27112_q >= (double)guiMapBottom)
             {
-                field_27112_q = field_27124_u - 1;
+                field_27112_q = guiMapBottom - 1;
             }
-            if(field_27111_r >= (double)field_27123_v)
+            if(field_27111_r >= (double)guiMapRight)
             {
-                field_27111_r = field_27123_v - 1;
+                field_27111_r = guiMapRight - 1;
             }
         } else
         {
-            field_27122_w = 0;
+            isMouseButtonDown = 0;
         }
         drawDefaultBackground();
-        func_27109_b(i, j, f);
+        genAchievementBackground(i, j, f);
         GL11.glDisable(2896 /*GL_LIGHTING*/);
         GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
         func_27110_k();
@@ -115,18 +115,18 @@ public class GuiAchievements extends GuiScreen
 
     public void updateScreen()
     {
-        field_27116_m = field_27114_o;
-        field_27115_n = field_27113_p;
-        double d = field_27112_q - field_27114_o;
-        double d1 = field_27111_r - field_27113_p;
+        field_27116_m = guiMapX;
+        field_27115_n = guiMapY;
+        double d = field_27112_q - guiMapX;
+        double d1 = field_27111_r - guiMapY;
         if(d * d + d1 * d1 < 4D)
         {
-            field_27114_o += d;
-            field_27113_p += d1;
+            guiMapX += d;
+            guiMapY += d1;
         } else
         {
-            field_27114_o += d * 0.84999999999999998D;
-            field_27113_p += d1 * 0.84999999999999998D;
+            guiMapX += d * 0.84999999999999998D;
+            guiMapY += d1 * 0.84999999999999998D;
         }
     }
 
@@ -137,25 +137,25 @@ public class GuiAchievements extends GuiScreen
         fontRenderer.drawString("Achievements", i + 15, j + 5, 0x404040);
     }
 
-    protected void func_27109_b(int i, int j, float f)
+    protected void genAchievementBackground(int i, int j, float f)
     {
-        int k = MathHelper.floor_double(field_27116_m + (field_27114_o - field_27116_m) * (double)f);
-        int l = MathHelper.floor_double(field_27115_n + (field_27113_p - field_27115_n) * (double)f);
-        if(k < field_27126_s)
+        int k = MathHelper.floor_double(field_27116_m + (guiMapX - field_27116_m) * (double)f);
+        int l = MathHelper.floor_double(field_27115_n + (guiMapY - field_27115_n) * (double)f);
+        if(k < guiMapTop)
         {
-            k = field_27126_s;
+            k = guiMapTop;
         }
-        if(l < field_27125_t)
+        if(l < guiMapLeft)
         {
-            l = field_27125_t;
+            l = guiMapLeft;
         }
-        if(k >= field_27124_u)
+        if(k >= guiMapBottom)
         {
-            k = field_27124_u - 1;
+            k = guiMapBottom - 1;
         }
-        if(l >= field_27123_v)
+        if(l >= guiMapRight)
         {
-            l = field_27123_v - 1;
+            l = guiMapRight - 1;
         }
         int i1 = mc.renderEngine.getTexture("/terrain.png");
         int j1 = mc.renderEngine.getTexture("/achievement/bg.png");
@@ -339,13 +339,13 @@ public class GuiAchievements extends GuiScreen
             if(statFileWriter.canUnlockAchievement(achievement2))
             {
                 int l6 = Math.max(fontRenderer.getStringWidth(s), 120);
-                int j7 = fontRenderer.func_27277_a(s1, l6);
+                int j7 = fontRenderer.splitStringWidth(s1, l6);
                 if(statFileWriter.hasAchievementUnlocked(achievement2))
                 {
                     j7 += 12;
                 }
                 drawGradientRect(k5 - 3, j6 - 3, k5 + l6 + 3, j6 + j7 + 3 + 12, 0xc0000000, 0xc0000000);
-                fontRenderer.func_27278_a(s1, k5, j6 + 12, l6, 0xffa0a0a0);
+                fontRenderer.drawSplitString(s1, k5, j6 + 12, l6, 0xffa0a0a0);
                 if(statFileWriter.hasAchievementUnlocked(achievement2))
                 {
                     fontRenderer.drawStringWithShadow(StatCollector.translateToLocal("achievement.taken"), k5, j6 + j7 + 4, 0xff9090ff);
@@ -356,9 +356,9 @@ public class GuiAchievements extends GuiScreen
                 String s2 = StatCollector.translateToLocalFormatted("achievement.requires", new Object[] {
                     achievement2.parentAchievement.statName
                 });
-                int k7 = fontRenderer.func_27277_a(s2, i7);
+                int k7 = fontRenderer.splitStringWidth(s2, i7);
                 drawGradientRect(k5 - 3, j6 - 3, k5 + i7 + 3, j6 + k7 + 12 + 3, 0xc0000000, 0xc0000000);
-                fontRenderer.func_27278_a(s2, k5, j6 + 12, i7, 0xff705050);
+                fontRenderer.drawSplitString(s2, k5, j6 + 12, i7, 0xff705050);
             }
             fontRenderer.drawStringWithShadow(s, k5, j6, statFileWriter.canUnlockAchievement(achievement2) ? achievement2.getSpecial() ? -128 : -1 : achievement2.getSpecial() ? 0xff808040 : 0xff808080);
         }
@@ -372,28 +372,28 @@ public class GuiAchievements extends GuiScreen
         return true;
     }
 
-    private static final int field_27126_s;
-    private static final int field_27125_t;
-    private static final int field_27124_u;
-    private static final int field_27123_v;
+    private static final int guiMapTop;
+    private static final int guiMapLeft;
+    private static final int guiMapBottom;
+    private static final int guiMapRight;
     protected int achievementsPaneWidth;
     protected int achievementsPaneHeight;
-    protected int field_27118_j;
-    protected int field_27117_l;
+    protected int mouseX;
+    protected int mouseY;
     protected double field_27116_m;
     protected double field_27115_n;
-    protected double field_27114_o;
-    protected double field_27113_p;
+    protected double guiMapX;
+    protected double guiMapY;
     protected double field_27112_q;
     protected double field_27111_r;
-    private int field_27122_w;
+    private int isMouseButtonDown;
     private StatFileWriter statFileWriter;
 
     static 
     {
-        field_27126_s = AchievementList.minDisplayColumn * 24 - 112;
-        field_27125_t = AchievementList.minDisplayRow * 24 - 112;
-        field_27124_u = AchievementList.maxDisplayColumn * 24 - 77;
-        field_27123_v = AchievementList.maxDisplayRow * 24 - 77;
+        guiMapTop = AchievementList.minDisplayColumn * 24 - 112;
+        guiMapLeft = AchievementList.minDisplayRow * 24 - 112;
+        guiMapBottom = AchievementList.maxDisplayColumn * 24 - 77;
+        guiMapRight = AchievementList.maxDisplayRow * 24 - 77;
     }
 }

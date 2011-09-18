@@ -72,7 +72,7 @@ public class ContainerWorkbench extends Container
 
     }
 
-    public boolean isUsableByPlayer(EntityPlayer entityplayer)
+    public boolean canInteractWith(EntityPlayer entityplayer)
     {
         if(worldObj.getBlockId(posX, posY, posZ) != Block.workbench.blockID)
         {
@@ -84,25 +84,35 @@ public class ContainerWorkbench extends Container
     public ItemStack getStackInSlot(int i)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)slots.get(i);
+        Slot slot = (Slot)inventorySlots.get(i);
         if(slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
             if(i == 0)
             {
-                func_28125_a(itemstack1, 10, 46, true);
+                if(!func_28125_a(itemstack1, 10, 46, true))
+                {
+                    return null;
+                }
             } else
             if(i >= 10 && i < 37)
             {
-                func_28125_a(itemstack1, 37, 46, false);
+                if(!func_28125_a(itemstack1, 37, 46, false))
+                {
+                    return null;
+                }
             } else
             if(i >= 37 && i < 46)
             {
-                func_28125_a(itemstack1, 10, 37, false);
+                if(!func_28125_a(itemstack1, 10, 37, false))
+                {
+                    return null;
+                }
             } else
+            if(!func_28125_a(itemstack1, 10, 46, false))
             {
-                func_28125_a(itemstack1, 10, 46, false);
+                return null;
             }
             if(itemstack1.stackSize == 0)
             {

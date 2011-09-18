@@ -15,14 +15,16 @@ import org.lwjgl.opengl.GL11;
 //            Tessellator, World, RenderManager, RenderBlocks, 
 //            Block, GameSettings, BlockLeaves, WorldRenderer, 
 //            Entity, MathHelper, EntitySorter, TileEntityRenderer, 
-//            ICamera, EntityLiving, TileEntity, RenderHelper, 
-//            EntityRenderer, WorldProvider, Vec3D, RenderEngine, 
-//            RenderSorter, MovingObjectPosition, EntityPlayer, EnumMovingObjectType, 
-//            AxisAlignedBB, GuiIngame, SoundManager, EntityBubbleFX, 
-//            EffectRenderer, EntitySmokeFX, EntityNoteFX, EntityPortalFX, 
-//            EntityExplodeFX, EntityFlameFX, EntityLavaFX, EntityFootStepFX, 
-//            EntitySplashFX, EntityReddustFX, EntitySlimeFX, Item, 
-//            EntitySnowShovelFX, EntityHeartFX, ImageBufferDownload, StepSound, 
+//            EntityRenderer, ICamera, EntityLiving, RenderHelper, 
+//            TileEntity, WorldProvider, Vec3D, RenderEngine, 
+//            EntityPlayerSP, RenderSorter, MovingObjectPosition, EntityPlayer, 
+//            EnumMovingObjectType, AxisAlignedBB, GuiIngame, SoundManager, 
+//            EntityHugeExplodeFX, EffectRenderer, EntityLargeExplodeFX, EntityBubbleFX, 
+//            EntitySuspendFX, EntityAuraFX, EntityCritFX, EntitySmokeFX, 
+//            EntityNoteFX, EntityPortalFX, EntityExplodeFX, EntityFlameFX, 
+//            EntityLavaFX, EntityFootStepFX, EntitySplashFX, EntityCloudFX, 
+//            EntityReddustFX, EntitySlimeFX, Item, EntitySnowShovelFX, 
+//            EntityHeartFX, EntityDiggingFX, ImageBufferDownload, StepSound, 
 //            ItemRecord, ItemStack
 
 public class RenderGlobal
@@ -40,8 +42,6 @@ public class RenderGlobal
         dummyBuf50k = new int[50000];
         occlusionResult = GLAllocation.createDirectIntBuffer(64);
         glRenderLists = new ArrayList();
-        dummyInt0 = 0;
-        glDummyList = GLAllocation.generateDisplayLists(1);
         prevSortX = -9999D;
         prevSortY = -9999D;
         prevSortZ = -9999D;
@@ -170,7 +170,7 @@ public class RenderGlobal
         prevSortX = -9999D;
         prevSortY = -9999D;
         prevSortZ = -9999D;
-        RenderManager.instance.func_852_a(world);
+        RenderManager.instance.set(world);
         worldObj = world;
         globalRenderBlocks = new RenderBlocks(world);
         if(world != null)
@@ -182,13 +182,17 @@ public class RenderGlobal
 
     public void loadRenderers()
     {
+        if(worldObj == null)
+        {
+            return;
+        }
         Block.leaves.setGraphicsLevel(mc.gameSettings.fancyGraphics);
         renderDistance = mc.gameSettings.renderDistance;
         if(worldRenderers != null)
         {
             for(int i = 0; i < worldRenderers.length; i++)
             {
-                worldRenderers[i].func_1204_c();
+                worldRenderers[i].stopRendering();
             }
 
         }
@@ -198,7 +202,8 @@ public class RenderGlobal
             j = 400;
         }
         renderChunksWide = j / 16 + 1;
-        renderChunksTall = 8;
+        worldObj.getClass();
+        renderChunksTall = 128 / 16;
         renderChunksDeep = j / 16 + 1;
         worldRenderers = new WorldRenderer[renderChunksWide * renderChunksTall * renderChunksDeep];
         sortedWorldRenderers = new WorldRenderer[renderChunksWide * renderChunksTall * renderChunksDeep];
@@ -273,6 +278,7 @@ public class RenderGlobal
         TileEntityRenderer.staticPlayerX = ((Entity) (entityliving)).lastTickPosX + (((Entity) (entityliving)).posX - ((Entity) (entityliving)).lastTickPosX) * (double)f;
         TileEntityRenderer.staticPlayerY = ((Entity) (entityliving)).lastTickPosY + (((Entity) (entityliving)).posY - ((Entity) (entityliving)).lastTickPosY) * (double)f;
         TileEntityRenderer.staticPlayerZ = ((Entity) (entityliving)).lastTickPosZ + (((Entity) (entityliving)).posZ - ((Entity) (entityliving)).lastTickPosZ) * (double)f;
+        mc.entityRenderer.func_35806_b(f);
         List list = worldObj.getLoadedEntityList();
         countEntitiesTotal = list.size();
         for(int i = 0; i < worldObj.weatherEffects.size(); i++)
@@ -297,9 +303,11 @@ public class RenderGlobal
             {
                 l = 0;
             }
+            worldObj.getClass();
             if(l >= 128)
             {
-                l = 127;
+                worldObj.getClass();
+                l = 128 - 1;
             }
             if(worldObj.blockExists(MathHelper.floor_double(entity1.posX), l, MathHelper.floor_double(entity1.posZ)))
             {
@@ -308,11 +316,13 @@ public class RenderGlobal
             }
         }
 
+        RenderHelper.enableStandardItemLighting();
         for(int k = 0; k < tileEntities.size(); k++)
         {
             TileEntityRenderer.instance.renderTileEntity((TileEntity)tileEntities.get(k), f);
         }
 
+        mc.entityRenderer.func_35810_a(f);
     }
 
     public String getDebugInfoRenders()
@@ -632,11 +642,13 @@ public class RenderGlobal
 
     public void renderAllRenderLists(int i, double d)
     {
+        mc.entityRenderer.func_35806_b(d);
         for(int j = 0; j < allRenderLists.length; j++)
         {
             allRenderLists[j].func_860_a();
         }
 
+        mc.entityRenderer.func_35810_a(d);
     }
 
     public void updateClouds()
@@ -651,7 +663,7 @@ public class RenderGlobal
             return;
         }
         GL11.glDisable(3553 /*GL_TEXTURE_2D*/);
-        Vec3D vec3d = worldObj.func_4079_a(mc.renderViewEntity, f);
+        Vec3D vec3d = worldObj.getSkyColor(mc.renderViewEntity, f);
         float f1 = (float)vec3d.xCoord;
         float f2 = (float)vec3d.yCoord;
         float f3 = (float)vec3d.zCoord;
@@ -659,10 +671,10 @@ public class RenderGlobal
         {
             float f4 = (f1 * 30F + f2 * 59F + f3 * 11F) / 100F;
             float f5 = (f1 * 30F + f2 * 70F) / 100F;
-            float f7 = (f1 * 30F + f3 * 70F) / 100F;
+            float f6 = (f1 * 30F + f3 * 70F) / 100F;
             f1 = f4;
             f2 = f5;
-            f3 = f7;
+            f3 = f6;
         }
         GL11.glColor3f(f1, f2, f3);
         Tessellator tessellator = Tessellator.instance;
@@ -682,31 +694,30 @@ public class RenderGlobal
             GL11.glShadeModel(7425 /*GL_SMOOTH*/);
             GL11.glPushMatrix();
             GL11.glRotatef(90F, 1.0F, 0.0F, 0.0F);
-            float f8 = worldObj.getCelestialAngle(f);
-            GL11.glRotatef(f8 <= 0.5F ? 0.0F : 180F, 0.0F, 0.0F, 1.0F);
-            float f10 = af[0];
-            float f12 = af[1];
-            float f14 = af[2];
+            GL11.glRotatef(MathHelper.sin(worldObj.func_35456_d(f)) >= 0.0F ? 0.0F : 180F, 0.0F, 0.0F, 1.0F);
+            float f7 = af[0];
+            float f9 = af[1];
+            float f12 = af[2];
             if(mc.gameSettings.anaglyph)
             {
-                float f16 = (f10 * 30F + f12 * 59F + f14 * 11F) / 100F;
-                float f18 = (f10 * 30F + f12 * 70F) / 100F;
-                float f19 = (f10 * 30F + f14 * 70F) / 100F;
-                f10 = f16;
-                f12 = f18;
-                f14 = f19;
+                float f15 = (f7 * 30F + f9 * 59F + f12 * 11F) / 100F;
+                float f18 = (f7 * 30F + f9 * 70F) / 100F;
+                float f21 = (f7 * 30F + f12 * 70F) / 100F;
+                f7 = f15;
+                f9 = f18;
+                f12 = f21;
             }
             tessellator.startDrawing(6);
-            tessellator.setColorRGBA_F(f10, f12, f14, af[3]);
+            tessellator.setColorRGBA_F(f7, f9, f12, af[3]);
             tessellator.addVertex(0.0D, 100D, 0.0D);
             int i = 16;
             tessellator.setColorRGBA_F(af[0], af[1], af[2], 0.0F);
             for(int j = 0; j <= i; j++)
             {
-                float f20 = ((float)j * 3.141593F * 2.0F) / (float)i;
-                float f21 = MathHelper.sin(f20);
-                float f22 = MathHelper.cos(f20);
-                tessellator.addVertex(f21 * 120F, f22 * 120F, -f22 * 40F * af[3]);
+                float f22 = ((float)j * 3.141593F * 2.0F) / (float)i;
+                float f23 = MathHelper.sin(f22);
+                float f24 = MathHelper.cos(f22);
+                tessellator.addVertex(f23 * 120F, f24 * 120F, -f24 * 40F * af[3]);
             }
 
             tessellator.draw();
@@ -716,35 +727,35 @@ public class RenderGlobal
         GL11.glEnable(3553 /*GL_TEXTURE_2D*/);
         GL11.glBlendFunc(770, 1);
         GL11.glPushMatrix();
-        float f6 = 1.0F - worldObj.getRainStrength(f);
-        float f9 = 0.0F;
-        float f11 = 0.0F;
+        float d = 1.0F - worldObj.getRainStrength(f);
+        float f8 = 0.0F;
+        float f10 = 0.0F;
         float f13 = 0.0F;
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, f6);
-        GL11.glTranslatef(f9, f11, f13);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, d);
+        GL11.glTranslatef(f8, f10, f13);
         GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
         GL11.glRotatef(worldObj.getCelestialAngle(f) * 360F, 1.0F, 0.0F, 0.0F);
-        float f15 = 30F;
+        float f16 = 30F;
         GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, renderEngine.getTexture("/terrain/sun.png"));
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(-f15, 100D, -f15, 0.0D, 0.0D);
-        tessellator.addVertexWithUV(f15, 100D, -f15, 1.0D, 0.0D);
-        tessellator.addVertexWithUV(f15, 100D, f15, 1.0D, 1.0D);
-        tessellator.addVertexWithUV(-f15, 100D, f15, 0.0D, 1.0D);
+        tessellator.addVertexWithUV(-f16, 100D, -f16, 0.0D, 0.0D);
+        tessellator.addVertexWithUV(f16, 100D, -f16, 1.0D, 0.0D);
+        tessellator.addVertexWithUV(f16, 100D, f16, 1.0D, 1.0D);
+        tessellator.addVertexWithUV(-f16, 100D, f16, 0.0D, 1.0D);
         tessellator.draw();
-        f15 = 20F;
+        f16 = 20F;
         GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, renderEngine.getTexture("/terrain/moon.png"));
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(-f15, -100D, f15, 1.0D, 1.0D);
-        tessellator.addVertexWithUV(f15, -100D, f15, 0.0D, 1.0D);
-        tessellator.addVertexWithUV(f15, -100D, -f15, 0.0D, 0.0D);
-        tessellator.addVertexWithUV(-f15, -100D, -f15, 1.0D, 0.0D);
+        tessellator.addVertexWithUV(-f16, -100D, f16, 1.0D, 1.0D);
+        tessellator.addVertexWithUV(f16, -100D, f16, 0.0D, 1.0D);
+        tessellator.addVertexWithUV(f16, -100D, -f16, 0.0D, 0.0D);
+        tessellator.addVertexWithUV(-f16, -100D, -f16, 1.0D, 0.0D);
         tessellator.draw();
         GL11.glDisable(3553 /*GL_TEXTURE_2D*/);
-        float f17 = worldObj.getStarBrightness(f) * f6;
-        if(f17 > 0.0F)
+        float f19 = worldObj.getStarBrightness(f) * d;
+        if(f19 > 0.0F)
         {
-            GL11.glColor4f(f17, f17, f17, f17);
+            GL11.glColor4f(f19, f19, f19, f19);
             GL11.glCallList(starGLCallList);
         }
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -752,6 +763,43 @@ public class RenderGlobal
         GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
         GL11.glEnable(2912 /*GL_FOG*/);
         GL11.glPopMatrix();
+        GL11.glDisable(3553 /*GL_TEXTURE_2D*/);
+        GL11.glColor3f(0.0F, 0.0F, 0.0F);
+        d = (float) (mc.thePlayer.getPosition(f).yCoord - 64D);
+        if(d < 0.0D)
+        {
+            GL11.glPushMatrix();
+            GL11.glTranslatef(0.0F, 12F, 0.0F);
+            GL11.glCallList(glSkyList2);
+            GL11.glPopMatrix();
+            float f11 = 1.0F;
+            float f14 = -(float)(d + 64D);
+            float f17 = -f11;
+            float f20 = f14;
+            tessellator.startDrawingQuads();
+            tessellator.setColorRGBA_I(0, 255);
+            tessellator.addVertex(-f11, f20, f11);
+            tessellator.addVertex(f11, f20, f11);
+            tessellator.addVertex(f11, f17, f11);
+            tessellator.addVertex(-f11, f17, f11);
+            tessellator.addVertex(-f11, f17, -f11);
+            tessellator.addVertex(f11, f17, -f11);
+            tessellator.addVertex(f11, f20, -f11);
+            tessellator.addVertex(-f11, f20, -f11);
+            tessellator.addVertex(f11, f17, -f11);
+            tessellator.addVertex(f11, f17, f11);
+            tessellator.addVertex(f11, f20, f11);
+            tessellator.addVertex(f11, f20, -f11);
+            tessellator.addVertex(-f11, f20, -f11);
+            tessellator.addVertex(-f11, f20, f11);
+            tessellator.addVertex(-f11, f17, f11);
+            tessellator.addVertex(-f11, f17, -f11);
+            tessellator.addVertex(-f11, f17, -f11);
+            tessellator.addVertex(-f11, f17, f11);
+            tessellator.addVertex(f11, f17, f11);
+            tessellator.addVertex(f11, f17, -f11);
+            tessellator.draw();
+        }
         if(worldObj.worldProvider.func_28112_c())
         {
             GL11.glColor3f(f1 * 0.2F + 0.04F, f2 * 0.2F + 0.04F, f3 * 0.6F + 0.1F);
@@ -759,8 +807,10 @@ public class RenderGlobal
         {
             GL11.glColor3f(f1, f2, f3);
         }
-        GL11.glDisable(3553 /*GL_TEXTURE_2D*/);
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, -(float)(d - 16D), 0.0F);
         GL11.glCallList(glSkyList2);
+        GL11.glPopMatrix();
         GL11.glEnable(3553 /*GL_TEXTURE_2D*/);
         GL11.glDepthMask(true);
     }
@@ -784,7 +834,7 @@ public class RenderGlobal
         GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, renderEngine.getTexture("/environment/clouds.png"));
         GL11.glEnable(3042 /*GL_BLEND*/);
         GL11.glBlendFunc(770, 771);
-        Vec3D vec3d = worldObj.func_628_d(f);
+        Vec3D vec3d = worldObj.drawClouds(f);
         float f2 = (float)vec3d.xCoord;
         float f3 = (float)vec3d.yCoord;
         float f4 = (float)vec3d.zCoord;
@@ -798,15 +848,16 @@ public class RenderGlobal
             f4 = f8;
         }
         float f6 = 0.0004882813F;
-        double d = mc.renderViewEntity.prevPosX + (mc.renderViewEntity.posX - mc.renderViewEntity.prevPosX) * (double)f + (double)(((float)cloudOffsetX + f) * 0.03F);
-        double d1 = mc.renderViewEntity.prevPosZ + (mc.renderViewEntity.posZ - mc.renderViewEntity.prevPosZ) * (double)f;
-        int j = MathHelper.floor_double(d / 2048D);
-        int k = MathHelper.floor_double(d1 / 2048D);
-        d -= j * 2048 /*GL_EXP*/;
-        d1 -= k * 2048 /*GL_EXP*/;
+        double d = (double)((float)cloudOffsetX + f) + (worldObj.field_35467_J + (worldObj.field_35468_K - worldObj.field_35467_J) * (double)f) * 24000D;
+        double d1 = mc.renderViewEntity.prevPosX + (mc.renderViewEntity.posX - mc.renderViewEntity.prevPosX) * (double)f + d * 0.029999999329447746D;
+        double d2 = mc.renderViewEntity.prevPosZ + (mc.renderViewEntity.posZ - mc.renderViewEntity.prevPosZ) * (double)f;
+        int j = MathHelper.floor_double(d1 / 2048D);
+        int k = MathHelper.floor_double(d2 / 2048D);
+        d1 -= j * 2048 /*GL_EXP*/;
+        d2 -= k * 2048 /*GL_EXP*/;
         float f9 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F;
-        float f10 = (float)(d * (double)f6);
-        float f11 = (float)(d1 * (double)f6);
+        float f10 = (float)(d1 * (double)f6);
+        float f11 = (float)(d2 * (double)f6);
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_F(f2, f3, f4, 0.8F);
         for(int l = -byte0 * i; l < byte0 * i; l += byte0)
@@ -839,17 +890,18 @@ public class RenderGlobal
         Tessellator tessellator = Tessellator.instance;
         float f2 = 12F;
         float f3 = 4F;
-        double d = (mc.renderViewEntity.prevPosX + (mc.renderViewEntity.posX - mc.renderViewEntity.prevPosX) * (double)f + (double)(((float)cloudOffsetX + f) * 0.03F)) / (double)f2;
-        double d1 = (mc.renderViewEntity.prevPosZ + (mc.renderViewEntity.posZ - mc.renderViewEntity.prevPosZ) * (double)f) / (double)f2 + 0.33000001311302185D;
+        double d = (double)((float)cloudOffsetX + f) + (worldObj.field_35467_J + (worldObj.field_35468_K - worldObj.field_35467_J) * (double)f) * 24000D;
+        double d1 = (mc.renderViewEntity.prevPosX + (mc.renderViewEntity.posX - mc.renderViewEntity.prevPosX) * (double)f + d * 0.029999999329447746D) / (double)f2;
+        double d2 = (mc.renderViewEntity.prevPosZ + (mc.renderViewEntity.posZ - mc.renderViewEntity.prevPosZ) * (double)f) / (double)f2 + 0.33000001311302185D;
         float f4 = (worldObj.worldProvider.getCloudHeight() - f1) + 0.33F;
-        int i = MathHelper.floor_double(d / 2048D);
-        int j = MathHelper.floor_double(d1 / 2048D);
-        d -= i * 2048 /*GL_EXP*/;
-        d1 -= j * 2048 /*GL_EXP*/;
+        int i = MathHelper.floor_double(d1 / 2048D);
+        int j = MathHelper.floor_double(d2 / 2048D);
+        d1 -= i * 2048 /*GL_EXP*/;
+        d2 -= j * 2048 /*GL_EXP*/;
         GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, renderEngine.getTexture("/environment/clouds.png"));
         GL11.glEnable(3042 /*GL_BLEND*/);
         GL11.glBlendFunc(770, 771);
-        Vec3D vec3d = worldObj.func_628_d(f);
+        Vec3D vec3d = worldObj.drawClouds(f);
         float f5 = (float)vec3d.xCoord;
         float f6 = (float)vec3d.yCoord;
         float f7 = (float)vec3d.zCoord;
@@ -862,15 +914,15 @@ public class RenderGlobal
             f6 = f10;
             f7 = f12;
         }
-        float f9 = (float)(d * 0.0D);
-        float f11 = (float)(d1 * 0.0D);
+        float f9 = (float)(d1 * 0.0D);
+        float f11 = (float)(d2 * 0.0D);
         float f13 = 0.00390625F;
-        f9 = (float)MathHelper.floor_double(d) * f13;
-        f11 = (float)MathHelper.floor_double(d1) * f13;
-        float f14 = (float)(d - (double)MathHelper.floor_double(d));
-        float f15 = (float)(d1 - (double)MathHelper.floor_double(d1));
+        f9 = (float)MathHelper.floor_double(d1) * f13;
+        f11 = (float)MathHelper.floor_double(d2) * f13;
+        float f14 = (float)(d1 - (double)MathHelper.floor_double(d1));
+        float f15 = (float)(d2 - (double)MathHelper.floor_double(d2));
         int k = 8;
-        byte byte0 = 3;
+        byte byte0 = 4;
         float f16 = 0.0009765625F;
         GL11.glScalef(f2, 1.0F, f2);
         for(int l = 0; l < 2; l++)
@@ -1368,6 +1420,14 @@ public class RenderGlobal
         double d7 = mc.renderViewEntity.posY - d1;
         double d8 = mc.renderViewEntity.posZ - d2;
         double d9 = 16D;
+        if(s.equals("hugeexplosion"))
+        {
+            mc.effectRenderer.addEffect(new EntityHugeExplodeFX(worldObj, d, d1, d2, d3, d4, d5));
+        }
+        if(s.equals("largeexplode"))
+        {
+            mc.effectRenderer.addEffect(new EntityLargeExplodeFX(renderEngine, worldObj, d, d1, d2, d3, d4, d5));
+        }
         if(d6 * d6 + d7 * d7 + d8 * d8 > d9 * d9)
         {
             return;
@@ -1375,6 +1435,22 @@ public class RenderGlobal
         if(s.equals("bubble"))
         {
             mc.effectRenderer.addEffect(new EntityBubbleFX(worldObj, d, d1, d2, d3, d4, d5));
+        } else
+        if(s.equals("suspended"))
+        {
+            mc.effectRenderer.addEffect(new EntitySuspendFX(worldObj, d, d1, d2, d3, d4, d5));
+        } else
+        if(s.equals("depthsuspend"))
+        {
+            mc.effectRenderer.addEffect(new EntityAuraFX(worldObj, d, d1, d2, d3, d4, d5));
+        } else
+        if(s.equals("townaura"))
+        {
+            mc.effectRenderer.addEffect(new EntityAuraFX(worldObj, d, d1, d2, d3, d4, d5));
+        } else
+        if(s.equals("crit"))
+        {
+            mc.effectRenderer.addEffect(new EntityCritFX(worldObj, d, d1, d2, d3, d4, d5));
         } else
         if(s.equals("smoke"))
         {
@@ -1412,6 +1488,10 @@ public class RenderGlobal
         {
             mc.effectRenderer.addEffect(new EntitySmokeFX(worldObj, d, d1, d2, d3, d4, d5, 2.5F));
         } else
+        if(s.equals("cloud"))
+        {
+            mc.effectRenderer.addEffect(new EntityCloudFX(worldObj, d, d1, d2, d3, d4, d5));
+        } else
         if(s.equals("reddust"))
         {
             mc.effectRenderer.addEffect(new EntityReddustFX(worldObj, d, d1, d2, (float)d3, (float)d4, (float)d5));
@@ -1431,6 +1511,16 @@ public class RenderGlobal
         if(s.equals("heart"))
         {
             mc.effectRenderer.addEffect(new EntityHeartFX(worldObj, d, d1, d2, d3, d4, d5));
+        } else
+        if(s.startsWith("iconcrack_"))
+        {
+            int i = Integer.parseInt(s.substring(s.indexOf("_") + 1));
+            mc.effectRenderer.addEffect(new EntitySlimeFX(worldObj, d, d1, d2, d3, d4, d5, Item.itemsList[i]));
+        } else
+        if(s.startsWith("tilecrack_"))
+        {
+            int j = Integer.parseInt(s.substring(s.indexOf("_") + 1));
+            mc.effectRenderer.addEffect(new EntityDiggingFX(worldObj, d, d1, d2, d3, d4, d5, Block.blocksList[j], 0, 0));
         }
     }
 
@@ -1457,19 +1547,6 @@ public class RenderGlobal
         {
             renderEngine.releaseImageData(entity.cloakUrl);
         }
-    }
-
-    public void updateAllRenderers()
-    {
-        for(int i = 0; i < worldRenderers.length; i++)
-        {
-            if(worldRenderers[i].isChunkLit && !worldRenderers[i].needsUpdate)
-            {
-                worldRenderersToUpdate.add(worldRenderers[i]);
-                worldRenderers[i].markDirty();
-            }
-        }
-
     }
 
     public void doNothingWithTileEntity(int i, int j, int k, TileEntity tileentity)
@@ -1598,8 +1675,6 @@ public class RenderGlobal
     private RenderList allRenderLists[] = {
         new RenderList(), new RenderList(), new RenderList(), new RenderList()
     };
-    int dummyInt0;
-    int glDummyList;
     double prevSortX;
     double prevSortY;
     double prevSortZ;

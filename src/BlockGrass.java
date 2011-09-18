@@ -7,8 +7,8 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            Block, Material, IBlockAccess, WorldChunkManager, 
-//            ColorizerGrass, World
+//            Block, Material, IBlockAccess, ColorizerGrass, 
+//            WorldChunkManager, World
 
 public class BlockGrass extends Block
 {
@@ -18,6 +18,15 @@ public class BlockGrass extends Block
         super(i, Material.grass);
         blockIndexInTexture = 3;
         setTickOnLoad(true);
+    }
+
+    public int getBlockTextureFromSideAndMetadata(int i, int j)
+    {
+        if(i == 1)
+        {
+            return 0;
+        }
+        return i != 0 ? 3 : 2;
     }
 
     public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l)
@@ -34,11 +43,22 @@ public class BlockGrass extends Block
         return material != Material.snow && material != Material.craftedSnow ? 3 : 68;
     }
 
+    public int func_35274_i()
+    {
+        double d = 0.5D;
+        double d1 = 1.0D;
+        return ColorizerGrass.getGrassColor(d, d1);
+    }
+
+    public int getRenderColor(int i)
+    {
+        return func_35274_i();
+    }
+
     public int colorMultiplier(IBlockAccess iblockaccess, int i, int j, int k)
     {
-        iblockaccess.getWorldChunkManager().func_4069_a(i, k, 1, 1);
-        double d = iblockaccess.getWorldChunkManager().temperature[0];
-        double d1 = iblockaccess.getWorldChunkManager().humidity[0];
+        double d = iblockaccess.getWorldChunkManager().func_35554_b(i, k);
+        double d1 = iblockaccess.getWorldChunkManager().func_35558_c(i, k);
         return ColorizerGrass.getGrassColor(d, d1);
     }
 

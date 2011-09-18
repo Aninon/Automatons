@@ -11,5 +11,5 @@ package net.minecraft.src;
 public interface J_JsonNodeBuilder
 {
 
-    public abstract J_JsonNode func_27234_b();
+    public abstract J_JsonNode buildNode();
 }

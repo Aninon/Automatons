@@ -8,19 +8,23 @@ package net.minecraft.src;
 public class NibbleArray
 {
 
-    public NibbleArray(int i)
+    public NibbleArray(int i, int j)
     {
         data = new byte[i >> 1];
+        field_35754_b = j;
+        field_35755_c = j + 4;
     }
 
-    public NibbleArray(byte abyte0[])
+    public NibbleArray(byte abyte0[], int i)
     {
         data = abyte0;
+        field_35754_b = i;
+        field_35755_c = i + 4;
     }
 
     public int getNibble(int i, int j, int k)
     {
-        int l = i << 11 | k << 7 | j;
+        int l = i << field_35755_c | k << field_35754_b | j;
         int i1 = l >> 1;
         int j1 = l & 1;
         if(j1 == 0)
@@ -34,7 +38,7 @@ public class NibbleArray
 
     public void setNibble(int i, int j, int k, int l)
     {
-        int i1 = i << 11 | k << 7 | j;
+        int i1 = i << field_35755_c | k << field_35754_b | j;
         int j1 = i1 >> 1;
         int k1 = i1 & 1;
         if(k1 == 0)
@@ -52,4 +56,6 @@ public class NibbleArray
     }
 
     public final byte data[];
+    private final int field_35754_b;
+    private final int field_35755_c;
 }

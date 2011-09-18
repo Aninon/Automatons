@@ -4,7 +4,6 @@
 
 package net.minecraft.src;
 
-import java.io.PrintStream;
 import java.nio.*;
 import org.lwjgl.opengl.*;
 
@@ -19,6 +18,7 @@ public class Tessellator
         vertexCount = 0;
         hasColor = false;
         hasTexture = false;
+        field_35838_p = false;
         hasNormals = false;
         rawBufferIndex = 0;
         addedVertices = 0;
@@ -31,6 +31,7 @@ public class Tessellator
         byteBuffer = GLAllocation.createDirectByteBuffer(i * 4);
         intBuffer = byteBuffer.asIntBuffer();
         floatBuffer = byteBuffer.asFloatBuffer();
+        field_35836_g = byteBuffer.asShortBuffer();
         rawBuffer = new int[i];
         useVBO = tryVBO && GLContext.getCapabilities().GL_ARB_vertex_buffer_object;
         if(useVBO)
@@ -71,6 +72,20 @@ public class Tessellator
                 }
                 GL11.glEnableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
             }
+            if(field_35838_p)
+            {
+                GL13.glClientActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
+                if(useVBO)
+                {
+                    GL11.glTexCoordPointer(2, 5122 /*GL_SHORT*/, 32, 24L);
+                } else
+                {
+                    field_35836_g.position(14);
+                    GL11.glTexCoordPointer(2, 32, field_35836_g);
+                }
+                GL11.glEnableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
+                GL13.glClientActiveTexture(33984 /*GL_TEXTURE0_ARB*/);
+            }
             if(hasColor)
             {
                 if(useVBO)
@@ -87,7 +102,7 @@ public class Tessellator
             {
                 if(useVBO)
                 {
-                    GL11.glNormalPointer(5120 /*GL_BYTE*/, 32, 24L);
+                    GL11.glNormalPointer(5121 /*GL_UNSIGNED_BYTE*/, 32, 24L);
                 } else
                 {
                     byteBuffer.position(24);
@@ -115,6 +130,12 @@ public class Tessellator
             if(hasTexture)
             {
                 GL11.glDisableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
+            }
+            if(field_35838_p)
+            {
+                GL13.glClientActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
+                GL11.glDisableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
+                GL13.glClientActiveTexture(33984 /*GL_TEXTURE0_ARB*/);
             }
             if(hasColor)
             {
@@ -154,6 +175,7 @@ public class Tessellator
             hasNormals = false;
             hasColor = false;
             hasTexture = false;
+            field_35838_p = false;
             isColorDisabled = false;
             return;
         }
@@ -164,6 +186,12 @@ public class Tessellator
         hasTexture = true;
         textureU = d;
         textureV = d1;
+    }
+
+    public void func_35835_b(int i)
+    {
+        field_35838_p = true;
+        field_35837_l = i;
     }
 
     public void setColorOpaque_F(float f, float f1, float f2)
@@ -248,6 +276,10 @@ public class Tessellator
                     rawBuffer[rawBufferIndex + 3] = rawBuffer[(rawBufferIndex - j) + 3];
                     rawBuffer[rawBufferIndex + 4] = rawBuffer[(rawBufferIndex - j) + 4];
                 }
+                if(field_35838_p)
+                {
+                    rawBuffer[rawBufferIndex + 7] = rawBuffer[(rawBufferIndex - j) + 7];
+                }
                 if(hasColor)
                 {
                     rawBuffer[rawBufferIndex + 5] = rawBuffer[(rawBufferIndex - j) + 5];
@@ -264,6 +296,10 @@ public class Tessellator
         {
             rawBuffer[rawBufferIndex + 3] = Float.floatToRawIntBits((float)textureU);
             rawBuffer[rawBufferIndex + 4] = Float.floatToRawIntBits((float)textureV);
+        }
+        if(field_35838_p)
+        {
+            rawBuffer[rawBufferIndex + 7] = field_35837_l;
         }
         if(hasColor)
         {
@@ -308,12 +344,8 @@ public class Tessellator
 
     public void setNormal(float f, float f1, float f2)
     {
-        if(!isDrawing)
-        {
-            System.out.println("But..");
-        }
         hasNormals = true;
-        byte byte0 = (byte)(int)(f * 128F);
+        byte byte0 = (byte)(int)(f * 127F);
         byte byte1 = (byte)(int)(f1 * 127F);
         byte byte2 = (byte)(int)(f2 * 127F);
         normal = byte0 | byte1 << 8 | byte2 << 16;
@@ -333,18 +365,21 @@ public class Tessellator
         zOffset += f2;
     }
 
-    private static boolean convertQuadsToTriangles = true;
+    private static boolean convertQuadsToTriangles = false;
     private static boolean tryVBO = false;
     private ByteBuffer byteBuffer;
     private IntBuffer intBuffer;
     private FloatBuffer floatBuffer;
+    private ShortBuffer field_35836_g;
     private int rawBuffer[];
     private int vertexCount;
     private double textureU;
     private double textureV;
+    private int field_35837_l;
     private int color;
     private boolean hasColor;
     private boolean hasTexture;
+    private boolean field_35838_p;
     private boolean hasNormals;
     private int rawBufferIndex;
     private int addedVertices;

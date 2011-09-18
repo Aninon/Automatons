@@ -17,6 +17,7 @@ public class ContainerChest extends Container
     {
         lowerChestInventory = iinventory1;
         numRows = iinventory1.getSizeInventory() / 9;
+        iinventory1.func_35142_x_();
         int i = (numRows - 4) * 18;
         for(int j = 0; j < numRows; j++)
         {
@@ -43,7 +44,7 @@ public class ContainerChest extends Container
 
     }
 
-    public boolean isUsableByPlayer(EntityPlayer entityplayer)
+    public boolean canInteractWith(EntityPlayer entityplayer)
     {
         return lowerChestInventory.canInteractWith(entityplayer);
     }
@@ -51,17 +52,21 @@ public class ContainerChest extends Container
     public ItemStack getStackInSlot(int i)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)slots.get(i);
+        Slot slot = (Slot)inventorySlots.get(i);
         if(slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
             if(i < numRows * 9)
             {
-                func_28125_a(itemstack1, numRows * 9, slots.size(), true);
+                if(!func_28125_a(itemstack1, numRows * 9, inventorySlots.size(), true))
+                {
+                    return null;
+                }
             } else
+            if(!func_28125_a(itemstack1, 0, numRows * 9, false))
             {
-                func_28125_a(itemstack1, 0, numRows * 9, false);
+                return null;
             }
             if(itemstack1.stackSize == 0)
             {
@@ -72,6 +77,12 @@ public class ContainerChest extends Container
             }
         }
         return itemstack;
+    }
+
+    public void onCraftGuiClosed(EntityPlayer entityplayer)
+    {
+        super.onCraftGuiClosed(entityplayer);
+        lowerChestInventory.func_35141_y_();
     }
 
     private IInventory lowerChestInventory;

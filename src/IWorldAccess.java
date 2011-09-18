@@ -25,8 +25,6 @@ public interface IWorldAccess
 
     public abstract void releaseEntitySkin(Entity entity);
 
-    public abstract void updateAllRenderers();
-
     public abstract void playRecord(String s, int i, int j, int k);
 
     public abstract void doNothingWithTileEntity(int i, int j, int k, TileEntity tileentity);

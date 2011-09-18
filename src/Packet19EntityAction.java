@@ -38,7 +38,7 @@ public class Packet19EntityAction extends Packet
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_21147_a(this);
+        nethandler.handleEntityAction(this);
     }
 
     public int getPacketSize()

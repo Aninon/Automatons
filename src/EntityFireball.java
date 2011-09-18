@@ -9,7 +9,8 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            Entity, AxisAlignedBB, MathHelper, EntityLiving, 
-//            World, Vec3D, MovingObjectPosition, NBTTagCompound
+//            World, Vec3D, MovingObjectPosition, DamageSource, 
+//            NBTTagCompound
 
 public class EntityFireball extends Entity
 {
@@ -23,7 +24,7 @@ public class EntityFireball extends Entity
         inTile = 0;
         inGround = false;
         shake = 0;
-        ticksFlying = 0;
+        ticksInAir = 0;
         setSize(1.0F, 1.0F);
     }
 
@@ -48,7 +49,7 @@ public class EntityFireball extends Entity
         inTile = 0;
         inGround = false;
         shake = 0;
-        ticksFlying = 0;
+        ticksInAir = 0;
         setSize(1.0F, 1.0F);
         setLocationAndAngles(d, d1, d2, rotationYaw, rotationPitch);
         setPosition(d, d1, d2);
@@ -67,7 +68,7 @@ public class EntityFireball extends Entity
         inTile = 0;
         inGround = false;
         shake = 0;
-        ticksFlying = 0;
+        ticksInAir = 0;
         shootingEntity = entityliving;
         setSize(1.0F, 1.0F);
         setLocationAndAngles(entityliving.posX, entityliving.posY, entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
@@ -101,7 +102,7 @@ public class EntityFireball extends Entity
                 motionY *= rand.nextFloat() * 0.2F;
                 motionZ *= rand.nextFloat() * 0.2F;
                 ticksAlive = 0;
-                ticksFlying = 0;
+                ticksInAir = 0;
             } else
             {
                 ticksAlive++;
@@ -113,7 +114,7 @@ public class EntityFireball extends Entity
             }
         } else
         {
-            ticksFlying++;
+            ticksInAir++;
         }
         Vec3D vec3d = Vec3D.createVector(posX, posY, posZ);
         Vec3D vec3d1 = Vec3D.createVector(posX + motionX, posY + motionY, posZ + motionZ);
@@ -130,7 +131,7 @@ public class EntityFireball extends Entity
         for(int j = 0; j < list.size(); j++)
         {
             Entity entity1 = (Entity)list.get(j);
-            if(!entity1.canBeCollidedWith() || entity1 == shootingEntity && ticksFlying < 25)
+            if(!entity1.canBeCollidedWith() || entity1 == shootingEntity && ticksInAir < 25)
             {
                 continue;
             }
@@ -159,7 +160,7 @@ public class EntityFireball extends Entity
             {
                 if(movingobjectposition.entityHit != null)
                 {
-                    if(!movingobjectposition.entityHit.attackEntityFrom(shootingEntity, 0));
+                    if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35530_a(this, shootingEntity), 0));
                 }
                 worldObj.newExplosion(null, posX, posY, posZ, 1.0F, true);
             }
@@ -227,12 +228,12 @@ public class EntityFireball extends Entity
         return 1.0F;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         setBeenAttacked();
-        if(entity != null)
+        if(damagesource.func_35532_a() != null)
         {
-            Vec3D vec3d = entity.getLookVec();
+            Vec3D vec3d = damagesource.func_35532_a().getLookVec();
             if(vec3d != null)
             {
                 motionX = vec3d.xCoord;
@@ -262,7 +263,7 @@ public class EntityFireball extends Entity
     public int shake;
     public EntityLiving shootingEntity;
     private int ticksAlive;
-    private int ticksFlying;
+    private int ticksInAir;
     public double accelerationX;
     public double accelerationY;
     public double accelerationZ;

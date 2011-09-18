@@ -20,12 +20,14 @@ public class Packet70Bed extends Packet
         throws IOException
     {
         bedState = datainputstream.readByte();
+        field_35262_c = datainputstream.readByte();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
         dataoutputstream.writeByte(bedState);
+        dataoutputstream.writeByte(field_35262_c);
     }
 
     public void processPacket(NetHandler nethandler)
@@ -35,12 +37,13 @@ public class Packet70Bed extends Packet
 
     public int getPacketSize()
     {
-        return 1;
+        return 2;
     }
 
     public static final String bedChat[] = {
-        "tile.bed.notValid", null, null
+        "tile.bed.notValid", null, null, "gameMode.changed"
     };
     public int bedState;
+    public int field_35262_c;
 
 }

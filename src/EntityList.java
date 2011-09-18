@@ -10,11 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Referenced classes of package net.minecraft.src:
-//            World, Entity, NBTTagCompound, EntityArrow, 
-//            EntitySnowball, EntityItem, EntityPainting, EntityLiving, 
-//            EntityMob, EntityCreeper, EntitySkeleton, EntitySpider, 
-//            EntityGiantZombie, EntityZombie, EntitySlime, EntityGhast, 
-//            EntityPigZombie, EntityPig, EntitySheep, EntityCow, 
+//            World, Entity, NBTTagCompound, EntityItem, 
+//            EntityXPOrb, EntityArrow, EntitySnowball, EntityPainting, 
+//            EntityLiving, EntityMob, EntityCreeper, EntitySkeleton, 
+//            EntitySpider, EntityGiantZombie, EntityZombie, EntitySlime, 
+//            EntityGhast, EntityPigZombie, EntityEnderman, EntityCaveSpider, 
+//            EntitySilverfish, EntityPig, EntitySheep, EntityCow, 
 //            EntityChicken, EntitySquid, EntityWolf, EntityTNTPrimed, 
 //            EntityFallingSand, EntityMinecart, EntityBoat
 
@@ -127,9 +128,10 @@ public class EntityList
 
     static 
     {
+        addMapping(net.minecraft.src.EntityItem.class, "Item", 1);
+        addMapping(net.minecraft.src.EntityXPOrb.class, "XPOrb", 2);
         addMapping(net.minecraft.src.EntityArrow.class, "Arrow", 10);
         addMapping(net.minecraft.src.EntitySnowball.class, "Snowball", 11);
-        addMapping(net.minecraft.src.EntityItem.class, "Item", 1);
         addMapping(net.minecraft.src.EntityPainting.class, "Painting", 9);
         addMapping(net.minecraft.src.EntityLiving.class, "Mob", 48);
         addMapping(net.minecraft.src.EntityMob.class, "Monster", 49);
@@ -141,6 +143,9 @@ public class EntityList
         addMapping(net.minecraft.src.EntitySlime.class, "Slime", 55);
         addMapping(net.minecraft.src.EntityGhast.class, "Ghast", 56);
         addMapping(net.minecraft.src.EntityPigZombie.class, "PigZombie", 57);
+        addMapping(net.minecraft.src.EntityEnderman.class, "Enderman", 58);
+        addMapping(net.minecraft.src.EntityCaveSpider.class, "CaveSpider", 59);
+        addMapping(net.minecraft.src.EntitySilverfish.class, "Silverfish", 60);
         addMapping(net.minecraft.src.EntityPig.class, "Pig", 90);
         addMapping(net.minecraft.src.EntitySheep.class, "Sheep", 91);
         addMapping(net.minecraft.src.EntityCow.class, "Cow", 92);

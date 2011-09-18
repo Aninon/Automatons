@@ -20,7 +20,7 @@ public class BlockRedstoneOre extends Block
         {
             setTickOnLoad(true);
         }
-        field_468_a = flag;
+        glowing = flag;
     }
 
     public int tickRate()
@@ -75,7 +75,7 @@ public class BlockRedstoneOre extends Block
 
     public void randomDisplayTick(World world, int i, int j, int k, Random random)
     {
-        if(field_468_a)
+        if(glowing)
         {
             func_319_i(world, i, j, k);
         }
@@ -122,5 +122,5 @@ public class BlockRedstoneOre extends Block
 
     }
 
-    private boolean field_468_a;
+    private boolean glowing;
 }

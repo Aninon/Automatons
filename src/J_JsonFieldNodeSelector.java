@@ -14,7 +14,6 @@ final class J_JsonFieldNodeSelector extends J_LeafFunctor
 
     J_JsonFieldNodeSelector(J_JsonStringNode j_jsonstringnode)
     {
-//        super();
         field_27066_a = j_jsonstringnode;
     }
 
@@ -23,9 +22,9 @@ final class J_JsonFieldNodeSelector extends J_LeafFunctor
         return map.containsKey(field_27066_a);
     }
 
-    public String func_27060_a()
+    public String shortForm()
     {
-        return (new StringBuilder()).append("\"").append(field_27066_a.func_27216_b()).append("\"").toString();
+        return (new StringBuilder()).append("\"").append(field_27066_a.getText()).append("\"").toString();
     }
 
     public J_JsonNode func_27064_b(Map map)
@@ -35,15 +34,15 @@ final class J_JsonFieldNodeSelector extends J_LeafFunctor
 
     public String toString()
     {
-        return (new StringBuilder()).append("a field called [\"").append(field_27066_a.func_27216_b()).append("\"]").toString();
+        return (new StringBuilder()).append("a field called [\"").append(field_27066_a.getText()).append("\"]").toString();
     }
 
-    public Object func_27063_c(Object obj)
+    public Object typeSafeApplyTo(Object obj)
     {
         return func_27064_b((Map)obj);
     }
 
-    public boolean func_27058_a(Object obj)
+    public boolean matchsNode(Object obj)
     {
         return func_27065_a((Map)obj);
     }

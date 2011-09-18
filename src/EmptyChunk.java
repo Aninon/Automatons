@@ -44,7 +44,7 @@ public class EmptyChunk extends Chunk
     {
     }
 
-    public void func_1024_c()
+    public void generateSkylightMap()
     {
     }
 

@@ -4,10 +4,12 @@
 
 package net.minecraft.src;
 
+import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            EntityCreature, World, Block, BlockGrass, 
-//            MathHelper, AxisAlignedBB, NBTTagCompound
+//            MathHelper, AxisAlignedBB, DamageSource, NBTTagCompound, 
+//            EntityPlayer
 
 public abstract class EntityAnimal extends EntityCreature
 {
@@ -15,6 +17,12 @@ public abstract class EntityAnimal extends EntityCreature
     public EntityAnimal(World world)
     {
         super(world);
+    }
+
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
+    {
+        field_35174_at = 60;
+        return super.attackEntityFrom(damagesource, i);
     }
 
     protected float getBlockPathWeight(int i, int j, int k)
@@ -49,5 +57,15 @@ public abstract class EntityAnimal extends EntityCreature
     public int getTalkInterval()
     {
         return 120;
+    }
+
+    protected boolean canDespawn()
+    {
+        return false;
+    }
+
+    protected int a(EntityPlayer entityplayer)
+    {
+        return 1 + worldObj.rand.nextInt(3);
     }
 }

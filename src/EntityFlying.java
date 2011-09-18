@@ -9,7 +9,7 @@ package net.minecraft.src;
 //            EntityLiving, MathHelper, AxisAlignedBB, World, 
 //            Block
 
-public class EntityFlying extends EntityLiving
+public abstract class EntityFlying extends EntityLiving
 {
 
     public EntityFlying(World world)

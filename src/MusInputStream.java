@@ -16,7 +16,6 @@ class MusInputStream extends InputStream
 
     public MusInputStream(CodecMus codecmus, URL url, InputStream inputstream)
     {
-//        super();
         codec = codecmus;
         buffer = new byte[1];
         inputStream = inputstream;
@@ -40,11 +39,10 @@ class MusInputStream extends InputStream
     public int read(byte abyte0[], int i, int j)
     {
         try {
-            j = inputStream.read(abyte0, i, j);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return 0;
-        }
+			j = inputStream.read(abyte0, i, j);
+		} catch (IOException e) {
+			return 0;
+		}
         for(int k = 0; k < j; k++)
         {
             byte byte0 = abyte0[i + k] ^= hash >> 8;

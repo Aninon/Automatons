@@ -132,6 +132,8 @@ public abstract class GuiSlot
 
     public void drawScreen(int i, int j, float f)
     {
+        field_35409_k = i;
+        field_35408_l = j;
         drawBackground();
         int k = getSize();
         int l = width / 2 + 124;
@@ -350,6 +352,8 @@ public abstract class GuiSlot
     protected final int slotHeight;
     private int scrollUpButtonID;
     private int scrollDownButtonID;
+    protected int field_35409_k;
+    protected int field_35408_l;
     private float initialClickY;
     private float scrollMultiplier;
     private float amountScrolled;

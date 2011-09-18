@@ -17,7 +17,6 @@ class ThreadConnectToServer extends Thread
 
     ThreadConnectToServer(GuiConnecting guiconnecting, Minecraft minecraft, String s, int i)
     {
-//        super();
         connectingGui = guiconnecting;
         mc = minecraft;
         hostName = s;

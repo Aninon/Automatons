@@ -21,7 +21,7 @@ public class TileEntityPiston extends TileEntity
     {
         storedBlockID = i;
         storedMetadata = j;
-        facing = k;
+        storedOrientation = k;
         extending = flag;
         field_31023_j = flag1;
     }
@@ -43,7 +43,7 @@ public class TileEntityPiston extends TileEntity
 
     public int func_31009_d()
     {
-        return facing;
+        return storedOrientation;
     }
 
     public boolean func_31012_k()
@@ -57,17 +57,17 @@ public class TileEntityPiston extends TileEntity
         {
             f = 1.0F;
         }
-        return progress + (field_31022_k - progress) * f;
+        return lastProgress + (progress - lastProgress) * f;
     }
 
     public float func_31017_b(float f)
     {
         if(extending)
         {
-            return (func_31008_a(f) - 1.0F) * (float)PistonBlockTextures.offsetsXForSide[facing];
+            return (func_31008_a(f) - 1.0F) * (float)PistonBlockTextures.offsetsXForSide[storedOrientation];
         } else
         {
-            return (1.0F - func_31008_a(f)) * (float)PistonBlockTextures.offsetsXForSide[facing];
+            return (1.0F - func_31008_a(f)) * (float)PistonBlockTextures.offsetsXForSide[storedOrientation];
         }
     }
 
@@ -75,10 +75,10 @@ public class TileEntityPiston extends TileEntity
     {
         if(extending)
         {
-            return (func_31008_a(f) - 1.0F) * (float)PistonBlockTextures.offsetsYForSide[facing];
+            return (func_31008_a(f) - 1.0F) * (float)PistonBlockTextures.offsetsYForSide[storedOrientation];
         } else
         {
-            return (1.0F - func_31008_a(f)) * (float)PistonBlockTextures.offsetsYForSide[facing];
+            return (1.0F - func_31008_a(f)) * (float)PistonBlockTextures.offsetsYForSide[storedOrientation];
         }
     }
 
@@ -86,10 +86,10 @@ public class TileEntityPiston extends TileEntity
     {
         if(extending)
         {
-            return (func_31008_a(f) - 1.0F) * (float)PistonBlockTextures.offsetsZForSide[facing];
+            return (func_31008_a(f) - 1.0F) * (float)PistonBlockTextures.offsetsZForSide[storedOrientation];
         } else
         {
-            return (1.0F - func_31008_a(f)) * (float)PistonBlockTextures.offsetsZForSide[facing];
+            return (1.0F - func_31008_a(f)) * (float)PistonBlockTextures.offsetsZForSide[storedOrientation];
         }
     }
 
@@ -102,7 +102,7 @@ public class TileEntityPiston extends TileEntity
         {
             f = 1.0F - f;
         }
-        AxisAlignedBB axisalignedbb = Block.pistonMoving.func_31035_a(worldObj, xCoord, yCoord, zCoord, storedBlockID, f, facing);
+        AxisAlignedBB axisalignedbb = Block.pistonMoving.func_31035_a(worldObj, xCoord, yCoord, zCoord, storedBlockID, f, storedOrientation);
         if(axisalignedbb != null)
         {
             List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, axisalignedbb);
@@ -110,7 +110,7 @@ public class TileEntityPiston extends TileEntity
             {
                 field_31018_m.addAll(list);
                 Entity entity;
-                for(Iterator iterator = field_31018_m.iterator(); iterator.hasNext(); entity.moveEntity(f1 * (float)PistonBlockTextures.offsetsXForSide[facing], f1 * (float)PistonBlockTextures.offsetsYForSide[facing], f1 * (float)PistonBlockTextures.offsetsZForSide[facing]))
+                for(Iterator iterator = field_31018_m.iterator(); iterator.hasNext(); entity.moveEntity(f1 * (float)PistonBlockTextures.offsetsXForSide[storedOrientation], f1 * (float)PistonBlockTextures.offsetsYForSide[storedOrientation], f1 * (float)PistonBlockTextures.offsetsZForSide[storedOrientation]))
                 {
                     entity = (Entity)iterator.next();
                 }
@@ -120,13 +120,13 @@ public class TileEntityPiston extends TileEntity
         }
     }
 
-    public void func_31011_l()
+    public void clearPistonTileEntity()
     {
-        if(progress < 1.0F)
+        if(lastProgress < 1.0F)
         {
-            progress = field_31022_k = 1.0F;
+            lastProgress = progress = 1.0F;
             worldObj.removeBlockTileEntity(xCoord, yCoord, zCoord);
-            func_31005_i();
+            invalidate();
             if(worldObj.getBlockId(xCoord, yCoord, zCoord) == Block.pistonMoving.blockID)
             {
                 worldObj.setBlockAndMetadataWithNotify(xCoord, yCoord, zCoord, storedBlockID, storedMetadata);
@@ -136,26 +136,26 @@ public class TileEntityPiston extends TileEntity
 
     public void updateEntity()
     {
-        progress = field_31022_k;
-        if(progress >= 1.0F)
+        lastProgress = progress;
+        if(lastProgress >= 1.0F)
         {
             func_31010_a(1.0F, 0.25F);
             worldObj.removeBlockTileEntity(xCoord, yCoord, zCoord);
-            func_31005_i();
+            invalidate();
             if(worldObj.getBlockId(xCoord, yCoord, zCoord) == Block.pistonMoving.blockID)
             {
                 worldObj.setBlockAndMetadataWithNotify(xCoord, yCoord, zCoord, storedBlockID, storedMetadata);
             }
             return;
         }
-        field_31022_k += 0.5F;
-        if(field_31022_k >= 1.0F)
+        progress += 0.5F;
+        if(progress >= 1.0F)
         {
-            field_31022_k = 1.0F;
+            progress = 1.0F;
         }
         if(extending)
         {
-            func_31010_a(field_31022_k, (field_31022_k - progress) + 0.0625F);
+            func_31010_a(progress, (progress - lastProgress) + 0.0625F);
         }
     }
 
@@ -164,8 +164,8 @@ public class TileEntityPiston extends TileEntity
         super.readFromNBT(nbttagcompound);
         storedBlockID = nbttagcompound.getInteger("blockId");
         storedMetadata = nbttagcompound.getInteger("blockData");
-        facing = nbttagcompound.getInteger("facing");
-        progress = field_31022_k = nbttagcompound.getFloat("progress");
+        storedOrientation = nbttagcompound.getInteger("facing");
+        lastProgress = progress = nbttagcompound.getFloat("progress");
         extending = nbttagcompound.getBoolean("extending");
     }
 
@@ -174,18 +174,18 @@ public class TileEntityPiston extends TileEntity
         super.writeToNBT(nbttagcompound);
         nbttagcompound.setInteger("blockId", storedBlockID);
         nbttagcompound.setInteger("blockData", storedMetadata);
-        nbttagcompound.setInteger("facing", facing);
-        nbttagcompound.setFloat("progress", progress);
+        nbttagcompound.setInteger("facing", storedOrientation);
+        nbttagcompound.setFloat("progress", lastProgress);
         nbttagcompound.setBoolean("extending", extending);
     }
 
     private int storedBlockID;
     private int storedMetadata;
-    private int facing;
+    private int storedOrientation;
     private boolean extending;
     private boolean field_31023_j;
-    private float field_31022_k;
     private float progress;
+    private float lastProgress;
     private static List field_31018_m = new ArrayList();
 
 }

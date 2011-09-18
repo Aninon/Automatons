@@ -7,7 +7,7 @@ package net.minecraft.src;
 import java.util.List;
 
 // Referenced classes of package net.minecraft.src:
-//            NBTTagCompound, EntityPlayer
+//            NBTTagCompound, WorldSettings, EntityPlayer
 
 public class WorldInfo
 {
@@ -15,6 +15,14 @@ public class WorldInfo
     public WorldInfo(NBTTagCompound nbttagcompound)
     {
         randomSeed = nbttagcompound.getLong("RandomSeed");
+        field_35920_p = nbttagcompound.getInteger("GameType");
+        if(nbttagcompound.hasKey("MapFeatures"))
+        {
+            field_35919_q = nbttagcompound.getBoolean("MapFeatures");
+        } else
+        {
+            field_35919_q = true;
+        }
         spawnX = nbttagcompound.getInteger("SpawnX");
         spawnY = nbttagcompound.getInteger("SpawnY");
         spawnZ = nbttagcompound.getInteger("SpawnZ");
@@ -34,15 +42,19 @@ public class WorldInfo
         }
     }
 
-    public WorldInfo(long l, String s)
+    public WorldInfo(WorldSettings worldsettings, String s)
     {
-        randomSeed = l;
+        randomSeed = worldsettings.func_35518_a();
+        field_35920_p = worldsettings.func_35519_b();
+        field_35919_q = worldsettings.func_35520_c();
         levelName = s;
     }
 
     public WorldInfo(WorldInfo worldinfo)
     {
         randomSeed = worldinfo.randomSeed;
+        field_35920_p = worldinfo.field_35920_p;
+        field_35919_q = worldinfo.field_35919_q;
         spawnX = worldinfo.spawnX;
         spawnY = worldinfo.spawnY;
         spawnZ = worldinfo.spawnZ;
@@ -87,6 +99,8 @@ public class WorldInfo
     private void updateTagCompound(NBTTagCompound nbttagcompound, NBTTagCompound nbttagcompound1)
     {
         nbttagcompound.setLong("RandomSeed", randomSeed);
+        nbttagcompound.setInteger("GameType", field_35920_p);
+        nbttagcompound.setBoolean("MapFeatures", field_35919_q);
         nbttagcompound.setInteger("SpawnX", spawnX);
         nbttagcompound.setInteger("SpawnY", spawnY);
         nbttagcompound.setInteger("SpawnZ", spawnZ);
@@ -207,12 +221,12 @@ public class WorldInfo
         return lastTimePlayed;
     }
 
-    public boolean getThundering()
+    public boolean getIsThundering()
     {
         return thundering;
     }
 
-    public void setThundering(boolean flag)
+    public void setIsThundering(boolean flag)
     {
         thundering = flag;
     }
@@ -227,12 +241,12 @@ public class WorldInfo
         thunderTime = i;
     }
 
-    public boolean getRaining()
+    public boolean getIsRaining()
     {
         return raining;
     }
 
-    public void setRaining(boolean flag)
+    public void setIsRaining(boolean flag)
     {
         raining = flag;
     }
@@ -245,6 +259,16 @@ public class WorldInfo
     public void setRainTime(int i)
     {
         rainTime = i;
+    }
+
+    public int func_35918_q()
+    {
+        return field_35920_p;
+    }
+
+    public boolean func_35917_r()
+    {
+        return field_35919_q;
     }
 
     private long randomSeed;
@@ -262,4 +286,6 @@ public class WorldInfo
     private int rainTime;
     private boolean thundering;
     private int thunderTime;
+    private int field_35920_p;
+    private boolean field_35919_q;
 }

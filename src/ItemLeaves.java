@@ -20,7 +20,7 @@ public class ItemLeaves extends ItemBlock
 
     public int getPlacedBlockMetadata(int i)
     {
-        return i | 8;
+        return i | 4;
     }
 
     public int getIconFromDamage(int i)

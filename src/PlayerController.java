@@ -7,11 +7,11 @@ package net.minecraft.src;
 import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
-//            World, Block, ItemStack, EntityPlayer, 
+//            Block, World, ItemStack, EntityPlayer, 
 //            InventoryPlayer, EntityPlayerSP, WorldProvider, Container, 
 //            Entity
 
-public class PlayerController
+public abstract class PlayerController
 {
 
     public PlayerController(Minecraft minecraft)
@@ -24,16 +24,16 @@ public class PlayerController
     {
     }
 
-    public void clickBlock(int i, int j, int k, int l)
-    {
-        mc.theWorld.onBlockHit(mc.thePlayer, i, j, k, l);
-        sendBlockRemoved(i, j, k, l);
-    }
+    public abstract void clickBlock(int i, int j, int k, int l);
 
     public boolean sendBlockRemoved(int i, int j, int k, int l)
     {
         World world = mc.theWorld;
         Block block = Block.blocksList[world.getBlockId(i, j, k)];
+        if(block == null)
+        {
+            return false;
+        }
         world.playAuxSFX(2001, i, j, k, block.blockID + world.getBlockMetadata(i, j, k) * 256);
         int i1 = world.getBlockMetadata(i, j, k);
         boolean flag = world.setBlockWithNotify(i, j, k, 0);
@@ -44,22 +44,15 @@ public class PlayerController
         return flag;
     }
 
-    public void sendBlockRemoving(int i, int j, int k, int l)
-    {
-    }
+    public abstract void sendBlockRemoving(int i, int j, int k, int l);
 
-    public void resetBlockRemoving()
-    {
-    }
+    public abstract void resetBlockRemoving();
 
     public void setPartialTime(float f)
     {
     }
 
-    public float getBlockReachDistance()
-    {
-        return 5F;
-    }
+    public abstract float getBlockReachDistance();
 
     public boolean sendUseItem(EntityPlayer entityplayer, World world, ItemStack itemstack)
     {
@@ -87,30 +80,13 @@ public class PlayerController
     {
     }
 
-    public boolean shouldDrawHUD()
-    {
-        return true;
-    }
+    public abstract boolean shouldDrawHUD();
 
     public void func_6473_b(EntityPlayer entityplayer)
     {
     }
 
-    public boolean sendPlaceBlock(EntityPlayer entityplayer, World world, ItemStack itemstack, int i, int j, int k, int l)
-    {
-        int i1 = world.getBlockId(i, j, k);
-        if(i1 > 0 && Block.blocksList[i1].blockActivated(world, i, j, k, entityplayer))
-        {
-            return true;
-        }
-        if(itemstack == null)
-        {
-            return false;
-        } else
-        {
-            return itemstack.useItem(entityplayer, world, i, j, k, l);
-        }
-    }
+    public abstract boolean sendPlaceBlock(EntityPlayer entityplayer, World world, ItemStack itemstack, int i, int j, int k, int l);
 
     public EntityPlayer createPlayer(World world)
     {
@@ -127,15 +103,53 @@ public class PlayerController
         entityplayer.attackTargetEntityWithCurrentItem(entity);
     }
 
-    public ItemStack func_27174_a(int i, int j, int k, boolean flag, EntityPlayer entityplayer)
+    public ItemStack windowClick(int i, int j, int k, boolean flag, EntityPlayer entityplayer)
     {
-        return entityplayer.craftingInventory.func_27280_a(j, k, flag, entityplayer);
+        return entityplayer.craftingInventory.slotClick(j, k, flag, entityplayer);
     }
 
     public void func_20086_a(int i, EntityPlayer entityplayer)
     {
         entityplayer.craftingInventory.onCraftGuiClosed(entityplayer);
-        entityplayer.craftingInventory = entityplayer.slots;
+        entityplayer.craftingInventory = entityplayer.inventorySlots;
+    }
+
+    public boolean func_35643_e()
+    {
+        return false;
+    }
+
+    public void func_35638_c(EntityPlayer entityplayer)
+    {
+        entityplayer.func_35206_ab();
+    }
+
+    public boolean func_35642_f()
+    {
+        return false;
+    }
+
+    public boolean func_35641_g()
+    {
+        return true;
+    }
+
+    public boolean func_35640_h()
+    {
+        return false;
+    }
+
+    public boolean func_35636_i()
+    {
+        return false;
+    }
+
+    public void func_35637_a(ItemStack itemstack, int i)
+    {
+    }
+
+    public void func_35639_a(ItemStack itemstack)
+    {
     }
 
     protected final Minecraft mc;

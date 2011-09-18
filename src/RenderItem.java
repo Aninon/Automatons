@@ -52,22 +52,24 @@ public class RenderItem extends Render
             GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
             loadTexture("/terrain.png");
             float f4 = 0.25F;
-            if(!Block.blocksList[itemstack.itemID].renderAsNormalBlock() && itemstack.itemID != Block.stairSingle.blockID && Block.blocksList[itemstack.itemID].getRenderType() != 16)
+            int j = Block.blocksList[itemstack.itemID].getRenderType();
+            if(j == 1 || j == 19 || j == 12 || j == 2)
             {
                 f4 = 0.5F;
             }
             GL11.glScalef(f4, f4, f4);
-            for(int j = 0; j < byte0; j++)
+            for(int k = 0; k < byte0; k++)
             {
                 GL11.glPushMatrix();
-                if(j > 0)
+                if(k > 0)
                 {
-                    float f5 = ((random.nextFloat() * 2.0F - 1.0F) * 0.2F) / f4;
-                    float f7 = ((random.nextFloat() * 2.0F - 1.0F) * 0.2F) / f4;
+                    float f6 = ((random.nextFloat() * 2.0F - 1.0F) * 0.2F) / f4;
                     float f9 = ((random.nextFloat() * 2.0F - 1.0F) * 0.2F) / f4;
-                    GL11.glTranslatef(f5, f7, f9);
+                    float f11 = ((random.nextFloat() * 2.0F - 1.0F) * 0.2F) / f4;
+                    GL11.glTranslatef(f6, f9, f11);
                 }
-                renderBlocks.renderBlockOnInventory(Block.blocksList[itemstack.itemID], itemstack.getItemDamage(), entityitem.getEntityBrightness(f1));
+                float f7 = 1.0F;
+                renderBlocks.renderBlockOnInventory(Block.blocksList[itemstack.itemID], itemstack.getItemDamage(), f7);
                 GL11.glPopMatrix();
             }
 
@@ -83,39 +85,39 @@ public class RenderItem extends Render
                 loadTexture("/gui/items.png");
             }
             Tessellator tessellator = Tessellator.instance;
-            float f6 = (float)((i % 16) * 16 + 0) / 256F;
+            float f5 = (float)((i % 16) * 16 + 0) / 256F;
             float f8 = (float)((i % 16) * 16 + 16) / 256F;
             float f10 = (float)((i / 16) * 16 + 0) / 256F;
-            float f11 = (float)((i / 16) * 16 + 16) / 256F;
-            float f12 = 1.0F;
-            float f13 = 0.5F;
-            float f14 = 0.25F;
+            float f12 = (float)((i / 16) * 16 + 16) / 256F;
+            float f13 = 1.0F;
+            float f14 = 0.5F;
+            float f15 = 0.25F;
             if(field_27004_a)
             {
-                int k = Item.itemsList[itemstack.itemID].getColorFromDamage(itemstack.getItemDamage());
-                float f15 = (float)(k >> 16 & 0xff) / 255F;
-                float f17 = (float)(k >> 8 & 0xff) / 255F;
-                float f19 = (float)(k & 0xff) / 255F;
-                float f21 = entityitem.getEntityBrightness(f1);
-                GL11.glColor4f(f15 * f21, f17 * f21, f19 * f21, 1.0F);
+                int l = Item.itemsList[itemstack.itemID].getColorFromDamage(itemstack.getItemDamage());
+                float f16 = (float)(l >> 16 & 0xff) / 255F;
+                float f18 = (float)(l >> 8 & 0xff) / 255F;
+                float f20 = (float)(l & 0xff) / 255F;
+                float f22 = 1.0F;
+                GL11.glColor4f(f16 * f22, f18 * f22, f20 * f22, 1.0F);
             }
-            for(int l = 0; l < byte0; l++)
+            for(int i1 = 0; i1 < byte0; i1++)
             {
                 GL11.glPushMatrix();
-                if(l > 0)
+                if(i1 > 0)
                 {
-                    float f16 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
-                    float f18 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
-                    float f20 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
-                    GL11.glTranslatef(f16, f18, f20);
+                    float f17 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
+                    float f19 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
+                    float f21 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
+                    GL11.glTranslatef(f17, f19, f21);
                 }
                 GL11.glRotatef(180F - renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
                 tessellator.startDrawingQuads();
                 tessellator.setNormal(0.0F, 1.0F, 0.0F);
-                tessellator.addVertexWithUV(0.0F - f13, 0.0F - f14, 0.0D, f6, f11);
-                tessellator.addVertexWithUV(f12 - f13, 0.0F - f14, 0.0D, f8, f11);
-                tessellator.addVertexWithUV(f12 - f13, 1.0F - f14, 0.0D, f8, f10);
-                tessellator.addVertexWithUV(0.0F - f13, 1.0F - f14, 0.0D, f6, f10);
+                tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
+                tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
+                tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
+                tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
                 tessellator.draw();
                 GL11.glPopMatrix();
             }

@@ -74,7 +74,7 @@ public class Packet28EntityVelocity extends Packet
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_6498_a(this);
+        nethandler.handleEntityVelocity(this);
     }
 
     public int getPacketSize()

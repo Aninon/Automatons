@@ -18,7 +18,7 @@ abstract class GuiSlotStats extends GuiSlot
 
     protected GuiSlotStats(GuiStats guistats)
     {
-        super(GuiStats.func_27143_f(guistats), guistats.width, guistats.height, 32, guistats.height - 64, 20);
+        super(GuiStats.getMinecraft1(guistats), guistats.width, guistats.height, 32, guistats.height - 64, 20);
         field_27269_g = guistats;
         field_27268_b = -1;
         field_27271_e = -1;
@@ -49,24 +49,24 @@ abstract class GuiSlotStats extends GuiSlot
         }
         if(field_27268_b == 0)
         {
-            GuiStats.func_27128_a(field_27269_g, (i + 115) - 18, j + 1, 0, 0);
+            GuiStats.drawSprite(field_27269_g, (i + 115) - 18, j + 1, 0, 0);
         } else
         {
-            GuiStats.func_27128_a(field_27269_g, (i + 115) - 18, j + 1, 0, 18);
+            GuiStats.drawSprite(field_27269_g, (i + 115) - 18, j + 1, 0, 18);
         }
         if(field_27268_b == 1)
         {
-            GuiStats.func_27128_a(field_27269_g, (i + 165) - 18, j + 1, 0, 0);
+            GuiStats.drawSprite(field_27269_g, (i + 165) - 18, j + 1, 0, 0);
         } else
         {
-            GuiStats.func_27128_a(field_27269_g, (i + 165) - 18, j + 1, 0, 18);
+            GuiStats.drawSprite(field_27269_g, (i + 165) - 18, j + 1, 0, 18);
         }
         if(field_27268_b == 2)
         {
-            GuiStats.func_27128_a(field_27269_g, (i + 215) - 18, j + 1, 0, 0);
+            GuiStats.drawSprite(field_27269_g, (i + 215) - 18, j + 1, 0, 0);
         } else
         {
-            GuiStats.func_27128_a(field_27269_g, (i + 215) - 18, j + 1, 0, 18);
+            GuiStats.drawSprite(field_27269_g, (i + 215) - 18, j + 1, 0, 18);
         }
         if(field_27271_e != -1)
         {
@@ -84,7 +84,7 @@ abstract class GuiSlotStats extends GuiSlot
             {
                 byte0 = 36;
             }
-            GuiStats.func_27128_a(field_27269_g, i + c, j + 1, byte0, 0);
+            GuiStats.drawSprite(field_27269_g, i + c, j + 1, byte0, 0);
         }
     }
 
@@ -106,7 +106,7 @@ abstract class GuiSlotStats extends GuiSlot
         if(field_27268_b >= 0)
         {
             func_27266_c(field_27268_b);
-            GuiStats.func_27149_g(field_27269_g).sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+            GuiStats.getMinecraft2(field_27269_g).sndManager.playSoundFX("random.click", 1.0F, 1.0F);
         }
     }
 
@@ -126,12 +126,12 @@ abstract class GuiSlotStats extends GuiSlot
     {
         if(statcrafting != null)
         {
-            String s = statcrafting.func_27084_a(GuiStats.func_27142_c(field_27269_g).writeStat(statcrafting));
-            field_27269_g.drawString(GuiStats.func_27133_h(field_27269_g), s, i - GuiStats.func_27137_i(field_27269_g).getStringWidth(s), j + 5, flag ? 0xffffff : 0x909090);
+            String s = statcrafting.func_27084_a(GuiStats.getStatsFileWriter(field_27269_g).writeStat(statcrafting));
+            field_27269_g.drawString(GuiStats.getFontRenderer4(field_27269_g), s, i - GuiStats.getFontRenderer5(field_27269_g).getStringWidth(s), j + 5, flag ? 0xffffff : 0x909090);
         } else
         {
             String s1 = "-";
-            field_27269_g.drawString(GuiStats.func_27132_j(field_27269_g), s1, i - GuiStats.func_27134_k(field_27269_g).getStringWidth(s1), j + 5, flag ? 0xffffff : 0x909090);
+            field_27269_g.drawString(GuiStats.getFontRenderer6(field_27269_g), s1, i - GuiStats.getFontRenderer7(field_27269_g).getStringWidth(s1), j + 5, flag ? 0xffffff : 0x909090);
         }
     }
 
@@ -174,9 +174,9 @@ abstract class GuiSlotStats extends GuiSlot
             {
                 int i1 = i + 12;
                 int j1 = j - 12;
-                int k1 = GuiStats.func_27139_l(field_27269_g).getStringWidth(s);
-                GuiStats.func_27129_a(field_27269_g, i1 - 3, j1 - 3, i1 + k1 + 3, j1 + 8 + 3, 0xc0000000, 0xc0000000);
-                GuiStats.func_27144_m(field_27269_g).drawStringWithShadow(s, i1, j1, -1);
+                int k1 = GuiStats.getFontRenderer8(field_27269_g).getStringWidth(s);
+                GuiStats.drawGradientRect(field_27269_g, i1 - 3, j1 - 3, i1 + k1 + 3, j1 + 8 + 3, 0xc0000000, 0xc0000000);
+                GuiStats.getFontRenderer9(field_27269_g).drawStringWithShadow(s, i1, j1, -1);
             }
         }
     }
@@ -193,9 +193,9 @@ abstract class GuiSlotStats extends GuiSlot
         {
             int k = i + 12;
             int l = j - 12;
-            int i1 = GuiStats.func_27127_n(field_27269_g).getStringWidth(s);
-            GuiStats.func_27135_b(field_27269_g, k - 3, l - 3, k + i1 + 3, l + 8 + 3, 0xc0000000, 0xc0000000);
-            GuiStats.func_27131_o(field_27269_g).drawStringWithShadow(s, k, l, -1);
+            int i1 = GuiStats.getFontRenderer10(field_27269_g).getStringWidth(s);
+            GuiStats.drawGradientRect1(field_27269_g, k - 3, l - 3, k + i1 + 3, l + 8 + 3, 0xc0000000, 0xc0000000);
+            GuiStats.getFontRenderer11(field_27269_g).drawStringWithShadow(s, k, l, -1);
         }
     }
 

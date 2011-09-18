@@ -26,19 +26,19 @@ final class StatTypeTime
         double d4 = d3 / 365D;
         if(d4 > 0.5D)
         {
-            return (new StringBuilder()).append(StatBase.func_27081_j().format(d4)).append(" y").toString();
+            return (new StringBuilder()).append(StatBase.getDecimalFormat().format(d4)).append(" y").toString();
         }
         if(d3 > 0.5D)
         {
-            return (new StringBuilder()).append(StatBase.func_27081_j().format(d3)).append(" d").toString();
+            return (new StringBuilder()).append(StatBase.getDecimalFormat().format(d3)).append(" d").toString();
         }
         if(d2 > 0.5D)
         {
-            return (new StringBuilder()).append(StatBase.func_27081_j().format(d2)).append(" h").toString();
+            return (new StringBuilder()).append(StatBase.getDecimalFormat().format(d2)).append(" h").toString();
         }
         if(d1 > 0.5D)
         {
-            return (new StringBuilder()).append(StatBase.func_27081_j().format(d1)).append(" m").toString();
+            return (new StringBuilder()).append(StatBase.getDecimalFormat().format(d1)).append(" m").toString();
         } else
         {
             return (new StringBuilder()).append(d).append(" s").toString();

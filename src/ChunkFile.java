@@ -30,7 +30,7 @@ class ChunkFile
         }
     }
 
-    public int func_22322_a(ChunkFile chunkfile)
+    public int compareChunks(ChunkFile chunkfile)
     {
         int i = xChunk >> 5;
         int j = chunkfile.xChunk >> 5;
@@ -45,24 +45,24 @@ class ChunkFile
         }
     }
 
-    public File func_22324_a()
+    public File getChunkFile()
     {
         return chunkFile;
     }
 
-    public int func_22323_b()
+    public int getXChunk()
     {
         return xChunk;
     }
 
-    public int func_22321_c()
+    public int getYChunk()
     {
         return yChunk;
     }
 
     public int compareTo(Object obj)
     {
-        return func_22322_a((ChunkFile)obj);
+        return compareChunks((ChunkFile)obj);
     }
 
     private final File chunkFile;

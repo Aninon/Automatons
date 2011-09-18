@@ -83,7 +83,7 @@ public class GuiButton extends Gui
 
     public boolean mousePressed(Minecraft minecraft, int i, int j)
     {
-        return enabled && i >= xPosition && j >= yPosition && i < xPosition + width && j < yPosition + height;
+        return enabled && enabled2 && i >= xPosition && j >= yPosition && i < xPosition + width && j < yPosition + height;
     }
 
     protected int width;

@@ -13,7 +13,6 @@ class ThreadCloseConnection extends Thread
 
     ThreadCloseConnection(NetworkManager networkmanager)
     {
-//        super();
         networkManager = networkmanager;
     }
 

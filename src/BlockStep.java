@@ -41,7 +41,21 @@ public class BlockStep extends Block
         {
             return 4;
         }
-        return j != 3 ? 6 : 16;
+        if(j == 3)
+        {
+            return 16;
+        }
+        if(j == 4)
+        {
+            return Block.brick.blockIndexInTexture;
+        }
+        if(j == 5)
+        {
+            return Block.field_35285_bn.blockIndexInTexture;
+        } else
+        {
+            return 6;
+        }
     }
 
     public int getBlockTextureFromSide(int i)
@@ -118,7 +132,7 @@ public class BlockStep extends Block
     }
 
     public static final String field_22037_a[] = {
-        "stone", "sand", "wood", "cobble"
+        "stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick"
     };
     private boolean blockType;
 

@@ -10,7 +10,7 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            Entity, World, Block, Item, 
 //            AxisAlignedBB, Material, MathHelper, EntityPlayer, 
-//            NBTTagCompound
+//            DamageSource, NBTTagCompound
 
 public class EntityBoat extends Entity
 {
@@ -18,9 +18,9 @@ public class EntityBoat extends Entity
     public EntityBoat(World world)
     {
         super(world);
-        boatCurrentDamage = 0;
-        boatTimeSinceHit = 0;
-        boatRockDirection = 1;
+        damageTaken = 0;
+        timeSinceHit = 0;
+        forwardDirection = 1;
         preventEntitySpawning = true;
         setSize(1.5F, 0.6F);
         yOffset = height / 2.0F;
@@ -67,17 +67,17 @@ public class EntityBoat extends Entity
         return (double)height * 0.0D - 0.30000001192092896D;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         if(worldObj.multiplayerWorld || isDead)
         {
             return true;
         }
-        boatRockDirection = -boatRockDirection;
-        boatTimeSinceHit = 10;
-        boatCurrentDamage += i * 10;
+        forwardDirection = -forwardDirection;
+        timeSinceHit = 10;
+        damageTaken += i * 10;
         setBeenAttacked();
-        if(boatCurrentDamage > 40)
+        if(damageTaken > 40)
         {
             if(riddenByEntity != null)
             {
@@ -100,9 +100,9 @@ public class EntityBoat extends Entity
 
     public void performHurtAnimation()
     {
-        boatRockDirection = -boatRockDirection;
-        boatTimeSinceHit = 10;
-        boatCurrentDamage += boatCurrentDamage * 10;
+        forwardDirection = -forwardDirection;
+        timeSinceHit = 10;
+        damageTaken += damageTaken * 10;
     }
 
     public boolean canBeCollidedWith()
@@ -134,13 +134,13 @@ public class EntityBoat extends Entity
     public void onUpdate()
     {
         super.onUpdate();
-        if(boatTimeSinceHit > 0)
+        if(timeSinceHit > 0)
         {
-            boatTimeSinceHit--;
+            timeSinceHit--;
         }
-        if(boatCurrentDamage > 0)
+        if(damageTaken > 0)
         {
-            boatCurrentDamage--;
+            damageTaken--;
         }
         prevPosX = posX;
         prevPosY = posY;
@@ -368,9 +368,9 @@ public class EntityBoat extends Entity
         return true;
     }
 
-    public int boatCurrentDamage;
-    public int boatTimeSinceHit;
-    public int boatRockDirection;
+    public int damageTaken;
+    public int timeSinceHit;
+    public int forwardDirection;
     private int field_9394_d;
     private double boatX;
     private double boatY;

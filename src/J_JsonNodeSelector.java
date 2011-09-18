@@ -13,33 +13,33 @@ public final class J_JsonNodeSelector
 
     J_JsonNodeSelector(J_Functor j_functor)
     {
-        field_27359_a = j_functor;
+        valueGetter = j_functor;
     }
 
-    public boolean func_27356_a(Object obj)
+    public boolean matchs(Object obj)
     {
-        return field_27359_a.func_27058_a(obj);
+        return valueGetter.matchsNode(obj);
     }
 
-    public Object func_27357_b(Object obj)
+    public Object getValue(Object obj)
     {
-        return field_27359_a.func_27059_b(obj);
+        return valueGetter.applyTo(obj);
     }
 
-    public J_JsonNodeSelector func_27355_a(J_JsonNodeSelector j_jsonnodeselector)
+    public J_JsonNodeSelector with(J_JsonNodeSelector j_jsonnodeselector)
     {
         return new J_JsonNodeSelector(new J_ChainedFunctor(this, j_jsonnodeselector));
     }
 
-    String func_27358_a()
+    String shortForm()
     {
-        return field_27359_a.func_27060_a();
+        return valueGetter.shortForm();
     }
 
     public String toString()
     {
-        return field_27359_a.toString();
+        return valueGetter.toString();
     }
 
-    final J_Functor field_27359_a;
+    final J_Functor valueGetter;
 }

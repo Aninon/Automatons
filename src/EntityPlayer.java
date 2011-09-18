@@ -7,16 +7,17 @@ package net.minecraft.src;
 import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
-//            EntityLiving, InventoryPlayer, ContainerPlayer, World, 
-//            ChunkCoordinates, DataWatcher, Container, StatList, 
-//            MathHelper, AxisAlignedBB, Entity, ItemStack, 
-//            Item, EntityItem, Material, NBTTagCompound, 
-//            NBTTagList, EntityMob, EntityArrow, EntityCreeper, 
-//            EntityGhast, EntityWolf, EnumStatus, WorldProvider, 
-//            BlockBed, Block, IChunkProvider, EntityMinecart, 
-//            AchievementList, EntityBoat, EntityPig, EntityFish, 
-//            IInventory, TileEntityFurnace, TileEntityDispenser, TileEntitySign, 
-//            StatBase
+//            EntityLiving, InventoryPlayer, FoodStats, PlayerCapabilities, 
+//            ContainerPlayer, World, ChunkCoordinates, DataWatcher, 
+//            ItemStack, Item, EnumAction, Container, 
+//            StatList, Vec3D, Potion, PotionEffect, 
+//            MathHelper, AxisAlignedBB, Entity, EntityItem, 
+//            Material, NBTTagCompound, NBTTagList, DamageSource, 
+//            EntityMob, EntityArrow, EntityCreeper, EntityGhast, 
+//            EntityWolf, EnumStatus, WorldProvider, BlockBed, 
+//            Block, IChunkProvider, EntityMinecart, AchievementList, 
+//            EntityBoat, EntityPig, EntityFish, IInventory, 
+//            TileEntityFurnace, TileEntityDispenser, TileEntitySign, StatBase
 
 public abstract class EntityPlayer extends EntityLiving
 {
@@ -25,16 +26,22 @@ public abstract class EntityPlayer extends EntityLiving
     {
         super(world);
         inventory = new InventoryPlayer(this);
+        field_35217_av = new FoodStats();
+        field_35216_aw = 0;
         field_9371_f = 0;
         score = 0;
         isSwinging = false;
         swingProgressInt = 0;
+        field_35214_aG = 0;
         timeUntilPortal = 20;
         inPortal = false;
+        field_35212_aW = new PlayerCapabilities();
+        field_35215_ba = 0.1F;
+        field_35213_bb = 0.02F;
         damageRemainder = 0;
         fishEntity = null;
-        slots = new ContainerPlayer(inventory, !world.multiplayerWorld);
-        craftingInventory = slots;
+        inventorySlots = new ContainerPlayer(inventory, !world.multiplayerWorld);
+        craftingInventory = inventorySlots;
         yOffset = 1.62F;
         ChunkCoordinates chunkcoordinates = world.getSpawnPoint();
         setLocationAndAngles((double)chunkcoordinates.posX + 0.5D, chunkcoordinates.posY + 1, (double)chunkcoordinates.posZ + 0.5D, 0.0F, 0.0F);
@@ -49,10 +56,83 @@ public abstract class EntityPlayer extends EntityLiving
     {
         super.entityInit();
         dataWatcher.addObject(16, Byte.valueOf((byte)0));
+        dataWatcher.addObject(17, Byte.valueOf((byte)0));
+    }
+
+    public ItemStack func_35195_X()
+    {
+        return field_34907_d;
+    }
+
+    public int func_35205_Y()
+    {
+        return field_34906_e;
+    }
+
+    public boolean func_35196_Z()
+    {
+        return field_34907_d != null;
+    }
+
+    public int func_35192_aa()
+    {
+        if(func_35196_Z())
+        {
+            return field_34907_d.func_35866_m() - field_34906_e;
+        } else
+        {
+            return 0;
+        }
+    }
+
+    public void func_35206_ab()
+    {
+        if(field_34907_d != null)
+        {
+            field_34907_d.func_35862_a(worldObj, this, field_34906_e);
+        }
+        func_35207_ac();
+    }
+
+    public void func_35207_ac()
+    {
+        field_34907_d = null;
+        field_34906_e = 0;
+        if(!worldObj.multiplayerWorld)
+        {
+            func_35116_d(false);
+        }
+    }
+
+    public boolean func_35162_ad()
+    {
+        return func_35196_Z() && Item.itemsList[field_34907_d.itemID].func_35412_b(field_34907_d) == EnumAction.block;
     }
 
     public void onUpdate()
     {
+        if(field_34907_d != null)
+        {
+            ItemStack itemstack = inventory.getCurrentItem();
+            if(itemstack != field_34907_d)
+            {
+                func_35207_ac();
+            } else
+            {
+                if(field_34906_e <= 25 && field_34906_e % 4 == 0)
+                {
+                    func_35201_a(itemstack, 5);
+                }
+                if(--field_34906_e == 0 && !worldObj.multiplayerWorld)
+                {
+                    func_35208_ae();
+                }
+            }
+        }
+        if(field_35214_aG > 0)
+        {
+            field_35214_aG--;
+        }
         if(isPlayerSleeping())
         {
             sleepTimer++;
@@ -81,10 +161,18 @@ public abstract class EntityPlayer extends EntityLiving
             }
         }
         super.onUpdate();
-        if(!worldObj.multiplayerWorld && craftingInventory != null && !craftingInventory.isUsableByPlayer(this))
+        if(!worldObj.multiplayerWorld && craftingInventory != null && !craftingInventory.canInteractWith(this))
         {
             closeScreen();
-            craftingInventory = slots;
+            craftingInventory = inventorySlots;
+        }
+        if(field_35212_aW.field_35757_b)
+        {
+            for(int i = 0; i < 8; i++) { }
+        }
+        if(fire > 0 && field_35212_aW.field_35759_a)
+        {
+            fire = 0;
         }
         field_20066_r = field_20063_u;
         field_20065_s = field_20062_v;
@@ -125,6 +213,60 @@ public abstract class EntityPlayer extends EntityLiving
         {
             startMinecartRidingCoordinate = null;
         }
+        if(!worldObj.multiplayerWorld)
+        {
+            field_35217_av.func_35768_a(this);
+        }
+    }
+
+    protected void func_35201_a(ItemStack itemstack, int i)
+    {
+        if(itemstack.func_35865_n() == EnumAction.eat)
+        {
+            for(int j = 0; j < i; j++)
+            {
+                Vec3D vec3d = Vec3D.createVector(((double)rand.nextFloat() - 0.5D) * 0.10000000000000001D, Math.random() * 0.10000000000000001D + 0.10000000000000001D, 0.0D);
+                vec3d.rotateAroundX((-rotationPitch * 3.141593F) / 180F);
+                vec3d.rotateAroundY((-rotationYaw * 3.141593F) / 180F);
+                Vec3D vec3d1 = Vec3D.createVector(((double)rand.nextFloat() - 0.5D) * 0.29999999999999999D, (double)(-rand.nextFloat()) * 0.59999999999999998D - 0.29999999999999999D, 0.59999999999999998D);
+                vec3d1.rotateAroundX((-rotationPitch * 3.141593F) / 180F);
+                vec3d1.rotateAroundY((-rotationYaw * 3.141593F) / 180F);
+                vec3d1 = vec3d1.addVector(posX, posY + (double)getEyeHeight(), posZ);
+                worldObj.spawnParticle((new StringBuilder()).append("iconcrack_").append(itemstack.getItem().shiftedIndex).toString(), vec3d1.xCoord, vec3d1.yCoord, vec3d1.zCoord, vec3d.xCoord, vec3d.yCoord + 0.050000000000000003D, vec3d.zCoord);
+            }
+
+            worldObj.playSoundAtEntity(this, "mob.eat", 0.5F + 0.5F * (float)rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
+        }
+    }
+
+    protected void func_35208_ae()
+    {
+        if(field_34907_d != null)
+        {
+            func_35201_a(field_34907_d, 16);
+            int i = field_34907_d.stackSize;
+            ItemStack itemstack = field_34907_d.func_35863_b(worldObj, this);
+            if(itemstack != field_34907_d || itemstack != null && itemstack.stackSize != i)
+            {
+                inventory.mainInventory[inventory.currentItem] = itemstack;
+                if(itemstack.stackSize == 0)
+                {
+                    inventory.mainInventory[inventory.currentItem] = null;
+                }
+            }
+            func_35207_ac();
+        }
+    }
+
+    public void handleHealthUpdate(byte byte0)
+    {
+        if(byte0 == 9)
+        {
+            func_35208_ae();
+        } else
+        {
+            super.handleHealthUpdate(byte0);
+        }
     }
 
     protected boolean isMovementBlocked()
@@ -134,7 +276,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     protected void closeScreen()
     {
-        craftingInventory = slots;
+        craftingInventory = inventorySlots;
     }
 
     public void updateCloak()
@@ -163,12 +305,28 @@ public abstract class EntityPlayer extends EntityLiving
         deathTime = 0;
     }
 
-    protected void updatePlayerActionState()
+    private int func_35202_aE()
     {
+        if(func_35160_a(Potion.field_35675_e))
+        {
+            return 6 - (1 + func_35167_b(Potion.field_35675_e).func_35801_c()) * 1;
+        }
+        if(func_35160_a(Potion.field_35672_f))
+        {
+            return 6 + (1 + func_35167_b(Potion.field_35672_f).func_35801_c()) * 2;
+        } else
+        {
+            return 6;
+        }
+    }
+
+    protected void updateEntityActionState()
+    {
+        int i = func_35202_aE();
         if(isSwinging)
         {
             swingProgressInt++;
-            if(swingProgressInt >= 8)
+            if(swingProgressInt >= i)
             {
                 swingProgressInt = 0;
                 isSwinging = false;
@@ -177,11 +335,15 @@ public abstract class EntityPlayer extends EntityLiving
         {
             swingProgressInt = 0;
         }
-        swingProgress = (float)swingProgressInt / 8F;
+        swingProgress = (float)swingProgressInt / (float)i;
     }
 
     public void onLivingUpdate()
     {
+        if(field_35216_aw > 0)
+        {
+            field_35216_aw--;
+        }
         if(worldObj.difficultySetting == 0 && health < 20 && (ticksExisted % 20) * 12 == 0)
         {
             heal(1);
@@ -189,6 +351,13 @@ public abstract class EntityPlayer extends EntityLiving
         inventory.decrementAnimations();
         prevCameraYaw = cameraYaw;
         super.onLivingUpdate();
+        field_35169_bv = field_35215_ba;
+        field_35168_bw = field_35213_bb;
+        if(func_35117_Q())
+        {
+            field_35169_bv += (double)field_35215_ba * 0.29999999999999999D;
+            field_35168_bw += (double)field_35213_bb * 0.29999999999999999D;
+        }
         float f = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
         float f1 = (float)Math.atan(-motionY * 0.20000000298023224D) * 15F;
         if(f > 0.1F)
@@ -233,9 +402,9 @@ public abstract class EntityPlayer extends EntityLiving
         return score;
     }
 
-    public void onDeath(Entity entity)
+    public void onDeath(DamageSource damagesource)
     {
-        super.onDeath(entity);
+        super.onDeath(damagesource);
         setSize(0.2F, 0.2F);
         setPosition(posX, posY, posZ);
         motionY = 0.10000000149011612D;
@@ -244,7 +413,7 @@ public abstract class EntityPlayer extends EntityLiving
             dropPlayerItemWithRandomChoice(new ItemStack(Item.appleRed, 1), true);
         }
         inventory.dropAllItems();
-        if(entity != null)
+        if(damagesource != null)
         {
             motionX = -MathHelper.cos(((attackedAtYaw + rotationYaw) * 3.141593F) / 180F) * 0.1F;
             motionZ = -MathHelper.sin(((attackedAtYaw + rotationYaw) * 3.141593F) / 180F) * 0.1F;
@@ -327,6 +496,14 @@ public abstract class EntityPlayer extends EntityLiving
         {
             f /= 5F;
         }
+        if(func_35160_a(Potion.field_35675_e))
+        {
+            f *= 1.0F + (float)(func_35167_b(Potion.field_35675_e).func_35801_c() + 1) * 0.2F;
+        }
+        if(func_35160_a(Potion.field_35672_f))
+        {
+            f *= 1.0F - (float)(func_35167_b(Potion.field_35672_f).func_35801_c() + 1) * 0.2F;
+        }
         return f;
     }
 
@@ -343,6 +520,9 @@ public abstract class EntityPlayer extends EntityLiving
         dimension = nbttagcompound.getInteger("Dimension");
         sleeping = nbttagcompound.getBoolean("Sleeping");
         sleepTimer = nbttagcompound.getShort("SleepTimer");
+        field_35211_aX = nbttagcompound.getInteger("Xp");
+        field_35210_aY = nbttagcompound.getInteger("XpLevel");
+        field_35209_aZ = nbttagcompound.getInteger("XpTotal");
         if(sleeping)
         {
             bedChunkCoordinates = new ChunkCoordinates(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ));
@@ -352,6 +532,7 @@ public abstract class EntityPlayer extends EntityLiving
         {
             playerSpawnCoordinate = new ChunkCoordinates(nbttagcompound.getInteger("SpawnX"), nbttagcompound.getInteger("SpawnY"), nbttagcompound.getInteger("SpawnZ"));
         }
+        field_35217_av.func_35766_a(nbttagcompound);
     }
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
@@ -361,12 +542,16 @@ public abstract class EntityPlayer extends EntityLiving
         nbttagcompound.setInteger("Dimension", dimension);
         nbttagcompound.setBoolean("Sleeping", sleeping);
         nbttagcompound.setShort("SleepTimer", (short)sleepTimer);
+        nbttagcompound.setInteger("Xp", field_35211_aX);
+        nbttagcompound.setInteger("XpLevel", field_35210_aY);
+        nbttagcompound.setInteger("XpTotal", field_35209_aZ);
         if(playerSpawnCoordinate != null)
         {
             nbttagcompound.setInteger("SpawnX", playerSpawnCoordinate.posX);
             nbttagcompound.setInteger("SpawnY", playerSpawnCoordinate.posY);
             nbttagcompound.setInteger("SpawnZ", playerSpawnCoordinate.posZ);
         }
+        field_35217_av.func_35763_b(nbttagcompound);
     }
 
     public void displayGUIChest(IInventory iinventory)
@@ -391,8 +576,12 @@ public abstract class EntityPlayer extends EntityLiving
         yOffset = 1.62F;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
+        if(field_35212_aW.field_35759_a && !damagesource.func_35529_d())
+        {
+            return false;
+        }
         entityAge = 0;
         if(health <= 0)
         {
@@ -402,6 +591,7 @@ public abstract class EntityPlayer extends EntityLiving
         {
             wakeUpPlayer(true, true, false);
         }
+        Entity entity = damagesource.func_35532_a();
         if((entity instanceof EntityMob) || (entity instanceof EntityArrow))
         {
             if(worldObj.difficultySetting == 0)
@@ -421,20 +611,20 @@ public abstract class EntityPlayer extends EntityLiving
         {
             return false;
         }
-        Object obj = entity;
-        if((obj instanceof EntityArrow) && ((EntityArrow)obj).owner != null)
+        Entity entity1 = entity;
+        if((entity1 instanceof EntityArrow) && ((EntityArrow)entity1).shootingEntity != null)
         {
-            obj = ((EntityArrow)obj).owner;
+            entity1 = ((EntityArrow)entity1).shootingEntity;
         }
-        if(obj instanceof EntityLiving)
+        if(entity1 instanceof EntityLiving)
         {
-            alertWolves((EntityLiving)obj, false);
+            alertWolves((EntityLiving)entity1, false);
         }
         addStat(StatList.damageTakenStat, i);
-        return super.attackEntityFrom(entity, i);
+        return super.attackEntityFrom(damagesource, i);
     }
 
-    protected boolean func_27025_G()
+    protected boolean isPVPEnabled()
     {
         return false;
     }
@@ -453,7 +643,7 @@ public abstract class EntityPlayer extends EntityLiving
                 return;
             }
         }
-        if((entityliving instanceof EntityPlayer) && !func_27025_G())
+        if((entityliving instanceof EntityPlayer) && !isPVPEnabled())
         {
             return;
         }
@@ -467,22 +657,30 @@ public abstract class EntityPlayer extends EntityLiving
             }
             Entity entity = (Entity)iterator.next();
             EntityWolf entitywolf1 = (EntityWolf)entity;
-            if(entitywolf1.isWolfTamed() && entitywolf1.getTarget() == null && username.equals(entitywolf1.getWolfOwner()) && (!flag || !entitywolf1.isWolfSitting()))
+            if(entitywolf1.isWolfTamed() && entitywolf1.getEntityToAttack() == null && username.equals(entitywolf1.getWolfOwner()) && (!flag || !entitywolf1.isWolfSitting()))
             {
-                entitywolf1.setWolfSitting(false);
-                entitywolf1.setTarget(entityliving);
+                entitywolf1.setIsSitting(false);
+                entitywolf1.setEntityToAttack(entityliving);
             }
         } while(true);
     }
 
-    protected void damageEntity(int i)
+    protected void b(DamageSource damagesource, int i)
     {
-        int j = 25 - inventory.getTotalArmorValue();
-        int k = i * j + damageRemainder;
-        inventory.damageArmor(i);
-        i = k / 25;
-        damageRemainder = k % 25;
-        super.damageEntity(i);
+        if(!damagesource.func_35534_b() && func_35162_ad())
+        {
+            i = 1 + i >> 1;
+        }
+        if(!damagesource.func_35534_b())
+        {
+            int j = 25 - inventory.getTotalArmorValue();
+            int k = i * j + damageRemainder;
+            inventory.damageArmor(i);
+            i = k / 25;
+            damageRemainder = k % 25;
+        }
+        func_35198_d(damagesource.func_35533_c());
+        super.b(damagesource, i);
     }
 
     public void displayGUIFurnace(TileEntityFurnace tileentityfurnace)
@@ -532,8 +730,11 @@ public abstract class EntityPlayer extends EntityLiving
 
     public void swingItem()
     {
-        swingProgressInt = -1;
-        isSwinging = true;
+        if(!isSwinging || swingProgressInt >= func_35202_aE() / 2 || swingProgressInt < 0)
+        {
+            swingProgressInt = -1;
+            isSwinging = true;
+        }
     }
 
     public void attackTargetEntityWithCurrentItem(Entity entity)
@@ -541,11 +742,26 @@ public abstract class EntityPlayer extends EntityLiving
         int i = inventory.getDamageVsEntity(entity);
         if(i > 0)
         {
-            if(motionY < 0.0D)
+            boolean flag = motionY < 0.0D && !onGround && !isOnLadder() && !isInWater();
+            if(flag)
             {
-                i++;
+                i = (i * 3) / 2 + 1;
             }
-            entity.attackEntityFrom(this, i);
+            boolean flag1 = entity.attackEntityFrom(DamageSource.func_35527_a(this), i);
+            if(flag1)
+            {
+                if(func_35117_Q())
+                {
+                    entity.addVelocity(-MathHelper.sin((rotationYaw * 3.141593F) / 180F) * 1.0F, 0.10000000000000001D, MathHelper.cos((rotationYaw * 3.141593F) / 180F) * 1.0F);
+                    motionX *= 0.59999999999999998D;
+                    motionZ *= 0.59999999999999998D;
+                    func_35113_c(false);
+                }
+                if(flag)
+                {
+                    func_35200_b(entity);
+                }
+            }
             ItemStack itemstack = getCurrentEquippedItem();
             if(itemstack != null && (entity instanceof EntityLiving))
             {
@@ -564,7 +780,12 @@ public abstract class EntityPlayer extends EntityLiving
                 }
                 addStat(StatList.damageDealtStat, i);
             }
+            func_35198_d(0.3F);
         }
+    }
+
+    public void func_35200_b(Entity entity)
+    {
     }
 
     public void respawnPlayer()
@@ -580,7 +801,7 @@ public abstract class EntityPlayer extends EntityLiving
     public void setEntityDead()
     {
         super.setEntityDead();
-        slots.onCraftGuiClosed(this);
+        inventorySlots.onCraftGuiClosed(this);
         if(craftingInventory != null)
         {
             craftingInventory.onCraftGuiClosed(this);
@@ -719,13 +940,13 @@ public abstract class EntityPlayer extends EntityLiving
         return worldObj.getBlockId(bedChunkCoordinates.posX, bedChunkCoordinates.posY, bedChunkCoordinates.posZ) == Block.bed.blockID;
     }
 
-    public static ChunkCoordinates func_25060_a(World world, ChunkCoordinates chunkcoordinates)
+    public static ChunkCoordinates verifyRespawnCoordinates(World world, ChunkCoordinates chunkcoordinates)
     {
         IChunkProvider ichunkprovider = world.getIChunkProvider();
-        ichunkprovider.prepareChunk(chunkcoordinates.posX - 3 >> 4, chunkcoordinates.posZ - 3 >> 4);
-        ichunkprovider.prepareChunk(chunkcoordinates.posX + 3 >> 4, chunkcoordinates.posZ - 3 >> 4);
-        ichunkprovider.prepareChunk(chunkcoordinates.posX - 3 >> 4, chunkcoordinates.posZ + 3 >> 4);
-        ichunkprovider.prepareChunk(chunkcoordinates.posX + 3 >> 4, chunkcoordinates.posZ + 3 >> 4);
+        ichunkprovider.loadChunk(chunkcoordinates.posX - 3 >> 4, chunkcoordinates.posZ - 3 >> 4);
+        ichunkprovider.loadChunk(chunkcoordinates.posX + 3 >> 4, chunkcoordinates.posZ - 3 >> 4);
+        ichunkprovider.loadChunk(chunkcoordinates.posX - 3 >> 4, chunkcoordinates.posZ + 3 >> 4);
+        ichunkprovider.loadChunk(chunkcoordinates.posX + 3 >> 4, chunkcoordinates.posZ + 3 >> 4);
         if(world.getBlockId(chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ) != Block.bed.blockID)
         {
             return null;
@@ -808,6 +1029,13 @@ public abstract class EntityPlayer extends EntityLiving
     {
         super.jump();
         addStat(StatList.jumpStat, 1);
+        if(func_35117_Q())
+        {
+            func_35198_d(0.8F);
+        } else
+        {
+            func_35198_d(0.2F);
+        }
     }
 
     public void moveEntityWithHeading(float f, float f1)
@@ -815,11 +1043,22 @@ public abstract class EntityPlayer extends EntityLiving
         double d = posX;
         double d1 = posY;
         double d2 = posZ;
-        super.moveEntityWithHeading(f, f1);
+        if(field_35212_aW.field_35757_b)
+        {
+            double d3 = motionY;
+            float f2 = field_35168_bw;
+            field_35168_bw = 0.05F;
+            super.moveEntityWithHeading(f, f1);
+            motionY = d3 * 0.59999999999999998D;
+            field_35168_bw = f2;
+        } else
+        {
+            super.moveEntityWithHeading(f, f1);
+        }
         addMovementStat(posX - d, posY - d1, posZ - d2);
     }
 
-    private void addMovementStat(double d, double d1, double d2)
+    public void addMovementStat(double d, double d1, double d2)
     {
         if(ridingEntity != null)
         {
@@ -831,6 +1070,7 @@ public abstract class EntityPlayer extends EntityLiving
             if(i > 0)
             {
                 addStat(StatList.distanceDoveStat, i);
+                func_35198_d(0.015F * (float)i * 0.01F);
             }
         } else
         if(isInWater())
@@ -839,6 +1079,7 @@ public abstract class EntityPlayer extends EntityLiving
             if(j > 0)
             {
                 addStat(StatList.distanceSwumStat, j);
+                func_35198_d(0.015F * (float)j * 0.01F);
             }
         } else
         if(isOnLadder())
@@ -854,6 +1095,13 @@ public abstract class EntityPlayer extends EntityLiving
             if(k > 0)
             {
                 addStat(StatList.distanceWalkedStat, k);
+                if(func_35117_Q())
+                {
+                    func_35198_d(0.09999999F * (float)k * 0.01F);
+                } else
+                {
+                    func_35198_d(0.01F * (float)k * 0.01F);
+                }
             }
         } else
         {
@@ -898,6 +1146,10 @@ public abstract class EntityPlayer extends EntityLiving
 
     protected void fall(float f)
     {
+        if(field_35212_aW.field_35758_c)
+        {
+            return;
+        }
         if(f >= 2.0F)
         {
             addStat(StatList.distanceFallenStat, (int)Math.round((double)f * 100D));
@@ -919,6 +1171,22 @@ public abstract class EntityPlayer extends EntityLiving
         if(itemstack.itemID == Item.fishingRod.shiftedIndex && fishEntity != null)
         {
             i = itemstack.getIconIndex() + 16;
+        } else
+        if(field_34907_d != null && itemstack.itemID == Item.bow.shiftedIndex)
+        {
+            int j = itemstack.func_35866_m() - field_34906_e;
+            if(j >= 18)
+            {
+                return 133;
+            }
+            if(j > 13)
+            {
+                return 117;
+            }
+            if(j > 0)
+            {
+                return 101;
+            }
         }
         return i;
     }
@@ -936,9 +1204,88 @@ public abstract class EntityPlayer extends EntityLiving
         }
     }
 
+    public void func_35204_c(int i)
+    {
+        field_35211_aX += i;
+        field_35209_aZ += i;
+        for(; field_35211_aX >= func_35193_as(); func_35203_aG())
+        {
+            field_35211_aX -= func_35193_as();
+        }
+
+    }
+
+    public int func_35193_as()
+    {
+        return (field_35210_aY + 1) * 10;
+    }
+
+    private void func_35203_aG()
+    {
+        field_35210_aY++;
+    }
+
+    public void func_35198_d(float f)
+    {
+        if(field_35212_aW.field_35759_a)
+        {
+            return;
+        }
+        if(!worldObj.multiplayerWorld)
+        {
+            field_35217_av.func_35762_a(f);
+        }
+    }
+
+    public FoodStats func_35191_at()
+    {
+        return field_35217_av;
+    }
+
+    public boolean func_35197_b(boolean flag)
+    {
+        return (flag || field_35217_av.func_35770_c()) && !field_35212_aW.field_35759_a;
+    }
+
+    public boolean func_35194_au()
+    {
+        return health > 0 && health < 20;
+    }
+
+    public void func_35199_b(ItemStack itemstack, int i)
+    {
+        if(itemstack == field_34907_d)
+        {
+            return;
+        }
+        field_34907_d = itemstack;
+        field_34906_e = i;
+        if(!worldObj.multiplayerWorld)
+        {
+            func_35116_d(true);
+        }
+    }
+
+    public boolean func_35190_e(int i, int j, int k)
+    {
+        return true;
+    }
+
+    protected int a(EntityPlayer entityplayer)
+    {
+        return field_35209_aZ >> 1;
+    }
+
+    protected boolean func_35163_av()
+    {
+        return true;
+    }
+
     public InventoryPlayer inventory;
-    public Container slots;
+    public Container inventorySlots;
     public Container craftingInventory;
+    protected FoodStats field_35217_av;
+    protected int field_35216_aw;
     public byte field_9371_f;
     public int score;
     public float prevCameraYaw;
@@ -948,6 +1295,7 @@ public abstract class EntityPlayer extends EntityLiving
     public String username;
     public int dimension;
     public String playerCloakUrl;
+    public int field_35214_aG;
     public double field_20066_r;
     public double field_20065_s;
     public double field_20064_t;
@@ -966,6 +1314,14 @@ public abstract class EntityPlayer extends EntityLiving
     protected boolean inPortal;
     public float timeInPortal;
     public float prevTimeInPortal;
+    public PlayerCapabilities field_35212_aW;
+    public int field_35211_aX;
+    public int field_35210_aY;
+    public int field_35209_aZ;
+    private ItemStack field_34907_d;
+    private int field_34906_e;
+    protected float field_35215_ba;
+    protected float field_35213_bb;
     private int damageRemainder;
     public EntityFish fishEntity;
 }

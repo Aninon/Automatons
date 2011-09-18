@@ -7,8 +7,8 @@ package net.minecraft.src;
 
 public enum EnumMovingObjectType
 {
-    TILE("TILE", 0),
-    ENTITY("ENTITY", 1);
+    TILE,
+    ENTITY;
 /*
     public static EnumMovingObjectType[] values()
     {
@@ -19,25 +19,23 @@ public enum EnumMovingObjectType
     {
         return (EnumMovingObjectType)Enum.valueOf(net.minecraft.src.EnumMovingObjectType.class, s);
     }
-*/
+
     private EnumMovingObjectType(String s, int i)
     {
-//        super(s, i);
+        super(s, i);
     }
-/*
+
     public static final EnumMovingObjectType TILE;
     public static final EnumMovingObjectType ENTITY;
-*/
     private static final EnumMovingObjectType allMovingObjectTypes[]; /* synthetic field */
-
+/*
     static 
     {
-/*
         TILE = new EnumMovingObjectType("TILE", 0);
         ENTITY = new EnumMovingObjectType("ENTITY", 1);
-*/
         allMovingObjectTypes = (new EnumMovingObjectType[] {
             TILE, ENTITY
         });
     }
+*/
 }

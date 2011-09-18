@@ -13,18 +13,18 @@ public final class J_InvalidSyntaxException extends Exception
 
     J_InvalidSyntaxException(String s, J_ThingWithPosition j_thingwithposition)
     {
-        super((new StringBuilder()).append("At line ").append(j_thingwithposition.func_27330_b()).append(", column ").append(j_thingwithposition.func_27331_a()).append(":  ").append(s).toString());
-        field_27191_a = j_thingwithposition.func_27331_a();
-        field_27190_b = j_thingwithposition.func_27330_b();
+        super((new StringBuilder()).append("At line ").append(j_thingwithposition.getRow()).append(", column ").append(j_thingwithposition.getColumn()).append(":  ").append(s).toString());
+        column = j_thingwithposition.getColumn();
+        row = j_thingwithposition.getRow();
     }
 
     J_InvalidSyntaxException(String s, Throwable throwable, J_ThingWithPosition j_thingwithposition)
     {
-        super((new StringBuilder()).append("At line ").append(j_thingwithposition.func_27330_b()).append(", column ").append(j_thingwithposition.func_27331_a()).append(":  ").append(s).toString(), throwable);
-        field_27191_a = j_thingwithposition.func_27331_a();
-        field_27190_b = j_thingwithposition.func_27330_b();
+        super((new StringBuilder()).append("At line ").append(j_thingwithposition.getRow()).append(", column ").append(j_thingwithposition.getColumn()).append(":  ").append(s).toString(), throwable);
+        column = j_thingwithposition.getColumn();
+        row = j_thingwithposition.getRow();
     }
 
-    private final int field_27191_a;
-    private final int field_27190_b;
+    private final int column;
+    private final int row;
 }

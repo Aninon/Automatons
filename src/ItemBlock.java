@@ -7,7 +7,7 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            Item, Block, World, ItemStack, 
-//            Material, StepSound, EntityPlayer
+//            EntityPlayer, Material, StepSound
 
 public class ItemBlock extends Item
 {
@@ -19,12 +19,19 @@ public class ItemBlock extends Item
         setIconIndex(Block.blocksList[i + 256].getBlockTextureFromSide(2));
     }
 
+    public int func_35435_b()
+    {
+        return blockID;
+    }
+
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-        if(world.getBlockId(i, j, k) == Block.snow.blockID)
+        int i1 = world.getBlockId(i, j, k);
+        if(i1 == Block.snow.blockID)
         {
             l = 0;
         } else
+        if(i1 != Block.field_35278_bv.blockID)
         {
             if(l == 0)
             {
@@ -55,7 +62,12 @@ public class ItemBlock extends Item
         {
             return false;
         }
-        if(j == 127 && Block.blocksList[blockID].blockMaterial.isSolid())
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
+        }
+        world.getClass();
+        if(j == 128 - 1 && Block.blocksList[blockID].blockMaterial.isSolid())
         {
             return false;
         }
@@ -64,9 +76,12 @@ public class ItemBlock extends Item
             Block block = Block.blocksList[blockID];
             if(world.setBlockAndMetadataWithNotify(i, j, k, blockID, getPlacedBlockMetadata(itemstack.getItemDamage())))
             {
-                Block.blocksList[blockID].onBlockPlaced(world, i, j, k, l);
-                Block.blocksList[blockID].onBlockPlacedBy(world, i, j, k, entityplayer);
-                world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.func_1145_d(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                if(world.getBlockId(i, j, k) == blockID)
+                {
+                    Block.blocksList[blockID].onBlockPlaced(world, i, j, k, l);
+                    Block.blocksList[blockID].onBlockPlacedBy(world, i, j, k, entityplayer);
+                }
+                world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.stepSoundDir2(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
                 itemstack.stackSize--;
             }
             return true;

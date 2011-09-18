@@ -15,7 +15,6 @@ class RailLogic
 
     public RailLogic(BlockRail blockrail, World world, int i, int j, int k)
     {
-//        super();
         rail = blockrail;
         connectedTracks = new ArrayList();
         worldObj = world;

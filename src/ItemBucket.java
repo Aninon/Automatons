@@ -9,7 +9,8 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            Item, EntityPlayer, Vec3D, MathHelper, 
 //            World, MovingObjectPosition, EnumMovingObjectType, Material, 
-//            ItemStack, WorldProvider, Block, EntityCow
+//            ItemStack, WorldProvider, Block, PlayerCapabilities, 
+//            EntityCow
 
 public class ItemBucket extends Item
 {
@@ -49,12 +50,16 @@ public class ItemBucket extends Item
             int i = movingobjectposition.blockX;
             int j = movingobjectposition.blockY;
             int k = movingobjectposition.blockZ;
-            if(!world.func_6466_a(entityplayer, i, j, k))
+            if(!world.canMineBlock(entityplayer, i, j, k))
             {
                 return itemstack;
             }
             if(isFull == 0)
             {
+                if(!entityplayer.func_35190_e(i, j, k))
+                {
+                    return itemstack;
+                }
                 if(world.getBlockMaterial(i, j, k) == Material.water && world.getBlockMetadata(i, j, k) == 0)
                 {
                     world.setBlockWithNotify(i, j, k, 0);
@@ -95,6 +100,10 @@ public class ItemBucket extends Item
                 {
                     i++;
                 }
+                if(!entityplayer.func_35190_e(i, j, k))
+                {
+                    return itemstack;
+                }
                 if(world.isAirBlock(i, j, k) || !world.getBlockMaterial(i, j, k).isSolid())
                 {
                     if(world.worldProvider.isHellWorld && isFull == Block.waterMoving.blockID)
@@ -109,7 +118,13 @@ public class ItemBucket extends Item
                     {
                         world.setBlockAndMetadataWithNotify(i, j, k, isFull, 0);
                     }
-                    return new ItemStack(Item.bucketEmpty);
+                    if(entityplayer.field_35212_aW.field_35756_d)
+                    {
+                        return itemstack;
+                    } else
+                    {
+                        return new ItemStack(Item.bucketEmpty);
+                    }
                 }
             }
         } else

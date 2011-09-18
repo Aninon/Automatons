@@ -15,9 +15,9 @@ public class ContainerFurnace extends Container
 
     public ContainerFurnace(InventoryPlayer inventoryplayer, TileEntityFurnace tileentityfurnace)
     {
-        cookTime = 0;
-        burnTime = 0;
-        itemBurnTime = 0;
+        lastCookTime = 0;
+        lastBurnTime = 0;
+        lastItemBurnTime = 0;
         furnace = tileentityfurnace;
         addSlot(new Slot(tileentityfurnace, 0, 56, 17));
         addSlot(new Slot(tileentityfurnace, 1, 56, 53));
@@ -44,23 +44,23 @@ public class ContainerFurnace extends Container
         for(int i = 0; i < crafters.size(); i++)
         {
             ICrafting icrafting = (ICrafting)crafters.get(i);
-            if(cookTime != furnace.furnaceCookTime)
+            if(lastCookTime != furnace.furnaceCookTime)
             {
                 icrafting.updateCraftingInventoryInfo(this, 0, furnace.furnaceCookTime);
             }
-            if(burnTime != furnace.furnaceBurnTime)
+            if(lastBurnTime != furnace.furnaceBurnTime)
             {
                 icrafting.updateCraftingInventoryInfo(this, 1, furnace.furnaceBurnTime);
             }
-            if(itemBurnTime != furnace.currentItemBurnTime)
+            if(lastItemBurnTime != furnace.currentItemBurnTime)
             {
                 icrafting.updateCraftingInventoryInfo(this, 2, furnace.currentItemBurnTime);
             }
         }
 
-        cookTime = furnace.furnaceCookTime;
-        burnTime = furnace.furnaceBurnTime;
-        itemBurnTime = furnace.currentItemBurnTime;
+        lastCookTime = furnace.furnaceCookTime;
+        lastBurnTime = furnace.furnaceBurnTime;
+        lastItemBurnTime = furnace.currentItemBurnTime;
     }
 
     public void func_20112_a(int i, int j)
@@ -79,7 +79,7 @@ public class ContainerFurnace extends Container
         }
     }
 
-    public boolean isUsableByPlayer(EntityPlayer entityplayer)
+    public boolean canInteractWith(EntityPlayer entityplayer)
     {
         return furnace.canInteractWith(entityplayer);
     }
@@ -87,25 +87,35 @@ public class ContainerFurnace extends Container
     public ItemStack getStackInSlot(int i)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)slots.get(i);
+        Slot slot = (Slot)inventorySlots.get(i);
         if(slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
             if(i == 2)
             {
-                func_28125_a(itemstack1, 3, 39, true);
+                if(!func_28125_a(itemstack1, 3, 39, true))
+                {
+                    return null;
+                }
             } else
             if(i >= 3 && i < 30)
             {
-                func_28125_a(itemstack1, 30, 39, false);
+                if(!func_28125_a(itemstack1, 30, 39, false))
+                {
+                    return null;
+                }
             } else
             if(i >= 30 && i < 39)
             {
-                func_28125_a(itemstack1, 3, 30, false);
+                if(!func_28125_a(itemstack1, 3, 30, false))
+                {
+                    return null;
+                }
             } else
+            if(!func_28125_a(itemstack1, 3, 39, false))
             {
-                func_28125_a(itemstack1, 3, 39, false);
+                return null;
             }
             if(itemstack1.stackSize == 0)
             {
@@ -126,7 +136,7 @@ public class ContainerFurnace extends Container
     }
 
     private TileEntityFurnace furnace;
-    private int cookTime;
-    private int burnTime;
-    private int itemBurnTime;
+    private int lastCookTime;
+    private int lastBurnTime;
+    private int lastItemBurnTime;
 }

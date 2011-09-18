@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 //            NetClientHandler, AxisAlignedBB, Packet11PlayerPosition, Packet13PlayerLookMove, 
 //            Packet12PlayerLook, Packet10Flying, Packet14BlockDig, Packet3Chat, 
 //            Packet18Animation, Packet9Respawn, Packet101CloseWindow, Container, 
-//            InventoryPlayer, StatBase, Session, Entity, 
+//            InventoryPlayer, StatBase, Session, DamageSource, 
 //            EntityItem
 
 public class EntityClientPlayerMP extends EntityPlayerSP
@@ -23,12 +23,13 @@ public class EntityClientPlayerMP extends EntityPlayerSP
         field_9380_bx = 0;
         field_21093_bH = false;
         field_9382_bF = false;
+        field_35227_cs = false;
         wasSneaking = false;
         field_12242_bI = 0;
         sendQueue = netclienthandler;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         return false;
     }
@@ -39,7 +40,8 @@ public class EntityClientPlayerMP extends EntityPlayerSP
 
     public void onUpdate()
     {
-        if(!worldObj.blockExists(MathHelper.floor_double(posX), 64, MathHelper.floor_double(posZ)))
+        worldObj.getClass();
+        if(!worldObj.blockExists(MathHelper.floor_double(posX), 128 / 2, MathHelper.floor_double(posZ)))
         {
             return;
         } else
@@ -57,17 +59,29 @@ public class EntityClientPlayerMP extends EntityPlayerSP
             sendInventoryChanged();
             field_9380_bx = 0;
         }
-        boolean flag = isSneaking();
+        boolean flag = func_35117_Q();
         if(flag != wasSneaking)
         {
             if(flag)
+            {
+                sendQueue.addToSendQueue(new Packet19EntityAction(this, 4));
+            } else
+            {
+                sendQueue.addToSendQueue(new Packet19EntityAction(this, 5));
+            }
+            wasSneaking = flag;
+        }
+        boolean flag1 = isSneaking();
+        if(flag1 != field_35227_cs)
+        {
+            if(flag1)
             {
                 sendQueue.addToSendQueue(new Packet19EntityAction(this, 1));
             } else
             {
                 sendQueue.addToSendQueue(new Packet19EntityAction(this, 2));
             }
-            wasSneaking = flag;
+            field_35227_cs = flag1;
         }
         double d = posX - oldPosX;
         double d1 = boundingBox.minY - field_9378_bz;
@@ -75,30 +89,30 @@ public class EntityClientPlayerMP extends EntityPlayerSP
         double d3 = posZ - oldPosZ;
         double d4 = rotationYaw - oldRotationYaw;
         double d5 = rotationPitch - oldRotationPitch;
-        boolean flag1 = d1 != 0.0D || d2 != 0.0D || d != 0.0D || d3 != 0.0D;
-        boolean flag2 = d4 != 0.0D || d5 != 0.0D;
+        boolean flag2 = d1 != 0.0D || d2 != 0.0D || d != 0.0D || d3 != 0.0D;
+        boolean flag3 = d4 != 0.0D || d5 != 0.0D;
         if(ridingEntity != null)
         {
-            if(flag2)
+            if(flag3)
             {
                 sendQueue.addToSendQueue(new Packet11PlayerPosition(motionX, -999D, -999D, motionZ, onGround));
             } else
             {
                 sendQueue.addToSendQueue(new Packet13PlayerLookMove(motionX, -999D, -999D, motionZ, rotationYaw, rotationPitch, onGround));
             }
-            flag1 = false;
+            flag2 = false;
         } else
-        if(flag1 && flag2)
+        if(flag2 && flag3)
         {
             sendQueue.addToSendQueue(new Packet13PlayerLookMove(posX, boundingBox.minY, posY, posZ, rotationYaw, rotationPitch, onGround));
             field_12242_bI = 0;
         } else
-        if(flag1)
+        if(flag2)
         {
             sendQueue.addToSendQueue(new Packet11PlayerPosition(posX, boundingBox.minY, posY, posZ, onGround));
             field_12242_bI = 0;
         } else
-        if(flag2)
+        if(flag3)
         {
             sendQueue.addToSendQueue(new Packet12PlayerLook(rotationYaw, rotationPitch, onGround));
             field_12242_bI = 0;
@@ -114,14 +128,14 @@ public class EntityClientPlayerMP extends EntityPlayerSP
             }
         }
         field_9382_bF = onGround;
-        if(flag1)
+        if(flag2)
         {
             oldPosX = posX;
             field_9378_bz = boundingBox.minY;
             oldPosY = posY;
             oldPosZ = posZ;
         }
-        if(flag2)
+        if(flag3)
         {
             oldRotationYaw = rotationYaw;
             oldRotationPitch = rotationPitch;
@@ -155,10 +169,11 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     public void respawnPlayer()
     {
         sendInventoryChanged();
-        sendQueue.addToSendQueue(new Packet9Respawn((byte)dimension));
+        worldObj.getClass();
+        sendQueue.addToSendQueue(new Packet9Respawn((byte)dimension, (byte)worldObj.difficultySetting, worldObj.getRandomSeed(), 128, 0));
     }
 
-    protected void damageEntity(int i)
+    protected void b(DamageSource damagesource, int i)
     {
         health -= i;
     }
@@ -216,6 +231,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     private float oldRotationYaw;
     private float oldRotationPitch;
     private boolean field_9382_bF;
+    private boolean field_35227_cs;
     private boolean wasSneaking;
     private int field_12242_bI;
 }

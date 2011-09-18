@@ -146,12 +146,13 @@ public class BlockFurnace extends BlockContainer
         if(world.multiplayerWorld)
         {
             return true;
-        } else
-        {
-            TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getBlockTileEntity(i, j, k);
-            entityplayer.displayGUIFurnace(tileentityfurnace);
-            return true;
         }
+        TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getBlockTileEntity(i, j, k);
+        if(tileentityfurnace != null)
+        {
+            entityplayer.displayGUIFurnace(tileentityfurnace);
+        }
+        return true;
     }
 
     public static void updateFurnaceBlockState(boolean flag, World world, int i, int j, int k)
@@ -168,11 +169,14 @@ public class BlockFurnace extends BlockContainer
         }
         keepFurnaceInventory = false;
         world.setBlockMetadataWithNotify(i, j, k, l);
-        tileentity.func_31004_j();
-        world.setBlockTileEntity(i, j, k, tileentity);
+        if(tileentity != null)
+        {
+            tileentity.validate();
+            world.setBlockTileEntity(i, j, k, tileentity);
+        }
     }
 
-    protected TileEntity getBlockEntity()
+    public TileEntity getBlockEntity()
     {
         return new TileEntityFurnace();
     }
@@ -203,38 +207,41 @@ public class BlockFurnace extends BlockContainer
         if(!keepFurnaceInventory)
         {
             TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getBlockTileEntity(i, j, k);
-label0:
-            for(int l = 0; l < tileentityfurnace.getSizeInventory(); l++)
+            if(tileentityfurnace != null)
             {
-                ItemStack itemstack = tileentityfurnace.getStackInSlot(l);
-                if(itemstack == null)
+label0:
+                for(int l = 0; l < tileentityfurnace.getSizeInventory(); l++)
                 {
-                    continue;
+                    ItemStack itemstack = tileentityfurnace.getStackInSlot(l);
+                    if(itemstack == null)
+                    {
+                        continue;
+                    }
+                    float f = furnaceRand.nextFloat() * 0.8F + 0.1F;
+                    float f1 = furnaceRand.nextFloat() * 0.8F + 0.1F;
+                    float f2 = furnaceRand.nextFloat() * 0.8F + 0.1F;
+                    do
+                    {
+                        if(itemstack.stackSize <= 0)
+                        {
+                            continue label0;
+                        }
+                        int i1 = furnaceRand.nextInt(21) + 10;
+                        if(i1 > itemstack.stackSize)
+                        {
+                            i1 = itemstack.stackSize;
+                        }
+                        itemstack.stackSize -= i1;
+                        EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
+                        float f3 = 0.05F;
+                        entityitem.motionX = (float)furnaceRand.nextGaussian() * f3;
+                        entityitem.motionY = (float)furnaceRand.nextGaussian() * f3 + 0.2F;
+                        entityitem.motionZ = (float)furnaceRand.nextGaussian() * f3;
+                        world.entityJoinedWorld(entityitem);
+                    } while(true);
                 }
-                float f = furnaceRand.nextFloat() * 0.8F + 0.1F;
-                float f1 = furnaceRand.nextFloat() * 0.8F + 0.1F;
-                float f2 = furnaceRand.nextFloat() * 0.8F + 0.1F;
-                do
-                {
-                    if(itemstack.stackSize <= 0)
-                    {
-                        continue label0;
-                    }
-                    int i1 = furnaceRand.nextInt(21) + 10;
-                    if(i1 > itemstack.stackSize)
-                    {
-                        i1 = itemstack.stackSize;
-                    }
-                    itemstack.stackSize -= i1;
-                    EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
-                    float f3 = 0.05F;
-                    entityitem.motionX = (float)furnaceRand.nextGaussian() * f3;
-                    entityitem.motionY = (float)furnaceRand.nextGaussian() * f3 + 0.2F;
-                    entityitem.motionZ = (float)furnaceRand.nextGaussian() * f3;
-                    world.entityJoinedWorld(entityitem);
-                } while(true);
-            }
 
+            }
         }
         super.onBlockRemoval(world, i, j, k);
     }

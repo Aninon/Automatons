@@ -42,6 +42,22 @@ public class EntityPortalFX extends EntityFX
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
+    public int func_35115_a(float f)
+    {
+        int i = super.func_35115_a(f);
+        float f1 = (float)particleAge / (float)particleMaxAge;
+        f1 *= f1;
+        f1 *= f1;
+        int j = i & 0xff;
+        int k = i >> 16 & 0xff;
+        k += (int)(f1 * 15F * 16F);
+        if(k > 240)
+        {
+            k = 240;
+        }
+        return j | k << 16;
+    }
+
     public float getEntityBrightness(float f)
     {
         float f1 = super.getEntityBrightness(f);

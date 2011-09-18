@@ -33,12 +33,12 @@ public class BlockCloth extends Block
         return i;
     }
 
-    public static int func_21034_c(int i)
+    public static int getBlockFromDye(int i)
     {
         return ~i & 0xf;
     }
 
-    public static int func_21035_d(int i)
+    public static int getDyeFromBlock(int i)
     {
         return ~i & 0xf;
     }

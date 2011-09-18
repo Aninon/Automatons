@@ -16,16 +16,16 @@ abstract class J_LeafFunctor
     {
     }
 
-    public final Object func_27059_b(Object obj)
+    public final Object applyTo(Object obj)
     {
-        if(!func_27058_a(obj))
+        if(!matchsNode(obj))
         {
             throw J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException.func_27322_a(this);
         } else
         {
-            return func_27063_c(obj);
+            return typeSafeApplyTo(obj);
         }
     }
 
-    protected abstract Object func_27063_c(Object obj);
+    protected abstract Object typeSafeApplyTo(Object obj);
 }

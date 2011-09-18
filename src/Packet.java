@@ -8,21 +8,23 @@ import java.io.*;
 import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
-//            PacketCounter, Packet0KeepAlive, Packet1Login, Packet2Handshake, 
-//            Packet3Chat, Packet4UpdateTime, Packet5PlayerInventory, Packet6SpawnPosition, 
-//            Packet7UseEntity, Packet8UpdateHealth, Packet9Respawn, Packet10Flying, 
-//            Packet11PlayerPosition, Packet12PlayerLook, Packet13PlayerLookMove, Packet14BlockDig, 
-//            Packet15Place, Packet16BlockItemSwitch, Packet17Sleep, Packet18Animation, 
-//            Packet19EntityAction, Packet20NamedEntitySpawn, Packet21PickupSpawn, Packet22Collect, 
-//            Packet23VehicleSpawn, Packet24MobSpawn, Packet25EntityPainting, Packet27Position, 
-//            Packet28EntityVelocity, Packet29DestroyEntity, Packet30Entity, Packet31RelEntityMove, 
-//            Packet32EntityLook, Packet33RelEntityMoveLook, Packet34EntityTeleport, Packet38EntityStatus, 
-//            Packet39AttachEntity, Packet40EntityMetadata, Packet50PreChunk, Packet51MapChunk, 
-//            Packet52MultiBlockChange, Packet53BlockChange, Packet54PlayNoteBlock, Packet60Explosion, 
-//            Packet61DoorChange, Packet70Bed, Packet71Weather, Packet100OpenWindow, 
-//            Packet101CloseWindow, Packet102WindowClick, Packet103SetSlot, Packet104WindowItems, 
-//            Packet105UpdateProgressbar, Packet106Transaction, Packet130UpdateSign, Packet131MapData, 
-//            Packet200Statistic, Packet255KickDisconnect, NetHandler
+//            MCHash, PacketCounter, Packet0KeepAlive, Packet1Login, 
+//            Packet2Handshake, Packet3Chat, Packet4UpdateTime, Packet5PlayerInventory, 
+//            Packet6SpawnPosition, Packet7UseEntity, Packet8UpdateHealth, Packet9Respawn, 
+//            Packet10Flying, Packet11PlayerPosition, Packet12PlayerLook, Packet13PlayerLookMove, 
+//            Packet14BlockDig, Packet15Place, Packet16BlockItemSwitch, Packet17Sleep, 
+//            Packet18Animation, Packet19EntityAction, Packet20NamedEntitySpawn, Packet21PickupSpawn, 
+//            Packet22Collect, Packet23VehicleSpawn, Packet24MobSpawn, Packet25EntityPainting, 
+//            Packet26EntityExpOrb, Packet27Position, Packet28EntityVelocity, Packet29DestroyEntity, 
+//            Packet30Entity, Packet31RelEntityMove, Packet32EntityLook, Packet33RelEntityMoveLook, 
+//            Packet34EntityTeleport, Packet38EntityStatus, Packet39AttachEntity, Packet40EntityMetadata, 
+//            Packet41EntityEffect, Packet42RemoveEntityEffect, Packet43Experience, Packet50PreChunk, 
+//            Packet51MapChunk, Packet52MultiBlockChange, Packet53BlockChange, Packet54PlayNoteBlock, 
+//            Packet60Explosion, Packet61DoorChange, Packet70Bed, Packet71Weather, 
+//            Packet100OpenWindow, Packet101CloseWindow, Packet102WindowClick, Packet103SetSlot, 
+//            Packet104WindowItems, Packet105UpdateProgressbar, Packet106Transaction, Packet107CreativeSetSlot, 
+//            Packet130UpdateSign, Packet131MapData, Packet200Statistic, Packet201PlayerInfo, 
+//            Packet254ServerPing, Packet255KickDisconnect, NetHandler
 
 public abstract class Packet
 {
@@ -34,7 +36,7 @@ public abstract class Packet
 
     static void addIdClassMapping(int i, boolean flag, boolean flag1, Class class1)
     {
-        if(packetIdToClassMap.containsKey(Integer.valueOf(i)))
+        if(packetIdToClassMap.func_35858_b(i))
         {
             throw new IllegalArgumentException((new StringBuilder()).append("Duplicate packet id:").append(i).toString());
         }
@@ -42,7 +44,7 @@ public abstract class Packet
         {
             throw new IllegalArgumentException((new StringBuilder()).append("Duplicate packet class:").append(class1).toString());
         }
-        packetIdToClassMap.put(Integer.valueOf(i), class1);
+        packetIdToClassMap.addKey(i, class1);
         packetClassToIdMap.put(class1, Integer.valueOf(i));
         if(flag)
         {
@@ -58,7 +60,7 @@ public abstract class Packet
     {
         try
         {
-            Class class1 = (Class)packetIdToClassMap.get(Integer.valueOf(i));
+            Class class1 = (Class)packetIdToClassMap.lookup(i);
             if(class1 == null)
             {
                 return null;
@@ -108,15 +110,15 @@ public abstract class Packet
             System.out.println("Reached end of stream");
             return null;
         }
-        PacketCounter packetcounter = (PacketCounter)packetStats.get(Integer.valueOf(i));
+        PacketCounter packetcounter = (PacketCounter)totalPacketsCount.lookup(i);
         if(packetcounter == null)
         {
             packetcounter = new PacketCounter(null);
-            packetStats.put(Integer.valueOf(i), packetcounter);
+            totalPacketsCount.addKey(i, packetcounter);
         }
         packetcounter.addPacket(packet.getPacketSize());
-        totalPacketsCount++;
-        if(totalPacketsCount % 1000 != 0);
+        packetStats++;
+        if(packetStats % 1000 != 0);
         return packet;
     }
 
@@ -184,14 +186,14 @@ public abstract class Packet
         }
     }
 
-    private static Map packetIdToClassMap = new HashMap();
+    private static MCHash packetIdToClassMap = new MCHash();
     private static Map packetClassToIdMap = new HashMap();
     private static Set clientPacketIdList = new HashSet();
     private static Set serverPacketIdList = new HashSet();
     public final long creationTimeMillis = System.currentTimeMillis();
     public boolean isChunkDataPacket;
-    private static HashMap packetStats = new HashMap();
-    private static int totalPacketsCount = 0;
+    private static MCHash totalPacketsCount = new MCHash();
+    private static int packetStats = 0;
 
     static 
     {
@@ -221,6 +223,7 @@ public abstract class Packet
         addIdClassMapping(23, true, false, net.minecraft.src.Packet23VehicleSpawn.class);
         addIdClassMapping(24, true, false, net.minecraft.src.Packet24MobSpawn.class);
         addIdClassMapping(25, true, false, net.minecraft.src.Packet25EntityPainting.class);
+        addIdClassMapping(26, true, false, net.minecraft.src.Packet26EntityExpOrb.class);
         addIdClassMapping(27, false, true, net.minecraft.src.Packet27Position.class);
         addIdClassMapping(28, true, false, net.minecraft.src.Packet28EntityVelocity.class);
         addIdClassMapping(29, true, false, net.minecraft.src.Packet29DestroyEntity.class);
@@ -232,6 +235,9 @@ public abstract class Packet
         addIdClassMapping(38, true, false, net.minecraft.src.Packet38EntityStatus.class);
         addIdClassMapping(39, true, false, net.minecraft.src.Packet39AttachEntity.class);
         addIdClassMapping(40, true, false, net.minecraft.src.Packet40EntityMetadata.class);
+        addIdClassMapping(41, true, false, net.minecraft.src.Packet41EntityEffect.class);
+        addIdClassMapping(42, true, false, net.minecraft.src.Packet42RemoveEntityEffect.class);
+        addIdClassMapping(43, true, false, net.minecraft.src.Packet43Experience.class);
         addIdClassMapping(50, true, false, net.minecraft.src.Packet50PreChunk.class);
         addIdClassMapping(51, true, false, net.minecraft.src.Packet51MapChunk.class);
         addIdClassMapping(52, true, false, net.minecraft.src.Packet52MultiBlockChange.class);
@@ -248,9 +254,12 @@ public abstract class Packet
         addIdClassMapping(104, true, false, net.minecraft.src.Packet104WindowItems.class);
         addIdClassMapping(105, true, false, net.minecraft.src.Packet105UpdateProgressbar.class);
         addIdClassMapping(106, true, true, net.minecraft.src.Packet106Transaction.class);
+        addIdClassMapping(107, true, true, net.minecraft.src.Packet107CreativeSetSlot.class);
         addIdClassMapping(130, true, true, net.minecraft.src.Packet130UpdateSign.class);
         addIdClassMapping(131, true, false, net.minecraft.src.Packet131MapData.class);
         addIdClassMapping(200, true, false, net.minecraft.src.Packet200Statistic.class);
+        addIdClassMapping(201, true, false, net.minecraft.src.Packet201PlayerInfo.class);
+        addIdClassMapping(254, false, true, net.minecraft.src.Packet254ServerPing.class);
         addIdClassMapping(255, true, true, net.minecraft.src.Packet255KickDisconnect.class);
     }
 }

@@ -8,7 +8,7 @@ package net.minecraft.src;
 interface J_ThingWithPosition
 {
 
-    public abstract int func_27331_a();
+    public abstract int getColumn();
 
-    public abstract int func_27330_b();
+    public abstract int getRow();
 }

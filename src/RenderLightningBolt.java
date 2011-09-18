@@ -17,7 +17,7 @@ public class RenderLightningBolt extends Render
     {
     }
 
-    public void func_27002_a(EntityLightningBolt entitylightningbolt, double d, double d1, double d2, 
+    public void doRenderLightningBolt(EntityLightningBolt entitylightningbolt, double d, double d1, double d2, 
             float f, float f1)
     {
         Tessellator tessellator = Tessellator.instance;
@@ -122,6 +122,6 @@ public class RenderLightningBolt extends Render
     public void doRender(Entity entity, double d, double d1, double d2, 
             float f, float f1)
     {
-        func_27002_a((EntityLightningBolt)entity, d, d1, d2, f, f1);
+        doRenderLightningBolt((EntityLightningBolt)entity, d, d1, d2, f, f1);
     }
 }

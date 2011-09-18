@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelZombie, ModelRenderer
+//            ModelZombie, ModelRenderer, MathHelper
 
 public class ModelSkeleton extends ModelZombie
 {
@@ -14,19 +14,38 @@ public class ModelSkeleton extends ModelZombie
     public ModelSkeleton()
     {
         float f = 0.0F;
-        bipedRightArm = new ModelRenderer(40, 16);
+        bipedRightArm = new ModelRenderer(this, 40, 16);
         bipedRightArm.addBox(-1F, -2F, -1F, 2, 12, 2, f);
         bipedRightArm.setRotationPoint(-5F, 2.0F, 0.0F);
-        bipedLeftArm = new ModelRenderer(40, 16);
+        bipedLeftArm = new ModelRenderer(this, 40, 16);
         bipedLeftArm.mirror = true;
         bipedLeftArm.addBox(-1F, -2F, -1F, 2, 12, 2, f);
         bipedLeftArm.setRotationPoint(5F, 2.0F, 0.0F);
-        bipedRightLeg = new ModelRenderer(0, 16);
+        bipedRightLeg = new ModelRenderer(this, 0, 16);
         bipedRightLeg.addBox(-1F, 0.0F, -1F, 2, 12, 2, f);
         bipedRightLeg.setRotationPoint(-2F, 12F, 0.0F);
-        bipedLeftLeg = new ModelRenderer(0, 16);
+        bipedLeftLeg = new ModelRenderer(this, 0, 16);
         bipedLeftLeg.mirror = true;
         bipedLeftLeg.addBox(-1F, 0.0F, -1F, 2, 12, 2, f);
         bipedLeftLeg.setRotationPoint(2.0F, 12F, 0.0F);
+    }
+
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
+    {
+        super.setRotationAngles(f, f1, f2, f3, f4, f5);
+        float f6 = 0.0F;
+        float f7 = 0.0F;
+        bipedRightArm.rotateAngleZ = 0.0F;
+        bipedLeftArm.rotateAngleZ = 0.0F;
+        bipedRightArm.rotateAngleY = -(0.1F - f6 * 0.6F) + bipedHead.rotateAngleY;
+        bipedLeftArm.rotateAngleY = (0.1F - f6 * 0.6F) + bipedHead.rotateAngleY + 0.4F;
+        bipedRightArm.rotateAngleX = -1.570796F + bipedHead.rotateAngleX;
+        bipedLeftArm.rotateAngleX = -1.570796F + bipedHead.rotateAngleX;
+        bipedRightArm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
+        bipedLeftArm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
+        bipedRightArm.rotateAngleZ += MathHelper.cos(f2 * 0.09F) * 0.05F + 0.05F;
+        bipedLeftArm.rotateAngleZ -= MathHelper.cos(f2 * 0.09F) * 0.05F + 0.05F;
+        bipedRightArm.rotateAngleX += MathHelper.sin(f2 * 0.067F) * 0.05F;
+        bipedLeftArm.rotateAngleX -= MathHelper.sin(f2 * 0.067F) * 0.05F;
     }
 }

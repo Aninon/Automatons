@@ -19,7 +19,7 @@ public class AxisAlignedBB
         return new AxisAlignedBB(d, d1, d2, d3, d4, d5);
     }
 
-    public static void func_28196_a()
+    public static void clearBoundingBoxes()
     {
         boundingBoxes.clear();
         numBoundingBoxesInUse = 0;

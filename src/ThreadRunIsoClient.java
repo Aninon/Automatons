@@ -13,7 +13,6 @@ class ThreadRunIsoClient extends Thread
 
     ThreadRunIsoClient(CanvasIsomPreview canvasisompreview)
     {
-//        super();
         isoCanvas = canvasisompreview;
     }
 
