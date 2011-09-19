@@ -114,7 +114,7 @@ public class AM_EntityOmni extends EntityLiving
 				return true;
 			}
 			
-			if(itemstack.itemID == Item.egg.shiftedIndex)
+			if(itemstack.itemID == Item.egg.shiftedIndex || itemstack.itemID == Item.field_35419_bl.shiftedIndex || itemstack.itemID == Item.feather.shiftedIndex)
 			{
 				metamorph(new EntityChicken(worldObj));
 				return true;
@@ -124,7 +124,7 @@ public class AM_EntityOmni extends EntityLiving
 				metamorph(new EntityCow(worldObj));
 				return true;
 			}
-			if(itemstack.itemID == Item.feather.shiftedIndex)
+			if(itemstack.itemID == Item.field_35415_bn.shiftedIndex)
 			{
 				metamorph(new EntityZombie(worldObj));
 				return true;
@@ -137,6 +137,11 @@ public class AM_EntityOmni extends EntityLiving
 			if(itemstack.itemID == Item.silk.shiftedIndex)
 			{
 				metamorph(new EntitySpider(worldObj));
+				return true;
+			}
+			if(itemstack.itemID == Block.web.blockID)
+			{
+				metamorph(new EntityCaveSpider(worldObj));
 				return true;
 			}
 			if(itemstack.itemID == Item.gunpowder.shiftedIndex)
@@ -178,6 +183,17 @@ public class AM_EntityOmni extends EntityLiving
 				metamorph(new AM_EntityWatcher(worldObj));
 				return true;
 			}
+			if(itemstack.itemID == Item.field_35416_bo.shiftedIndex)
+			{
+				metamorph(new EntityEnderman(worldObj));
+				return true;
+			}
+			if(itemstack.itemID == Item.swordGold.shiftedIndex)
+			{
+				metamorph(new EntityPigZombie(worldObj));
+				return true;
+			}
+			
 		}
 		
 		return false;
