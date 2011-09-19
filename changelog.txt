@@ -22,8 +22,14 @@
 
 #make cities generate more dynamically, 1 building at a time?
 
-#IMPORTANT- fix the spawn rates somehow!
+#IMPORTANT- FIX BIOMES
+#restore sliders as enemies for guard turrets
 
+
+
+
+v0.5.9b - emergency update
+v0.5.9 -updated to 1.8.1
 v0.5.8
 
 -added the slider pan for many lulz
