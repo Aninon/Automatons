@@ -58,7 +58,7 @@ public class AM_ItemJunks extends Item
     }
 
     public static final String dyeColorNames[] = {
-        "ironFrag", "automatonBod", "automatonHead", "automatonLeg", "rod", "automatonBack", "biterHead", "robo", "greens", "coals", 
+        "pigman", "silverfish", "wolf", "nitrate", "sulfuric", "automatonBack", "biterHead", "robo", "greens", "coals", 
         "superMetal", "techo", "factotumHead", "furnaceChunk", "automatonBod2", "white"
     };
   
