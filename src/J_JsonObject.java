@@ -17,22 +17,22 @@ final class J_JsonObject extends J_JsonRootNode
         field_27222_a = new HashMap(map);
     }
 
-    public Map func_27214_c()
+    public Map getFields()
     {
         return new HashMap(field_27222_a);
     }
 
-    public EnumJsonNodeType func_27218_a()
+    public EnumJsonNodeType getType()
     {
         return EnumJsonNodeType.OBJECT;
     }
 
-    public String func_27216_b()
+    public String getText()
     {
         throw new IllegalStateException("Attempt to get text on a JsonNode without text.");
     }
 
-    public List func_27215_d()
+    public List getElements()
     {
         throw new IllegalStateException("Attempt to get elements on a JsonNode without elements.");
     }

@@ -8,8 +8,8 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            EntityLiving, IMob, DataWatcher, NBTTagCompound, 
-//            MathHelper, AxisAlignedBB, World, EntityPlayer, 
-//            Item, Chunk
+//            MathHelper, AxisAlignedBB, World, DamageSource, 
+//            EntityPlayer, Item, Chunk
 
 public class EntitySlime extends EntityLiving
     implements IMob
@@ -24,6 +24,7 @@ public class EntitySlime extends EntityLiving
         yOffset = 0.0F;
         slimeJumpDelay = rand.nextInt(20) + 10;
         setSlimeSize(i);
+        field_35171_bJ = i;
     }
 
     protected void entityInit()
@@ -83,7 +84,7 @@ public class EntitySlime extends EntityLiving
         field_768_a = field_768_a * 0.6F;
     }
 
-    protected void updatePlayerActionState()
+    protected void updateEntityActionState()
     {
         despawnEntity();
         EntityPlayer entityplayer = worldObj.getClosestPlayerToEntity(this, 16D);
@@ -138,7 +139,7 @@ public class EntitySlime extends EntityLiving
     public void onCollideWithPlayer(EntityPlayer entityplayer)
     {
         int i = getSlimeSize();
-        if(i > 1 && canEntityBeSeen(entityplayer) && (double)getDistanceToEntity(entityplayer) < 0.59999999999999998D * (double)i && entityplayer.attackEntityFrom(this, i))
+        if(i > 1 && canEntityBeSeen(entityplayer) && (double)getDistanceToEntity(entityplayer) < 0.59999999999999998D * (double)i && entityplayer.attackEntityFrom(DamageSource.func_35525_a(this), i))
         {
             worldObj.playSoundAtEntity(this, "mob.slimeattack", 1.0F, (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
         }

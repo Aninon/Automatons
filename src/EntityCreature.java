@@ -10,13 +10,14 @@ import java.util.Random;
 //            EntityLiving, World, Entity, AxisAlignedBB, 
 //            MathHelper, PathEntity, Vec3D
 
-public class EntityCreature extends EntityLiving
+public abstract class EntityCreature extends EntityLiving
 {
 
     public EntityCreature(World world)
     {
         super(world);
         hasAttacked = false;
+        field_35174_at = 0;
     }
 
     protected boolean isMovementCeased()
@@ -24,8 +25,12 @@ public class EntityCreature extends EntityLiving
         return false;
     }
 
-    protected void updatePlayerActionState()
+    protected void updateEntityActionState()
     {
+        if(field_35174_at > 0)
+        {
+            field_35174_at--;
+        }
         hasAttacked = isMovementCeased();
         float f = 16F;
         if(entityToAttack == null)
@@ -54,9 +59,9 @@ public class EntityCreature extends EntityLiving
         {
             pathToEntity = worldObj.getPathToEntity(this, entityToAttack, f);
         } else
-        if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || rand.nextInt(80) == 0))
+        if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || field_35174_at > 0 || rand.nextInt(80) == 0))
         {
-            func_31021_B();
+            func_31026_E();
         }
         int i = MathHelper.floor_double(boundingBox.minY + 0.5D);
         boolean flag = isInWater();
@@ -64,7 +69,7 @@ public class EntityCreature extends EntityLiving
         rotationPitch = 0.0F;
         if(pathToEntity == null || rand.nextInt(100) == 0)
         {
-            super.updatePlayerActionState();
+            super.updateEntityActionState();
             pathToEntity = null;
             return;
         }
@@ -131,7 +136,7 @@ public class EntityCreature extends EntityLiving
         }
     }
 
-    protected void func_31021_B()
+    protected void func_31026_E()
     {
         boolean flag = false;
         int i = -1;
@@ -196,17 +201,28 @@ public class EntityCreature extends EntityLiving
         pathToEntity = pathentity;
     }
 
-    public Entity getTarget()
+    public Entity getEntityToAttack()
     {
         return entityToAttack;
     }
 
-    public void setTarget(Entity entity)
+    public void setEntityToAttack(Entity entity)
     {
         entityToAttack = entity;
+    }
+
+    protected float func_35166_t_()
+    {
+        float f = super.func_35166_t_();
+        if(field_35174_at > 0)
+        {
+            f *= 2.0F;
+        }
+        return f;
     }
 
     private PathEntity pathToEntity;
     protected Entity entityToAttack;
     protected boolean hasAttacked;
+    protected int field_35174_at;
 }

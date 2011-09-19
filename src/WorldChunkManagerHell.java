@@ -4,19 +4,19 @@
 
 package net.minecraft.src;
 
-import java.util.Arrays;
+import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
-//            WorldChunkManager, BiomeGenBase, ChunkCoordIntPair
+//            WorldChunkManager, BiomeGenBase, ChunkPosition, ChunkCoordIntPair
 
 public class WorldChunkManagerHell extends WorldChunkManager
 {
 
-    public WorldChunkManagerHell(BiomeGenBase biomegenbase, double d, double d1)
+    public WorldChunkManagerHell(BiomeGenBase biomegenbase, float f, float f1)
     {
         field_4201_e = biomegenbase;
-        field_4200_f = d;
-        field_4199_g = d1;
+        field_4200_f = f;
+        field_4199_g = f1;
     }
 
     public BiomeGenBase getBiomeGenAtChunkCoord(ChunkCoordIntPair chunkcoordintpair)
@@ -29,7 +29,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
         return field_4201_e;
     }
 
-    public double getTemperature(int i, int j)
+    public float func_35554_b(int i, int j)
     {
         return field_4200_f;
     }
@@ -40,14 +40,29 @@ public class WorldChunkManagerHell extends WorldChunkManager
         return field_4195_d;
     }
 
-    public double[] getTemperatures(double ad[], int i, int j, int k, int l)
+    public float[] getTemperatures(float af[], int i, int j, int k, int l)
     {
-        if(ad == null || ad.length < k * l)
+        if(af == null || af.length < k * l)
         {
-            ad = new double[k * l];
+            af = new float[k * l];
         }
-        Arrays.fill(ad, 0, k * l, field_4200_f);
-        return ad;
+        Arrays.fill(af, 0, k * l, field_4200_f);
+        return af;
+    }
+
+    public float[] func_35560_b(float af[], int i, int j, int k, int l)
+    {
+        if(af == null || af.length < k * l)
+        {
+            af = new float[k * l];
+        }
+        Arrays.fill(af, 0, k * l, field_4199_g);
+        return af;
+    }
+
+    public float func_35558_c(int i, int j)
+    {
+        return field_4199_g;
     }
 
     public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase abiomegenbase[], int i, int j, int k, int l)
@@ -56,18 +71,27 @@ public class WorldChunkManagerHell extends WorldChunkManager
         {
             abiomegenbase = new BiomeGenBase[k * l];
         }
-        if(temperature == null || temperature.length < k * l)
-        {
-            temperature = new double[k * l];
-            humidity = new double[k * l];
-        }
         Arrays.fill(abiomegenbase, 0, k * l, field_4201_e);
-        Arrays.fill(humidity, 0, k * l, field_4199_g);
-        Arrays.fill(temperature, 0, k * l, field_4200_f);
         return abiomegenbase;
     }
 
+    public ChunkPosition func_35556_a(int i, int j, int k, List list, Random random)
+    {
+        if(list.contains(field_4201_e))
+        {
+            return new ChunkPosition((i - k) + random.nextInt(k * 2 + 1), 0, (j - k) + random.nextInt(k * 2 + 1));
+        } else
+        {
+            return null;
+        }
+    }
+
+    public boolean func_35562_a(int i, int j, int k, List list)
+    {
+        return list.contains(field_4201_e);
+    }
+
     private BiomeGenBase field_4201_e;
-    private double field_4200_f;
-    private double field_4199_g;
+    private float field_4200_f;
+    private float field_4199_g;
 }

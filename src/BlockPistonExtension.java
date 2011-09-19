@@ -44,7 +44,7 @@ public class BlockPistonExtension extends Block
         if(k1 == Block.pistonBase.blockID || k1 == Block.pistonStickyBase.blockID)
         {
             int i1 = world.getBlockMetadata(i, j, k);
-            if(BlockPistonBase.isPowered(i1))
+            if(BlockPistonBase.isExtended(i1))
             {
                 Block.blocksList[k1].dropBlockAsItem(world, i, j, k, i1);
                 world.setBlockWithNotify(i, j, k, 0);

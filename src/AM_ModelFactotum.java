@@ -8,84 +8,84 @@ public class AM_ModelFactotum extends ModelBase
 {
 	public AM_ModelFactotum()
 	{
-		bod = new ModelRenderer(18, 16);
+		bod = new ModelRenderer(this,18, 16);
 		bod.addBox(0F, 0F, -4F, 15, 7, 8, 0F);
 		bod.setRotationPoint(0F, 14F, -7F);
 		bod.rotateAngleX = 0F;
 		bod.rotateAngleY = 4.712389F;
 		bod.rotateAngleZ = 0F;
 		bod.mirror = false;
-		furn1 = new ModelRenderer(0, 0);
+		furn1 = new ModelRenderer(this,0, 0);
 		furn1.addBox(-4F, -8F, -4F, 8, 8, 8, 0F);
 		furn1.setRotationPoint(0F, 15F, 4F);
 		furn1.rotateAngleX = -0.1487144F;
 		furn1.rotateAngleY = -0.03717861F;
 		furn1.rotateAngleZ = 0F;
 		furn1.mirror = false;
-		eyes = new ModelRenderer(0, 27);
+		eyes = new ModelRenderer(this,0, 27);
 		eyes.addBox(-2F, 1F, -5F, 4, 2, 1, 0F);
 		eyes.setRotationPoint(0F, 16F, -7F);
 		eyes.rotateAngleX = 0F;
 		eyes.rotateAngleY = 0F;
 		eyes.rotateAngleZ = 0F;
 		eyes.mirror = false;
-		furn2 = new ModelRenderer(1, 0);
+		furn2 = new ModelRenderer(this,1, 0);
 		furn2.addBox(-3F, -8F, -4F, 6, 8, 8, 0F);
 		furn2.setRotationPoint(0F, 18F, -2F);
 		furn2.rotateAngleX = 0.1858931F;
 		furn2.rotateAngleY = -0.03717861F;
 		furn2.rotateAngleZ = 0F;
 		furn2.mirror = false;
-		furn3 = new ModelRenderer(0, 0);
+		furn3 = new ModelRenderer(this,0, 0);
 		furn3.addBox(-4F, -8F, -4F, 8, 8, 8, 0F);
 		furn3.setRotationPoint(4F, 19F, 4F);
 		furn3.rotateAngleX = 0.3543328F;
 		furn3.rotateAngleY = -2.007645F;
 		furn3.rotateAngleZ = 0F;
 		furn3.mirror = false;
-		furn13 = new ModelRenderer(0, 0);
+		furn13 = new ModelRenderer(this,0, 0);
 		furn13.addBox(-4F, -8F, -4F, 8, 8, 8, 0F);
 		furn13.setRotationPoint(-4F, 19F, 4F);
 		furn13.rotateAngleX = 0.2974289F;
 		furn13.rotateAngleY = 2.082002F;
 		furn13.rotateAngleZ = 0F;
 		furn13.mirror = false;
-		leg1 = new ModelRenderer(25, 0);
+		leg1 = new ModelRenderer(this,25, 0);
 		leg1.addBox(-1F, 0F, -1F, 2, 5, 2, 0F);
 		leg1.setRotationPoint(2F, 19F, -4F);
 		leg1.rotateAngleX = 0F;
 		leg1.rotateAngleY = 0F;
 		leg1.rotateAngleZ = 0F;
 		leg1.mirror = false;
-		leg2 = new ModelRenderer(25, 0);
+		leg2 = new ModelRenderer(this,25, 0);
 		leg2.addBox(-1F, 0F, -1F, 2, 5, 2, 0F);
 		leg2.setRotationPoint(-2F, 19F, -4F);
 		leg2.rotateAngleX = 0F;
 		leg2.rotateAngleY = 0F;
 		leg2.rotateAngleZ = 0F;
 		leg2.mirror = false;
-		leg3 = new ModelRenderer(25, 0);
+		leg3 = new ModelRenderer(this,25, 0);
 		leg3.addBox(-1F, 0F, -1F, 2, 5, 2, 0F);
 		leg3.setRotationPoint(-2F, 19F, 4F);
 		leg3.rotateAngleX = 0F;
 		leg3.rotateAngleY = 0F;
 		leg3.rotateAngleZ = 0F;
 		leg3.mirror = false;
-		leg4 = new ModelRenderer(25, 0);
+		leg4 = new ModelRenderer(this,25, 0);
 		leg4.addBox(-1F, 0F, -1F, 2, 5, 2, 0F);
 		leg4.setRotationPoint(2F, 19F, 4F);
 		leg4.rotateAngleX = 0F;
 		leg4.rotateAngleY = 0F;
 		leg4.rotateAngleZ = 0F;
 		leg4.mirror = false;
-		head = new ModelRenderer(0, 16);
+		head = new ModelRenderer(this,0, 16);
 		head.addBox(-3F, -1F, -6F, 6, 5, 6, 0F);
 		head.setRotationPoint(0F, 16F, -7F);
 		head.rotateAngleX = 0F;
 		head.rotateAngleY = 0F;
 		head.rotateAngleZ = 0F;
 		head.mirror = false;
-		hat = new ModelRenderer(32, 0);
+		hat = new ModelRenderer(this,32, 0);
 		hat.addBox(-4F, -3F, -8F, 8, 3, 8, 0F);
 		hat.setRotationPoint(0F, 16F, -7F);
 		hat.rotateAngleX = 0.1858931F;
@@ -94,9 +94,9 @@ public class AM_ModelFactotum extends ModelBase
 		hat.mirror = false;
 	}
 	
-	public void render(float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		super.render(f, f1, f2, f3, f4, f5);
+		super.render(entity,f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		bod.render(f5);
 		furn1.render(f5);

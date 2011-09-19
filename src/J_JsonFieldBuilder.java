@@ -15,7 +15,7 @@ final class J_JsonFieldBuilder
     {
     }
 
-    static J_JsonFieldBuilder func_27301_a()
+    static J_JsonFieldBuilder aJsonFieldBuilder()
     {
         return new J_JsonFieldBuilder();
     }
@@ -34,12 +34,12 @@ final class J_JsonFieldBuilder
 
     J_JsonStringNode func_27303_b()
     {
-        return (J_JsonStringNode)field_27306_a.func_27234_b();
+        return (J_JsonStringNode)field_27306_a.buildNode();
     }
 
     J_JsonNode func_27302_c()
     {
-        return field_27305_b.func_27234_b();
+        return field_27305_b.buildNode();
     }
 
     private J_JsonNodeBuilder field_27306_a;

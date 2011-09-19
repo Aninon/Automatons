@@ -35,7 +35,7 @@ public class AM_BlockBad extends Block
 	
 		AM_EntityWatcher et=new AM_EntityWatcher(world, (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F);
 		world.entityJoinedWorld(et);
-		et.setTarget(entityplayer);
+		et.setEntityToAttack(entityplayer);
 	}
 	public int idDropped(int i, Random random)
     {

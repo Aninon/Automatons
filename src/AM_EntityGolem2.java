@@ -36,9 +36,9 @@ public class AM_EntityGolem2 extends EntityAnimal
 	
 	protected Entity entityplayer;
 	
-	protected void updatePlayerActionState()
+	protected void updateEntityActionState()
 	{
-		super.updatePlayerActionState();
+		super.updateEntityActionState();
 		
 		if(entityplayer==null && entityToAttack==null){
 		List L=worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityPlayer.class, boundingBox.expand(4D, 3D, 4D));
@@ -79,11 +79,15 @@ public class AM_EntityGolem2 extends EntityAnimal
 		}
 	}
 	
-	public boolean attackEntityFrom(Entity entity, int i)
-	{
+	
+	public boolean attackEntityFrom(DamageSource damagesource, int i)
+    {
 		moveSpeed = 1.6F;
-		setTarget(entity);
-		super.attackEntityFrom(entity,i);
+		Entity e=damagesource.func_35532_a();
+		if(e!=null || e!=this){
+			setEntityToAttack(e);
+		}
+		super.attackEntityFrom(damagesource,i);
 		return true;
 		
 		
@@ -99,15 +103,20 @@ public class AM_EntityGolem2 extends EntityAnimal
     }
 	
 	
-	protected void attackEntity(Entity entity, float f)
-	{
-		if(f < 2.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
-		{
-			attackTime = 80;
-			byte byte0 = 3;
-			entity.attackEntityFrom(this, byte0);
-		}
-	}
+	
+	protected boolean attackEntityAsMob(Entity entity)
+    {
+        return entity.attackEntityFrom(DamageSource.func_35525_a(this), 3);
+    }
+
+    protected void attackEntity(Entity entity, float f)
+    {
+        if(attackTime <= 0 && f < 2.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
+        {
+            attackTime = 40;
+            attackEntityAsMob(entity);
+        }
+    }
 
 
 	protected String getLivingSound()
@@ -126,9 +135,14 @@ public class AM_EntityGolem2 extends EntityAnimal
 	}
 
 	
-	protected void dropFewItems(){
-		Dropper();
-	}
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 
 	void Dropper(){
 		

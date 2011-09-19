@@ -36,10 +36,10 @@ public class SaveFormatOld
         for(int i = 0; i < 5; i++)
         {
             String s = (new StringBuilder()).append("World").append(i + 1).toString();
-            WorldInfo worldinfo = func_22173_b(s);
+            WorldInfo worldinfo = getWorldInfo(s);
             if(worldinfo != null)
             {
-                arraylist.add(new SaveFormatComparator(s, "", worldinfo.getLastTimePlayed(), worldinfo.getSizeOnDisk(), false));
+                arraylist.add(new SaveFormatComparator(s, "", worldinfo.getLastTimePlayed(), worldinfo.getSizeOnDisk(), worldinfo.func_35918_q(), false));
             }
         }
 
@@ -50,7 +50,7 @@ public class SaveFormatOld
     {
     }
 
-    public WorldInfo func_22173_b(String s)
+    public WorldInfo getWorldInfo(String s)
     {
         File file = new File(field_22180_a, s);
         if(!file.exists())

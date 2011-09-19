@@ -22,25 +22,25 @@ public final class J_SajParser
         throws J_InvalidSyntaxException, IOException
     {
         J_PositionTrackingPushbackReader j_positiontrackingpushbackreader = new J_PositionTrackingPushbackReader(reader);
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         switch(c)
         {
         case 123: // '{'
             j_positiontrackingpushbackreader.func_27334_a(c);
             j_jsonlistener.func_27195_b();
-            func_27453_b(j_positiontrackingpushbackreader, j_jsonlistener);
+            objectString(j_positiontrackingpushbackreader, j_jsonlistener);
             break;
 
         case 91: // '['
             j_positiontrackingpushbackreader.func_27334_a(c);
             j_jsonlistener.func_27195_b();
-            func_27455_a(j_positiontrackingpushbackreader, j_jsonlistener);
+            arrayString(j_positiontrackingpushbackreader, j_jsonlistener);
             break;
 
         default:
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Expected either [ or { but got [").append(c).append("].").toString(), j_positiontrackingpushbackreader);
         }
-        int i = func_27448_l(j_positiontrackingpushbackreader);
+        int i = readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         if(i != -1)
         {
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Got unexpected trailing character [").append((char)i).append("].").toString(), j_positiontrackingpushbackreader);
@@ -51,20 +51,20 @@ public final class J_SajParser
         }
     }
 
-    private void func_27455_a(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
+    private void arrayString(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
         throws J_InvalidSyntaxException, IOException
     {
-        char c = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         if(c != '[')
         {
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Expected object to start with [ but got [").append(c).append("].").toString(), j_positiontrackingpushbackreader);
         }
         j_jsonlistener.func_27200_d();
-        char c1 = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c1 = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         j_positiontrackingpushbackreader.func_27334_a(c1);
         if(c1 != ']')
         {
-            func_27464_d(j_positiontrackingpushbackreader, j_jsonlistener);
+            aJsonValue(j_positiontrackingpushbackreader, j_jsonlistener);
         }
         boolean flag = false;
         do
@@ -73,11 +73,11 @@ public final class J_SajParser
             {
                 break;
             }
-            char c2 = (char)func_27448_l(j_positiontrackingpushbackreader);
+            char c2 = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
             switch(c2)
             {
             case 44: // ','
-                func_27464_d(j_positiontrackingpushbackreader, j_jsonlistener);
+                aJsonValue(j_positiontrackingpushbackreader, j_jsonlistener);
                 break;
 
             case 93: // ']'
@@ -91,20 +91,20 @@ public final class J_SajParser
         j_jsonlistener.func_27197_e();
     }
 
-    private void func_27453_b(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
+    private void objectString(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
         throws J_InvalidSyntaxException, IOException
     {
-        char c = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         if(c != '{')
         {
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Expected object to start with { but got [").append(c).append("].").toString(), j_positiontrackingpushbackreader);
         }
         j_jsonlistener.func_27194_f();
-        char c1 = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c1 = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         j_positiontrackingpushbackreader.func_27334_a(c1);
         if(c1 != '}')
         {
-            func_27449_c(j_positiontrackingpushbackreader, j_jsonlistener);
+            aFieldToken(j_positiontrackingpushbackreader, j_jsonlistener);
         }
         boolean flag = false;
         do
@@ -113,11 +113,11 @@ public final class J_SajParser
             {
                 break;
             }
-            char c2 = (char)func_27448_l(j_positiontrackingpushbackreader);
+            char c2 = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
             switch(c2)
             {
             case 44: // ','
-                func_27449_c(j_positiontrackingpushbackreader, j_jsonlistener);
+                aFieldToken(j_positiontrackingpushbackreader, j_jsonlistener);
                 break;
 
             case 125: // '}'
@@ -131,32 +131,32 @@ public final class J_SajParser
         j_jsonlistener.func_27203_g();
     }
 
-    private void func_27449_c(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
+    private void aFieldToken(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
         throws J_InvalidSyntaxException, IOException
     {
-        char c = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         if('"' != c)
         {
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Expected object identifier to begin with [\"] but got [").append(c).append("].").toString(), j_positiontrackingpushbackreader);
         }
         j_positiontrackingpushbackreader.func_27334_a(c);
         j_jsonlistener.func_27205_a(func_27452_i(j_positiontrackingpushbackreader));
-        char c1 = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c1 = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         if(c1 != ':')
         {
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Expected object identifier to be followed by : but got [").append(c1).append("].").toString(), j_positiontrackingpushbackreader);
         } else
         {
-            func_27464_d(j_positiontrackingpushbackreader, j_jsonlistener);
+            aJsonValue(j_positiontrackingpushbackreader, j_jsonlistener);
             j_jsonlistener.func_27199_h();
             return;
         }
     }
 
-    private void func_27464_d(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
+    private void aJsonValue(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader, J_JsonListener j_jsonlistener)
         throws J_InvalidSyntaxException, IOException
     {
-        char c = (char)func_27448_l(j_positiontrackingpushbackreader);
+        char c = (char)readNextNonWhitespaceChar(j_positiontrackingpushbackreader);
         switch(c)
         {
         case 34: // '"'
@@ -209,17 +209,17 @@ public final class J_SajParser
         case 56: // '8'
         case 57: // '9'
             j_positiontrackingpushbackreader.func_27334_a(c);
-            j_jsonlistener.func_27201_b(func_27459_a(j_positiontrackingpushbackreader));
+            j_jsonlistener.func_27201_b(numberToken(j_positiontrackingpushbackreader));
             break;
 
         case 123: // '{'
             j_positiontrackingpushbackreader.func_27334_a(c);
-            func_27453_b(j_positiontrackingpushbackreader, j_jsonlistener);
+            objectString(j_positiontrackingpushbackreader, j_jsonlistener);
             break;
 
         case 91: // '['
             j_positiontrackingpushbackreader.func_27334_a(c);
-            func_27455_a(j_positiontrackingpushbackreader, j_jsonlistener);
+            arrayString(j_positiontrackingpushbackreader, j_jsonlistener);
             break;
 
         default:
@@ -227,11 +227,11 @@ public final class J_SajParser
         }
     }
 
-    private String func_27459_a(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private String numberToken(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
         StringBuilder stringbuilder = new StringBuilder();
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         if('-' == c)
         {
             stringbuilder.append('-');
@@ -239,35 +239,35 @@ public final class J_SajParser
         {
             j_positiontrackingpushbackreader.func_27334_a(c);
         }
-        stringbuilder.append(func_27451_b(j_positiontrackingpushbackreader));
+        stringbuilder.append(nonNegativeNumberToken(j_positiontrackingpushbackreader));
         return stringbuilder.toString();
     }
 
-    private String func_27451_b(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private String nonNegativeNumberToken(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
         StringBuilder stringbuilder = new StringBuilder();
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         if('0' == c)
         {
             stringbuilder.append('0');
-            stringbuilder.append(func_27462_f(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27454_g(j_positiontrackingpushbackreader));
+            stringbuilder.append(possibleFractionalComponent(j_positiontrackingpushbackreader));
+            stringbuilder.append(possibleExponent(j_positiontrackingpushbackreader));
         } else
         {
             j_positiontrackingpushbackreader.func_27334_a(c);
-            stringbuilder.append(func_27460_c(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27456_e(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27462_f(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27454_g(j_positiontrackingpushbackreader));
+            stringbuilder.append(nonZeroDigitToken(j_positiontrackingpushbackreader));
+            stringbuilder.append(digitString(j_positiontrackingpushbackreader));
+            stringbuilder.append(possibleFractionalComponent(j_positiontrackingpushbackreader));
+            stringbuilder.append(possibleExponent(j_positiontrackingpushbackreader));
         }
         return stringbuilder.toString();
     }
 
-    private char func_27460_c(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private char nonZeroDigitToken(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
-        char c1 = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c1 = (char)j_positiontrackingpushbackreader.read();
         char c;
         switch(c1)
         {
@@ -289,10 +289,10 @@ public final class J_SajParser
         return c;
     }
 
-    private char func_27458_d(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private char digitToken(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
-        char c1 = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c1 = (char)j_positiontrackingpushbackreader.read();
         char c;
         switch(c1)
         {
@@ -315,7 +315,7 @@ public final class J_SajParser
         return c;
     }
 
-    private String func_27456_e(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private String digitString(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException
     {
         StringBuilder stringbuilder = new StringBuilder();
@@ -324,7 +324,7 @@ public final class J_SajParser
         {
             while(!flag) 
             {
-                char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+                char c = (char)j_positiontrackingpushbackreader.read();
                 switch(c)
                 {
                 case 48: // '0'
@@ -350,16 +350,16 @@ public final class J_SajParser
         } while(true);
     }
 
-    private String func_27462_f(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private String possibleFractionalComponent(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
         StringBuilder stringbuilder = new StringBuilder();
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         if(c == '.')
         {
             stringbuilder.append('.');
-            stringbuilder.append(func_27458_d(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27456_e(j_positiontrackingpushbackreader));
+            stringbuilder.append(digitToken(j_positiontrackingpushbackreader));
+            stringbuilder.append(digitString(j_positiontrackingpushbackreader));
         } else
         {
             j_positiontrackingpushbackreader.func_27334_a(c);
@@ -367,17 +367,17 @@ public final class J_SajParser
         return stringbuilder.toString();
     }
 
-    private String func_27454_g(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private String possibleExponent(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
         StringBuilder stringbuilder = new StringBuilder();
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         if(c == '.' || c == 'E')
         {
             stringbuilder.append('E');
-            stringbuilder.append(func_27461_h(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27458_d(j_positiontrackingpushbackreader));
-            stringbuilder.append(func_27456_e(j_positiontrackingpushbackreader));
+            stringbuilder.append(possibleSign(j_positiontrackingpushbackreader));
+            stringbuilder.append(digitToken(j_positiontrackingpushbackreader));
+            stringbuilder.append(digitString(j_positiontrackingpushbackreader));
         } else
         {
             j_positiontrackingpushbackreader.func_27334_a(c);
@@ -385,11 +385,11 @@ public final class J_SajParser
         return stringbuilder.toString();
     }
 
-    private String func_27461_h(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private String possibleSign(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException
     {
         StringBuilder stringbuilder = new StringBuilder();
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         if(c == '+' || c == '-')
         {
             stringbuilder.append(c);
@@ -404,7 +404,7 @@ public final class J_SajParser
         throws J_InvalidSyntaxException, IOException
     {
         StringBuilder stringbuilder = new StringBuilder();
-        char c = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c = (char)j_positiontrackingpushbackreader.read();
         if('"' != c)
         {
             throw new J_InvalidSyntaxException((new StringBuilder()).append("Expected [\"] but got [").append(c).append("].").toString(), j_positiontrackingpushbackreader);
@@ -416,7 +416,7 @@ public final class J_SajParser
             {
                 break;
             }
-            char c1 = (char)j_positiontrackingpushbackreader.func_27333_c();
+            char c1 = (char)j_positiontrackingpushbackreader.read();
             switch(c1)
             {
             case 34: // '"'
@@ -424,7 +424,7 @@ public final class J_SajParser
                 break;
 
             case 92: // '\\'
-                char c2 = func_27457_j(j_positiontrackingpushbackreader);
+                char c2 = escapedStringChar(j_positiontrackingpushbackreader);
                 stringbuilder.append(c2);
                 break;
 
@@ -436,10 +436,10 @@ public final class J_SajParser
         return stringbuilder.toString();
     }
 
-    private char func_27457_j(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private char escapedStringChar(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
-        char c1 = (char)j_positiontrackingpushbackreader.func_27333_c();
+        char c1 = (char)j_positiontrackingpushbackreader.read();
         char c;
         switch(c1)
         {
@@ -476,7 +476,7 @@ public final class J_SajParser
             break;
 
         case 117: // 'u'
-            c = (char)func_27450_k(j_positiontrackingpushbackreader);
+            c = (char)hexadecimalNumber(j_positiontrackingpushbackreader);
             break;
 
         default:
@@ -485,7 +485,7 @@ public final class J_SajParser
         return c;
     }
 
-    private int func_27450_k(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private int hexadecimalNumber(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException, J_InvalidSyntaxException
     {
         char ac[] = new char[4];
@@ -507,14 +507,14 @@ public final class J_SajParser
         return j;
     }
 
-    private int func_27448_l(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
+    private int readNextNonWhitespaceChar(J_PositionTrackingPushbackReader j_positiontrackingpushbackreader)
         throws IOException
     {
         boolean flag = false;
         int i;
         do
         {
-            i = j_positiontrackingpushbackreader.func_27333_c();
+            i = j_positiontrackingpushbackreader.read();
             switch(i)
             {
             default:

@@ -7,7 +7,7 @@ public class AM_ModelChopper extends ModelBase
 {
 	public 	AM_ModelChopper	()
 	{
-		hed = new ModelRenderer(0, 3);
+		hed = new ModelRenderer(this,0, 3);
 		hed.addBox(-3F, 0F, -5F, 6, 4, 3, 0F);
 		hed.setRotationPoint(0F, 16F, 0F);
 		
@@ -16,7 +16,7 @@ public class AM_ModelChopper extends ModelBase
 		hed.rotateAngleZ = 0F;
 		hed.mirror = false;
 		
-		bod = new ModelRenderer(20, 6);
+		bod = new ModelRenderer(this,20, 6);
 		bod.addBox(-2F, 0F, -2F, 4, 8, 4, 0F);
 		bod.setRotationPoint(0F, 16F, 0F);
 		
@@ -25,7 +25,7 @@ public class AM_ModelChopper extends ModelBase
 		bod.rotateAngleZ = 0F;
 		bod.mirror = false;
 		
-		blade1 = new ModelRenderer(0, 0);
+		blade1 = new ModelRenderer(this,0, 0);
 		blade1.addBox(-8F, -0.5F, -0.5F, 16, 1, 1, 0F);
 		blade1.setRotationPoint(0F, 15F, 0F);
 		
@@ -34,7 +34,7 @@ public class AM_ModelChopper extends ModelBase
 		blade1.rotateAngleZ = 0F;
 		blade1.mirror = false;
 		
-		blade2 = new ModelRenderer(0, 0);
+		blade2 = new ModelRenderer(this,0, 0);
 		blade2.addBox(-8F, -0.5F, -0.5F, 16, 1, 1, 0F);
 		blade2.setRotationPoint(0F, 15F, 0F);
 		
@@ -46,9 +46,9 @@ public class AM_ModelChopper extends ModelBase
 		
 	}
 
-	public void render(float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		super.render(f, f1, f2, f3, f4, f5);
+		super.render(entity,f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		hed.render(f5);
 		bod.render(f5);

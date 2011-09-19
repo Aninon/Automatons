@@ -6,7 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Block, Material, World, AxisAlignedBB
+//            Block, Material, World, AxisAlignedBB, 
+//            IBlockAccess
 
 public class BlockFence extends Block
 {
@@ -49,5 +50,11 @@ public class BlockFence extends Block
     public int getRenderType()
     {
         return 11;
+    }
+
+    public boolean func_35303_f(IBlockAccess iblockaccess, int i, int j, int k)
+    {
+        int l = iblockaccess.getBlockId(i, j, k);
+        return l == blockID || l == Block.field_35277_bw.blockID;
     }
 }

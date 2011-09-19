@@ -15,7 +15,7 @@ public interface ISaveHandler
 
     public abstract WorldInfo loadWorldInfo();
 
-    public abstract void func_22150_b();
+    public abstract void checkSessionLock();
 
     public abstract IChunkLoader getChunkLoader(WorldProvider worldprovider);
 

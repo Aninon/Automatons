@@ -19,7 +19,7 @@ class CanvasMojangLogo extends Canvas
     {
         try
         {
-            logo = ImageIO.read((net.minecraft.src.PanelCrashReport.class).getResource("/gui/logo.png"));
+            logo = ImageIO.read((net.minecraft.src.PanelCrashReport.class).getResource("/gui/crash_logo.png"));
         }
         catch(IOException ioexception) { }
         byte byte0 = 100;

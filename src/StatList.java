@@ -131,7 +131,7 @@ public class StatList
         }
         for(int l = j; l < k; l++)
         {
-            if(Item.itemsList[l] != null && Item.itemsList[l].isDamagable())
+            if(Item.itemsList[l] != null && Item.itemsList[l].isDamageable())
             {
                 String s1 = StatCollector.translateToLocalFormatted(s, new Object[] {
                     Item.itemsList[l].getStatName()
@@ -217,16 +217,16 @@ public class StatList
 
     static 
     {
-        minutesPlayedStat = (new StatBasic(1100, StatCollector.translateToLocal("stat.playOneMinute"), StatBase.field_27086_j)).initIndependentStat().registerStat();
-        distanceWalkedStat = (new StatBasic(2000, StatCollector.translateToLocal("stat.walkOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceSwumStat = (new StatBasic(2001, StatCollector.translateToLocal("stat.swimOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceFallenStat = (new StatBasic(2002, StatCollector.translateToLocal("stat.fallOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceClimbedStat = (new StatBasic(2003, StatCollector.translateToLocal("stat.climbOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceFlownStat = (new StatBasic(2004, StatCollector.translateToLocal("stat.flyOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceDoveStat = (new StatBasic(2005, StatCollector.translateToLocal("stat.diveOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceByMinecartStat = (new StatBasic(2006, StatCollector.translateToLocal("stat.minecartOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceByBoatStat = (new StatBasic(2007, StatCollector.translateToLocal("stat.boatOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
-        distanceByPigStat = (new StatBasic(2008, StatCollector.translateToLocal("stat.pigOneCm"), StatBase.field_27085_k)).initIndependentStat().registerStat();
+        minutesPlayedStat = (new StatBasic(1100, StatCollector.translateToLocal("stat.playOneMinute"), StatBase.timeStatType)).initIndependentStat().registerStat();
+        distanceWalkedStat = (new StatBasic(2000, StatCollector.translateToLocal("stat.walkOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceSwumStat = (new StatBasic(2001, StatCollector.translateToLocal("stat.swimOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceFallenStat = (new StatBasic(2002, StatCollector.translateToLocal("stat.fallOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceClimbedStat = (new StatBasic(2003, StatCollector.translateToLocal("stat.climbOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceFlownStat = (new StatBasic(2004, StatCollector.translateToLocal("stat.flyOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceDoveStat = (new StatBasic(2005, StatCollector.translateToLocal("stat.diveOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceByMinecartStat = (new StatBasic(2006, StatCollector.translateToLocal("stat.minecartOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceByBoatStat = (new StatBasic(2007, StatCollector.translateToLocal("stat.boatOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
+        distanceByPigStat = (new StatBasic(2008, StatCollector.translateToLocal("stat.pigOneCm"), StatBase.distanceStatType)).initIndependentStat().registerStat();
         AchievementList.func_27374_a();
     }
 }

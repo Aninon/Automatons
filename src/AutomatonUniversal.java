@@ -59,8 +59,8 @@ public class AutomatonUniversal {
 	public static boolean angrywolf(EntityWolf ew){
 	return ew.isWolfAngry();
 	}
-	public static int addFuel(int i){
-		return ModLoader.AddAllFuel(i);
+	public static int addFuel(int i, int j){
+		return ModLoader.AddAllFuel(i,j);
 	}
 	
 	

@@ -68,7 +68,7 @@ public class Timer
         renderPartialTicks = elapsedPartialTicks;
     }
 
-    public float ticksPerSecond;
+    float ticksPerSecond;
     private double lastHRTime;
     public int elapsedTicks;
     public float renderPartialTicks;

@@ -21,7 +21,7 @@ public class ItemCloth extends ItemBlock
 
     public int getIconFromDamage(int i)
     {
-        return Block.cloth.getBlockTextureFromSideAndMetadata(2, BlockCloth.func_21034_c(i));
+        return Block.cloth.getBlockTextureFromSideAndMetadata(2, BlockCloth.getBlockFromDye(i));
     }
 
     public int getPlacedBlockMetadata(int i)
@@ -31,6 +31,6 @@ public class ItemCloth extends ItemBlock
 
     public String getItemNameIS(ItemStack itemstack)
     {
-        return (new StringBuilder()).append(super.getItemName()).append(".").append(ItemDye.dyeColorNames[BlockCloth.func_21034_c(itemstack.getItemDamage())]).toString();
+        return (new StringBuilder()).append(super.getItemName()).append(".").append(ItemDye.dyeColorNames[BlockCloth.getBlockFromDye(itemstack.getItemDamage())]).toString();
     }
 }

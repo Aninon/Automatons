@@ -44,7 +44,7 @@ public class ChunkProviderLoadOrGenerate
         }
     }
 
-    public Chunk prepareChunk(int i, int j)
+    public Chunk loadChunk(int i, int j)
     {
         return provideChunk(i, j);
     }
@@ -88,22 +88,7 @@ public class ChunkProviderLoadOrGenerate
             {
                 chunks[i1].onChunkLoad();
             }
-            if(!chunks[i1].isTerrainPopulated && chunkExists(i + 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i + 1, j))
-            {
-                populate(this, i, j);
-            }
-            if(chunkExists(i - 1, j) && !provideChunk(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j))
-            {
-                populate(this, i - 1, j);
-            }
-            if(chunkExists(i, j - 1) && !provideChunk(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j))
-            {
-                populate(this, i, j - 1);
-            }
-            if(chunkExists(i - 1, j - 1) && !provideChunk(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j))
-            {
-                populate(this, i - 1, j - 1);
-            }
+            chunks[i1].func_35843_a(this, this, i, j);
         }
         lastQueriedChunkXPos = i;
         lastQueriedChunkZPos = j;

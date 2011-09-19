@@ -14,7 +14,6 @@ class J_FieldNodeContainer
 
     J_FieldNodeContainer(J_JsonListenerToJdomAdapter j_jsonlistenertojdomadapter, J_JsonFieldBuilder j_jsonfieldbuilder)
     {
-//        super();
         field_27291_b = j_jsonlistenertojdomadapter;
         fieldBuilder = j_jsonfieldbuilder;
     }

@@ -26,7 +26,7 @@ public class GuiVideoSettings extends GuiScreen
         StringTranslate stringtranslate = StringTranslate.getInstance();
         field_22107_a = stringtranslate.translateKey("options.videoTitle");
         int i = 0;
-        EnumOptions aenumoptions[] = field_22108_k;
+        EnumOptions aenumoptions[] = videoOptions;
         int j = aenumoptions.length;
         for(int k = 0; k < j; k++)
         {
@@ -50,6 +50,7 @@ public class GuiVideoSettings extends GuiScreen
         {
             return;
         }
+        int i = guiGameSettings.guiScale;
         if(guibutton.id < 100 && (guibutton instanceof GuiSmallButton))
         {
             guiGameSettings.setOptionValue(((GuiSmallButton)guibutton).returnEnumOptions(), 1);
@@ -60,10 +61,13 @@ public class GuiVideoSettings extends GuiScreen
             mc.gameSettings.saveOptions();
             mc.displayGuiScreen(parentGuiScreen);
         }
-        ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
-        int i = scaledresolution.getScaledWidth();
-        int j = scaledresolution.getScaledHeight();
-        setWorldAndResolution(mc, i, j);
+        if(guiGameSettings.guiScale != i)
+        {
+            ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+            int j = scaledresolution.getScaledWidth();
+            int k = scaledresolution.getScaledHeight();
+            setWorldAndResolution(mc, j, k);
+        }
     }
 
     public void drawScreen(int i, int j, float f)
@@ -76,12 +80,12 @@ public class GuiVideoSettings extends GuiScreen
     private GuiScreen parentGuiScreen;
     protected String field_22107_a;
     private GameSettings guiGameSettings;
-    private static EnumOptions field_22108_k[];
+    private static EnumOptions videoOptions[];
 
     static 
     {
-        field_22108_k = (new EnumOptions[] {
-            EnumOptions.GRAPHICS, EnumOptions.RENDER_DISTANCE, EnumOptions.AMBIENT_OCCLUSION, EnumOptions.FRAMERATE_LIMIT, EnumOptions.ANAGLYPH, EnumOptions.VIEW_BOBBING, EnumOptions.GUI_SCALE, EnumOptions.ADVANCED_OPENGL
+        videoOptions = (new EnumOptions[] {
+            EnumOptions.GRAPHICS, EnumOptions.RENDER_DISTANCE, EnumOptions.AMBIENT_OCCLUSION, EnumOptions.FRAMERATE_LIMIT, EnumOptions.ANAGLYPH, EnumOptions.VIEW_BOBBING, EnumOptions.GUI_SCALE, EnumOptions.ADVANCED_OPENGL, EnumOptions.GAMMA
         });
     }
 }

@@ -34,7 +34,7 @@ public class GuiRenameWorld extends GuiScreen
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, stringtranslate.translateKey("selectWorld.renameButton")));
         controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
         ISaveFormat isaveformat = mc.getSaveLoader();
-        WorldInfo worldinfo = isaveformat.func_22173_b(worldName);
+        WorldInfo worldinfo = isaveformat.getWorldInfo(worldName);
         String s = worldinfo.getWorldName();
         theGuiTextField = new GuiTextField(this, fontRenderer, width / 2 - 100, 60, 200, 20, s);
         theGuiTextField.isFocused = true;

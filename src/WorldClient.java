@@ -8,21 +8,22 @@ import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
 //            World, SaveHandlerMP, WorldProvider, MCHash, 
-//            ChunkCoordinates, NetClientHandler, IWorldAccess, Entity, 
-//            WorldBlockPositionType, ChunkProviderClient, Packet255KickDisconnect, WorldInfo, 
+//            ChunkCoordinates, NetClientHandler, Entity, WorldBlockPositionType, 
+//            ChunkProviderClient, Packet255KickDisconnect, WorldInfo, WorldSettings, 
 //            IChunkProvider
 
 public class WorldClient extends World
 {
 
-    public WorldClient(NetClientHandler netclienthandler, long l, int i)
+    public WorldClient(NetClientHandler netclienthandler, WorldSettings worldsettings, int i, int j)
     {
-        super(new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(i), l);
+        super(new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(i), worldsettings);
         blocksToReceive = new LinkedList();
         entityHashSet = new MCHash();
         entityList = new HashSet();
         entitySpawnQueue = new HashSet();
         sendQueue = netclienthandler;
+        difficultySetting = j;
         setSpawnPoint(new ChunkCoordinates(8, 64, 8));
         mapStorage = netclienthandler.mapStorage;
     }
@@ -30,17 +31,7 @@ public class WorldClient extends World
     public void tick()
     {
         setWorldTime(getWorldTime() + 1L);
-        int i = calculateSkylightSubtracted(1.0F);
-        if(i != skylightSubtracted)
-        {
-            skylightSubtracted = i;
-            for(int j = 0; j < worldAccesses.size(); j++)
-            {
-                ((IWorldAccess)worldAccesses.get(j)).updateAllRenderers();
-            }
-
-        }
-        for(int k = 0; k < 10 && !entitySpawnQueue.isEmpty(); k++)
+        for(int i = 0; i < 10 && !entitySpawnQueue.isEmpty(); i++)
         {
             Entity entity = (Entity)entitySpawnQueue.iterator().next();
             if(!loadedEntityList.contains(entity))
@@ -50,14 +41,14 @@ public class WorldClient extends World
         }
 
         sendQueue.processReadPackets();
-        for(int l = 0; l < blocksToReceive.size(); l++)
+        for(int j = 0; j < blocksToReceive.size(); j++)
         {
-            WorldBlockPositionType worldblockpositiontype = (WorldBlockPositionType)blocksToReceive.get(l);
+            WorldBlockPositionType worldblockpositiontype = (WorldBlockPositionType)blocksToReceive.get(j);
             if(--worldblockpositiontype.acceptCountdown == 0)
             {
                 super.setBlockAndMetadata(worldblockpositiontype.posX, worldblockpositiontype.posY, worldblockpositiontype.posZ, worldblockpositiontype.blockID, worldblockpositiontype.metadata);
                 super.markBlockNeedsUpdate(worldblockpositiontype.posX, worldblockpositiontype.posY, worldblockpositiontype.posZ);
-                blocksToReceive.remove(l--);
+                blocksToReceive.remove(j--);
             }
         }
 
@@ -95,7 +86,7 @@ public class WorldClient extends World
     {
     }
 
-    public boolean TickUpdates(boolean flag)
+    public boolean tickUpdates(boolean flag)
     {
         return false;
     }
@@ -104,7 +95,7 @@ public class WorldClient extends World
     {
         if(flag)
         {
-            field_20915_C.prepareChunk(i, j);
+            field_20915_C.loadChunk(i, j);
         } else
         {
             field_20915_C.func_539_c(i, j);
@@ -253,7 +244,7 @@ public class WorldClient extends World
             lastLightningBolt--;
         }
         prevRainingStrength = rainingStrength;
-        if(worldInfo.getRaining())
+        if(worldInfo.getIsRaining())
         {
             rainingStrength += 0.01D;
         } else
@@ -269,7 +260,7 @@ public class WorldClient extends World
             rainingStrength = 1.0F;
         }
         prevThunderingStrength = thunderingStrength;
-        if(worldInfo.getThundering())
+        if(worldInfo.getIsThundering())
         {
             thunderingStrength += 0.01D;
         } else

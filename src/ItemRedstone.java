@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, World, Block, ItemStack, 
-//            EntityPlayer
+//            Item, World, Block, EntityPlayer, 
+//            ItemStack
 
 public class ItemRedstone extends Item
 {
@@ -49,6 +49,10 @@ public class ItemRedstone extends Item
             {
                 return false;
             }
+        }
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
         }
         if(Block.redstoneWire.canPlaceBlockAt(world, i, j, k))
         {

@@ -21,7 +21,7 @@ public class EntityRendererProxy extends EntityRenderer
     public void updateCameraAndRender(float f)
     {
         super.updateCameraAndRender(f);
-        ModLoader.OnTick(game);
+        ModLoader.OnTick(f, game);
     }
 
     private Minecraft game;

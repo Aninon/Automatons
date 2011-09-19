@@ -25,43 +25,36 @@ class NetworkWriterThread extends Thread
         {
             NetworkManager.numWriteThreads++;
         }
-        try
+        try {
+        while(NetworkManager.isRunning(netManager)) 
         {
-            do
+            while(NetworkManager.sendNetworkPacket(netManager)) ;
+            try
             {
-                if(!NetworkManager.isRunning(netManager))
+                if(NetworkManager.func_28140_f(netManager) != null)
                 {
-                    break;
+                    NetworkManager.func_28140_f(netManager).flush();
                 }
-                while(NetworkManager.sendNetworkPacket(netManager)) ;
-                try
-                {
-                    sleep(100L);
-                }
-                catch(InterruptedException interruptedexception) { }
-                try
-                {
-                    if(NetworkManager.func_28140_f(netManager) != null)
-                    {
-                        NetworkManager.func_28140_f(netManager).flush();
-                    }
-                }
-                catch(IOException ioexception)
-                {
-                    if(!NetworkManager.func_28138_e(netManager))
-                    {
-                        NetworkManager.func_30005_a(netManager, ioexception);
-                    }
-                    ioexception.printStackTrace();
-                }
-            } while(true);
-        }
-        finally
-        {
-            synchronized(NetworkManager.threadSyncObject)
-            {
-                NetworkManager.numWriteThreads--;
             }
+            catch(IOException ioexception)
+            {
+                if(!NetworkManager.func_28138_e(netManager))
+                {
+                    NetworkManager.func_30005_a(netManager, ioexception);
+                }
+                ioexception.printStackTrace();
+            }
+            try
+            {
+                sleep(2L);
+            }
+            catch(InterruptedException interruptedexception) { }
+        }
+        } finally {
+        synchronized(NetworkManager.threadSyncObject)
+        {
+            NetworkManager.numWriteThreads--;
+        }
         }
     }
 

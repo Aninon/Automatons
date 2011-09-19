@@ -32,7 +32,7 @@ public class Packet38EntityStatus extends Packet
 
     public void processPacket(NetHandler nethandler)
     {
-        nethandler.func_9447_a(this);
+        nethandler.handleEntityStatus(this);
     }
 
     public int getPacketSize()

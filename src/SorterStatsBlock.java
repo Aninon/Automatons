@@ -16,7 +16,6 @@ class SorterStatsBlock
 
     SorterStatsBlock(GuiSlotStatsBlock guislotstatsblock, GuiStats guistats)
     {
-//        super();
         slotStatsBlockGUI = guislotstatsblock;
         statsGUI = guistats;
     }
@@ -52,8 +51,8 @@ class SorterStatsBlock
             {
                 return -1;
             }
-            int k = GuiStats.func_27142_c(slotStatsBlockGUI.field_27274_a).writeStat(statbase);
-            int l = GuiStats.func_27142_c(slotStatsBlockGUI.field_27274_a).writeStat(statbase1);
+            int k = GuiStats.getStatsFileWriter(slotStatsBlockGUI.field_27274_a).writeStat(statbase);
+            int l = GuiStats.getStatsFileWriter(slotStatsBlockGUI.field_27274_a).writeStat(statbase1);
             if(k != l)
             {
                 return (k - l) * slotStatsBlockGUI.field_27270_f;

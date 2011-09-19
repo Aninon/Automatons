@@ -15,14 +15,13 @@ class J_ArrayNodeContainer
 
     J_ArrayNodeContainer(J_JsonListenerToJdomAdapter j_jsonlistenertojdomadapter, J_JsonArrayNodeBuilder j_jsonarraynodebuilder)
     {
-//        super();
         field_27293_b = j_jsonlistenertojdomadapter;
         nodeBuilder = j_jsonarraynodebuilder;
     }
 
     public void func_27290_a(J_JsonNodeBuilder j_jsonnodebuilder)
     {
-        nodeBuilder.func_27240_a(j_jsonnodebuilder);
+        nodeBuilder.withElement(j_jsonnodebuilder);
     }
 
     public void func_27289_a(J_JsonFieldBuilder j_jsonfieldbuilder)

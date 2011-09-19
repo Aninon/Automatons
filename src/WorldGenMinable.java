@@ -25,8 +25,8 @@ public class WorldGenMinable extends WorldGenerator
         double d1 = (float)(i + 8) - (MathHelper.sin(f) * (float)numberOfBlocks) / 8F;
         double d2 = (float)(k + 8) + (MathHelper.cos(f) * (float)numberOfBlocks) / 8F;
         double d3 = (float)(k + 8) - (MathHelper.cos(f) * (float)numberOfBlocks) / 8F;
-        double d4 = j + random.nextInt(3) + 2;
-        double d5 = j + random.nextInt(3) + 2;
+        double d4 = (j + random.nextInt(3)) - 2;
+        double d5 = (j + random.nextInt(3)) - 2;
         for(int l = 0; l <= numberOfBlocks; l++)
         {
             double d6 = d + ((d1 - d) * (double)l) / (double)numberOfBlocks;

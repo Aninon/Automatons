@@ -16,7 +16,7 @@ import java.util.*;
 //hasCurrentTarget() = func_25021_O()
 //isMovementCeased=func_25026_u
 //func_31026_E =func_31021_B  wander
-public class AM_EntityWorker extends EntityCreature
+public class AM_EntityWorker extends EntityAnimal
 {
 
 	public AM_EntityWorker(World world){
@@ -49,10 +49,10 @@ public class AM_EntityWorker extends EntityCreature
 		
 	}
 	
-	protected void func_31021_B() //kills wandering!
+	protected void func_31026_E() //kills wandering!
 	{
 		if(getMode()!=1){
-			super.func_31021_B();
+			super.func_31026_E();
 		}
 	}
 
@@ -159,9 +159,39 @@ public class AM_EntityWorker extends EntityCreature
 		return 0.4F;
 	}
 
-	protected void dropFewItems(){
+	/*
+	public void onDeath(DamageSource damagesource)
+    {
+        Entity entity = damagesource.func_35532_a();
+        if(scoreValue >= 0 && entity != null)
+        {
+            entity.addToPlayerScore(this, scoreValue);
+        }
+        if(entity != null)
+        {
+            entity.onKillEntity(this);
+        }
+        unused_flag = true;
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }*/
+	
+	
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
+	
+	/* void a(boolean flag){ //dropFewItems
 		Dropper();
-	}
+	}*/
 	
 	void Dropper(){
 		
@@ -174,7 +204,7 @@ public class AM_EntityWorker extends EntityCreature
 		}
 		
 		if(!AutomatonUniversal.otherWorld(worldObj)){
-			showHeartsOrSmokeFX(false);
+			poof();
 			entityDropItem(new ItemStack(AutomatonLogger.automaton+256, 1,0), 0.0F);
 			dropInventory();
 			setEntityDead();
@@ -195,8 +225,8 @@ public class AM_EntityWorker extends EntityCreature
 	}
 
 
-	protected void updatePlayerActionState(){
-		super.updatePlayerActionState();
+	protected void updateEntityActionState(){
+		super.updateEntityActionState();
 		if(!AutomatonUniversal.otherWorld(worldObj))
 		{
 			if(entityplayer==null){
@@ -587,18 +617,17 @@ public class AM_EntityWorker extends EntityCreature
 		return isBotSitting()||  (getMode()==2 && getState()==2) || (getMode()==4 && (getState()==0||getState()==3));
 	}
 
-	public boolean attackEntityFrom(Entity entity, int i)
-	{
-		
-		if(entity != null && (entity instanceof EntityPlayer) && ((EntityPlayer)entity).username==getBotOwner())
-		{
-			i=20;
-		}
-		super.attackEntityFrom(entity,i);
-		return true;
-		
-		
-	}
+
+	
+	public boolean attackEntityFrom(DamageSource damagesource, int i)
+    {
+            Entity entity = damagesource.func_35532_a();
+            if(entity != null && entity != this && (entity instanceof EntityPlayer) && ((EntityPlayer)entity).username==getBotOwner() )
+            {
+               i=20;
+            }
+		return super.attackEntityFrom(damagesource, i);
+    }
 
 	//protected Entity findPlayerToAttack2()
 	//{
@@ -664,7 +693,7 @@ public class AM_EntityWorker extends EntityCreature
 	
 	
 	protected void modeSwap(){
-		showHeartsOrSmokeFX(false);
+		poof();
 		isJumping = false;
 		setPathToEntity(null);
 	}
@@ -751,7 +780,7 @@ public class AM_EntityWorker extends EntityCreature
 		return false;
 	}
 
-	void showHeartsOrSmokeFX(boolean flag)
+	void poof()
 	{
 		AutomatonUniversal.poof(worldObj,posX,posY,posZ);
 	}

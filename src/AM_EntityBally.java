@@ -76,8 +76,23 @@ protected void entityInit(){
         return 0.4F;
     }
 
-    protected void dropFewItems(){
-            Dropper();
+    public void onDeath(DamageSource damagesource)
+    {
+        Entity entity = damagesource.func_35532_a();
+        if(scoreValue >= 0 && entity != null)
+        {
+            entity.addToPlayerScore(this, scoreValue);
+        }
+        if(entity != null)
+        {
+            entity.onKillEntity(this);
+        }
+        unused_flag = true;
+        if(!worldObj.multiplayerWorld)
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
     }
 	
 	void Dropper(){

@@ -12,7 +12,7 @@ public class AM_BlockTv extends Block
         super(i, 0, Material.glass);
 
     }
-	
+	/*
 	
 	public void randomDisplayTick(World world, int i, int j, int k, Random random)
     {
@@ -22,7 +22,7 @@ public class AM_BlockTv extends Block
 	}
 	//mod_Automatons.renderFire2(this, i,  j,  k);
 	
-    }
+    }*/
 	
 	
 	/*public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l)
@@ -43,12 +43,12 @@ public class AM_BlockTv extends Block
         return super.shouldSideBeRendered(iblockaccess, i, j, k, 1 - l);
     }*/
 	
-
+/*
 	public int getRenderType()
     {
         return  AutomatonLogger.tvRenderId;
     }
-
+*/
 
     public boolean isOpaqueCube()
     {

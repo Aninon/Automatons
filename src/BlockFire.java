@@ -32,6 +32,7 @@ public class BlockFire extends Block
         setBurnRate(Block.tnt.blockID, 15, 100);
         setBurnRate(Block.tallGrass.blockID, 60, 100);
         setBurnRate(Block.cloth.blockID, 30, 60);
+        setBurnRate(Block.field_35278_bv.blockID, 15, 100);
     }
 
     private void setBurnRate(int i, int j, int k)
@@ -77,7 +78,7 @@ public class BlockFire extends Block
         {
             world.setBlockWithNotify(i, j, k, 0);
         }
-        if(!flag && world.func_27161_C() && (world.canBlockBeRainedOn(i, j, k) || world.canBlockBeRainedOn(i - 1, j, k) || world.canBlockBeRainedOn(i + 1, j, k) || world.canBlockBeRainedOn(i, j, k - 1) || world.canBlockBeRainedOn(i, j, k + 1)))
+        if(!flag && world.isRaining() && (world.canLightningStrikeAt(i, j, k) || world.canLightningStrikeAt(i - 1, j, k) || world.canLightningStrikeAt(i + 1, j, k) || world.canLightningStrikeAt(i, j, k - 1) || world.canLightningStrikeAt(i, j, k + 1)))
         {
             world.setBlockWithNotify(i, j, k, 0);
             return;
@@ -128,7 +129,7 @@ public class BlockFire extends Block
                         continue;
                     }
                     int j2 = (i2 + 40) / (l + 30);
-                    if(j2 <= 0 || random.nextInt(l1) > j2 || world.func_27161_C() && world.canBlockBeRainedOn(i1, k1, j1) || world.canBlockBeRainedOn(i1 - 1, k1, k) || world.canBlockBeRainedOn(i1 + 1, k1, j1) || world.canBlockBeRainedOn(i1, k1, j1 - 1) || world.canBlockBeRainedOn(i1, k1, j1 + 1))
+                    if(j2 <= 0 || random.nextInt(l1) > j2 || world.isRaining() && world.canLightningStrikeAt(i1, k1, j1) || world.canLightningStrikeAt(i1 - 1, k1, k) || world.canLightningStrikeAt(i1 + 1, k1, j1) || world.canLightningStrikeAt(i1, k1, j1 - 1) || world.canLightningStrikeAt(i1, k1, j1 + 1))
                     {
                         continue;
                     }
@@ -152,7 +153,7 @@ public class BlockFire extends Block
         if(random.nextInt(l) < j1)
         {
             boolean flag = world.getBlockId(i, j, k) == Block.tnt.blockID;
-            if(random.nextInt(i1 + 10) < 5 && !world.canBlockBeRainedOn(i, j, k))
+            if(random.nextInt(i1 + 10) < 5 && !world.canLightningStrikeAt(i, j, k))
             {
                 int k1 = i1 + random.nextInt(5) / 4;
                 if(k1 > 15)

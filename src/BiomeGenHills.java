@@ -6,14 +6,13 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ItemFood
+//            BiomeGenBase
 
-public class ItemCookie extends ItemFood
+public class BiomeGenHills extends BiomeGenBase
 {
 
-    public ItemCookie(int i, int j, boolean flag, int k)
+    protected BiomeGenHills(int i)
     {
-        super(i, j, flag);
-        maxStackSize = k;
+        super(i);
     }
 }

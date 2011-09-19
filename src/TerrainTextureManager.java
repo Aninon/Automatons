@@ -19,10 +19,10 @@ public class TerrainTextureManager
     public TerrainTextureManager()
     {
         field_1181_a = new float[768];
-        field_1180_b = new int[5120];
-        field_1186_c = new int[5120];
-        field_1185_d = new int[5120];
-        field_1184_e = new int[5120];
+        field_1180_b = new int[17408];
+        field_1186_c = new int[17408];
+        field_1185_d = new int[17408];
+        field_1184_e = new int[17408];
         field_1183_f = new int[34];
         field_1182_g = new int[768];
         try
@@ -104,132 +104,144 @@ public class TerrainTextureManager
         isoimagebuffer.field_1351_f = false;
         Arrays.fill(field_1186_c, 0);
         Arrays.fill(field_1185_d, 0);
-        Arrays.fill(field_1183_f, 160);
+        Arrays.fill(field_1183_f, 544);
+label0:
         for(int i1 = l - 1; i1 >= j; i1--)
         {
-            for(int j1 = k - 1; j1 >= i; j1--)
+            int j1 = k - 1;
+            do
             {
-                int k1 = j1 - i;
-                int l1 = i1 - j;
-                int i2 = k1 + l1;
-                boolean flag = true;
-                for(int j2 = 0; j2 < 128; j2++)
+label1:
                 {
-                    int k2 = ((l1 - k1 - j2) + 160) - 16;
-                    if(k2 >= field_1183_f[i2] && k2 >= field_1183_f[i2 + 1])
+                    if(j1 < i)
                     {
-                        continue;
+                        continue label0;
                     }
-                    Block block = Block.blocksList[world.getBlockId(j1, j2, i1)];
-                    if(block == null)
+                    int k1 = j1 - i;
+                    int l1 = i1 - j;
+                    int i2 = k1 + l1;
+                    boolean flag = true;
+                    int j2 = 0;
+                    do
                     {
-                        flag = false;
-                        continue;
-                    }
-                    if(block.blockMaterial == Material.water)
-                    {
-                        int l2 = world.getBlockId(j1, j2 + 1, i1);
-                        if(l2 != 0 && Block.blocksList[l2].blockMaterial == Material.water)
+                        world.getClass();
+                        if(j2 >= 128)
                         {
-                            continue;
+                            break label1;
                         }
-                        float f1 = ((float)j2 / 127F) * 0.6F + 0.4F;
-                        float f2 = world.getLightBrightness(j1, j2 + 1, i1) * f1;
-                        if(k2 < 0 || k2 >= 160)
+                        int k2 = ((l1 - k1 - j2) + 544) - 16;
+                        if(k2 < field_1183_f[i2] || k2 < field_1183_f[i2 + 1])
                         {
-                            continue;
-                        }
-                        int i4 = i2 + k2 * 32;
-                        if(i2 >= 0 && i2 <= 32 && field_1185_d[i4] <= j2)
-                        {
-                            field_1185_d[i4] = j2;
-                            field_1184_e[i4] = (int)(f2 * 127F);
-                        }
-                        if(i2 >= -1 && i2 <= 31 && field_1185_d[i4 + 1] <= j2)
-                        {
-                            field_1185_d[i4 + 1] = j2;
-                            field_1184_e[i4 + 1] = (int)(f2 * 127F);
-                        }
-                        flag = false;
-                        continue;
-                    }
-                    if(flag)
-                    {
-                        if(k2 < field_1183_f[i2])
-                        {
-                            field_1183_f[i2] = k2;
-                        }
-                        if(k2 < field_1183_f[i2 + 1])
-                        {
-                            field_1183_f[i2 + 1] = k2;
-                        }
-                    }
-                    float f = ((float)j2 / 127F) * 0.6F + 0.4F;
-                    if(k2 >= 0 && k2 < 160)
-                    {
-                        int i3 = i2 + k2 * 32;
-                        int k3 = field_1182_g[block.blockID * 3 + 0];
-                        float f3 = (world.getLightBrightness(j1, j2 + 1, i1) * 0.8F + 0.2F) * f;
-                        int j4 = k3;
-                        if(i2 >= 0)
-                        {
-                            float f5 = f3;
-                            if(field_1186_c[i3] <= j2)
+                            Block block = Block.blocksList[world.getBlockId(j1, j2, i1)];
+                            if(block == null)
                             {
-                                field_1186_c[i3] = j2;
-                                field_1180_b[i3] = 0xff000000 | (int)(field_1181_a[j4 * 3 + 0] * f5) << 16 | (int)(field_1181_a[j4 * 3 + 1] * f5) << 8 | (int)(field_1181_a[j4 * 3 + 2] * f5);
+                                flag = false;
+                            } else
+                            if(block.blockMaterial == Material.water)
+                            {
+                                int l2 = world.getBlockId(j1, j2 + 1, i1);
+                                if(l2 == 0 || Block.blocksList[l2].blockMaterial != Material.water)
+                                {
+                                    world.getClass();
+                                    float f1 = ((float)j2 / (128F - 1.0F)) * 0.6F + 0.4F;
+                                    float f2 = world.getLightBrightness(j1, j2 + 1, i1) * f1;
+                                    if(k2 >= 0 && k2 < 544)
+                                    {
+                                        int i4 = i2 + k2 * 32;
+                                        if(i2 >= 0 && i2 <= 32 && field_1185_d[i4] <= j2)
+                                        {
+                                            field_1185_d[i4] = j2;
+                                            field_1184_e[i4] = (int)(f2 * 127F);
+                                        }
+                                        if(i2 >= -1 && i2 <= 31 && field_1185_d[i4 + 1] <= j2)
+                                        {
+                                            field_1185_d[i4 + 1] = j2;
+                                            field_1184_e[i4 + 1] = (int)(f2 * 127F);
+                                        }
+                                        flag = false;
+                                    }
+                                }
+                            } else
+                            {
+                                if(flag)
+                                {
+                                    if(k2 < field_1183_f[i2])
+                                    {
+                                        field_1183_f[i2] = k2;
+                                    }
+                                    if(k2 < field_1183_f[i2 + 1])
+                                    {
+                                        field_1183_f[i2 + 1] = k2;
+                                    }
+                                }
+                                world.getClass();
+                                float f = ((float)j2 / (128F - 1.0F)) * 0.6F + 0.4F;
+                                if(k2 >= 0 && k2 < 544)
+                                {
+                                    int i3 = i2 + k2 * 32;
+                                    int k3 = field_1182_g[block.blockID * 3 + 0];
+                                    float f3 = (world.getLightBrightness(j1, j2 + 1, i1) * 0.8F + 0.2F) * f;
+                                    int j4 = k3;
+                                    if(i2 >= 0)
+                                    {
+                                        float f5 = f3;
+                                        if(field_1186_c[i3] <= j2)
+                                        {
+                                            field_1186_c[i3] = j2;
+                                            field_1180_b[i3] = 0xff000000 | (int)(field_1181_a[j4 * 3 + 0] * f5) << 16 | (int)(field_1181_a[j4 * 3 + 1] * f5) << 8 | (int)(field_1181_a[j4 * 3 + 2] * f5);
+                                        }
+                                    }
+                                    if(i2 < 31)
+                                    {
+                                        float f6 = f3 * 0.9F;
+                                        if(field_1186_c[i3 + 1] <= j2)
+                                        {
+                                            field_1186_c[i3 + 1] = j2;
+                                            field_1180_b[i3 + 1] = 0xff000000 | (int)(field_1181_a[j4 * 3 + 0] * f6) << 16 | (int)(field_1181_a[j4 * 3 + 1] * f6) << 8 | (int)(field_1181_a[j4 * 3 + 2] * f6);
+                                        }
+                                    }
+                                }
+                                if(k2 >= -1 && k2 < 543)
+                                {
+                                    int j3 = i2 + (k2 + 1) * 32;
+                                    int l3 = field_1182_g[block.blockID * 3 + 1];
+                                    float f4 = world.getLightBrightness(j1 - 1, j2, i1) * 0.8F + 0.2F;
+                                    int k4 = field_1182_g[block.blockID * 3 + 2];
+                                    float f7 = world.getLightBrightness(j1, j2, i1 + 1) * 0.8F + 0.2F;
+                                    if(i2 >= 0)
+                                    {
+                                        float f8 = f4 * f * 0.6F;
+                                        if(field_1186_c[j3] <= j2 - 1)
+                                        {
+                                            field_1186_c[j3] = j2 - 1;
+                                            field_1180_b[j3] = 0xff000000 | (int)(field_1181_a[l3 * 3 + 0] * f8) << 16 | (int)(field_1181_a[l3 * 3 + 1] * f8) << 8 | (int)(field_1181_a[l3 * 3 + 2] * f8);
+                                        }
+                                    }
+                                    if(i2 < 31)
+                                    {
+                                        float f9 = f7 * 0.9F * f * 0.4F;
+                                        if(field_1186_c[j3 + 1] <= j2 - 1)
+                                        {
+                                            field_1186_c[j3 + 1] = j2 - 1;
+                                            field_1180_b[j3 + 1] = 0xff000000 | (int)(field_1181_a[k4 * 3 + 0] * f9) << 16 | (int)(field_1181_a[k4 * 3 + 1] * f9) << 8 | (int)(field_1181_a[k4 * 3 + 2] * f9);
+                                        }
+                                    }
+                                }
                             }
                         }
-                        if(i2 < 31)
-                        {
-                            float f6 = f3 * 0.9F;
-                            if(field_1186_c[i3 + 1] <= j2)
-                            {
-                                field_1186_c[i3 + 1] = j2;
-                                field_1180_b[i3 + 1] = 0xff000000 | (int)(field_1181_a[j4 * 3 + 0] * f6) << 16 | (int)(field_1181_a[j4 * 3 + 1] * f6) << 8 | (int)(field_1181_a[j4 * 3 + 2] * f6);
-                            }
-                        }
-                    }
-                    if(k2 < -1 || k2 >= 159)
-                    {
-                        continue;
-                    }
-                    int j3 = i2 + (k2 + 1) * 32;
-                    int l3 = field_1182_g[block.blockID * 3 + 1];
-                    float f4 = world.getLightBrightness(j1 - 1, j2, i1) * 0.8F + 0.2F;
-                    int k4 = field_1182_g[block.blockID * 3 + 2];
-                    float f7 = world.getLightBrightness(j1, j2, i1 + 1) * 0.8F + 0.2F;
-                    if(i2 >= 0)
-                    {
-                        float f8 = f4 * f * 0.6F;
-                        if(field_1186_c[j3] <= j2 - 1)
-                        {
-                            field_1186_c[j3] = j2 - 1;
-                            field_1180_b[j3] = 0xff000000 | (int)(field_1181_a[l3 * 3 + 0] * f8) << 16 | (int)(field_1181_a[l3 * 3 + 1] * f8) << 8 | (int)(field_1181_a[l3 * 3 + 2] * f8);
-                        }
-                    }
-                    if(i2 >= 31)
-                    {
-                        continue;
-                    }
-                    float f9 = f7 * 0.9F * f * 0.4F;
-                    if(field_1186_c[j3 + 1] <= j2 - 1)
-                    {
-                        field_1186_c[j3 + 1] = j2 - 1;
-                        field_1180_b[j3 + 1] = 0xff000000 | (int)(field_1181_a[k4 * 3 + 0] * f9) << 16 | (int)(field_1181_a[k4 * 3 + 1] * f9) << 8 | (int)(field_1181_a[k4 * 3 + 2] * f9);
-                    }
+                        j2++;
+                    } while(true);
                 }
-
-            }
-
+                j1--;
+            } while(true);
         }
 
         func_800_a();
         if(isoimagebuffer.field_1348_a == null)
         {
-            isoimagebuffer.field_1348_a = new BufferedImage(32, 160, 2);
+            isoimagebuffer.field_1348_a = new BufferedImage(32, 544, 2);
         }
-        isoimagebuffer.field_1348_a.setRGB(0, 0, 32, 160, field_1180_b, 0, 32);
+        isoimagebuffer.field_1348_a.setRGB(0, 0, 32, 544, field_1180_b, 0, 32);
         isoimagebuffer.field_1352_e = true;
     }
 
@@ -237,7 +249,7 @@ public class TerrainTextureManager
     {
         for(int i = 0; i < 32; i++)
         {
-            for(int j = 0; j < 160; j++)
+            for(int j = 0; j < 544; j++)
             {
                 int k = i + j * 32;
                 if(field_1186_c[k] == 0)

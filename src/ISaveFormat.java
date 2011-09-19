@@ -20,7 +20,7 @@ public interface ISaveFormat
 
     public abstract void flushCache();
 
-    public abstract WorldInfo func_22173_b(String s);
+    public abstract WorldInfo getWorldInfo(String s);
 
     public abstract void func_22172_c(String s);
 

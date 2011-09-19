@@ -15,7 +15,7 @@ import java.util.*;
 
 //hasPath() = getGotPath()
 //isWet() = func_27008_Y()
-//setTarget( = setEntityToAttack(
+//setEntityToAttack( = setEntityToAttack(
 //hasCurrentTarget() = func_25021_O()
 //getIsWolfsFavoriteMeat()=func_25010_k()
 //func_25026_x=func_25018_n_
@@ -112,9 +112,14 @@ public class AM_EntitySentry extends EntityCreature
 		return 0.4F;
 	}
 
-	protected void dropFewItems(){
-		Dropper();
-	}
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 	
 	void Dropper(){
 		for(int j = 0; j < 20; j++)
@@ -143,9 +148,9 @@ public class AM_EntitySentry extends EntityCreature
 	}
 
 
-	protected void updatePlayerActionState()
+	protected void updateEntityActionState()
 	{
-		super.updatePlayerActionState();
+		super.updateEntityActionState();
 		if(entityplayer==null){
 			entityplayer = worldObj.getPlayerEntityByName(getBotOwner());
 		}else{
@@ -153,7 +158,7 @@ public class AM_EntitySentry extends EntityCreature
 			if(f > 7F){
 				
 				if(entityToAttack!=null && f>14f){
-					setTarget(null);
+					setEntityToAttack(null);
 					getPathOrWalkableBlock(entityplayer, f);
 				}else{
 					getPathOrWalkableBlock(entityplayer, f);
@@ -169,20 +174,20 @@ public class AM_EntitySentry extends EntityCreature
 	
 					
 					if(!list.isEmpty()){
-						setTarget(closest(list));
+						setEntityToAttack(closest(list));
 					}else{
 						list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntityAnimal.class, boundingBox.expand(16D, 3D, 16D));
 						if(!list.isEmpty()){
-							setTarget(closest(list));
+							setEntityToAttack(closest(list));
 						}else{
 							list = worldObj.getEntitiesWithinAABB(net.minecraft.src.EntitySlime.class, boundingBox.expand(16D, 3D, 16D));
 							if(!list.isEmpty()){
-								setTarget(closestSlime(list));
+								setEntityToAttack(closestSlime(list));
 							}
 						}
 					}
 				}else{
-					setTarget(null);
+					setEntityToAttack(null);
 					getPathOrWalkableBlock(entityplayer, 8f);//System.out.println("is puppy lost?");
 					//setPathToEntity(worldObj.getPathToEntity(this, entityToAttack, 16f));
 				}
@@ -243,11 +248,7 @@ public class AM_EntitySentry extends EntityCreature
 	}
 
 
-	public void onLivingUpdate()
-	{
-		super.onLivingUpdate();
 
-	}
 
 	public void onUpdate() {
 		super.onUpdate();
@@ -302,32 +303,33 @@ public class AM_EntitySentry extends EntityCreature
 		return entityplayer==null;
 	}
 
-	public boolean attackEntityFrom(Entity entity, int i)
-	{
-		
-		if(entity != null && (entity instanceof EntityPlayer) && ((EntityPlayer)entity).username==getBotOwner())
-		{
-			i=20;
-		}
-		super.attackEntityFrom(entity,i);
-		return true;
-		
-		
-	}
+	public boolean attackEntityFrom(DamageSource damagesource, int i)
+    {
+            Entity entity = damagesource.func_35532_a();
+            if(entity != null && entity != this && (entity instanceof EntityPlayer) && ((EntityPlayer)entity).username==getBotOwner() )
+            {
+               i=20;
+            }
+		return super.attackEntityFrom(damagesource, i);
+    }
 
 
-	protected void attackEntity(Entity entity, float f)
-	{
-		
+	
+	protected boolean attackEntityAsMob(Entity entity)
+    {
+        return entity.attackEntityFrom(DamageSource.func_35525_a(this), 8);
+    }
 
-		if(f < 2.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
-		{
-			attackTime = 40;
-			byte byte0 = 8;
-			entity.attackEntityFrom(this, byte0);
-		}
-		
-	}
+    protected void attackEntity(Entity entity, float f)
+    {
+        if(attackTime <= 0 && f < 2.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
+        {
+            attackTime = 40;
+            attackEntityAsMob(entity);
+        }
+    }
+	
+
 	public String getBotOwner()
 	{
 		return dataWatcher.getWatchableObjectString(17);

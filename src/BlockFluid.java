@@ -22,12 +22,17 @@ public abstract class BlockFluid extends Block
         setTickOnLoad(true);
     }
 
+    public int func_35274_i()
+    {
+        return 0xffffff;
+    }
+
     public int colorMultiplier(IBlockAccess iblockaccess, int i, int j, int k)
     {
         return 0xffffff;
     }
 
-    public static float getPercentAir(int i)
+    public static float getFluidHeightPercent(int i)
     {
         if(i >= 8)
         {
@@ -95,13 +100,13 @@ public abstract class BlockFluid extends Block
         {
             return false;
         }
-        if(material == Material.ice)
-        {
-            return false;
-        }
         if(l == 1)
         {
             return true;
+        }
+        if(material == Material.ice)
+        {
+            return false;
         } else
         {
             return super.getIsBlockSolid(iblockaccess, i, j, k, l);
@@ -115,13 +120,13 @@ public abstract class BlockFluid extends Block
         {
             return false;
         }
-        if(material == Material.ice)
-        {
-            return false;
-        }
         if(l == 1)
         {
             return true;
+        }
+        if(material == Material.ice)
+        {
+            return false;
         } else
         {
             return super.shouldSideBeRendered(iblockaccess, i, j, k, l);
@@ -256,6 +261,17 @@ public abstract class BlockFluid extends Block
         return blockMaterial != Material.lava ? 0 : 30;
     }
 
+    public int func_35275_c(IBlockAccess iblockaccess, int i, int j, int k)
+    {
+        int l = iblockaccess.func_35451_b(i, j, k, 0);
+        int i1 = iblockaccess.func_35451_b(i, j + 1, k, 0);
+        int j1 = l & 0xff;
+        int k1 = i1 & 0xff;
+        int l1 = l >> 16 & 0xff;
+        int i2 = i1 >> 16 & 0xff;
+        return (j1 <= k1 ? k1 : j1) | (l1 <= i2 ? i2 : l1) << 16;
+    }
+
     public float getBlockBrightness(IBlockAccess iblockaccess, int i, int j, int k)
     {
         float f = iblockaccess.getLightBrightness(i, j, k);
@@ -275,10 +291,87 @@ public abstract class BlockFluid extends Block
 
     public void randomDisplayTick(World world, int i, int j, int k, Random random)
     {
+        if(blockMaterial == Material.water)
+        {
+            if(random.nextInt(10) == 0)
+            {
+                int l = world.getBlockMetadata(i, j, k);
+                if(l <= 0 || l >= 8)
+                {
+                    world.spawnParticle("suspended", (float)i + random.nextFloat(), (float)j + random.nextFloat(), (float)k + random.nextFloat(), 0.0D, 0.0D, 0.0D);
+                }
+            }
+            for(int i1 = 0; i1 < 0; i1++)
+            {
+                int k1 = random.nextInt(4);
+                int l1 = i;
+                int i2 = k;
+                if(k1 == 0)
+                {
+                    l1--;
+                }
+                if(k1 == 1)
+                {
+                    l1++;
+                }
+                if(k1 == 2)
+                {
+                    i2--;
+                }
+                if(k1 == 3)
+                {
+                    i2++;
+                }
+                if(world.getBlockMaterial(l1, j, i2) != Material.air || !world.getBlockMaterial(l1, j - 1, i2).getIsSolid() && !world.getBlockMaterial(l1, j - 1, i2).getIsLiquid())
+                {
+                    continue;
+                }
+                float f = 0.0625F;
+                double d3 = (float)i + random.nextFloat();
+                double d4 = (float)j + random.nextFloat();
+                double d5 = (float)k + random.nextFloat();
+                if(k1 == 0)
+                {
+                    d3 = (float)i - f;
+                }
+                if(k1 == 1)
+                {
+                    d3 = (float)(i + 1) + f;
+                }
+                if(k1 == 2)
+                {
+                    d5 = (float)k - f;
+                }
+                if(k1 == 3)
+                {
+                    d5 = (float)(k + 1) + f;
+                }
+                double d6 = 0.0D;
+                double d7 = 0.0D;
+                if(k1 == 0)
+                {
+                    d6 = -f;
+                }
+                if(k1 == 1)
+                {
+                    d6 = f;
+                }
+                if(k1 == 2)
+                {
+                    d7 = -f;
+                }
+                if(k1 == 3)
+                {
+                    d7 = f;
+                }
+                world.spawnParticle("splash", d3, d4, d5, d6, 0.0D, d7);
+            }
+
+        }
         if(blockMaterial == Material.water && random.nextInt(64) == 0)
         {
-            int l = world.getBlockMetadata(i, j, k);
-            if(l > 0 && l < 8)
+            int j1 = world.getBlockMetadata(i, j, k);
+            if(j1 > 0 && j1 < 8)
             {
                 world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, "liquid.water", random.nextFloat() * 0.25F + 0.75F, random.nextFloat() * 1.0F + 0.5F);
             }

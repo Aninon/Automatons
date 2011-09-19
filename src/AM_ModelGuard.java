@@ -7,7 +7,7 @@ public class AM_ModelGuard extends ModelBase
 {
 	public 	AM_ModelGuard	()
 	{
-		rod = new ModelRenderer(0, 0);
+		rod = new ModelRenderer(this,0, 0);
 		rod.addBox(-1F, 0F, -1F, 2, 2, 2, 0F);
 		rod.setRotationPoint(0F, 20F, 0F);
 		
@@ -16,7 +16,7 @@ public class AM_ModelGuard extends ModelBase
 		rod.rotateAngleZ = 0F;
 		rod.mirror = false;
 		
-		head = new ModelRenderer(13, 0);
+		head = new ModelRenderer(this,13, 0);
 		head.addBox(-2.5F, -2.5F, -9F, 5, 5, 12, 0F);
 		head.setRotationPoint(0F, 18F, 0F);
 		
@@ -25,7 +25,7 @@ public class AM_ModelGuard extends ModelBase
 		head.rotateAngleZ = 0F;
 		head.mirror = false;
 		
-		thing = new ModelRenderer(5, 19);
+		thing = new ModelRenderer(this,5, 19);
 		thing.addBox(-1.5F, -1.5F, -2F, 3, 3, 7, 0F);
 		thing.setRotationPoint(0F, 18F, 0F);
 		
@@ -34,7 +34,7 @@ public class AM_ModelGuard extends ModelBase
 		thing.rotateAngleZ = 0F;
 		thing.mirror = false;
 		
-		stand2 = new ModelRenderer(26, 19);
+		stand2 = new ModelRenderer(this,26, 19);
 		stand2.addBox(-4F, 0F, -4F, 8, 2, 8, 0F);
 		stand2.setRotationPoint(0F, 22F, 0F);
 		
@@ -46,9 +46,9 @@ public class AM_ModelGuard extends ModelBase
 		
 	}
 
-	public void render(float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		super.render(f, f1, f2, f3, f4, f5);
+		super.render(entity,f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		rod.render(f5);
 		head.render(f5);

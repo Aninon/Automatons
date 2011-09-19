@@ -20,7 +20,7 @@ public class IsomPreviewApplet extends Applet
 
     public void start()
     {
-        a.func_1272_b();
+        a.startThreads();
     }
 
     public void stop()

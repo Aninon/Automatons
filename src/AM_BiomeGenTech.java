@@ -11,8 +11,10 @@ import java.util.Random;
 public class AM_BiomeGenTech extends BiomeGenBase
 {
 
-    public AM_BiomeGenTech()
+    public AM_BiomeGenTech(int i)
     {
+	
+		 super(i);
 		 fillerBlock = (byte)Block.blockClay.blockID;
 		 topBlock = (byte)AutomatonLogger.frass;
 		 
@@ -26,12 +28,12 @@ public class AM_BiomeGenTech extends BiomeGenBase
 		
 		
 
-		
-        spawnableCreatureList.add(new SpawnListEntry(AM_EntityChopper.class, 30));
-		spawnableCreatureList.add(new SpawnListEntry(AM_EntityBobby.class, 28));
-		spawnableCreatureList.add(new SpawnListEntry(AM_EntityGolem.class, 8));
-		spawnableMonsterList.add(new SpawnListEntry(AM_EntityWatcher.class, 20));
-		spawnableMonsterList.add(new SpawnListEntry(AM_EntitySlider.class, 8));
+		/*
+        spawnableCreatureList.add(new SpawnListEntry(AM_EntityChopper.class, 30,4,4));
+		spawnableCreatureList.add(new SpawnListEntry(AM_EntityBobby.class, 28,4,4));
+		spawnableCreatureList.add(new SpawnListEntry(AM_EntityGolem.class, 8,4,4));
+		spawnableMonsterList.add(new SpawnListEntry(AM_EntityWatcher.class, 20,4,4));
+		spawnableMonsterList.add(new SpawnListEntry(AM_EntitySlider.class, 8,4,4));*/
 		//spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityChopper.class, 14));
     }
 	public WorldGenerator getRandomWorldGenForTrees(Random random)

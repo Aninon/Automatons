@@ -22,10 +22,9 @@ public class CodecMus extends CodecJOrbis
     protected InputStream openInputStream()
     {
         try {
-            return new MusInputStream(this, url, urlConnection.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+			return new MusInputStream(this, url, urlConnection.getInputStream());
+		} catch (IOException e) {
+			return null;
+		}
     }
 }

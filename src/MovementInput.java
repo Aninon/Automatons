@@ -24,14 +24,6 @@ public class MovementInput
     {
     }
 
-    public void resetKeyState()
-    {
-    }
-
-    public void checkKeyForMovementInput(int i, boolean flag)
-    {
-    }
-
     public float moveStrafe;
     public float moveForward;
     public boolean field_1177_c;

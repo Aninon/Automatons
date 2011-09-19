@@ -36,9 +36,8 @@ public class AM_BlockArbor extends Block
 	
 	public int colorMultiplier(IBlockAccess iblockaccess, int i, int j, int k)
     {
-        iblockaccess.getWorldChunkManager().func_4069_a(i, k, 1, 1);
-        double d = iblockaccess.getWorldChunkManager().temperature[0];
-        double d1 = iblockaccess.getWorldChunkManager().humidity[0];
+        double d = iblockaccess.getWorldChunkManager().func_35554_b(i, k);
+        double d1 = iblockaccess.getWorldChunkManager().func_35558_c(i, k);
         return ColorizerGrass.getGrassColor(d, d1);
     }
 	

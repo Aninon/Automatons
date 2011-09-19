@@ -116,9 +116,24 @@ public class AM_EntitySleeper extends EntityLiving
 	}
 	
 	
-	protected void dropFewItems(){
-		Dropper();
-	}
+	public void onDeath(DamageSource damagesource)
+    {
+        Entity entity = damagesource.func_35532_a();
+        if(scoreValue >= 0 && entity != null)
+        {
+            entity.addToPlayerScore(this, scoreValue);
+        }
+        if(entity != null)
+        {
+            entity.onKillEntity(this);
+        }
+        unused_flag = true;
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 	
 	void Dropper(){
 		
@@ -135,7 +150,7 @@ public class AM_EntitySleeper extends EntityLiving
 			
 			entityDropItem(new ItemStack(AutomatonLogger.stuffs+256, 1,0), 0.0F);
 
-			setEntityDead();
+			deathTime=999;//();
 		}
 	}
 	

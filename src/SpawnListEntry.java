@@ -5,15 +5,21 @@
 package net.minecraft.src;
 
 
-public class SpawnListEntry
+// Referenced classes of package net.minecraft.src:
+//            WeightedRandomChoice
+
+public class SpawnListEntry extends WeightedRandomChoice
 {
 
-    public SpawnListEntry(Class class1, int i)
+    public SpawnListEntry(Class class1, int i, int j, int k)
     {
+        super(i);
         entityClass = class1;
-        spawnRarityRate = i;
+        field_35591_b = j;
+        field_35592_c = k;
     }
 
     public Class entityClass;
-    public int spawnRarityRate;
+    public int field_35591_b;
+    public int field_35592_c;
 }

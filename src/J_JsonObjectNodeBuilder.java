@@ -30,7 +30,7 @@ public final class J_JsonObjectNodeBuilder
         return J_JsonNodeFactories.func_27312_a(new J_JsonObjectNodeList(this));
     }
 
-    public J_JsonNode func_27234_b()
+    public J_JsonNode buildNode()
     {
         return func_27235_a();
     }

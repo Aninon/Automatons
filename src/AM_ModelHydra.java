@@ -8,7 +8,7 @@ public class AM_ModelHydra extends ModelBase
 {
 	public 	AM_ModelHydra	()
 	{
-		leg1 = new ModelRenderer(32, 0);
+		leg1 = new ModelRenderer(this,32, 0);
 		leg1.addBox(0F, 0F, -1F, 2, 5, 2, 0F);
 		leg1.setRotationPoint(1F, 15F, 1F);
 		
@@ -17,7 +17,7 @@ public class AM_ModelHydra extends ModelBase
 		leg1.rotateAngleZ = 0F;
 		leg1.mirror = false;
 		
-		knee1 = new ModelRenderer(40, 0);
+		knee1 = new ModelRenderer(this,40, 0);
 		knee1.addBox(-0.5F, 0F, -1F, 3, 5, 2, 0F);
 		knee1.setRotationPoint(1F, 19F, -2F);
 		
@@ -26,7 +26,7 @@ public class AM_ModelHydra extends ModelBase
 		knee1.rotateAngleZ = 0F;
 		knee1.mirror = false;
 		
-		foot1 = new ModelRenderer(50, 0);
+		foot1 = new ModelRenderer(this,50, 0);
 		foot1.addBox(0F, 0F, -5F, 2, 1, 5, 0F);
 		foot1.setRotationPoint(1F, 23F, 1F);
 		
@@ -35,7 +35,7 @@ public class AM_ModelHydra extends ModelBase
 		foot1.rotateAngleZ = 0F;
 		foot1.mirror = false;
 		
-		mid = new ModelRenderer(54, 7);
+		mid = new ModelRenderer(this,54, 7);
 		mid.addBox(-1.5F, -6F, -1F, 3, 6, 2, 0F);
 		mid.setRotationPoint(0F, 16F, 0F);
 		
@@ -44,7 +44,7 @@ public class AM_ModelHydra extends ModelBase
 		mid.rotateAngleZ = 0F;
 		mid.mirror = false;
 		
-		bod = new ModelRenderer(0, 21);
+		bod = new ModelRenderer(this,0, 21);
 		bod.addBox(-3F, -5F, -2F, 6, 7, 4, 0F);
 		bod.setRotationPoint(0F, 11F, 2F);
 		
@@ -53,7 +53,7 @@ public class AM_ModelHydra extends ModelBase
 		bod.rotateAngleZ = 0F;
 		bod.mirror = false;
 		
-		bod1 = new ModelRenderer(20, 25);
+		bod1 = new ModelRenderer(this,20, 25);
 		bod1.addBox(-4F, -3F, -2F, 8, 3, 4, 0F);
 		bod1.setRotationPoint(0F, 8F, -2F);
 		
@@ -62,7 +62,7 @@ public class AM_ModelHydra extends ModelBase
 		bod1.rotateAngleZ = 0F;
 		bod1.mirror = false;
 		
-		head1 = new ModelRenderer(8, 0);
+		head1 = new ModelRenderer(this,8, 0);
 		head1.addBox(-1F, -1F, -6F, 2, 2, 4, 0F);
 		head1.setRotationPoint(0F, 9F, -3F);
 		
@@ -71,7 +71,7 @@ public class AM_ModelHydra extends ModelBase
 		head1.rotateAngleZ = 0F;
 		head1.mirror = false;
 		
-		head2 = new ModelRenderer(20, 0);
+		head2 = new ModelRenderer(this,20, 0);
 		head2.addBox(-2F, -2F, -2F, 4, 3, 2, 0F);
 		head2.setRotationPoint(0F, 9F, -3F);
 		
@@ -80,7 +80,7 @@ public class AM_ModelHydra extends ModelBase
 		head2.rotateAngleZ = 0F;
 		head2.mirror = false;
 		
-		army1 = new ModelRenderer(23, 7);
+		army1 = new ModelRenderer(this,23, 7);
 		army1.addBox(0F, -2F, -1F, 2, 15, 2, 0F);
 		army1.setRotationPoint(4F, 8F, -2F);
 		
@@ -89,7 +89,7 @@ public class AM_ModelHydra extends ModelBase
 		army1.rotateAngleZ = 0F;
 		army1.mirror = false;
 		
-		fin1 = new ModelRenderer(42, 9);
+		fin1 = new ModelRenderer(this,42, 9);
 		fin1.addBox(-1F, 0F, 0F, 2, 12, 1, 0F);
 		fin1.setRotationPoint(2F, 7F, -1F);
 		
@@ -98,7 +98,7 @@ public class AM_ModelHydra extends ModelBase
 		fin1.rotateAngleZ = 0F;
 		fin1.mirror = false;
 		
-		fin4 = new ModelRenderer(42, 9);
+		fin4 = new ModelRenderer(this,42, 9);
 		fin4.addBox(-1F, 0F, 0F, 2, 12, 1, 0F);
 		fin4.setRotationPoint(-2F, 7F, -1F);
 		
@@ -107,7 +107,7 @@ public class AM_ModelHydra extends ModelBase
 		fin4.rotateAngleZ = 0F;
 		fin4.mirror = false;
 		
-		fin2 = new ModelRenderer(42, 9);
+		fin2 = new ModelRenderer(this,42, 9);
 		fin2.addBox(-1F, 0F, 0F, 2, 12, 1, 0F);
 		fin2.setRotationPoint(0F, 7F, -1F);
 		
@@ -116,7 +116,7 @@ public class AM_ModelHydra extends ModelBase
 		fin2.rotateAngleZ = 0F;
 		fin2.mirror = false;
 		
-		fin3 = new ModelRenderer(42, 9);
+		fin3 = new ModelRenderer(this,42, 9);
 		fin3.addBox(-1F, 0F, 0F, 2, 12, 1, 0F);
 		fin3.setRotationPoint(-1F, 7F, -1F);
 		
@@ -125,7 +125,7 @@ public class AM_ModelHydra extends ModelBase
 		fin3.rotateAngleZ = 0F;
 		fin3.mirror = false;
 		
-		army2 = new ModelRenderer(23, 7);
+		army2 = new ModelRenderer(this,23, 7);
 		army2.addBox(-2F, -2F, -1F, 2, 15, 2, 0F);
 		army2.setRotationPoint(-4F, 8F, -2F);
 		
@@ -134,7 +134,7 @@ public class AM_ModelHydra extends ModelBase
 		army2.rotateAngleZ = 0F;
 		army2.mirror = false;
 		
-		leg2 = new ModelRenderer(32, 0);
+		leg2 = new ModelRenderer(this,32, 0);
 		leg2.addBox(-2F, 0F, -1F, 2, 5, 2, 0F);
 		leg2.setRotationPoint(-1F, 15F, 1F);
 		
@@ -143,7 +143,7 @@ public class AM_ModelHydra extends ModelBase
 		leg2.rotateAngleZ = 0F;
 		leg2.mirror = false;
 		
-		knee2 = new ModelRenderer(40, 0);
+		knee2 = new ModelRenderer(this,40, 0);
 		knee2.addBox(-2.5F, 0F, -1F, 3, 5, 2, 0F);
 		knee2.setRotationPoint(-1F, 19F, -2F);
 		
@@ -152,7 +152,7 @@ public class AM_ModelHydra extends ModelBase
 		knee2.rotateAngleZ = 0F;
 		knee2.mirror = false;
 		
-		foot2 = new ModelRenderer(50, 0);
+		foot2 = new ModelRenderer(this,50, 0);
 		foot2.addBox(-2F, 0F, -5F, 2, 1, 5, 0F);
 		foot2.setRotationPoint(-1F, 23F, 1F);
 		
@@ -164,9 +164,9 @@ public class AM_ModelHydra extends ModelBase
 		
 	}
 
-	public void render(float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
 	{
-		super.render(f, f1, f2, f3, f4, f5);
+		super.render(entity,f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		leg1.render(f5);
 		//knee1.render(f5);

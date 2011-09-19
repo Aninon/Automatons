@@ -45,7 +45,6 @@ public enum EnumArt
 */
     private EnumArt(String s, int i, String s1, int j, int k, int l, int i1)
     {
-//        super(s, i);
         title = s1;
         sizeX = j;
         sizeY = k;
@@ -85,12 +84,11 @@ public enum EnumArt
     public final int sizeY;
     public final int offsetX;
     public final int offsetY;
-    private static final EnumArt allArt[]; /* synthetic field */
-
+//    private static final EnumArt allArt[]; /* synthetic field */
+/*
     static 
     {
-/*
-    	Kebab = new EnumArt("Kebab", 0, "Kebab", 16, 16, 0, 0);
+        Kebab = new EnumArt("Kebab", 0, "Kebab", 16, 16, 0, 0);
         Aztec = new EnumArt("Aztec", 1, "Aztec", 16, 16, 16, 0);
         Alban = new EnumArt("Alban", 2, "Alban", 16, 16, 32, 0);
         Aztec2 = new EnumArt("Aztec2", 3, "Aztec2", 16, 16, 48, 0);
@@ -115,11 +113,11 @@ public enum EnumArt
         BurningSkull = new EnumArt("BurningSkull", 22, "BurningSkull", 64, 64, 128, 192);
         Skeleton = new EnumArt("Skeleton", 23, "Skeleton", 64, 48, 192, 64);
         DonkeyKong = new EnumArt("DonkeyKong", 24, "DonkeyKong", 64, 48, 192, 112);
-*/
         allArt = (new EnumArt[] {
             Kebab, Aztec, Alban, Aztec2, Bomb, Plant, Wasteland, Pool, Courbet, Sea, 
             Sunset, Creebet, Wanderer, Graham, Match, Bust, Stage, Void, SkullAndRoses, Fighters, 
             Pointer, Pigscene, BurningSkull, Skeleton, DonkeyKong
         });
     }
+*/
 }

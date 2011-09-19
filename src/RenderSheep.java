@@ -23,7 +23,7 @@ public class RenderSheep extends RenderLiving
         if(i == 0 && !entitysheep.getSheared())
         {
             loadTexture("/mob/sheep_fur.png");
-            float f1 = entitysheep.getEntityBrightness(f);
+            float f1 = 1.0F;
             int j = entitysheep.getFleeceColor();
             GL11.glColor3f(f1 * EntitySheep.fleeceColorTable[j][0], f1 * EntitySheep.fleeceColorTable[j][1], f1 * EntitySheep.fleeceColorTable[j][2]);
             return true;

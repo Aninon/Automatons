@@ -10,8 +10,8 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            Entity, EntityPlayer, MathHelper, AxisAlignedBB, 
 //            World, ItemStack, Item, Vec3D, 
-//            MovingObjectPosition, Material, NBTTagCompound, EntityItem, 
-//            StatList
+//            MovingObjectPosition, DamageSource, Material, NBTTagCompound, 
+//            EntityItem, StatList
 
 public class EntityFish extends Entity
 {
@@ -65,7 +65,7 @@ public class EntityFish extends Entity
         motionX = -MathHelper.sin((rotationYaw / 180F) * 3.141593F) * MathHelper.cos((rotationPitch / 180F) * 3.141593F) * f;
         motionZ = MathHelper.cos((rotationYaw / 180F) * 3.141593F) * MathHelper.cos((rotationPitch / 180F) * 3.141593F) * f;
         motionY = -MathHelper.sin((rotationPitch / 180F) * 3.141593F) * f;
-        func_4042_a(motionX, motionY, motionZ, 1.5F, 1.0F);
+        calculateVelocity(motionX, motionY, motionZ, 1.5F, 1.0F);
     }
 
     protected void entityInit()
@@ -79,7 +79,7 @@ public class EntityFish extends Entity
         return d < d1 * d1;
     }
 
-    public void func_4042_a(double d, double d1, double d2, float f, 
+    public void calculateVelocity(double d, double d1, double d2, float f, 
             float f1)
     {
         float f2 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
@@ -233,7 +233,7 @@ public class EntityFish extends Entity
         {
             if(movingobjectposition.entityHit != null)
             {
-                if(movingobjectposition.entityHit.attackEntityFrom(angler, 0))
+                if(movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35524_a(this, angler), 0))
                 {
                     bobber = movingobjectposition.entityHit;
                 }
@@ -281,7 +281,7 @@ public class EntityFish extends Entity
             } else
             {
                 char c = '\u01F4';
-                if(worldObj.canBlockBeRainedOn(MathHelper.floor_double(posX), MathHelper.floor_double(posY) + 1, MathHelper.floor_double(posZ)))
+                if(worldObj.canLightningStrikeAt(MathHelper.floor_double(posX), MathHelper.floor_double(posY) + 1, MathHelper.floor_double(posZ)))
                 {
                     c = '\u012C';
                 }

@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ItemStack, Block, CraftingManager
+//            ItemStack, Block, CraftingManager, Item
 
 public class RecipesCrafting
 {
@@ -28,6 +28,15 @@ public class RecipesCrafting
         });
         craftingmanager.addRecipe(new ItemStack(Block.sandStone), new Object[] {
             "##", "##", Character.valueOf('#'), Block.sand
+        });
+        craftingmanager.addRecipe(new ItemStack(Block.field_35285_bn, 4), new Object[] {
+            "##", "##", Character.valueOf('#'), Block.stone
+        });
+        craftingmanager.addRecipe(new ItemStack(Block.field_35288_bq, 16), new Object[] {
+            "###", "###", Character.valueOf('#'), Item.ingotIron
+        });
+        craftingmanager.addRecipe(new ItemStack(Block.field_35282_br, 16), new Object[] {
+            "###", "###", Character.valueOf('#'), Block.glass
         });
     }
 }

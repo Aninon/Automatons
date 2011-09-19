@@ -44,8 +44,9 @@ public class AM_EntitySlider extends EntityAnimal
     {
         return 5;
     }
+	/*
 	
-	   protected void updatePlayerActionState()
+	   protected void updateEntityActionState()
     {
         hasAttacked = isMovementCeased();
         float f = 16F;
@@ -85,7 +86,7 @@ public class AM_EntitySlider extends EntityAnimal
         rotationPitch = 0.0F;
         if(pathToEntity == null || rand.nextInt(100) == 0)
         {
-            super.updatePlayerActionState();
+            super.updateEntityActionState();
             pathToEntity = null;
             return;
         }
@@ -150,7 +151,7 @@ public class AM_EntitySlider extends EntityAnimal
         {
             isJumping = true;
         }
-    }
+    }*/
 
     protected void func_31026_E()
     {
@@ -185,8 +186,27 @@ public class AM_EntitySlider extends EntityAnimal
 	    private PathEntity pathToEntity;
 	
 	
+	public void onDeath(DamageSource damagesource)
+    {
+        Entity entity = damagesource.func_35532_a();
+        if(scoreValue >= 0 && entity != null)
+        {
+            entity.addToPlayerScore(this, scoreValue);
+        }
+        if(entity != null)
+        {
+            entity.onKillEntity(this);
+        }
+        unused_flag = true;
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 	
-	protected void dropFewItems(){
+	
+	protected void Dropper(){
             
 	for(int j = 0; j < 20; j++)
                 {
@@ -205,7 +225,7 @@ public class AM_EntitySlider extends EntityAnimal
 			}else if(R==3){
 			entityDropItem(new ItemStack(AutomatonLogger.stuffs+256, 1,4), 0.0F);
 			}
-			setEntityDead();
+			deathTime=999;//setEntityDead();
 	}
 	}
 	
@@ -250,10 +270,12 @@ public class AM_EntitySlider extends EntityAnimal
         }
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-        if(super.attackEntityFrom(entity, i))
+        if(super.attackEntityFrom(damagesource, i))
         {
+			field_35174_at=0;
+            Entity entity = damagesource.func_35532_a();
             if(riddenByEntity == entity || ridingEntity == entity)
             {
                 return true;
@@ -309,7 +331,7 @@ public class AM_EntitySlider extends EntityAnimal
             d1 *= 1.0F; //- entityCollisionReduction;
             addVelocity(-d, 0.0D, -d1);
             entity.addVelocity(f, 0.75D, f1);
-			worldObj.playSoundAtEntity(this, "mob.clank", 1.0F, 1.0F );
+			worldObj.playSoundAtEntity(this, "automatons.clank", 1.0F, 1.0F );
 			//entity.posY+=5;
         }
     }

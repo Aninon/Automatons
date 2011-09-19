@@ -20,10 +20,6 @@ public class RenderArrow extends Render
     public void renderArrow(EntityArrow entityarrow, double d, double d1, double d2, 
             float f, float f1)
     {
-        if(entityarrow.prevRotationYaw == 0.0F && entityarrow.prevRotationPitch == 0.0F)
-        {
-            return;
-        }
         loadTexture("/item/arrows.png");
         GL11.glPushMatrix();
         GL11.glTranslatef((float)d, (float)d1, (float)d2);

@@ -44,7 +44,7 @@ public final class J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException extend
         StringBuilder stringbuilder = new StringBuilder();
         for(int i = list.size() - 1; i >= 0; i--)
         {
-            stringbuilder.append(((J_JsonNodeSelector)list.get(i)).func_27358_a());
+            stringbuilder.append(((J_JsonNodeSelector)list.get(i)).shortForm());
             if(i != 0)
             {
                 stringbuilder.append(".");

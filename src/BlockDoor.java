@@ -236,7 +236,8 @@ public class BlockDoor extends Block
 
     public boolean canPlaceBlockAt(World world, int i, int j, int k)
     {
-        if(j >= 127)
+        world.getClass();
+        if(j >= 128 - 1)
         {
             return false;
         } else

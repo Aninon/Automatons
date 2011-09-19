@@ -4,6 +4,7 @@
 
 package net.minecraft.src;
 
+import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            EntityAnimal, Item, EntityPlayer, InventoryPlayer, 
@@ -52,6 +53,28 @@ public class EntityCow extends EntityAnimal
     protected int getDropItemId()
     {
         return Item.leather.shiftedIndex;
+    }
+
+    protected void a(boolean flag)
+    {
+        int i = rand.nextInt(3);
+        for(int j = 0; j < i; j++)
+        {
+            dropItem(Item.leather.shiftedIndex, 1);
+        }
+
+        i = rand.nextInt(3) + 1;
+        for(int k = 0; k < i; k++)
+        {
+            if(fire > 0)
+            {
+                dropItem(Item.field_35418_bk.shiftedIndex, 1);
+            } else
+            {
+                dropItem(Item.field_35417_bj.shiftedIndex, 1);
+            }
+        }
+
     }
 
     public boolean interact(EntityPlayer entityplayer)

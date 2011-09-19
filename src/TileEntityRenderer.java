@@ -6,11 +6,13 @@ package net.minecraft.src;
 
 import java.util.*;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 // Referenced classes of package net.minecraft.src:
 //            TileEntitySign, TileEntitySignRenderer, TileEntityMobSpawner, TileEntityMobSpawnerRenderer, 
-//            TileEntityPiston, TileEntityRendererPiston, TileEntitySpecialRenderer, TileEntity, 
-//            EntityLiving, World, FontRenderer, RenderEngine
+//            TileEntityPiston, TileEntityRendererPiston, TileEntityChest, TileEntityChestRenderer, 
+//            TileEntitySpecialRenderer, TileEntity, EntityLiving, World, 
+//            FontRenderer, RenderEngine
 
 public class TileEntityRenderer
 {
@@ -21,6 +23,7 @@ public class TileEntityRenderer
         specialRendererMap.put(net.minecraft.src.TileEntitySign.class, new TileEntitySignRenderer());
         specialRendererMap.put(net.minecraft.src.TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
         specialRendererMap.put(net.minecraft.src.TileEntityPiston.class, new TileEntityRendererPiston());
+        specialRendererMap.put(net.minecraft.src.TileEntityChest.class, new TileEntityChestRenderer());
         TileEntitySpecialRenderer tileentityspecialrenderer;
         for(Iterator iterator = specialRendererMap.values().iterator(); iterator.hasNext(); tileentityspecialrenderer.setTileEntityRenderer(this))
         {
@@ -76,8 +79,11 @@ public class TileEntityRenderer
     {
         if(tileentity.getDistanceFrom(playerX, playerY, playerZ) < 4096D)
         {
-            float f1 = worldObj.getLightBrightness(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord);
-            GL11.glColor3f(f1, f1, f1);
+            int i = worldObj.func_35451_b(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, 0);
+            int j = i % 0x10000;
+            int k = i / 0x10000;
+            GL13.glMultiTexCoord2f(33985 /*GL_TEXTURE1_ARB*/, (float)j / 1.0F, (float)k / 1.0F);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             renderTileEntityAt(tileentity, (double)tileentity.xCoord - staticPlayerX, (double)tileentity.yCoord - staticPlayerY, (double)tileentity.zCoord - staticPlayerZ, f);
         }
     }

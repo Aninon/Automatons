@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, World, Material, Block, 
-//            EntityPlayer, MathHelper, ItemStack, TileEntitySign
+//            Item, World, Material, EntityPlayer, 
+//            Block, MathHelper, ItemStack, TileEntitySign
 
 public class ItemSign extends Item
 {
@@ -48,13 +48,18 @@ public class ItemSign extends Item
         {
             i++;
         }
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
+        }
         if(!Block.signPost.canPlaceBlockAt(world, i, j, k))
         {
             return false;
         }
         if(l == 1)
         {
-            world.setBlockAndMetadataWithNotify(i, j, k, Block.signPost.blockID, MathHelper.floor_double((double)(((entityplayer.rotationYaw + 180F) * 16F) / 360F) + 0.5D) & 0xf);
+            int i1 = MathHelper.floor_double((double)(((entityplayer.rotationYaw + 180F) * 16F) / 360F) + 0.5D) & 0xf;
+            world.setBlockAndMetadataWithNotify(i, j, k, Block.signPost.blockID, i1);
         } else
         {
             world.setBlockAndMetadataWithNotify(i, j, k, Block.signWall.blockID, l);

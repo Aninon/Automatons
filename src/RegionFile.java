@@ -87,30 +87,30 @@ public class RegionFile
         }
     }
 
-    public synchronized int func_22209_a()
+    public synchronized int getSizeDelta()
     {
         int i = sizeDelta;
         sizeDelta = 0;
         return i;
     }
 
-    private void func_22211_a(String s)
+    private void debug(String s)
     {
     }
 
     private void debugln(String s)
     {
-        func_22211_a((new StringBuilder()).append(s).append("\n").toString());
+        debug((new StringBuilder()).append(s).append("\n").toString());
     }
 
     private void func_22199_a(String s, int i, int j, String s1)
     {
-        func_22211_a((new StringBuilder()).append("REGION ").append(s).append(" ").append(fileName.getName()).append("[").append(i).append(",").append(j).append("] = ").append(s1).toString());
+        debug((new StringBuilder()).append("REGION ").append(s).append(" ").append(fileName.getName()).append("[").append(i).append(",").append(j).append("] = ").append(s1).toString());
     }
 
     private void func_22197_a(String s, int i, int j, int k, String s1)
     {
-        func_22211_a((new StringBuilder()).append("REGION ").append(s).append(" ").append(fileName.getName()).append("[").append(i).append(",").append(j).append("] ").append(k).append("B = ").append(s1).toString());
+        debug((new StringBuilder()).append("REGION ").append(s).append(" ").append(fileName.getName()).append("[").append(i).append(",").append(j).append("] ").append(k).append("B = ").append(s1).toString());
     }
 
     private void debugln(String s, int i, int j, String s1)
@@ -267,7 +267,7 @@ public class RegionFile
                     setOffset(i, j, k1 << 8 | i2);
                 }
             }
-            func_22208_b(i, j, (int)(System.currentTimeMillis() / 1000L));
+            setChunkTimestamp(i, j, (int)(System.currentTimeMillis() / 1000L));
         }
         catch(IOException ioexception)
         {
@@ -295,7 +295,7 @@ public class RegionFile
         return offsets[i + j * 32];
     }
 
-    public boolean func_22202_c(int i, int j)
+    public boolean isChunkSaved(int i, int j)
     {
         return getOffset(i, j) != 0;
     }
@@ -308,7 +308,7 @@ public class RegionFile
         dataFile.writeInt(k);
     }
 
-    private void func_22208_b(int i, int j, int k)
+    private void setChunkTimestamp(int i, int j, int k)
         throws IOException
     {
         chunkTimestamps[i + j * 32] = k;
@@ -316,7 +316,7 @@ public class RegionFile
         dataFile.writeInt(k);
     }
 
-    public void func_22196_b()
+    public void close()
         throws IOException
     {
         dataFile.close();

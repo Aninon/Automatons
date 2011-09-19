@@ -14,39 +14,38 @@ final class J_JsonElementNodeSelector extends J_LeafFunctor
 
     J_JsonElementNodeSelector(int i)
     {
-//        super();
-        field_27069_a = i;
+        index = i;
     }
 
-    public boolean func_27067_a(List list)
+    public boolean matchsNode_(List list)
     {
-        return list.size() > field_27069_a;
+        return list.size() > index;
     }
 
-    public String func_27060_a()
+    public String shortForm()
     {
-        return Integer.toString(field_27069_a);
+        return Integer.toString(index);
     }
 
-    public J_JsonNode func_27068_b(List list)
+    public J_JsonNode typeSafeApplyTo_(List list)
     {
-        return (J_JsonNode)list.get(field_27069_a);
+        return (J_JsonNode)list.get(index);
     }
 
     public String toString()
     {
-        return (new StringBuilder()).append("an element at index [").append(field_27069_a).append("]").toString();
+        return (new StringBuilder()).append("an element at index [").append(index).append("]").toString();
     }
 
-    public Object func_27063_c(Object obj)
+    public Object typeSafeApplyTo(Object obj)
     {
-        return func_27068_b((List)obj);
+        return typeSafeApplyTo_((List)obj);
     }
 
-    public boolean func_27058_a(Object obj)
+    public boolean matchsNode(Object obj)
     {
-        return func_27067_a((List)obj);
+        return matchsNode_((List)obj);
     }
 
-    final int field_27069_a; /* synthetic field */
+    final int index; /* synthetic field */
 }

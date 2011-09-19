@@ -18,7 +18,7 @@ public class Vec3D
         return new Vec3D(d, d1, d2);
     }
 
-    public static void func_28215_a()
+    public static void clearVectorList()
     {
         vectorList.clear();
         nextVector = 0;
@@ -80,6 +80,11 @@ public class Vec3D
         {
             return createVector(xCoord / d, yCoord / d, zCoord / d);
         }
+    }
+
+    public double func_35612_b(Vec3D vec3d)
+    {
+        return xCoord * vec3d.xCoord + yCoord * vec3d.yCoord + zCoord * vec3d.zCoord;
     }
 
     public Vec3D crossProduct(Vec3D vec3d)

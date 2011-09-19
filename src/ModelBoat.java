@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelBase, ModelRenderer
+//            ModelBase, ModelRenderer, Entity
 
 public class ModelBoat extends ModelBase
 {
@@ -14,11 +14,11 @@ public class ModelBoat extends ModelBase
     public ModelBoat()
     {
         boatSides = new ModelRenderer[5];
-        boatSides[0] = new ModelRenderer(0, 8);
-        boatSides[1] = new ModelRenderer(0, 0);
-        boatSides[2] = new ModelRenderer(0, 0);
-        boatSides[3] = new ModelRenderer(0, 0);
-        boatSides[4] = new ModelRenderer(0, 0);
+        boatSides[0] = new ModelRenderer(this, 0, 8);
+        boatSides[1] = new ModelRenderer(this, 0, 0);
+        boatSides[2] = new ModelRenderer(this, 0, 0);
+        boatSides[3] = new ModelRenderer(this, 0, 0);
+        boatSides[4] = new ModelRenderer(this, 0, 0);
         byte byte0 = 24;
         byte byte1 = 6;
         byte byte2 = 20;
@@ -39,7 +39,7 @@ public class ModelBoat extends ModelBase
         boatSides[3].rotateAngleY = 3.141593F;
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         for(int i = 0; i < 5; i++)
         {

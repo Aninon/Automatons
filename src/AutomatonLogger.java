@@ -12,43 +12,43 @@ public class AutomatonLogger {
 
 	static File f;
 
-	public static int automaton=104;
-	public static int itemOmni=105;
-	public static int itemBally=106;
-	public static int cheatStick=107;
-	public static int automatonCore=108;
-	public static int itemBeacon=109;
-	public static int biter=110;
-	public static int smack=111;
+	public static int automaton=144;
+	public static int itemOmni=145;
+	public static int itemBally=146;
+	public static int cheatStick=147;
+	public static int automatonCore=149;
+	public static int itemBeacon=150;
+	public static int biter=151;
+	public static int smack=152;
 	//112
 	//113
-	public static int itemBot=114;
-	public static int superCore=115;
+	public static int itemBot=153;
+	public static int superCore=154;
 	//116
-	public static int blaster=117;
-	public static int guard=118;
-	public static int stuffs=119;
-	public static int mortar=120;
-	public static int pickTech=121;
-	public static int itemFactotum=122;
-	public static int regulator=123;
-	public static int daymaker=124;
-	public static int techifier=125;
-	public static int naturizer=126;
+	public static int blaster=155;
+	public static int guard=156;
+	public static int stuffs=157;
+	public static int mortar=158;
+	public static int pickTech=159;
+	public static int itemFactotum=160;
+	public static int regulator=161;
+	public static int daymaker=162;
+	public static int techifier=163;
+	public static int naturizer=164;
 
-	public static int tech=97;
-	public static int crystal=98;
-	public static int crink=99;
-	public static int fakeCrystal=100;
-	public static int glowy=101;
-	public static int frass=102;
-	public static int dapling=103;
-	public static int duplex=104;
-	public static int boing=105;
-	public static int heal=106;
-	public static int grower=107;
-	public static int frass2=108;
-	public static int hollow=109;
+	public static int tech=118;
+	public static int crystal=119;
+	public static int crink=120;
+	public static int fakeCrystal=121;
+	public static int glowy=122;
+	public static int frass=123;
+	public static int dapling=124;
+	public static int duplex=125;
+	public static int boing=126;
+	public static int heal=127;
+	public static int grower=128;
+	public static int frass2=129;
+	public static int hollow=130;
 	public static int tv=110;
 	public static int sky=111;
 	public static int deployer=112;
@@ -57,7 +57,7 @@ public class AutomatonLogger {
 	public static int arbor=117;
 	
 	
-	public static int worker=58;
+	public static int worker=108;
 	public static int guardTurret=80;
 	public static int sentry=77;
 	public static int watcher=79;

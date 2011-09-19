@@ -53,7 +53,7 @@ public class ItemMap extends ItemMapBase
         return mapdata;
     }
 
-    public void func_28011_a(World world, Entity entity, MapData mapdata)
+    public void updateMapData(World world, Entity entity, MapData mapdata)
     {
         if(world.worldProvider.worldType != mapdata.field_28178_d)
         {
@@ -248,7 +248,7 @@ public class ItemMap extends ItemMapBase
         }
         if(flag)
         {
-            func_28011_a(world, entity, mapdata);
+            updateMapData(world, entity, mapdata);
         }
     }
 

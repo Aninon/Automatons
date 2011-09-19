@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelBase, ModelRenderer
+//            ModelBase, ModelRenderer, Entity
 
 public class ModelMinecart extends ModelBase
 {
@@ -14,12 +14,12 @@ public class ModelMinecart extends ModelBase
     public ModelMinecart()
     {
         sideModels = new ModelRenderer[7];
-        sideModels[0] = new ModelRenderer(0, 10);
-        sideModels[1] = new ModelRenderer(0, 0);
-        sideModels[2] = new ModelRenderer(0, 0);
-        sideModels[3] = new ModelRenderer(0, 0);
-        sideModels[4] = new ModelRenderer(0, 0);
-        sideModels[5] = new ModelRenderer(44, 10);
+        sideModels[0] = new ModelRenderer(this, 0, 10);
+        sideModels[1] = new ModelRenderer(this, 0, 0);
+        sideModels[2] = new ModelRenderer(this, 0, 0);
+        sideModels[3] = new ModelRenderer(this, 0, 0);
+        sideModels[4] = new ModelRenderer(this, 0, 0);
+        sideModels[5] = new ModelRenderer(this, 44, 10);
         byte byte0 = 20;
         byte byte1 = 8;
         byte byte2 = 16;
@@ -43,7 +43,7 @@ public class ModelMinecart extends ModelBase
         sideModels[5].rotateAngleX = -1.570796F;
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         sideModels[5].rotationPointY = 4F - f2;
         for(int i = 0; i < 6; i++)

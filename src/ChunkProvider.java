@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
-//            IChunkProvider, EmptyChunk, ChunkCoordIntPair, Chunk, 
-//            IChunkLoader, World, ModLoader, IProgressUpdate
+//            IChunkProvider, PlayerList, EmptyChunk, ChunkCoordIntPair, 
+//            World, ChunkCoordinates, Chunk, IChunkLoader, 
+//            ModLoader, IProgressUpdate
 
 public class ChunkProvider
     implements IChunkProvider
@@ -18,7 +19,7 @@ public class ChunkProvider
     public ChunkProvider(World world, IChunkLoader ichunkloader, IChunkProvider ichunkprovider)
     {
         droppedChunksSet = new HashSet();
-        chunkMap = new HashMap();
+        chunkMap = new PlayerList();
         chunkList = new ArrayList();
         field_28064_b = new EmptyChunk(world, new byte[32768], 0, 0);
         worldObj = world;
@@ -28,16 +29,33 @@ public class ChunkProvider
 
     public boolean chunkExists(int i, int j)
     {
-        return chunkMap.containsKey(Integer.valueOf(ChunkCoordIntPair.chunkXZ2Int(i, j)));
+        return chunkMap.func_35575_b(ChunkCoordIntPair.chunkXZ2Int(i, j));
     }
 
-    public Chunk prepareChunk(int i, int j)
+    public void func_35391_d(int i, int j)
     {
-        int k = ChunkCoordIntPair.chunkXZ2Int(i, j);
-        droppedChunksSet.remove(Integer.valueOf(k));
-        Chunk chunk = (Chunk)chunkMap.get(Integer.valueOf(k));
+        ChunkCoordinates chunkcoordinates = worldObj.getSpawnPoint();
+        int k = (i * 16 + 8) - chunkcoordinates.posX;
+        int l = (j * 16 + 8) - chunkcoordinates.posZ;
+        char c = '\200';
+        if(k < -c || k > c || l < -c || l > c)
+        {
+            droppedChunksSet.add(Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(i, j)));
+        }
+    }
+
+    public Chunk loadChunk(int i, int j)
+    {
+        long l = ChunkCoordIntPair.chunkXZ2Int(i, j);
+        droppedChunksSet.remove(Long.valueOf(l));
+        Chunk chunk = (Chunk)chunkMap.func_35578_a(l);
         if(chunk == null)
         {
+            int k = 0x1c9c3c;
+            if(i < -k || j < -k || i >= k || j >= k)
+            {
+                return field_28064_b;
+            }
             chunk = loadChunkFromFile(i, j);
             if(chunk == null)
             {
@@ -49,43 +67,22 @@ public class ChunkProvider
                     chunk = chunkProvider.provideChunk(i, j);
                 }
             }
-            chunkMap.put(Integer.valueOf(k), chunk);
+            chunkMap.func_35577_a(l, chunk);
             chunkList.add(chunk);
             if(chunk != null)
             {
                 chunk.func_4143_d();
                 chunk.onChunkLoad();
             }
-            if(!chunk.isTerrainPopulated && chunkExists(i + 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i + 1, j))
-            {
-                populate(this, i, j);
-            }
-            if(chunkExists(i - 1, j) && !provideChunk(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j))
-            {
-                populate(this, i - 1, j);
-            }
-            if(chunkExists(i, j - 1) && !provideChunk(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j))
-            {
-                populate(this, i, j - 1);
-            }
-            if(chunkExists(i - 1, j - 1) && !provideChunk(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j))
-            {
-                populate(this, i - 1, j - 1);
-            }
+            chunk.func_35843_a(this, this, i, j);
         }
         return chunk;
     }
 
     public Chunk provideChunk(int i, int j)
     {
-        Chunk chunk = (Chunk)chunkMap.get(Integer.valueOf(ChunkCoordIntPair.chunkXZ2Int(i, j)));
-        if(chunk == null)
-        {
-            return prepareChunk(i, j);
-        } else
-        {
-            return chunk;
-        }
+        Chunk chunk = (Chunk)chunkMap.func_35578_a(ChunkCoordIntPair.chunkXZ2Int(i, j));
+        return chunk != null ? chunk : loadChunk(i, j);
     }
 
     private Chunk loadChunkFromFile(int i, int j)
@@ -112,34 +109,32 @@ public class ChunkProvider
 
     private void func_28063_a(Chunk chunk)
     {
-        if(chunkLoader == null)
+        if(chunkLoader != null)
         {
-            return;
-        }
-        try
-        {
-            chunkLoader.saveExtraChunkData(worldObj, chunk);
-        }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
+            try
+            {
+                chunkLoader.saveExtraChunkData(worldObj, chunk);
+            }
+            catch(Exception exception)
+            {
+                exception.printStackTrace();
+            }
         }
     }
 
     private void func_28062_b(Chunk chunk)
     {
-        if(chunkLoader == null)
+        if(chunkLoader != null)
         {
-            return;
-        }
-        try
-        {
-            chunk.lastSaveTime = worldObj.getWorldTime();
-            chunkLoader.saveChunk(worldObj, chunk);
-        }
-        catch(IOException ioexception)
-        {
-            ioexception.printStackTrace();
+            try
+            {
+                chunk.lastSaveTime = worldObj.getWorldTime();
+                chunkLoader.saveChunk(worldObj, chunk);
+            }
+            catch(IOException ioexception)
+            {
+                ioexception.printStackTrace();
+            }
         }
     }
 
@@ -196,14 +191,29 @@ public class ChunkProvider
         {
             if(!droppedChunksSet.isEmpty())
             {
-                Integer integer = (Integer)droppedChunksSet.iterator().next();
-                Chunk chunk = (Chunk)chunkMap.get(integer);
-                chunk.onChunkUnload();
-                func_28062_b(chunk);
-                func_28063_a(chunk);
-                droppedChunksSet.remove(integer);
-                chunkMap.remove(integer);
-                chunkList.remove(chunk);
+                Long long1 = (Long)droppedChunksSet.iterator().next();
+                Chunk chunk1 = (Chunk)chunkMap.func_35578_a(long1.longValue());
+                chunk1.onChunkUnload();
+                func_28062_b(chunk1);
+                func_28063_a(chunk1);
+                droppedChunksSet.remove(long1);
+                chunkMap.func_35574_d(long1.longValue());
+                chunkList.remove(chunk1);
+            }
+        }
+
+        for(int j = 0; j < 10; j++)
+        {
+            if(field_35392_h >= chunkList.size())
+            {
+                field_35392_h = 0;
+                break;
+            }
+            Chunk chunk = (Chunk)chunkList.get(field_35392_h++);
+            EntityPlayer entityplayer = worldObj.getClosestPlayer((double)(chunk.xPosition << 4) + 8D, 64D, (double)(chunk.zPosition << 4) + 8D, 288D);
+            if(entityplayer == null)
+            {
+                func_35391_d(chunk.xPosition, chunk.zPosition);
             }
         }
 
@@ -221,14 +231,15 @@ public class ChunkProvider
 
     public String makeString()
     {
-        return (new StringBuilder("ServerChunkCache: ")).append(chunkMap.size()).append(" Drop: ").append(droppedChunksSet.size()).toString();
+        return (new StringBuilder("ServerChunkCache: ")).append(chunkMap.func_35576_a()).append(" Drop: ").append(droppedChunksSet.size()).toString();
     }
 
     private Set droppedChunksSet;
     private Chunk field_28064_b;
     private IChunkProvider chunkProvider;
     private IChunkLoader chunkLoader;
-    private Map chunkMap;
+    private PlayerList chunkMap;
     private List chunkList;
     private World worldObj;
+    private int field_35392_h;
 }

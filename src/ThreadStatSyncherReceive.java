@@ -14,7 +14,6 @@ class ThreadStatSyncherReceive extends Thread
 
     ThreadStatSyncherReceive(StatsSyncher statssyncher)
     {
-//        super();
         syncher = statssyncher;
     }
 
@@ -37,7 +36,7 @@ class ThreadStatSyncherReceive extends Thread
         }
         finally
         {
-            StatsSyncher.func_27416_a(syncher, false);
+            StatsSyncher.setBusy(syncher, false);
         }
     }
 

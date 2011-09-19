@@ -9,14 +9,15 @@ import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
 //            IBlockAccess, WorldProvider, WorldInfo, MapStorage, 
-//            ISaveHandler, ChunkProvider, EntityPlayer, ChunkProviderLoadOrGenerate, 
-//            MathHelper, IChunkProvider, IProgressUpdate, Chunk, 
-//            Material, Block, IWorldAccess, EnumSkyBlock, 
-//            Vec3D, Entity, AxisAlignedBB, WorldChunkManager, 
-//            BiomeGenBase, NextTickListEntry, TileEntity, BlockFire, 
-//            BlockFluid, Explosion, MetadataChunkBlock, SpawnerAnimals, 
+//            ISaveHandler, ChunkProvider, WorldChunkManager, ChunkPosition, 
+//            EntityPlayer, ChunkProviderLoadOrGenerate, MathHelper, IChunkProvider, 
+//            IProgressUpdate, Chunk, Material, Block, 
+//            IWorldAccess, EnumSkyBlock, Vec3D, Entity, 
+//            AxisAlignedBB, BiomeGenBase, NextTickListEntry, TileEntity, 
+//            BlockFire, BlockFluid, Explosion, SpawnerAnimals, 
 //            ChunkCoordIntPair, EntityLightningBolt, ChunkCache, Pathfinder, 
-//            ChunkCoordinates, MovingObjectPosition, PathEntity, MapDataBase
+//            ChunkCoordinates, WorldSettings, MovingObjectPosition, PathEntity, 
+//            MapDataBase
 
 public class World
     implements IBlockAccess
@@ -27,19 +28,19 @@ public class World
         return worldProvider.worldChunkMgr;
     }
 
-    public World(ISaveHandler isavehandler, String s, WorldProvider worldprovider, long l)
+    public World(ISaveHandler isavehandler, String s, WorldProvider worldprovider, WorldSettings worldsettings)
     {
         scheduledUpdatesAreImmediate = false;
-        lightingToUpdate = new ArrayList();
         loadedEntityList = new ArrayList();
         unloadedEntityList = new ArrayList();
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
         loadedTileEntityList = new ArrayList();
         addedTileEntityList = new ArrayList();
+        field_34900_Q = new ArrayList();
         playerEntities = new ArrayList();
         weatherEffects = new ArrayList();
-        field_1019_F = 0xffffffL;
+        cloudColour = 0xffffffL;
         skylightSubtracted = 0;
         updateLCG = (new Random()).nextInt();
         lastLightningBolt = 0;
@@ -51,15 +52,15 @@ public class World
         isNewWorld = false;
         worldAccesses = new ArrayList();
         collidingBoundingBoxes = new ArrayList();
-        lightingUpdatesCounter = 0;
         spawnHostileMobs = true;
         spawnPeacefulMobs = true;
         positionsToUpdate = new HashSet();
         soundCounter = rand.nextInt(12000);
+        field_35466_H = new int[32768];
         field_1012_M = new ArrayList();
         multiplayerWorld = false;
         saveHandler = isavehandler;
-        worldInfo = new WorldInfo(l, s);
+        worldInfo = new WorldInfo(worldsettings, s);
         worldProvider = worldprovider;
         mapStorage = new MapStorage(isavehandler);
         worldprovider.registerWorld(this);
@@ -71,16 +72,16 @@ public class World
     public World(World world, WorldProvider worldprovider)
     {
         scheduledUpdatesAreImmediate = false;
-        lightingToUpdate = new ArrayList();
         loadedEntityList = new ArrayList();
         unloadedEntityList = new ArrayList();
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
         loadedTileEntityList = new ArrayList();
         addedTileEntityList = new ArrayList();
+        field_34900_Q = new ArrayList();
         playerEntities = new ArrayList();
         weatherEffects = new ArrayList();
-        field_1019_F = 0xffffffL;
+        cloudColour = 0xffffffL;
         skylightSubtracted = 0;
         updateLCG = (new Random()).nextInt();
         lastLightningBolt = 0;
@@ -92,11 +93,11 @@ public class World
         isNewWorld = false;
         worldAccesses = new ArrayList();
         collidingBoundingBoxes = new ArrayList();
-        lightingUpdatesCounter = 0;
         spawnHostileMobs = true;
         spawnPeacefulMobs = true;
         positionsToUpdate = new HashSet();
         soundCounter = rand.nextInt(12000);
+        field_35466_H = new int[32768];
         field_1012_M = new ArrayList();
         multiplayerWorld = false;
         lockTimestamp = world.lockTimestamp;
@@ -110,24 +111,24 @@ public class World
         func_27163_E();
     }
 
-    public World(ISaveHandler isavehandler, String s, long l)
+    public World(ISaveHandler isavehandler, String s, WorldSettings worldsettings)
     {
-        this(isavehandler, s, l, ((WorldProvider) (null)));
+        this(isavehandler, s, worldsettings, ((WorldProvider) (null)));
     }
 
-    public World(ISaveHandler isavehandler, String s, long l, WorldProvider worldprovider)
+    public World(ISaveHandler isavehandler, String s, WorldSettings worldsettings, WorldProvider worldprovider)
     {
         scheduledUpdatesAreImmediate = false;
-        lightingToUpdate = new ArrayList();
         loadedEntityList = new ArrayList();
         unloadedEntityList = new ArrayList();
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
         loadedTileEntityList = new ArrayList();
         addedTileEntityList = new ArrayList();
+        field_34900_Q = new ArrayList();
         playerEntities = new ArrayList();
         weatherEffects = new ArrayList();
-        field_1019_F = 0xffffffL;
+        cloudColour = 0xffffffL;
         skylightSubtracted = 0;
         updateLCG = (new Random()).nextInt();
         lastLightningBolt = 0;
@@ -139,11 +140,11 @@ public class World
         isNewWorld = false;
         worldAccesses = new ArrayList();
         collidingBoundingBoxes = new ArrayList();
-        lightingUpdatesCounter = 0;
         spawnHostileMobs = true;
         spawnPeacefulMobs = true;
         positionsToUpdate = new HashSet();
         soundCounter = rand.nextInt(12000);
+        field_35466_H = new int[32768];
         field_1012_M = new ArrayList();
         multiplayerWorld = false;
         saveHandler = isavehandler;
@@ -164,7 +165,7 @@ public class World
         boolean flag = false;
         if(worldInfo == null)
         {
-            worldInfo = new WorldInfo(l, s);
+            worldInfo = new WorldInfo(worldsettings, s);
             flag = true;
         } else
         {
@@ -189,14 +190,31 @@ public class World
     protected void getInitialSpawnLocation()
     {
         findingSpawnPoint = true;
+        WorldChunkManager worldchunkmanager = getWorldChunkManager();
+        List list = worldchunkmanager.func_35559_a();
+        Random random = new Random(getRandomSeed());
+        ChunkPosition chunkposition = worldchunkmanager.func_35556_a(0, 0, 256, list, random);
         int i = 0;
         byte byte0 = 64;
-        int j;
-        for(j = 0; !worldProvider.canCoordinateBeSpawn(i, j); j += rand.nextInt(64) - rand.nextInt(64))
+        int j = 0;
+        if(chunkposition != null)
         {
-            i += rand.nextInt(64) - rand.nextInt(64);
+            i = chunkposition.x;
+            j = chunkposition.z;
+        } else
+        {
+            System.out.println("Unable to find spawn biome");
         }
-
+        int k = 0;
+        do
+        {
+            if(worldProvider.canCoordinateBeSpawn(i, j))
+            {
+                break;
+            }
+            i += random.nextInt(64) - random.nextInt(64);
+            j += random.nextInt(64) - random.nextInt(64);
+        } while(++k != 1000);
         worldInfo.setSpawn(i, byte0, j);
         findingSpawnPoint = false;
     }
@@ -208,12 +226,17 @@ public class World
             worldInfo.setSpawnY(64);
         }
         int i = worldInfo.getSpawnX();
-        int j;
-        for(j = worldInfo.getSpawnZ(); getFirstUncoveredBlock(i, j) == 0; j += rand.nextInt(8) - rand.nextInt(8))
+        int j = worldInfo.getSpawnZ();
+        int k = 0;
+        do
         {
+            if(getFirstUncoveredBlock(i, j) != 0)
+            {
+                break;
+            }
             i += rand.nextInt(8) - rand.nextInt(8);
-        }
-
+            j += rand.nextInt(8) - rand.nextInt(8);
+        } while(++k != 10000);
         worldInfo.setSpawnX(i);
         worldInfo.setSpawnZ(j);
     }
@@ -294,7 +317,7 @@ public class World
 
     public int getBlockId(int i, int j, int k)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return 0;
         }
@@ -376,7 +399,7 @@ public class World
 
     public boolean setBlockAndMetadata(int i, int j, int k, int l, int i1)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return false;
         }
@@ -390,13 +413,15 @@ public class World
         } else
         {
             Chunk chunk = getChunkFromChunkCoords(i >> 4, k >> 4);
-            return chunk.setBlockIDWithMetadata(i & 0xf, j, k & 0xf, l, i1);
+            boolean flag = chunk.setBlockIDWithMetadata(i & 0xf, j, k & 0xf, l, i1);
+            func_35463_p(i, j, k);
+            return flag;
         }
     }
 
     public boolean setBlock(int i, int j, int k, int l)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return false;
         }
@@ -410,7 +435,9 @@ public class World
         } else
         {
             Chunk chunk = getChunkFromChunkCoords(i >> 4, k >> 4);
-            return chunk.setBlockID(i & 0xf, j, k & 0xf, l);
+            boolean flag = chunk.setBlockID(i & 0xf, j, k & 0xf, l);
+            func_35463_p(i, j, k);
+            return flag;
         }
     }
 
@@ -428,7 +455,7 @@ public class World
 
     public int getBlockMetadata(int i, int j, int k)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return 0;
         }
@@ -453,7 +480,7 @@ public class World
         if(setBlockMetadata(i, j, k, l))
         {
             int i1 = getBlockId(i, j, k);
-            if(Block.neighborNotifyOnMetadataChangeDisabled[i1 & 0xff])
+            if(Block.requiresSelfNotify[i1 & 0xff])
             {
                 notifyBlockChange(i, j, k, i1);
             } else
@@ -465,7 +492,7 @@ public class World
 
     public boolean setBlockMetadata(int i, int j, int k, int l)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return false;
         }
@@ -533,6 +560,11 @@ public class World
             l = k;
             k = i1;
         }
+        for(int j1 = k; j1 <= l; j1++)
+        {
+            func_35459_c(EnumSkyBlock.Sky, i, j1, j);
+        }
+
         markBlocksDirty(i, k, j, i, l, j);
     }
 
@@ -602,7 +634,7 @@ public class World
 
     public int getBlockLightValue_do(int i, int j, int k, boolean flag)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return 15;
         }
@@ -649,35 +681,9 @@ public class World
         return chunk.getBlockLightValue(i, j, k, skylightSubtracted);
     }
 
-    public boolean canExistingBlockSeeTheSky(int i, int j, int k)
-    {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
-        {
-            return false;
-        }
-        if(j < 0)
-        {
-            return false;
-        }
-        if(j >= 128)
-        {
-            return true;
-        }
-        if(!chunkExists(i >> 4, k >> 4))
-        {
-            return false;
-        } else
-        {
-            Chunk chunk = getChunkFromChunkCoords(i >> 4, k >> 4);
-            i &= 0xf;
-            k &= 0xf;
-            return chunk.canBlockSeeTheSky(i, j, k);
-        }
-    }
-
     public int getHeightValue(int i, int j)
     {
-        if(i < 0xfe17b800 || j < 0xfe17b800 || i >= 0x1e84800 || j > 0x1e84800)
+        if(i < 0xfe363c80 || j < 0xfe363c80 || i >= 0x1c9c380 || j >= 0x1c9c380)
         {
             return 0;
         }
@@ -691,34 +697,55 @@ public class World
         }
     }
 
-    public void neighborLightPropagationChanged(EnumSkyBlock enumskyblock, int i, int j, int k, int l)
+    public int func_35457_a(EnumSkyBlock enumskyblock, int i, int j, int k)
     {
-        if(worldProvider.hasNoSky && enumskyblock == EnumSkyBlock.Sky)
+        if(j < 0)
         {
-            return;
+            j = 0;
         }
-        if(!blockExists(i, j, k))
+        if(j >= 128 && enumskyblock == EnumSkyBlock.Sky)
         {
-            return;
+            return 15;
         }
-        if(enumskyblock == EnumSkyBlock.Sky)
+        if(j < 0 || j >= 128 || i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
-            if(canExistingBlockSeeTheSky(i, j, k))
+            return enumskyblock.field_1722_c;
+        }
+        int l = i >> 4;
+        int i1 = k >> 4;
+        if(!chunkExists(l, i1))
+        {
+            return 0;
+        }
+        int j1 = getBlockId(i, j, k);
+        if(j1 == Block.stairSingle.blockID || j1 == Block.tilledField.blockID || j1 == Block.stairCompactCobblestone.blockID || j1 == Block.stairCompactPlanks.blockID)
+        {
+            int k1 = getSavedLightValue(enumskyblock, i, j + 1, k);
+            int l1 = getSavedLightValue(enumskyblock, i + 1, j, k);
+            int i2 = getSavedLightValue(enumskyblock, i - 1, j, k);
+            int j2 = getSavedLightValue(enumskyblock, i, j, k + 1);
+            int k2 = getSavedLightValue(enumskyblock, i, j, k - 1);
+            if(l1 > k1)
             {
-                l = 15;
+                k1 = l1;
             }
+            if(i2 > k1)
+            {
+                k1 = i2;
+            }
+            if(j2 > k1)
+            {
+                k1 = j2;
+            }
+            if(k2 > k1)
+            {
+                k1 = k2;
+            }
+            return k1;
         } else
-        if(enumskyblock == EnumSkyBlock.Block)
         {
-            int i1 = getBlockId(i, j, k);
-            if(Block.lightValue[i1] > l)
-            {
-                l = Block.lightValue[i1];
-            }
-        }
-        if(getSavedLightValue(enumskyblock, i, j, k) != l)
-        {
-            scheduleLightingUpdate(enumskyblock, i, j, k, i, j, k);
+            Chunk chunk = getChunkFromChunkCoords(l, i1);
+            return chunk.getSavedLightValue(enumskyblock, i & 0xf, j, k & 0xf);
         }
     }
 
@@ -732,7 +759,7 @@ public class World
         {
             j = 127;
         }
-        if(j < 0 || j >= 128 || i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(j < 0 || j >= 128 || i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return enumskyblock.field_1722_c;
         }
@@ -750,7 +777,7 @@ public class World
 
     public void setLightValue(EnumSkyBlock enumskyblock, int i, int j, int k, int l)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k >= 0x1c9c380)
         {
             return;
         }
@@ -775,6 +802,17 @@ public class World
 
     }
 
+    public int func_35451_b(int i, int j, int k, int l)
+    {
+        int i1 = func_35457_a(EnumSkyBlock.Sky, i, j, k);
+        int j1 = func_35457_a(EnumSkyBlock.Block, i, j, k);
+        if(j1 < l)
+        {
+            j1 = l;
+        }
+        return i1 << 20 | j1 << 4;
+    }
+
     public float getBrightness(int i, int j, int k, int l)
     {
         int i1 = getBlockLightValue(i, j, k);
@@ -797,15 +835,15 @@ public class World
 
     public MovingObjectPosition rayTraceBlocks(Vec3D vec3d, Vec3D vec3d1)
     {
-        return func_28105_a(vec3d, vec3d1, false, false);
+        return rayTraceBlocks_do_do(vec3d, vec3d1, false, false);
     }
 
     public MovingObjectPosition rayTraceBlocks_do(Vec3D vec3d, Vec3D vec3d1, boolean flag)
     {
-        return func_28105_a(vec3d, vec3d1, flag, false);
+        return rayTraceBlocks_do_do(vec3d, vec3d1, flag, false);
     }
 
-    public MovingObjectPosition func_28105_a(Vec3D vec3d, Vec3D vec3d1, boolean flag, boolean flag1)
+    public MovingObjectPosition rayTraceBlocks_do_do(Vec3D vec3d, Vec3D vec3d1, boolean flag, boolean flag1)
     {
         if(Double.isNaN(vec3d.xCoord) || Double.isNaN(vec3d.yCoord) || Double.isNaN(vec3d.zCoord))
         {
@@ -1158,7 +1196,25 @@ public class World
         return (int)(f2 * 11F);
     }
 
-    public Vec3D func_4079_a(Entity entity, float f)
+    public float func_35464_b(float f)
+    {
+        float f1 = getCelestialAngle(f);
+        float f2 = 1.0F - (MathHelper.cos(f1 * 3.141593F * 2.0F) * 2.0F + 0.2F);
+        if(f2 < 0.0F)
+        {
+            f2 = 0.0F;
+        }
+        if(f2 > 1.0F)
+        {
+            f2 = 1.0F;
+        }
+        f2 = 1.0F - f2;
+        f2 = (float)((double)f2 * (1.0D - (double)(getRainStrength(f) * 5F) / 16D));
+        f2 = (float)((double)f2 * (1.0D - (double)(getWeightedThunderStrength(f) * 5F) / 16D));
+        return f2 * 0.8F + 0.2F;
+    }
+
+    public Vec3D getSkyColor(Entity entity, float f)
     {
         float f1 = getCelestialAngle(f);
         float f2 = MathHelper.cos(f1 * 3.141593F * 2.0F) * 2.0F + 0.5F;
@@ -1172,7 +1228,7 @@ public class World
         }
         int i = MathHelper.floor_double(entity.posX);
         int j = MathHelper.floor_double(entity.posZ);
-        float f3 = (float)getWorldChunkManager().getTemperature(i, j);
+        float f3 = getWorldChunkManager().func_35554_b(i, j);
         int k = getWorldChunkManager().getBiomeGenAt(i, j).getSkyColorByTemp(f3);
         float f4 = (float)(k >> 16 & 0xff) / 255F;
         float f5 = (float)(k >> 8 & 0xff) / 255F;
@@ -1215,10 +1271,16 @@ public class World
 
     public float getCelestialAngle(float f)
     {
-        return worldProvider.calculateCelestialAngle(worldInfo.getWorldTime(), f);
+        return worldProvider.calculateCelestialAngle(worldInfo.getWorldTime(), f) + (float)(field_35467_J + (field_35468_K - field_35467_J) * (double)f);
     }
 
-    public Vec3D func_628_d(float f)
+    public float func_35456_d(float f)
+    {
+        float f1 = getCelestialAngle(f);
+        return f1 * 3.141593F * 2.0F;
+    }
+
+    public Vec3D drawClouds(float f)
     {
         float f1 = getCelestialAngle(f);
         float f2 = MathHelper.cos(f1 * 3.141593F * 2.0F) * 2.0F + 0.5F;
@@ -1230,9 +1292,9 @@ public class World
         {
             f2 = 1.0F;
         }
-        float f3 = (float)(field_1019_F >> 16 & 255L) / 255F;
-        float f4 = (float)(field_1019_F >> 8 & 255L) / 255F;
-        float f5 = (float)(field_1019_F & 255L) / 255F;
+        float f3 = (float)(cloudColour >> 16 & 255L) / 255F;
+        float f4 = (float)(cloudColour >> 8 & 255L) / 255F;
+        float f5 = (float)(cloudColour & 255L) / 255F;
         float f6 = getRainStrength(f);
         if(f6 > 0.0F)
         {
@@ -1263,7 +1325,12 @@ public class World
         return worldProvider.func_4096_a(f1, f);
     }
 
-    public int findTopSolidBlock(int i, int j)
+    public int func_35461_e(int i, int j)
+    {
+        return getChunkFromBlockCoords(i, j).func_35840_c(i & 0xf, j & 0xf);
+    }
+
+    public int getTopSolidOrLiquidBlock(int i, int j)
     {
         Chunk chunk = getChunkFromBlockCoords(i, j);
         int k = 127;
@@ -1272,8 +1339,7 @@ public class World
         while(k > 0) 
         {
             int l = chunk.getBlockID(i, k, j);
-            Material material = l != 0 ? Block.blocksList[l].blockMaterial : Material.air;
-            if(!material.getIsSolid() && !material.getIsLiquid())
+            if(l == 0 || !Block.blocksList[l].blockMaterial.getIsSolid() || Block.blocksList[l].blockMaterial == Material.leaves)
             {
                 k--;
             } else
@@ -1398,21 +1464,29 @@ public class World
                 break;
             }
             TileEntity tileentity = (TileEntity)iterator.next();
-            if(!tileentity.func_31006_g())
+            if(!tileentity.isInvalid() && tileentity.worldObj != null)
             {
                 tileentity.updateEntity();
             }
-            if(tileentity.func_31006_g())
+            if(tileentity.isInvalid())
             {
                 iterator.remove();
-                Chunk chunk = getChunkFromChunkCoords(tileentity.xCoord >> 4, tileentity.zCoord >> 4);
-                if(chunk != null)
+                if(chunkExists(tileentity.xCoord >> 4, tileentity.zCoord >> 4))
                 {
-                    chunk.removeChunkBlockTileEntity(tileentity.xCoord & 0xf, tileentity.yCoord, tileentity.zCoord & 0xf);
+                    Chunk chunk = getChunkFromChunkCoords(tileentity.xCoord >> 4, tileentity.zCoord >> 4);
+                    if(chunk != null)
+                    {
+                        chunk.removeChunkBlockTileEntity(tileentity.xCoord & 0xf, tileentity.yCoord, tileentity.zCoord & 0xf);
+                    }
                 }
             }
         } while(true);
         scanningTileEntities = false;
+        if(!field_34900_Q.isEmpty())
+        {
+            loadedTileEntityList.removeAll(field_34900_Q);
+            field_34900_Q.clear();
+        }
         if(!addedTileEntityList.isEmpty())
         {
             Iterator iterator1 = addedTileEntityList.iterator();
@@ -1423,16 +1497,19 @@ public class World
                     break;
                 }
                 TileEntity tileentity1 = (TileEntity)iterator1.next();
-                if(!tileentity1.func_31006_g())
+                if(!tileentity1.isInvalid())
                 {
                     if(!loadedTileEntityList.contains(tileentity1))
                     {
                         loadedTileEntityList.add(tileentity1);
                     }
-                    Chunk chunk1 = getChunkFromChunkCoords(tileentity1.xCoord >> 4, tileentity1.zCoord >> 4);
-                    if(chunk1 != null)
+                    if(chunkExists(tileentity1.xCoord >> 4, tileentity1.zCoord >> 4))
                     {
-                        chunk1.setChunkBlockTileEntity(tileentity1.xCoord & 0xf, tileentity1.yCoord, tileentity1.zCoord & 0xf, tileentity1);
+                        Chunk chunk1 = getChunkFromChunkCoords(tileentity1.xCoord >> 4, tileentity1.zCoord >> 4);
+                        if(chunk1 != null)
+                        {
+                            chunk1.setChunkBlockTileEntity(tileentity1.xCoord & 0xf, tileentity1.yCoord, tileentity1.zCoord & 0xf, tileentity1);
+                        }
                     }
                     markBlockNeedsUpdate(tileentity1.xCoord, tileentity1.yCoord, tileentity1.zCoord);
                 }
@@ -1441,7 +1518,7 @@ public class World
         }
     }
 
-    public void func_31054_a(Collection collection)
+    public void addTileEntity(Collection collection)
     {
         if(scanningTileEntities)
         {
@@ -1643,7 +1720,7 @@ public class World
                     {
                         continue;
                     }
-                    double d1 = (float)(l1 + 1) - BlockFluid.getPercentAir(getBlockMetadata(k1, l1, i2));
+                    double d1 = (float)(l1 + 1) - BlockFluid.getFluidHeightPercent(getBlockMetadata(k1, l1, i2));
                     if((double)l >= d1)
                     {
                         flag = true;
@@ -1816,7 +1893,7 @@ public class World
         return null;
     }
 
-    public String func_687_d()
+    public String getDebugLoadedEntities()
     {
         return (new StringBuilder()).append("All: ").append(loadedEntityList.size()).toString();
     }
@@ -1840,7 +1917,7 @@ public class World
 
     public void setBlockTileEntity(int i, int j, int k, TileEntity tileentity)
     {
-        if(!tileentity.func_31006_g())
+        if(tileentity != null && !tileentity.isInvalid())
         {
             if(scanningTileEntities)
             {
@@ -1865,7 +1942,7 @@ public class World
         TileEntity tileentity = getBlockTileEntity(i, j, k);
         if(tileentity != null && scanningTileEntities)
         {
-            tileentity.func_31005_i();
+            tileentity.invalidate();
         } else
         {
             if(tileentity != null)
@@ -1878,6 +1955,11 @@ public class World
                 chunk.removeChunkBlockTileEntity(i & 0xf, j, k & 0xf);
             }
         }
+    }
+
+    public void func_35455_a(TileEntity tileentity)
+    {
+        field_34900_Q.add(tileentity);
     }
 
     public boolean isBlockOpaqueCube(int i, int j, int k)
@@ -1900,102 +1982,13 @@ public class World
             return false;
         } else
         {
-            return block.blockMaterial.getIsTranslucent() && block.renderAsNormalBlock();
+            return block.blockMaterial.getIsOpaque() && block.renderAsNormalBlock();
         }
     }
 
     public void saveWorldIndirectly(IProgressUpdate iprogressupdate)
     {
         saveWorld(true, iprogressupdate);
-    }
-
-    public boolean updatingLighting()
-    {
-        if(lightingUpdatesCounter >= 50)
-        {
-            return false;
-        }
-        lightingUpdatesCounter++;
-        try
-        {
-            int i = 500;
-            for(; lightingToUpdate.size() > 0; ((MetadataChunkBlock)lightingToUpdate.remove(lightingToUpdate.size() - 1)).updateChunkLighting(this))
-            {
-                if(--i <= 0)
-                {
-                    boolean flag = true;
-                    return flag;
-                }
-            }
-
-            boolean flag1 = false;
-            return flag1;
-        }
-        finally
-        {
-            lightingUpdatesCounter--;
-        }
-    }
-
-    public void scheduleLightingUpdate(EnumSkyBlock enumskyblock, int i, int j, int k, int l, int i1, int j1)
-    {
-        scheduleLightingUpdate_do(enumskyblock, i, j, k, l, i1, j1, true);
-    }
-
-    public void scheduleLightingUpdate_do(EnumSkyBlock enumskyblock, int i, int j, int k, int l, int i1, int j1, 
-            boolean flag)
-    {
-        if(worldProvider.hasNoSky && enumskyblock == EnumSkyBlock.Sky)
-        {
-            return;
-        }
-        lightingUpdatesScheduled++;
-        try
-        {
-            if(lightingUpdatesScheduled == 50)
-            {
-                return;
-            }
-            int k1 = (l + i) / 2;
-            int l1 = (j1 + k) / 2;
-            if(!blockExists(k1, 64, l1))
-            {
-                return;
-            }
-            if(getChunkFromBlockCoords(k1, l1).func_21167_h())
-            {
-                return;
-            }
-            int i2 = lightingToUpdate.size();
-            if(flag)
-            {
-                int j2 = 5;
-                if(j2 > i2)
-                {
-                    j2 = i2;
-                }
-                for(int l2 = 0; l2 < j2; l2++)
-                {
-                    MetadataChunkBlock metadatachunkblock = (MetadataChunkBlock)lightingToUpdate.get(lightingToUpdate.size() - l2 - 1);
-                    if(metadatachunkblock.blockEnum == enumskyblock && metadatachunkblock.func_866_a(i, j, k, l, i1, j1))
-                    {
-                        return;
-                    }
-                }
-
-            }
-            lightingToUpdate.add(new MetadataChunkBlock(enumskyblock, i, j, k, l, i1, j1));
-            int k2 = 0xf4240;
-            if(lightingToUpdate.size() > 0xf4240)
-            {
-                System.out.println((new StringBuilder()).append("More than ").append(k2).append(" updates, aborting lighting updates").toString());
-                lightingToUpdate.clear();
-            }
-        }
-        finally
-        {
-            lightingUpdatesScheduled--;
-        }
     }
 
     public void calculateInitialSkylight()
@@ -2015,6 +2008,10 @@ public class World
 
     public void tick()
     {
+        field_35467_J = field_35468_K;
+        field_35468_K += field_35465_L;
+        field_35465_L *= 0.97999999999999998D;
+        getWorldChunkManager().func_35561_b();
         updateWeather();
         if(isAllPlayersFullyAsleep())
         {
@@ -2030,17 +2027,12 @@ public class World
                 wakeUpAllPlayers();
             }
         }
-        SpawnerAnimals.performSpawning(this, spawnHostileMobs, spawnPeacefulMobs);
+        SpawnerAnimals.performSpawning(this, spawnHostileMobs, spawnPeacefulMobs && worldInfo.getWorldTime() % 400L == 0L);
         chunkProvider.unload100OldestChunks();
         int i = calculateSkylightSubtracted(1.0F);
         if(i != skylightSubtracted)
         {
             skylightSubtracted = i;
-            for(int j = 0; j < worldAccesses.size(); j++)
-            {
-                ((IWorldAccess)worldAccesses.get(j)).updateAllRenderers();
-            }
-
         }
         long l1 = worldInfo.getWorldTime() + 1L;
         if(l1 % (long)autosavePeriod == 0L)
@@ -2048,16 +2040,16 @@ public class World
             saveWorld(false, null);
         }
         worldInfo.setWorldTime(l1);
-        TickUpdates(false);
+        tickUpdates(false);
         updateBlocksAndPlayCaveSounds();
     }
 
     private void func_27163_E()
     {
-        if(worldInfo.getRaining())
+        if(worldInfo.getIsRaining())
         {
             rainingStrength = 1.0F;
-            if(worldInfo.getThundering())
+            if(worldInfo.getIsThundering())
             {
                 thunderingStrength = 1.0F;
             }
@@ -2077,7 +2069,7 @@ public class World
         int i = worldInfo.getThunderTime();
         if(i <= 0)
         {
-            if(worldInfo.getThundering())
+            if(worldInfo.getIsThundering())
             {
                 worldInfo.setThunderTime(rand.nextInt(12000) + 3600);
             } else
@@ -2090,13 +2082,13 @@ public class World
             worldInfo.setThunderTime(i);
             if(i <= 0)
             {
-                worldInfo.setThundering(!worldInfo.getThundering());
+                worldInfo.setIsThundering(!worldInfo.getIsThundering());
             }
         }
         int j = worldInfo.getRainTime();
         if(j <= 0)
         {
-            if(worldInfo.getRaining())
+            if(worldInfo.getIsRaining())
             {
                 worldInfo.setRainTime(rand.nextInt(12000) + 12000);
             } else
@@ -2109,11 +2101,11 @@ public class World
             worldInfo.setRainTime(j);
             if(j <= 0)
             {
-                worldInfo.setRaining(!worldInfo.getRaining());
+                worldInfo.setIsRaining(!worldInfo.getIsRaining());
             }
         }
         prevRainingStrength = rainingStrength;
-        if(worldInfo.getRaining())
+        if(worldInfo.getIsRaining())
         {
             rainingStrength += 0.01D;
         } else
@@ -2129,7 +2121,7 @@ public class World
             rainingStrength = 1.0F;
         }
         prevThunderingStrength = thunderingStrength;
-        if(worldInfo.getThundering())
+        if(worldInfo.getIsThundering())
         {
             thunderingStrength += 0.01D;
         } else
@@ -2149,9 +2141,9 @@ public class World
     private void stopPrecipitation()
     {
         worldInfo.setRainTime(0);
-        worldInfo.setRaining(false);
+        worldInfo.setIsRaining(false);
         worldInfo.setThunderTime(0);
-        worldInfo.setThundering(false);
+        worldInfo.setIsThundering(false);
     }
 
     protected void updateBlocksAndPlayCaveSounds()
@@ -2184,6 +2176,7 @@ public class World
             int k = chunkcoordintpair.chunkXPos * 16;
             int i1 = chunkcoordintpair.chunkZPos * 16;
             Chunk chunk = getChunkFromChunkCoords(chunkcoordintpair.chunkXPos, chunkcoordintpair.chunkZPos);
+            chunk.func_35841_j();
             if(soundCounter == 0)
             {
                 updateLCG = updateLCG * 3 + 0x3c6ef35f;
@@ -2204,14 +2197,14 @@ public class World
                     }
                 }
             }
-            if(rand.nextInt(0x186a0) == 0 && func_27161_C() && func_27160_B())
+            if(rand.nextInt(0x186a0) == 0 && isRaining() && getIsThundering())
             {
                 updateLCG = updateLCG * 3 + 0x3c6ef35f;
                 int l1 = updateLCG >> 2;
                 int i3 = k + (l1 & 0xf);
                 int i4 = i1 + (l1 >> 8 & 0xf);
-                int i5 = findTopSolidBlock(i3, i4);
-                if(canBlockBeRainedOn(i3, i5, i4))
+                int i5 = func_35461_e(i3, i4);
+                if(canLightningStrikeAt(i3, i5, i4))
                 {
                     addWeatherEffect(new EntityLightningBolt(this, i3, i5, i4));
                     lastLightningBolt = 2;
@@ -2223,21 +2216,42 @@ public class World
                 int i2 = updateLCG >> 2;
                 int j3 = i2 & 0xf;
                 int j4 = i2 >> 8 & 0xf;
-                int j5 = findTopSolidBlock(j3 + k, j4 + i1);
+                int j5 = func_35461_e(j3 + k, j4 + i1);
                 if(getWorldChunkManager().getBiomeGenAt(j3 + k, j4 + i1).getEnableSnow() && j5 >= 0 && j5 < 128 && chunk.getSavedLightValue(EnumSkyBlock.Block, j3, j5, j4) < 10)
                 {
                     int i6 = chunk.getBlockID(j3, j5 - 1, j4);
                     int k6 = chunk.getBlockID(j3, j5, j4);
-                    if(func_27161_C() && k6 == 0 && Block.snow.canPlaceBlockAt(this, j3 + k, j5, j4 + i1) && i6 != 0 && i6 != Block.ice.blockID && Block.blocksList[i6].blockMaterial.getIsSolid())
+                    if(isRaining() && k6 == 0 && Block.snow.canPlaceBlockAt(this, j3 + k, j5, j4 + i1) && i6 != 0 && i6 != Block.ice.blockID && Block.blocksList[i6].blockMaterial.getIsSolid())
                     {
                         setBlockWithNotify(j3 + k, j5, j4 + i1, Block.snow.blockID);
                     }
                     if(i6 == Block.waterStill.blockID && chunk.getBlockMetadata(j3, j5 - 1, j4) == 0)
                     {
-                        setBlockWithNotify(j3 + k, j5 - 1, j4 + i1, Block.ice.blockID);
+                        boolean flag = true;
+                        if(flag && getBlockMaterial((j3 + k) - 1, j5 - 1, j4 + i1) != Material.water)
+                        {
+                            flag = false;
+                        }
+                        if(flag && getBlockMaterial(j3 + k + 1, j5 - 1, j4 + i1) != Material.water)
+                        {
+                            flag = false;
+                        }
+                        if(flag && getBlockMaterial(j3 + k, j5 - 1, (j4 + i1) - 1) != Material.water)
+                        {
+                            flag = false;
+                        }
+                        if(flag && getBlockMaterial(j3 + k, j5 - 1, j4 + i1 + 1) != Material.water)
+                        {
+                            flag = false;
+                        }
+                        if(!flag)
+                        {
+                            setBlockWithNotify(j3 + k, j5 - 1, j4 + i1, Block.ice.blockID);
+                        }
                     }
                 }
             }
+            func_35463_p(k + rand.nextInt(16), rand.nextInt(128), i1 + rand.nextInt(16));
             int j2 = 0;
             while(j2 < 80) 
             {
@@ -2257,7 +2271,243 @@ public class World
 
     }
 
-    public boolean TickUpdates(boolean flag)
+    public void func_35463_p(int i, int j, int k)
+    {
+        func_35459_c(EnumSkyBlock.Sky, i, j, k);
+        func_35459_c(EnumSkyBlock.Block, i, j, k);
+    }
+
+    private int func_35460_a(int i, int j, int k, int l, int i1, int j1)
+    {
+        int k1 = 0;
+        if(canBlockSeeTheSky(j, k, l))
+        {
+            k1 = 15;
+        } else
+        {
+            if(j1 == 0)
+            {
+                j1 = 1;
+            }
+            for(int l1 = 0; l1 < 6; l1++)
+            {
+                int i2 = (l1 % 2) * 2 - 1;
+                int j2 = j + (((l1 / 2) % 3) / 2) * i2;
+                int k2 = k + (((l1 / 2 + 1) % 3) / 2) * i2;
+                int l2 = l + (((l1 / 2 + 2) % 3) / 2) * i2;
+                int i3 = getSavedLightValue(EnumSkyBlock.Sky, j2, k2, l2) - j1;
+                if(i3 > k1)
+                {
+                    k1 = i3;
+                }
+            }
+
+        }
+        return k1;
+    }
+
+    private int func_35458_d(int i, int j, int k, int l, int i1, int j1)
+    {
+        int k1 = Block.lightValue[i1];
+        int l1 = getSavedLightValue(EnumSkyBlock.Block, j - 1, k, l) - j1;
+        int i2 = getSavedLightValue(EnumSkyBlock.Block, j + 1, k, l) - j1;
+        int j2 = getSavedLightValue(EnumSkyBlock.Block, j, k - 1, l) - j1;
+        int k2 = getSavedLightValue(EnumSkyBlock.Block, j, k + 1, l) - j1;
+        int l2 = getSavedLightValue(EnumSkyBlock.Block, j, k, l - 1) - j1;
+        int i3 = getSavedLightValue(EnumSkyBlock.Block, j, k, l + 1) - j1;
+        if(l1 > k1)
+        {
+            k1 = l1;
+        }
+        if(i2 > k1)
+        {
+            k1 = i2;
+        }
+        if(j2 > k1)
+        {
+            k1 = j2;
+        }
+        if(k2 > k1)
+        {
+            k1 = k2;
+        }
+        if(l2 > k1)
+        {
+            k1 = l2;
+        }
+        if(i3 > k1)
+        {
+            k1 = i3;
+        }
+        return k1;
+    }
+
+    public void func_35459_c(EnumSkyBlock enumskyblock, int i, int j, int k)
+    {
+        if(!doChunksNearChunkExist(i, j, k, 17))
+        {
+            return;
+        }
+        int l = 0;
+        int i1 = 0;
+        int j1 = getSavedLightValue(enumskyblock, i, j, k);
+        int l1 = 0;
+        int j2 = j1;
+        int i3 = getBlockId(i, j, k);
+        int l3 = Block.lightOpacity[i3];
+        if(l3 == 0)
+        {
+            l3 = 1;
+        }
+        int k4 = 0;
+        if(enumskyblock == EnumSkyBlock.Sky)
+        {
+            k4 = func_35460_a(j2, i, j, k, i3, l3);
+        } else
+        {
+            k4 = func_35458_d(j2, i, j, k, i3, l3);
+        }
+        l1 = k4;
+        if(l1 > j1)
+        {
+            field_35466_H[i1++] = 0x20820;
+        } else
+        if(l1 < j1)
+        {
+            if(enumskyblock == EnumSkyBlock.Block);
+            field_35466_H[i1++] = 0x20820 + (j1 << 18);
+            do
+            {
+                if(l >= i1)
+                {
+                    break;
+                }
+                int k2 = field_35466_H[l++];
+                int j3 = ((k2 & 0x3f) - 32) + i;
+                int i4 = ((k2 >> 6 & 0x3f) - 32) + j;
+                int l4 = ((k2 >> 12 & 0x3f) - 32) + k;
+                int j5 = k2 >> 18 & 0xf;
+                int l5 = getSavedLightValue(enumskyblock, j3, i4, l4);
+                if(l5 == j5)
+                {
+                    setLightValue(enumskyblock, j3, i4, l4, 0);
+                    if(--j5 > 0)
+                    {
+                        int k6 = j3 - i;
+                        int i7 = i4 - j;
+                        int k7 = l4 - k;
+                        if(k6 < 0)
+                        {
+                            k6 = -k6;
+                        }
+                        if(i7 < 0)
+                        {
+                            i7 = -i7;
+                        }
+                        if(k7 < 0)
+                        {
+                            k7 = -k7;
+                        }
+                        if(k6 + i7 + k7 < 17)
+                        {
+                            int i8 = 0;
+                            while(i8 < 6) 
+                            {
+                                int j8 = (i8 % 2) * 2 - 1;
+                                int k8 = j3 + (((i8 / 2) % 3) / 2) * j8;
+                                int l8 = i4 + (((i8 / 2 + 1) % 3) / 2) * j8;
+                                int i9 = l4 + (((i8 / 2 + 2) % 3) / 2) * j8;
+                                int i6 = getSavedLightValue(enumskyblock, k8, l8, i9);
+                                if(i6 == j5)
+                                {
+                                    field_35466_H[i1++] = (k8 - i) + 32 + ((l8 - j) + 32 << 6) + ((i9 - k) + 32 << 12) + (j5 << 18);
+                                }
+                                i8++;
+                            }
+                        }
+                    }
+                }
+            } while(true);
+            l = 0;
+        }
+        do
+        {
+            if(l >= i1)
+            {
+                break;
+            }
+            int k1 = field_35466_H[l++];
+            int i2 = ((k1 & 0x3f) - 32) + i;
+            int l2 = ((k1 >> 6 & 0x3f) - 32) + j;
+            int k3 = ((k1 >> 12 & 0x3f) - 32) + k;
+            int j4 = getSavedLightValue(enumskyblock, i2, l2, k3);
+            int i5 = getBlockId(i2, l2, k3);
+            int k5 = Block.lightOpacity[i5];
+            if(k5 == 0)
+            {
+                k5 = 1;
+            }
+            int j6 = 0;
+            if(enumskyblock == EnumSkyBlock.Sky)
+            {
+                j6 = func_35460_a(j4, i2, l2, k3, i5, k5);
+            } else
+            {
+                j6 = func_35458_d(j4, i2, l2, k3, i5, k5);
+            }
+            if(j6 != j4)
+            {
+                setLightValue(enumskyblock, i2, l2, k3, j6);
+                if(j6 > j4)
+                {
+                    int l6 = i2 - i;
+                    int j7 = l2 - j;
+                    int l7 = k3 - k;
+                    if(l6 < 0)
+                    {
+                        l6 = -l6;
+                    }
+                    if(j7 < 0)
+                    {
+                        j7 = -j7;
+                    }
+                    if(l7 < 0)
+                    {
+                        l7 = -l7;
+                    }
+                    if(l6 + j7 + l7 < 17 && i1 < field_35466_H.length - 6)
+                    {
+                        if(getSavedLightValue(enumskyblock, i2 - 1, l2, k3) < j6)
+                        {
+                            field_35466_H[i1++] = (i2 - 1 - i) + 32 + ((l2 - j) + 32 << 6) + ((k3 - k) + 32 << 12);
+                        }
+                        if(getSavedLightValue(enumskyblock, i2 + 1, l2, k3) < j6)
+                        {
+                            field_35466_H[i1++] = ((i2 + 1) - i) + 32 + ((l2 - j) + 32 << 6) + ((k3 - k) + 32 << 12);
+                        }
+                        if(getSavedLightValue(enumskyblock, i2, l2 - 1, k3) < j6)
+                        {
+                            field_35466_H[i1++] = (i2 - i) + 32 + ((l2 - 1 - j) + 32 << 6) + ((k3 - k) + 32 << 12);
+                        }
+                        if(getSavedLightValue(enumskyblock, i2, l2 + 1, k3) < j6)
+                        {
+                            field_35466_H[i1++] = (i2 - i) + 32 + (((l2 + 1) - j) + 32 << 6) + ((k3 - k) + 32 << 12);
+                        }
+                        if(getSavedLightValue(enumskyblock, i2, l2, k3 - 1) < j6)
+                        {
+                            field_35466_H[i1++] = (i2 - i) + 32 + ((l2 - j) + 32 << 6) + ((k3 - 1 - k) + 32 << 12);
+                        }
+                        if(getSavedLightValue(enumskyblock, i2, l2, k3 + 1) < j6)
+                        {
+                            field_35466_H[i1++] = (i2 - i) + 32 + ((l2 - j) + 32 << 6) + (((k3 + 1) - k) + 32 << 12);
+                        }
+                    }
+                }
+            }
+        } while(true);
+    }
+
+    public boolean tickUpdates(boolean flag)
     {
         int i = scheduledTickTreeSet.size();
         if(i != scheduledTickSet.size())
@@ -2302,6 +2552,10 @@ public class World
             int j1 = (j + rand.nextInt(byte0)) - rand.nextInt(byte0);
             int k1 = (k + rand.nextInt(byte0)) - rand.nextInt(byte0);
             int l1 = getBlockId(i1, j1, k1);
+            if(rand.nextInt(8) > j1 && l1 == 0)
+            {
+                spawnParticle("depthsuspend", (float)i1 + rand.nextFloat(), (float)j1 + rand.nextFloat(), (float)k1 + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
+            }
             if(l1 > 0)
             {
                 Block.blocksList[l1].randomDisplayTick(this, i1, j1, k1, random);
@@ -2359,7 +2613,7 @@ public class World
         return loadedEntityList;
     }
 
-    public void func_698_b(int i, int j, int k, TileEntity tileentity)
+    public void updateTileEntityChunkAndDoNothing(int i, int j, int k, TileEntity tileentity)
     {
         if(blockExists(i, j, k))
         {
@@ -2387,7 +2641,7 @@ public class World
         return i;
     }
 
-    public void func_636_a(List list)
+    public void addLoadedEntities(List list)
     {
         loadedEntityList.addAll(list);
         for(int i = 0; i < list.size(); i++)
@@ -2397,12 +2651,12 @@ public class World
 
     }
 
-    public void func_632_b(List list)
+    public void unloadEntities(List list)
     {
         unloadedEntityList.addAll(list);
     }
 
-    public void func_656_j()
+    public void dropOldChucks()
     {
         while(chunkProvider.unload100OldestChunks()) ;
     }
@@ -2421,7 +2675,7 @@ public class World
         {
             return false;
         }
-        if(block == Block.waterMoving || block == Block.waterStill || block == Block.lavaMoving || block == Block.lavaStill || block == Block.fire || block == Block.snow)
+        if(block == Block.waterMoving || block == Block.waterStill || block == Block.lavaMoving || block == Block.lavaStill || block == Block.fire || block == Block.snow || block == Block.field_35278_bv)
         {
             block = null;
         }
@@ -2629,7 +2883,7 @@ public class World
 
     public void checkSessionLock()
     {
-        saveHandler.func_22150_b();
+        saveHandler.checkSessionLock();
     }
 
     public void setWorldTime(long l)
@@ -2677,12 +2931,12 @@ public class World
         }
     }
 
-    public boolean func_6466_a(EntityPlayer entityplayer, int i, int j, int k)
+    public boolean canMineBlock(EntityPlayer entityplayer, int i, int j, int k)
     {
         return true;
     }
 
-    public void func_9425_a(Entity entity, byte byte0)
+    public void setEntityState(Entity entity, byte byte0)
     {
     }
 
@@ -2828,19 +3082,19 @@ public class World
         rainingStrength = f;
     }
 
-    public boolean func_27160_B()
+    public boolean getIsThundering()
     {
         return (double)getWeightedThunderStrength(1.0F) > 0.90000000000000002D;
     }
 
-    public boolean func_27161_C()
+    public boolean isRaining()
     {
         return (double)getRainStrength(1.0F) > 0.20000000000000001D;
     }
 
-    public boolean canBlockBeRainedOn(int i, int j, int k)
+    public boolean canLightningStrikeAt(int i, int j, int k)
     {
-        if(!func_27161_C())
+        if(!isRaining())
         {
             return false;
         }
@@ -2848,7 +3102,7 @@ public class World
         {
             return false;
         }
-        if(findTopSolidBlock(i, k) > j)
+        if(func_35461_e(i, k) > j)
         {
             return false;
         }
@@ -2891,17 +3145,43 @@ public class World
 
     }
 
+    public int func_35452_b()
+    {
+        return 128;
+    }
+
+    public Random func_35462_u(int i, int j, int k)
+    {
+        long l = (long)i * 0x4f9939f508L + (long)j * 0x1ef1565bd5L + getWorldInfo().getRandomSeed() + (long)k;
+        rand.setSeed(l);
+        return rand;
+    }
+
+    public boolean updatingLighting()
+    {
+        return false;
+    }
+
+    public void scheduleLightingUpdate(EnumSkyBlock enumskyblock, int i, int j, int k, int l, int i1, int j1)
+    {
+    }
+
+    public final int field_35473_a = 7;
+    public final int field_35471_b = 11;
+    public final int field_35472_c = 128;
+    public final int field_35469_d = 127;
+    public final int field_35470_e = 63;
     public boolean scheduledUpdatesAreImmediate;
-    private List lightingToUpdate;
     public List loadedEntityList;
     private List unloadedEntityList;
     private TreeSet scheduledTickTreeSet;
     private Set scheduledTickSet;
     public List loadedTileEntityList;
     private List addedTileEntityList;
+    private List field_34900_Q;
     public List playerEntities;
     public List weatherEffects;
-    private long field_1019_F;
+    private long cloudColour;
     public int skylightSubtracted;
     protected int updateLCG;
     protected final int DIST_HASH_MAGIC = 0x3c6ef35f;
@@ -2927,13 +3207,14 @@ public class World
     public MapStorage mapStorage;
     private ArrayList collidingBoundingBoxes;
     private boolean scanningTileEntities;
-    private int lightingUpdatesCounter;
-    private boolean spawnHostileMobs;
-    private boolean spawnPeacefulMobs;
-    static int lightingUpdatesScheduled = 0;
+    protected boolean spawnHostileMobs;
+    protected boolean spawnPeacefulMobs;
     private Set positionsToUpdate;
     private int soundCounter;
+    int field_35466_H[];
     private List field_1012_M;
     public boolean multiplayerWorld;
-
+    public double field_35467_J;
+    public double field_35468_K;
+    public double field_35465_L;
 }

@@ -6,27 +6,30 @@ package net.minecraft.src;
 
 import java.util.*;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 // Referenced classes of package net.minecraft.src:
-//            EntitySpider, RenderSpider, EntityPig, RenderPig, 
-//            ModelPig, EntitySheep, RenderSheep, ModelSheep2, 
-//            ModelSheep1, EntityCow, RenderCow, ModelCow, 
-//            EntityWolf, RenderWolf, ModelWolf, EntityChicken, 
-//            RenderChicken, ModelChicken, EntityCreeper, RenderCreeper, 
-//            EntitySkeleton, RenderBiped, ModelSkeleton, EntityZombie, 
-//            ModelZombie, EntitySlime, RenderSlime, ModelSlime, 
-//            EntityPlayer, RenderPlayer, EntityGiantZombie, RenderGiantZombie, 
-//            EntityGhast, RenderGhast, EntitySquid, RenderSquid, 
-//            ModelSquid, EntityLiving, RenderLiving, ModelBiped, 
-//            Entity, RenderEntity, EntityPainting, RenderPainting, 
-//            EntityArrow, RenderArrow, EntitySnowball, RenderSnowball, 
-//            Item, EntityEgg, EntityFireball, RenderFireball, 
-//            EntityItem, RenderItem, EntityTNTPrimed, RenderTNTPrimed, 
-//            EntityFallingSand, RenderFallingSand, EntityMinecart, RenderMinecart, 
-//            EntityBoat, RenderBoat, EntityFish, RenderFish, 
-//            EntityLightningBolt, RenderLightningBolt, ModLoader, Render, 
-//            MathHelper, World, Block, FontRenderer, 
-//            RenderEngine, ItemRenderer, GameSettings
+//            EntitySpider, RenderSpider, EntityCaveSpider, EntityPig, 
+//            RenderPig, ModelPig, EntitySheep, RenderSheep, 
+//            ModelSheep2, ModelSheep1, EntityCow, RenderCow, 
+//            ModelCow, EntityWolf, RenderWolf, ModelWolf, 
+//            EntityChicken, RenderChicken, ModelChicken, EntitySilverfish, 
+//            RenderSilverfish, EntityCreeper, RenderCreeper, EntityEnderman, 
+//            RenderEnderman, EntitySkeleton, RenderBiped, ModelSkeleton, 
+//            EntityZombie, ModelZombie, EntitySlime, RenderSlime, 
+//            ModelSlime, EntityPlayer, RenderPlayer, EntityGiantZombie, 
+//            RenderGiantZombie, EntityGhast, RenderGhast, EntitySquid, 
+//            RenderSquid, ModelSquid, EntityLiving, RenderLiving, 
+//            ModelBiped, Entity, RenderEntity, EntityPainting, 
+//            RenderPainting, EntityArrow, RenderArrow, EntitySnowball, 
+//            RenderSnowball, Item, EntityEgg, EntityFireball, 
+//            RenderFireball, EntityItem, RenderItem, EntityXPOrb, 
+//            RenderXPOrb, EntityTNTPrimed, RenderTNTPrimed, EntityFallingSand, 
+//            RenderFallingSand, EntityMinecart, RenderMinecart, EntityBoat, 
+//            RenderBoat, EntityFish, RenderFish, EntityLightningBolt, 
+//            RenderLightningBolt, ModLoader, Render, MathHelper, 
+//            World, Block, FontRenderer, RenderEngine, 
+//            ItemRenderer, GameSettings
 
 public class RenderManager
 {
@@ -35,12 +38,15 @@ public class RenderManager
     {
         entityRenderMap = new HashMap();
         entityRenderMap.put(net.minecraft.src.EntitySpider.class, new RenderSpider());
+        entityRenderMap.put(net.minecraft.src.EntityCaveSpider.class, new RenderSpider());
         entityRenderMap.put(net.minecraft.src.EntityPig.class, new RenderPig(new ModelPig(), new ModelPig(0.5F), 0.7F));
         entityRenderMap.put(net.minecraft.src.EntitySheep.class, new RenderSheep(new ModelSheep2(), new ModelSheep1(), 0.7F));
         entityRenderMap.put(net.minecraft.src.EntityCow.class, new RenderCow(new ModelCow(), 0.7F));
         entityRenderMap.put(net.minecraft.src.EntityWolf.class, new RenderWolf(new ModelWolf(), 0.5F));
         entityRenderMap.put(net.minecraft.src.EntityChicken.class, new RenderChicken(new ModelChicken(), 0.3F));
+        entityRenderMap.put(net.minecraft.src.EntitySilverfish.class, new RenderSilverfish());
         entityRenderMap.put(net.minecraft.src.EntityCreeper.class, new RenderCreeper());
+        entityRenderMap.put(net.minecraft.src.EntityEnderman.class, new RenderEnderman());
         entityRenderMap.put(net.minecraft.src.EntitySkeleton.class, new RenderBiped(new ModelSkeleton(), 0.5F));
         entityRenderMap.put(net.minecraft.src.EntityZombie.class, new RenderBiped(new ModelZombie(), 0.5F));
         entityRenderMap.put(net.minecraft.src.EntitySlime.class, new RenderSlime(new ModelSlime(16), new ModelSlime(0), 0.25F));
@@ -56,6 +62,7 @@ public class RenderManager
         entityRenderMap.put(net.minecraft.src.EntityEgg.class, new RenderSnowball(Item.egg.getIconFromDamage(0)));
         entityRenderMap.put(net.minecraft.src.EntityFireball.class, new RenderFireball());
         entityRenderMap.put(net.minecraft.src.EntityItem.class, new RenderItem());
+        entityRenderMap.put(net.minecraft.src.EntityXPOrb.class, new RenderXPOrb());
         entityRenderMap.put(net.minecraft.src.EntityTNTPrimed.class, new RenderTNTPrimed());
         entityRenderMap.put(net.minecraft.src.EntityFallingSand.class, new RenderFallingSand());
         entityRenderMap.put(net.minecraft.src.EntityMinecart.class, new RenderMinecart());
@@ -120,8 +127,11 @@ public class RenderManager
         double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)f;
         double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)f;
         float f1 = entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * f;
-        float f2 = entity.getEntityBrightness(f);
-        GL11.glColor3f(f2, f2, f2);
+        int i = entity.func_35115_a(f);
+        int j = i % 0x10000;
+        int k = i / 0x10000;
+        GL13.glMultiTexCoord2f(33985 /*GL_TEXTURE1_ARB*/, (float)j / 1.0F, (float)k / 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         renderEntityWithPosYaw(entity, d - renderPosX, d1 - renderPosY, d2 - renderPosZ, f1, f);
     }
 
@@ -136,7 +146,7 @@ public class RenderManager
         }
     }
 
-    public void func_852_a(World world)
+    public void set(World world)
     {
         worldObj = world;
     }

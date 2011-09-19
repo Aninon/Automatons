@@ -110,15 +110,17 @@ public class AM_ContainerFactotum extends Container
         }
     }
 
-    public boolean isUsableByPlayer(EntityPlayer entityplayer)
+	
+	public boolean canInteractWith(EntityPlayer entityplayer)
     {
         return furnace.canInteractWith(entityplayer);
     }
+	
 
     public ItemStack getStackInSlot(int i)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)slots.get(i);
+        Slot slot = (Slot)inventorySlots.get(i);
         if(slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();

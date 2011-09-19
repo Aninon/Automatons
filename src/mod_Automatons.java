@@ -83,7 +83,7 @@ public class mod_Automatons extends BaseMod
 	public static AM_BlockBad fakeCrystal=(AM_BlockBad)(new AM_BlockBad(AutomatonLogger.fakeCrystal, 231)).setHardness(0.4F).setResistance(5F).setLightValue(0.625F).setStepSound(Block.soundGlassFootstep).setBlockName("crystal");
 	public static Block glowy= (new AM_BlockGlow(AutomatonLogger.glowy, 229)).setHardness(0.4F).setResistance(5F).setLightValue(0.95F).setStepSound(Block.soundGlassFootstep).setBlockName("glowy");
 	public static Block frass = (new AM_BlockFrass(AutomatonLogger.frass)).setHardness(0.25F).setStepSound(Block.soundGlassFootstep).setBlockName("frass");
-	public static Block dapling = (new AM_BlockDapling(AutomatonLogger.dapling, ModLoader.addOverride("/terrain.png", "/automatons/dapling.png"))).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setBlockName("dapling").disableNeighborNotifyOnMetadataChange();
+	public static Block dapling = (new AM_BlockDapling(AutomatonLogger.dapling, ModLoader.addOverride("/terrain.png", "/automatons/dapling.png"))).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setBlockName("dapling").setRequiresSelfNotify();
 	public static Block duplex = (new AM_BlockDuplex(AutomatonLogger.duplex,227)).setHardness(0.1F).setLightOpacity(1).setLightValue(0.5F).setStepSound(Block.soundGlassFootstep).setBlockName("duplex");
 	public static Block boing = (new AM_BlockBoing(AutomatonLogger.boing)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("boing");
 	public static Block heal = (new AM_BlockHeal(AutomatonLogger.heal)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("heal");
@@ -287,14 +287,14 @@ public class mod_Automatons extends BaseMod
 		
 		AM_BlockFrass.setAllowed();
 		
-		ModLoader.AddSpawn(AM_EntityWatcher.class, 15, EnumCreatureType.monster);
-		ModLoader.AddSpawn(AM_EntitySlider.class, 2, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityWatcher.class, 12,4,4, EnumCreatureType.monster);
+		ModLoader.AddSpawn(AM_EntitySlider.class, 4,4,4 ,EnumCreatureType.creature);
 		
-		ModLoader.AddSpawn(AM_EntityChopper.class, 20, EnumCreatureType.creature);
-		ModLoader.AddSpawn(AM_EntityBobby.class, 18, EnumCreatureType.creature);
-		ModLoader.AddSpawn(AM_EntityGolem.class, 5, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityChopper.class, 14,4,4, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityBobby.class, 16,4,4, EnumCreatureType.creature);
+		ModLoader.AddSpawn(AM_EntityGolem.class, 5,4,4, EnumCreatureType.creature);
 		
-		ModLoader.AddSpawn(AM_EntityArborist.class, 2, EnumCreatureType.creature);
+		//ModLoader.AddSpawn(AM_EntityArborist.class, 2,1,1 EnumCreatureType.creature);
 
 		
 		//ModLoader.getUniqueEntityId()
@@ -487,15 +487,16 @@ public class mod_Automatons extends BaseMod
 		
 		
 		///BAD///
-		ModLoader.AddRecipe(new ItemStack(frass, 10), new Object[] {
-			"#", "#", Character.valueOf('#'), Block.dirt
+		ModLoader.AddRecipe(new ItemStack(frass, 1,1), new Object[] {
+			"##", "##", Character.valueOf('#'), Item.redstone
 		});
 		
-		ModLoader.AddRecipe(new ItemStack(cheatStick, 1), new Object[] {
+		
+		ModLoader.AddRecipe(new ItemStack(factotum, 1), new Object[] {
 			"##", "##", Character.valueOf('#'), frass
 		});
 		
-		ModLoader.AddRecipe(new ItemStack(pickTech, 50), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(automaton, 50), new Object[] {
 			"##", "# ", Character.valueOf('#'), frass
 		});
 		ModLoader.AddRecipe(new ItemStack(stuffs, 10,10), new Object[] {
@@ -513,26 +514,24 @@ public class mod_Automatons extends BaseMod
 		
 
 		
-		
+		/*
 		System.out.println("\nall tech biomes is " +((AutomatonLogger.allTech==1)?"on":"off"));
 		if(AutomatonLogger.allTech==1){
 			BiomeGenBase.generateBiomeLookup();
-		}
+		}*/
 	
 
-		at=new AM_Texture("./loller.png");
-		
-		defaultTerrain=ModLoader.getMinecraftInstance().renderEngine.getTexture("/terrain.png");
 
-		AutomatonLogger.tvRenderId=ModLoader.getUniqueBlockModelID(this,true);
-		ModLoader.SetInGameHook(this,true,true);
+		//defaultTerrain=ModLoader.getMinecraftInstance().renderEngine.getTexture("/terrain.png");
+
+		//AutomatonLogger.tvRenderId=ModLoader.getUniqueBlockModelID(this,true);
+		//ModLoader.SetInGameHook(this,true,true);
 		
 	} 
 	
 	
-	public static int defaultTerrain=0;
+	//public static int defaultTerrain=0;
 
-	public static AM_Texture at;
 	
 	public void AddRenderer(Map map)
 	{  
@@ -554,18 +553,9 @@ public class mod_Automatons extends BaseMod
 		map.put(AM_EntityRemnant.class, new AM_RenderSentry(new  AM_ModelRemnant(), 0.25F));
 		
 	}
-	
-	/*
-	public void GenerateSurface(World world, Random random, int i, int j)
-    {
-	
-	int y=world.findTopSolidBlock(i,j);
-	
-	world.setBlock(i,y,j,AutomatonLogger.sky);
-    }*/
-	
 
-	
+
+	/*
 	public boolean RenderWorldBlock(RenderBlocks renderblocks, IBlockAccess iblockaccess, int i, int j, int k, Block block, int l)
 	{
 	
@@ -596,7 +586,7 @@ public class mod_Automatons extends BaseMod
     }
 
 	public void redoTexture(){
-	GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/,at.textureID);
+	GL11.glBindTexture(3553 ,at.textureID);
 		
 		
 		
@@ -621,7 +611,7 @@ public class mod_Automatons extends BaseMod
 				buffer );
 				
 				//int hj =defaultTerrain;
-       // GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, hj);
+       // GL11.glBindTexture(3553 , hj);
 	}
 
 	public boolean renderFire(Block block, int i, int j, int k)
@@ -637,7 +627,7 @@ public class mod_Automatons extends BaseMod
 		//at.B.createGraphics().drawLine(G/100000, 0, 20, 20);
 		
 		
-		GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/,at.textureID);
+		GL11.glBindTexture(3553 ,at.textureID);
 
         int l = block.getBlockTextureFromSide(0);
 		
@@ -672,7 +662,7 @@ public class mod_Automatons extends BaseMod
 
 		
 		int hj =defaultTerrain;
-        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, hj);
+        GL11.glBindTexture(3553 , hj);
 		
 		
 		
@@ -692,7 +682,7 @@ public class mod_Automatons extends BaseMod
 		RenderBlocks.cfgGrassFix = false;
 
 		
-		GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/,at.textureID);
+		GL11.glBindTexture(3553 ,at.textureID);
 
 		 GL11.glReadBuffer(GL11.GL_FRONT);
 		int width = Display.getDisplayMode().getWidth();
@@ -757,16 +747,11 @@ public class mod_Automatons extends BaseMod
 
 		
 		int hj =defaultTerrain;
-        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, hj);
+        GL11.glBindTexture(3553 , hj);
 		
 		
 		
         return true;
-    }
-	
-	
-	
+    }*/
 	
 }
-
-//There you go, you're done. Make sure you make a ExampleBlock and ExampleItem class!

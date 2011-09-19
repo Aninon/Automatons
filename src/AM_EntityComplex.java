@@ -98,15 +98,6 @@ public class AM_EntityComplex extends EntityAnimal
         }
     }
 	
-	public boolean attackEntityFrom(Entity entity, int i)
-    {
-		
-		super.attackEntityFrom(entity,i);
-		return true;
-        
-		
-    }
-	
 	public int getMaxSpawnedInChunk()
     {
         return 20;

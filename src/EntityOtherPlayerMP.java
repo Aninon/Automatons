@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            EntityPlayer, MathHelper, ItemStack, InventoryPlayer, 
-//            World, Entity
+//            EntityPlayer, MathHelper, InventoryPlayer, Item, 
+//            ItemStack, World, DamageSource
 
 public class EntityOtherPlayerMP extends EntityPlayer
 {
@@ -15,6 +15,7 @@ public class EntityOtherPlayerMP extends EntityPlayer
     public EntityOtherPlayerMP(World world, String s)
     {
         super(world);
+        field_35218_b = false;
         field_20924_a = 0.0F;
         username = s;
         yOffset = 0.0F;
@@ -33,7 +34,7 @@ public class EntityOtherPlayerMP extends EntityPlayer
         yOffset = 0.0F;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         return true;
     }
@@ -63,6 +64,17 @@ public class EntityOtherPlayerMP extends EntityPlayer
         }
         field_704_R += (f - field_704_R) * 0.4F;
         field_703_S += field_704_R;
+        if(!field_35218_b && func_35114_R() && inventory.mainInventory[inventory.currentItem] != null)
+        {
+            ItemStack itemstack = inventory.mainInventory[inventory.currentItem];
+            func_35199_b(inventory.mainInventory[inventory.currentItem], Item.itemsList[itemstack.itemID].func_35411_c(itemstack));
+            field_35218_b = true;
+        } else
+        if(field_35218_b && !func_35114_R())
+        {
+            func_35207_ac();
+            field_35218_b = false;
+        }
     }
 
     public float getShadowSize()
@@ -72,7 +84,7 @@ public class EntityOtherPlayerMP extends EntityPlayer
 
     public void onLivingUpdate()
     {
-        super.updatePlayerActionState();
+        super.updateEntityActionState();
         if(field_785_bg > 0)
         {
             double d = posX + (field_784_bh - posX) / (double)field_785_bg;
@@ -126,6 +138,12 @@ public class EntityOtherPlayerMP extends EntityPlayer
     {
     }
 
+    public float getEyeHeight()
+    {
+        return 1.82F;
+    }
+
+    private boolean field_35218_b;
     private int field_785_bg;
     private double field_784_bh;
     private double field_783_bi;

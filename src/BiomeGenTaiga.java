@@ -8,15 +8,18 @@ import java.util.List;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            BiomeGenBase, SpawnListEntry, EntityWolf, WorldGenTaiga1, 
-//            WorldGenTaiga2, WorldGenerator
+//            BiomeGenBase, SpawnListEntry, EntityWolf, BiomeDecorator, 
+//            WorldGenTaiga1, WorldGenTaiga2, WorldGenerator
 
 public class BiomeGenTaiga extends BiomeGenBase
 {
 
-    public BiomeGenTaiga()
+    public BiomeGenTaiga(int i)
     {
-        spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityWolf.class, 2));
+        super(i);
+        spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityWolf.class, 8, 4, 4));
+        field_35488_u.field_35911_r = 10;
+        field_35488_u.field_35909_t = 1;
     }
 
     public WorldGenerator getRandomWorldGenForTrees(Random random)

@@ -22,7 +22,6 @@ public enum EnumSkyBlock
 */
     private EnumSkyBlock(String s, int i, int j)
     {
-//        super(s, i);
         field_1722_c = j;
     }
 /*
@@ -30,16 +29,15 @@ public enum EnumSkyBlock
     public static final EnumSkyBlock Block;
 */
     public final int field_1722_c;
-    private static final EnumSkyBlock allSkyBlocks[]; /* synthetic field */
-
+//    private static final EnumSkyBlock allSkyBlocks[]; /* synthetic field */
+/*
     static 
     {
-/*
         Sky = new EnumSkyBlock("Sky", 0, 15);
         Block = new EnumSkyBlock("Block", 1, 0);
-*/
         allSkyBlocks = (new EnumSkyBlock[] {
             Sky, Block
         });
     }
+*/
 }

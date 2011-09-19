@@ -48,10 +48,10 @@ public class AM_WorldGenCrypt extends WorldGenerator
 		int l4=l2-1;
 		int h4=h2-1;
 		
-		int a1=world.findTopSolidBlock(i+w2,k+l2);
-		int a2=world.findTopSolidBlock(i-w2,k+l2);
-		int a3=world.findTopSolidBlock(i-w2,k-l2);
-		int a4=world.findTopSolidBlock(i+w2,k-l2);
+		int a1=world.getTopSolidOrLiquidBlock(i+w2,k+l2);
+		int a2=world.getTopSolidOrLiquidBlock(i-w2,k+l2);
+		int a3=world.getTopSolidOrLiquidBlock(i-w2,k-l2);
+		int a4=world.getTopSolidOrLiquidBlock(i+w2,k-l2);
 		int maxa=j;
 		if(a1<maxa){maxa=a1;}
 		if(a2<maxa){maxa=a2;}

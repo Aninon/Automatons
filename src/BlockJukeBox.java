@@ -40,9 +40,13 @@ public class BlockJukeBox extends BlockContainer
         if(world.multiplayerWorld)
         {
             return;
+        }
+        TileEntityRecordPlayer tileentityrecordplayer = (TileEntityRecordPlayer)world.getBlockTileEntity(i, j, k);
+        if(tileentityrecordplayer == null)
+        {
+            return;
         } else
         {
-            TileEntityRecordPlayer tileentityrecordplayer = (TileEntityRecordPlayer)world.getBlockTileEntity(i, j, k);
             tileentityrecordplayer.record = l;
             tileentityrecordplayer.onInventoryChanged();
             world.setBlockMetadataWithNotify(i, j, k, 1);
@@ -57,6 +61,10 @@ public class BlockJukeBox extends BlockContainer
             return;
         }
         TileEntityRecordPlayer tileentityrecordplayer = (TileEntityRecordPlayer)world.getBlockTileEntity(i, j, k);
+        if(tileentityrecordplayer == null)
+        {
+            return;
+        }
         int l = tileentityrecordplayer.record;
         if(l == 0)
         {
@@ -98,7 +106,7 @@ public class BlockJukeBox extends BlockContainer
         }
     }
 
-    protected TileEntity getBlockEntity()
+    public TileEntity getBlockEntity()
     {
         return new TileEntityRecordPlayer();
     }

@@ -20,17 +20,17 @@ public final class J_JsonNodeFactories
 
     public static J_JsonNode func_27310_a()
     {
-        return J_JsonConstants.field_27228_a;
+        return J_JsonConstants.NULL;
     }
 
     public static J_JsonNode func_27313_b()
     {
-        return J_JsonConstants.field_27227_b;
+        return J_JsonConstants.TRUE;
     }
 
     public static J_JsonNode func_27314_c()
     {
-        return J_JsonConstants.field_27230_c;
+        return J_JsonConstants.FALSE;
     }
 
     public static J_JsonStringNode func_27316_a(String s)

@@ -7,7 +7,7 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            Item, Material, Block, EntityPlayer, 
-//            MathHelper, World, ItemStack
+//            MathHelper, ItemStack, World
 
 public class ItemDoor extends Item
 {
@@ -34,31 +34,44 @@ public class ItemDoor extends Item
         {
             block = Block.doorSteel;
         }
-        if(!block.canPlaceBlockAt(world, i, j, k))
+        if(!entityplayer.func_35190_e(i, j, k) || !entityplayer.func_35190_e(i, j + 1, k))
         {
             return false;
         }
-        int i1 = MathHelper.floor_double((double)(((entityplayer.rotationYaw + 180F) * 4F) / 360F) - 0.5D) & 3;
+        if(!block.canPlaceBlockAt(world, i, j, k))
+        {
+            return false;
+        } else
+        {
+            int i1 = MathHelper.floor_double((double)(((entityplayer.rotationYaw + 180F) * 4F) / 360F) - 0.5D) & 3;
+            func_35434_a(world, i, j, k, i1, block);
+            itemstack.stackSize--;
+            return true;
+        }
+    }
+
+    public static void func_35434_a(World world, int i, int j, int k, int l, Block block)
+    {
         byte byte0 = 0;
         byte byte1 = 0;
-        if(i1 == 0)
+        if(l == 0)
         {
             byte1 = 1;
         }
-        if(i1 == 1)
+        if(l == 1)
         {
             byte0 = -1;
         }
-        if(i1 == 2)
+        if(l == 2)
         {
             byte1 = -1;
         }
-        if(i1 == 3)
+        if(l == 3)
         {
             byte0 = 1;
         }
-        int j1 = (world.isBlockNormalCube(i - byte0, j, k - byte1) ? 1 : 0) + (world.isBlockNormalCube(i - byte0, j + 1, k - byte1) ? 1 : 0);
-        int k1 = (world.isBlockNormalCube(i + byte0, j, k + byte1) ? 1 : 0) + (world.isBlockNormalCube(i + byte0, j + 1, k + byte1) ? 1 : 0);
+        int i1 = (world.isBlockNormalCube(i - byte0, j, k - byte1) ? 1 : 0) + (world.isBlockNormalCube(i - byte0, j + 1, k - byte1) ? 1 : 0);
+        int j1 = (world.isBlockNormalCube(i + byte0, j, k + byte1) ? 1 : 0) + (world.isBlockNormalCube(i + byte0, j + 1, k + byte1) ? 1 : 0);
         boolean flag = world.getBlockId(i - byte0, j, k - byte1) == block.blockID || world.getBlockId(i - byte0, j + 1, k - byte1) == block.blockID;
         boolean flag1 = world.getBlockId(i + byte0, j, k + byte1) == block.blockID || world.getBlockId(i + byte0, j + 1, k + byte1) == block.blockID;
         boolean flag2 = false;
@@ -66,23 +79,21 @@ public class ItemDoor extends Item
         {
             flag2 = true;
         } else
-        if(k1 > j1)
+        if(j1 > i1)
         {
             flag2 = true;
         }
         if(flag2)
         {
-            i1 = i1 - 1 & 3;
-            i1 += 4;
+            l = l - 1 & 3;
+            l += 4;
         }
         world.editingBlocks = true;
-        world.setBlockAndMetadataWithNotify(i, j, k, block.blockID, i1);
-        world.setBlockAndMetadataWithNotify(i, j + 1, k, block.blockID, i1 + 8);
+        world.setBlockAndMetadataWithNotify(i, j, k, block.blockID, l);
+        world.setBlockAndMetadataWithNotify(i, j + 1, k, block.blockID, l + 8);
         world.editingBlocks = false;
         world.notifyBlocksOfNeighborChange(i, j, k, block.blockID);
         world.notifyBlocksOfNeighborChange(i, j + 1, k, block.blockID);
-        itemstack.stackSize--;
-        return true;
     }
 
     private Material doorMaterial;

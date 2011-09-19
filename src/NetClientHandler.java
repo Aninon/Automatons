@@ -6,34 +6,37 @@ package net.minecraft.src;
 
 import java.io.*;
 import java.net.*;
-import java.util.Random;
+import java.util.*;
 import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
 //            NetHandler, MapStorage, NetworkManager, PlayerControllerMP, 
-//            StatList, StatFileWriter, WorldClient, Packet1Login, 
-//            EntityPlayerSP, GuiDownloadTerrain, Packet21PickupSpawn, EntityItem, 
-//            ItemStack, Packet23VehicleSpawn, EntityMinecart, EntityFish, 
-//            EntityArrow, EntitySnowball, EntityFireball, EntityEgg, 
-//            EntityBoat, EntityTNTPrimed, EntityFallingSand, Block, 
-//            Entity, EntityLiving, Packet71Weather, EntityLightningBolt, 
-//            EntityPainting, Packet25EntityPainting, Packet28EntityVelocity, Packet40EntityMetadata, 
-//            DataWatcher, Packet20NamedEntitySpawn, EntityOtherPlayerMP, InventoryPlayer, 
-//            Packet34EntityTeleport, Packet30Entity, Packet29DestroyEntity, EntityPlayer, 
-//            Packet10Flying, AxisAlignedBB, Packet50PreChunk, Packet52MultiBlockChange, 
-//            Chunk, Packet51MapChunk, Packet53BlockChange, GuiConnectFailed, 
-//            Packet255KickDisconnect, Packet22Collect, EntityPickupFX, EffectRenderer, 
-//            Packet3Chat, GuiIngame, Packet18Animation, Packet17Sleep, 
-//            Packet2Handshake, Session, Packet24MobSpawn, EntityList, 
-//            Packet4UpdateTime, World, ChunkCoordinates, Packet6SpawnPosition, 
-//            WorldInfo, Packet39AttachEntity, Packet38EntityStatus, Packet8UpdateHealth, 
-//            Packet9Respawn, Explosion, Packet60Explosion, Packet100OpenWindow, 
-//            InventoryBasic, Container, TileEntityFurnace, TileEntityDispenser, 
-//            MathHelper, Packet103SetSlot, Slot, Packet106Transaction, 
-//            Packet104WindowItems, Packet130UpdateSign, TileEntitySign, Packet105UpdateProgressbar, 
-//            Packet5PlayerInventory, Packet54PlayNoteBlock, Packet70Bed, Packet131MapData, 
-//            Item, ItemMap, MapData, Packet61DoorChange, 
-//            EntityClientPlayerMP, Packet200Statistic, Packet, Packet101CloseWindow
+//            StatList, StatFileWriter, WorldClient, WorldSettings, 
+//            Packet1Login, EntityPlayerSP, GuiDownloadTerrain, Packet21PickupSpawn, 
+//            EntityItem, ItemStack, Packet23VehicleSpawn, EntityMinecart, 
+//            EntityFish, EntityArrow, EntitySnowball, EntityFireball, 
+//            EntityEgg, EntityBoat, EntityTNTPrimed, EntityFallingSand, 
+//            Block, Entity, EntityLiving, EntityXPOrb, 
+//            Packet26EntityExpOrb, Packet71Weather, EntityLightningBolt, EntityPainting, 
+//            Packet25EntityPainting, Packet28EntityVelocity, Packet40EntityMetadata, DataWatcher, 
+//            Packet20NamedEntitySpawn, EntityOtherPlayerMP, InventoryPlayer, Packet34EntityTeleport, 
+//            Packet30Entity, Packet29DestroyEntity, EntityPlayer, Packet10Flying, 
+//            AxisAlignedBB, Packet50PreChunk, Packet52MultiBlockChange, Chunk, 
+//            Packet51MapChunk, Packet53BlockChange, GuiConnectFailed, Packet255KickDisconnect, 
+//            Packet22Collect, EntityPickupFX, EffectRenderer, Packet3Chat, 
+//            GuiIngame, Packet18Animation, Packet17Sleep, Packet2Handshake, 
+//            Session, Packet24MobSpawn, EntityList, Packet4UpdateTime, 
+//            World, ChunkCoordinates, Packet6SpawnPosition, WorldInfo, 
+//            Packet39AttachEntity, Packet38EntityStatus, Packet8UpdateHealth, FoodStats, 
+//            Packet43Experience, Packet9Respawn, Explosion, Packet60Explosion, 
+//            Packet100OpenWindow, InventoryBasic, Container, TileEntityFurnace, 
+//            TileEntityDispenser, MathHelper, Packet103SetSlot, Slot, 
+//            Packet106Transaction, Packet104WindowItems, Packet130UpdateSign, TileEntitySign, 
+//            Packet105UpdateProgressbar, Packet5PlayerInventory, Packet54PlayNoteBlock, Packet70Bed, 
+//            Packet131MapData, Item, ItemMap, MapData, 
+//            Packet61DoorChange, EntityClientPlayerMP, Packet200Statistic, Packet41EntityEffect, 
+//            PotionEffect, Packet42RemoveEntityEffect, Packet201PlayerInfo, GuiSavingLevelString, 
+//            Packet0KeepAlive, Packet, Packet101CloseWindow
 
 public class NetClientHandler extends NetHandler
 {
@@ -44,6 +47,9 @@ public class NetClientHandler extends NetHandler
         disconnected = false;
         field_1210_g = false;
         mapStorage = new MapStorage(null);
+        field_35787_k = new HashMap();
+        field_35786_c = new ArrayList();
+        field_35785_d = 20;
         rand = new Random();
         mc = minecraft;
         Socket socket = new Socket(InetAddress.getByName(s), i);
@@ -63,12 +69,14 @@ public class NetClientHandler extends NetHandler
     {
         mc.playerController = new PlayerControllerMP(mc, this);
         mc.statFileWriter.readStat(StatList.joinMultiplayerStat, 1);
-        worldClient = new WorldClient(this, packet1login.mapSeed, packet1login.dimension);
+        worldClient = new WorldClient(this, new WorldSettings(packet1login.mapSeed, packet1login.field_35249_d, false), packet1login.field_35250_e, packet1login.field_35247_f);
         worldClient.multiplayerWorld = true;
         mc.changeWorld1(worldClient);
-        mc.thePlayer.dimension = packet1login.dimension;
+        mc.thePlayer.dimension = packet1login.field_35250_e;
         mc.displayGuiScreen(new GuiDownloadTerrain(this));
         mc.thePlayer.entityId = packet1login.protocolVersion;
+        field_35785_d = packet1login.field_35251_h;
+        ((PlayerControllerMP)mc.playerController).func_35648_a(packet1login.field_35249_d == 1);
     }
 
     public void handlePickupSpawn(Packet21PickupSpawn packet21pickupspawn)
@@ -157,7 +165,7 @@ public class NetClientHandler extends NetHandler
                     Entity entity = getEntityByID(packet23vehiclespawn.field_28044_i);
                     if(entity instanceof EntityLiving)
                     {
-                        ((EntityArrow)obj).owner = (EntityLiving)entity;
+                        ((EntityArrow)obj).shootingEntity = (EntityLiving)entity;
                     }
                 }
                 ((Entity) (obj)).setVelocity((double)packet23vehiclespawn.field_28047_e / 8000D, (double)packet23vehiclespawn.field_28046_f / 8000D, (double)packet23vehiclespawn.field_28045_g / 8000D);
@@ -165,35 +173,47 @@ public class NetClientHandler extends NetHandler
         }
     }
 
+    public void func_35778_a(Packet26EntityExpOrb packet26entityexporb)
+    {
+        EntityXPOrb entityxporb = new EntityXPOrb(worldClient, packet26entityexporb.field_35239_b, packet26entityexporb.field_35240_c, packet26entityexporb.field_35237_d, packet26entityexporb.field_35238_e);
+        entityxporb.serverPosX = packet26entityexporb.field_35239_b;
+        entityxporb.serverPosY = packet26entityexporb.field_35240_c;
+        entityxporb.serverPosZ = packet26entityexporb.field_35237_d;
+        entityxporb.rotationYaw = 0.0F;
+        entityxporb.rotationPitch = 0.0F;
+        entityxporb.entityId = packet26entityexporb.field_35241_a;
+        worldClient.func_712_a(packet26entityexporb.field_35241_a, entityxporb);
+    }
+
     public void handleWeather(Packet71Weather packet71weather)
     {
-        double d = (double)packet71weather.field_27053_b / 32D;
-        double d1 = (double)packet71weather.field_27057_c / 32D;
-        double d2 = (double)packet71weather.field_27056_d / 32D;
+        double d = (double)packet71weather.posX / 32D;
+        double d1 = (double)packet71weather.posY / 32D;
+        double d2 = (double)packet71weather.posZ / 32D;
         EntityLightningBolt entitylightningbolt = null;
-        if(packet71weather.field_27055_e == 1)
+        if(packet71weather.isLightningBolt == 1)
         {
             entitylightningbolt = new EntityLightningBolt(worldClient, d, d1, d2);
         }
         if(entitylightningbolt != null)
         {
-            entitylightningbolt.serverPosX = packet71weather.field_27053_b;
-            entitylightningbolt.serverPosY = packet71weather.field_27057_c;
-            entitylightningbolt.serverPosZ = packet71weather.field_27056_d;
+            entitylightningbolt.serverPosX = packet71weather.posX;
+            entitylightningbolt.serverPosY = packet71weather.posY;
+            entitylightningbolt.serverPosZ = packet71weather.posZ;
             entitylightningbolt.rotationYaw = 0.0F;
             entitylightningbolt.rotationPitch = 0.0F;
-            entitylightningbolt.entityId = packet71weather.field_27054_a;
+            entitylightningbolt.entityId = packet71weather.entityID;
             worldClient.addWeatherEffect(entitylightningbolt);
         }
     }
 
-    public void func_21146_a(Packet25EntityPainting packet25entitypainting)
+    public void handleEntityPainting(Packet25EntityPainting packet25entitypainting)
     {
         EntityPainting entitypainting = new EntityPainting(worldClient, packet25entitypainting.xPosition, packet25entitypainting.yPosition, packet25entitypainting.zPosition, packet25entitypainting.direction, packet25entitypainting.title);
         worldClient.func_712_a(packet25entitypainting.entityId, entitypainting);
     }
 
-    public void func_6498_a(Packet28EntityVelocity packet28entityvelocity)
+    public void handleEntityVelocity(Packet28EntityVelocity packet28entityvelocity)
     {
         Entity entity = getEntityByID(packet28entityvelocity.entityId);
         if(entity == null)
@@ -206,7 +226,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void func_21148_a(Packet40EntityMetadata packet40entitymetadata)
+    public void handleEntityMetadata(Packet40EntityMetadata packet40entitymetadata)
     {
         Entity entity = getEntityByID(packet40entitymetadata.entityId);
         if(entity != null && packet40entitymetadata.func_21047_b() != null)
@@ -453,6 +473,10 @@ public class NetClientHandler extends NetHandler
         {
             EntityPlayer entityplayer2 = (EntityPlayer)entity;
             entityplayer2.func_6420_o();
+        } else
+        if(packet18animation.animate == 5)
+        {
+            if(!(entity instanceof EntityOtherPlayerMP));
         }
     }
 
@@ -474,18 +498,24 @@ public class NetClientHandler extends NetHandler
     {
         if(packet2handshake.username.equals("-"))
         {
-            addToSendQueue(new Packet1Login(mc.session.username, 14));
+            addToSendQueue(new Packet1Login(mc.session.username, 17));
+        } else
+        if(packet2handshake.username == null || packet2handshake.username.trim().length() == 0)
+        {
+            netManager.networkShutdown("disconnect.genericReason", new Object[] {
+                "The server responded with an invalid server key"
+            });
         } else
         {
             try
             {
-                URL url = new URL((new StringBuilder()).append("http://www.minecraft.net/game/joinserver.jsp?user=").append(mc.session.username).append("&sessionId=").append(mc.session.sessionId).append("&serverId=").append(packet2handshake.username).toString());
+                URL url = new URL((new StringBuilder()).append("http://session.minecraft.net/game/joinserver.jsp?user=").append(mc.session.username).append("&sessionId=").append(mc.session.sessionId).append("&serverId=").append(packet2handshake.username).toString());
                 BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(url.openStream()));
                 String s = bufferedreader.readLine();
                 bufferedreader.close();
                 if(s.equalsIgnoreCase("ok"))
                 {
-                    addToSendQueue(new Packet1Login(mc.session.username, 14));
+                    addToSendQueue(new Packet1Login(mc.session.username, 17));
                 } else
                 {
                     netManager.networkShutdown("disconnect.loginFailedInfo", new Object[] {
@@ -525,7 +555,7 @@ public class NetClientHandler extends NetHandler
         entityliving.setPositionAndRotation(d, d1, d2, f, f1);
         entityliving.isMultiplayerEntity = true;
         worldClient.func_712_a(packet24mobspawn.entityId, entityliving);
-        java.util.List list = packet24mobspawn.getMetadata();
+        List list = packet24mobspawn.getMetadata();
         if(list != null)
         {
             entityliving.getDataWatcher().updateWatchedObjectsFromList(list);
@@ -543,7 +573,7 @@ public class NetClientHandler extends NetHandler
         mc.theWorld.getWorldInfo().setSpawn(packet6spawnposition.xPosition, packet6spawnposition.yPosition, packet6spawnposition.zPosition);
     }
 
-    public void func_6497_a(Packet39AttachEntity packet39attachentity)
+    public void handleAttachEntity(Packet39AttachEntity packet39attachentity)
     {
         Object obj = getEntityByID(packet39attachentity.entityId);
         Entity entity = getEntityByID(packet39attachentity.vehicleEntityId);
@@ -561,7 +591,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void func_9447_a(Packet38EntityStatus packet38entitystatus)
+    public void handleEntityStatus(Packet38EntityStatus packet38entitystatus)
     {
         Entity entity = getEntityByID(packet38entitystatus.entityId);
         if(entity != null)
@@ -584,20 +614,28 @@ public class NetClientHandler extends NetHandler
     public void handleHealth(Packet8UpdateHealth packet8updatehealth)
     {
         mc.thePlayer.setHealth(packet8updatehealth.healthMP);
+        mc.thePlayer.func_35191_at().func_35764_a(packet8updatehealth.field_35231_b);
+        mc.thePlayer.func_35191_at().func_35767_b(packet8updatehealth.field_35232_c);
+    }
+
+    public void func_35777_a(Packet43Experience packet43experience)
+    {
+        mc.thePlayer.func_35219_c(packet43experience.field_35230_a, packet43experience.field_35228_b, packet43experience.field_35229_c);
     }
 
     public void handleRespawn(Packet9Respawn packet9respawn)
     {
-        if(packet9respawn.respawnDimension != mc.thePlayer.dimension)
+        if(packet9respawn.field_35244_b != mc.thePlayer.dimension || packet9respawn.field_35246_a != mc.thePlayer.worldObj.getRandomSeed())
         {
             field_1210_g = false;
-            worldClient = new WorldClient(this, worldClient.getWorldInfo().getRandomSeed(), packet9respawn.respawnDimension);
+            worldClient = new WorldClient(this, new WorldSettings(packet9respawn.field_35246_a, packet9respawn.field_35243_e, false), packet9respawn.field_35244_b, packet9respawn.field_35245_c);
             worldClient.multiplayerWorld = true;
             mc.changeWorld1(worldClient);
-            mc.thePlayer.dimension = packet9respawn.respawnDimension;
+            mc.thePlayer.dimension = packet9respawn.field_35244_b;
             mc.displayGuiScreen(new GuiDownloadTerrain(this));
         }
-        mc.respawn(true, packet9respawn.respawnDimension);
+        mc.respawn(true, packet9respawn.field_35244_b);
+        ((PlayerControllerMP)mc.playerController).func_35648_a(packet9respawn.field_35243_e == 1);
     }
 
     public void handleExplosion(Packet60Explosion packet60explosion)
@@ -643,12 +681,12 @@ public class NetClientHandler extends NetHandler
         } else
         if(packet103setslot.windowId == 0 && packet103setslot.itemSlot >= 36 && packet103setslot.itemSlot < 45)
         {
-            ItemStack itemstack = mc.thePlayer.slots.getSlot(packet103setslot.itemSlot).getStack();
+            ItemStack itemstack = mc.thePlayer.inventorySlots.getSlot(packet103setslot.itemSlot).getStack();
             if(packet103setslot.myItemStack != null && (itemstack == null || itemstack.stackSize < packet103setslot.myItemStack.stackSize))
             {
                 packet103setslot.myItemStack.animationsToGo = 5;
             }
-            mc.thePlayer.slots.putStackInSlot(packet103setslot.itemSlot, packet103setslot.myItemStack);
+            mc.thePlayer.inventorySlots.putStackInSlot(packet103setslot.itemSlot, packet103setslot.myItemStack);
         } else
         if(packet103setslot.windowId == mc.thePlayer.craftingInventory.windowId)
         {
@@ -661,7 +699,7 @@ public class NetClientHandler extends NetHandler
         Container container = null;
         if(packet106transaction.windowId == 0)
         {
-            container = mc.thePlayer.slots;
+            container = mc.thePlayer.inventorySlots;
         } else
         if(packet106transaction.windowId == mc.thePlayer.craftingInventory.windowId)
         {
@@ -684,7 +722,7 @@ public class NetClientHandler extends NetHandler
     {
         if(packet104windowitems.windowId == 0)
         {
-            mc.thePlayer.slots.putStacksInSlots(packet104windowitems.itemStack);
+            mc.thePlayer.inventorySlots.putStacksInSlots(packet104windowitems.itemStack);
         } else
         if(packet104windowitems.windowId == mc.thePlayer.craftingInventory.windowId)
         {
@@ -692,7 +730,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleSignUpdate(Packet130UpdateSign packet130updatesign)
+    public void handleUpdateSign(Packet130UpdateSign packet130updatesign)
     {
         if(mc.theWorld.blockExists(packet130updatesign.xPosition, packet130updatesign.yPosition, packet130updatesign.zPosition))
         {
@@ -747,13 +785,17 @@ public class NetClientHandler extends NetHandler
         }
         if(i == 1)
         {
-            worldClient.getWorldInfo().setRaining(true);
+            worldClient.getWorldInfo().setIsRaining(true);
             worldClient.setRainStrength(1.0F);
         } else
         if(i == 2)
         {
-            worldClient.getWorldInfo().setRaining(false);
+            worldClient.getWorldInfo().setIsRaining(false);
             worldClient.setRainStrength(0.0F);
+        } else
+        if(i == 3)
+        {
+            ((PlayerControllerMP)mc.playerController).func_35648_a(packet70bed.field_35262_c == 1);
         }
     }
 
@@ -773,14 +815,65 @@ public class NetClientHandler extends NetHandler
         mc.theWorld.playAuxSFX(packet61doorchange.sfxID, packet61doorchange.posX, packet61doorchange.posY, packet61doorchange.posZ, packet61doorchange.auxData);
     }
 
-    public void func_27245_a(Packet200Statistic packet200statistic)
+    public void handleStatistic(Packet200Statistic packet200statistic)
     {
-        ((EntityClientPlayerMP)mc.thePlayer).func_27027_b(StatList.func_27361_a(packet200statistic.field_27052_a), packet200statistic.field_27051_b);
+        ((EntityClientPlayerMP)mc.thePlayer).func_27027_b(StatList.func_27361_a(packet200statistic.statisticId), packet200statistic.amount);
+    }
+
+    public void func_35780_a(Packet41EntityEffect packet41entityeffect)
+    {
+        Entity entity = getEntityByID(packet41entityeffect.field_35261_a);
+        if(entity == null || !(entity instanceof EntityLiving))
+        {
+            return;
+        } else
+        {
+            ((EntityLiving)entity).func_35165_a(new PotionEffect(packet41entityeffect.field_35259_b, packet41entityeffect.field_35258_d, packet41entityeffect.field_35260_c));
+            return;
+        }
+    }
+
+    public void func_35783_a(Packet42RemoveEntityEffect packet42removeentityeffect)
+    {
+        Entity entity = getEntityByID(packet42removeentityeffect.field_35253_a);
+        if(entity == null || !(entity instanceof EntityLiving))
+        {
+            return;
+        } else
+        {
+            ((EntityLiving)entity).damageEntity(packet42removeentityeffect.field_35252_b);
+            return;
+        }
     }
 
     public boolean isServerHandler()
     {
         return false;
+    }
+
+    public void func_35779_a(Packet201PlayerInfo packet201playerinfo)
+    {
+        GuiSavingLevelString guisavinglevelstring = (GuiSavingLevelString)field_35787_k.get(packet201playerinfo.field_35257_a);
+        if(guisavinglevelstring == null && packet201playerinfo.field_35255_b)
+        {
+            guisavinglevelstring = new GuiSavingLevelString(packet201playerinfo.field_35257_a);
+            field_35787_k.put(packet201playerinfo.field_35257_a, guisavinglevelstring);
+            field_35786_c.add(guisavinglevelstring);
+        }
+        if(guisavinglevelstring != null && !packet201playerinfo.field_35255_b)
+        {
+            field_35787_k.remove(packet201playerinfo.field_35257_a);
+            field_35786_c.remove(guisavinglevelstring);
+        }
+        if(packet201playerinfo.field_35255_b && guisavinglevelstring != null)
+        {
+            guisavinglevelstring.field_35623_b = packet201playerinfo.field_35256_c;
+        }
+    }
+
+    public void func_35784_a(Packet0KeepAlive packet0keepalive)
+    {
+        addToSendQueue(new Packet0KeepAlive(packet0keepalive.field_35254_a));
     }
 
     private boolean disconnected;
@@ -790,5 +883,8 @@ public class NetClientHandler extends NetHandler
     private WorldClient worldClient;
     private boolean field_1210_g;
     public MapStorage mapStorage;
+    private Map field_35787_k;
+    public List field_35786_c;
+    public int field_35785_d;
     Random rand;
 }

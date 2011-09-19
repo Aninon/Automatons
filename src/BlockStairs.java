@@ -104,6 +104,11 @@ public class BlockStairs extends Block
         modelBlock.onBlockDestroyedByPlayer(world, i, j, k, l);
     }
 
+    public int func_35275_c(IBlockAccess iblockaccess, int i, int j, int k)
+    {
+        return modelBlock.func_35275_c(iblockaccess, i, j, k);
+    }
+
     public float getBlockBrightness(IBlockAccess iblockaccess, int i, int j, int k)
     {
         return modelBlock.getBlockBrightness(iblockaccess, i, j, k);
@@ -131,17 +136,12 @@ public class BlockStairs extends Block
 
     public int getBlockTextureFromSideAndMetadata(int i, int j)
     {
-        return modelBlock.getBlockTextureFromSideAndMetadata(i, j);
+        return modelBlock.getBlockTextureFromSideAndMetadata(i, 0);
     }
 
     public int getBlockTextureFromSide(int i)
     {
-        return modelBlock.getBlockTextureFromSide(i);
-    }
-
-    public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l)
-    {
-        return modelBlock.getBlockTexture(iblockaccess, i, j, k, l);
+        return modelBlock.getBlockTextureFromSideAndMetadata(i, 0);
     }
 
     public int tickRate()

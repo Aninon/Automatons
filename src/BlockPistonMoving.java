@@ -20,7 +20,7 @@ public class BlockPistonMoving extends BlockContainer
         setHardness(-1F);
     }
 
-    protected TileEntity getBlockEntity()
+    public TileEntity getBlockEntity()
     {
         return null;
     }
@@ -34,7 +34,7 @@ public class BlockPistonMoving extends BlockContainer
         TileEntity tileentity = world.getBlockTileEntity(i, j, k);
         if(tileentity != null && (tileentity instanceof TileEntityPiston))
         {
-            ((TileEntityPiston)tileentity).func_31011_l();
+            ((TileEntityPiston)tileentity).clearPistonTileEntity();
         } else
         {
             super.onBlockRemoval(world, i, j, k);
@@ -89,7 +89,7 @@ public class BlockPistonMoving extends BlockContainer
         {
             return;
         }
-        TileEntityPiston tileentitypiston = func_31034_c(world, i, j, k);
+        TileEntityPiston tileentitypiston = getTileEntityAtLocation(world, i, j, k);
         if(tileentitypiston == null)
         {
             return;
@@ -115,7 +115,7 @@ public class BlockPistonMoving extends BlockContainer
 
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k)
     {
-        TileEntityPiston tileentitypiston = func_31034_c(world, i, j, k);
+        TileEntityPiston tileentitypiston = getTileEntityAtLocation(world, i, j, k);
         if(tileentitypiston == null)
         {
             return null;
@@ -130,7 +130,7 @@ public class BlockPistonMoving extends BlockContainer
 
     public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k)
     {
-        TileEntityPiston tileentitypiston = func_31034_c(iblockaccess, i, j, k);
+        TileEntityPiston tileentitypiston = getTileEntityAtLocation(iblockaccess, i, j, k);
         if(tileentitypiston != null)
         {
             Block block = Block.blocksList[tileentitypiston.getStoredBlockID()];
@@ -176,7 +176,7 @@ public class BlockPistonMoving extends BlockContainer
         }
     }
 
-    private TileEntityPiston func_31034_c(IBlockAccess iblockaccess, int i, int j, int k)
+    private TileEntityPiston getTileEntityAtLocation(IBlockAccess iblockaccess, int i, int j, int k)
     {
         TileEntity tileentity = iblockaccess.getBlockTileEntity(i, j, k);
         if(tileentity != null && (tileentity instanceof TileEntityPiston))

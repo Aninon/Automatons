@@ -164,6 +164,12 @@ public class InventoryPlayer
         return true;
     }
 
+    public boolean func_35157_d(int i)
+    {
+        int j = getInventorySlotContainItem(i);
+        return j >= 0;
+    }
+
     public boolean addItemStackToInventory(ItemStack itemstack)
     {
         if(!itemstack.isItemDamaged())
@@ -273,8 +279,8 @@ public class InventoryPlayer
         {
             NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
             int j = nbttagcompound.getByte("Slot") & 0xff;
-            ItemStack itemstack = new ItemStack(nbttagcompound);
-            if(itemstack.getItem() == null)
+            ItemStack itemstack = ItemStack.func_35864_a(nbttagcompound);
+            if(itemstack == null)
             {
                 continue;
             }
@@ -461,6 +467,14 @@ public class InventoryPlayer
         }
 
         return false;
+    }
+
+    public void func_35142_x_()
+    {
+    }
+
+    public void func_35141_y_()
+    {
     }
 
     public ItemStack mainInventory[];

@@ -36,6 +36,28 @@ public class EntityFlameFX extends EntityFX
         super.renderParticle(tessellator, f, f1, f2, f3, f4, f5);
     }
 
+    public int func_35115_a(float f)
+    {
+        float f1 = ((float)particleAge + f) / (float)particleMaxAge;
+        if(f1 < 0.0F)
+        {
+            f1 = 0.0F;
+        }
+        if(f1 > 1.0F)
+        {
+            f1 = 1.0F;
+        }
+        int i = super.func_35115_a(f);
+        int j = i & 0xff;
+        int k = i >> 16 & 0xff;
+        j += (int)(f1 * 15F * 16F);
+        if(j > 240)
+        {
+            j = 240;
+        }
+        return j | k << 16;
+    }
+
     public float getEntityBrightness(float f)
     {
         float f1 = ((float)particleAge + f) / (float)particleMaxAge;

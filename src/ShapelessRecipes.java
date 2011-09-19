@@ -36,7 +36,7 @@ public class ShapelessRecipes
             }
             for(int j = 0; j < 3; j++)
             {
-                ItemStack itemstack = inventorycrafting.func_21103_b(j, i);
+                ItemStack itemstack = inventorycrafting.getStackInRowAndColumn(j, i);
                 if(itemstack == null)
                 {
                     continue;

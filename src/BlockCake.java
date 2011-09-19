@@ -8,7 +8,7 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            Block, Material, IBlockAccess, World, 
-//            AxisAlignedBB, EntityPlayer
+//            AxisAlignedBB, EntityPlayer, FoodStats
 
 public class BlockCake extends Block
 {
@@ -110,9 +110,9 @@ public class BlockCake extends Block
 
     private void eatCakeSlice(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-        if(entityplayer.health < 20)
+        if(entityplayer.func_35197_b(false))
         {
-            entityplayer.heal(3);
+            entityplayer.func_35191_at().func_35771_a(2, 0.1F);
             int l = world.getBlockMetadata(i, j, k) + 1;
             if(l >= 6)
             {

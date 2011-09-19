@@ -19,51 +19,72 @@ public class WorldGenTrees extends WorldGenerator
 
     public boolean generate(World world, Random random, int i, int j, int k)
     {
-        int l = random.nextInt(3) + 4;
-        boolean flag = true;
-        if(j < 1 || j + l + 1 > 128)
+        int l;
+        boolean flag;
+label0:
         {
+            l = random.nextInt(3) + 4;
+            flag = true;
+            if(j >= 1)
+            {
+                world.getClass();
+                if(j + l + 1 <= 128)
+                {
+                    break label0;
+                }
+            }
             return false;
         }
-        for(int i1 = j; i1 <= j + 1 + l; i1++)
+label1:
         {
-            byte byte0 = 1;
-            if(i1 == j)
+            for(int i1 = j; i1 <= j + 1 + l; i1++)
             {
-                byte0 = 0;
-            }
-            if(i1 >= (j + 1 + l) - 2)
-            {
-                byte0 = 2;
-            }
-            for(int i2 = i - byte0; i2 <= i + byte0 && flag; i2++)
-            {
-                for(int l2 = k - byte0; l2 <= k + byte0 && flag; l2++)
+                byte byte0 = 1;
+                if(i1 == j)
                 {
-                    if(i1 >= 0 && i1 < 128)
+                    byte0 = 0;
+                }
+                if(i1 >= (j + 1 + l) - 2)
+                {
+                    byte0 = 2;
+                }
+                for(int i2 = i - byte0; i2 <= i + byte0 && flag; i2++)
+                {
+                    for(int l2 = k - byte0; l2 <= k + byte0 && flag; l2++)
                     {
-                        int j3 = world.getBlockId(i2, i1, l2);
-                        if(j3 != 0 && j3 != Block.leaves.blockID)
+                        if(i1 >= 0)
                         {
-                            flag = false;
+                            world.getClass();
+                            if(i1 < 128)
+                            {
+                                int j3 = world.getBlockId(i2, i1, l2);
+                                if(j3 != 0 && j3 != Block.leaves.blockID)
+                                {
+                                    flag = false;
+                                }
+                                continue;
+                            }
                         }
-                    } else
-                    {
                         flag = false;
                     }
+
                 }
 
             }
 
-        }
-
-        if(!flag)
-        {
-            return false;
-        }
-        int j1 = world.getBlockId(i, j - 1, k);
-        if(j1 != Block.grass.blockID && j1 != Block.dirt.blockID || j >= 128 - l - 1)
-        {
+            if(!flag)
+            {
+                return false;
+            }
+            int j1 = world.getBlockId(i, j - 1, k);
+            if(j1 == Block.grass.blockID || j1 == Block.dirt.blockID)
+            {
+                world.getClass();
+                if(j < 128 - l - 1)
+                {
+                    break label1;
+                }
+            }
             return false;
         }
         world.setBlock(i, j - 1, k, Block.dirt.blockID);

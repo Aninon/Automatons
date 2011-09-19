@@ -10,7 +10,7 @@ public class AM_ModelWorker extends ModelBase
     public AM_ModelWorker()
     {
 
-		bod = new ModelRenderer(10, 0);
+		bod = new ModelRenderer(this,10, 0);
 		bod.addBox(-2F, -4F, -2F, 4, 8, 4, 0F);
 		bod.setRotationPoint(0F, 14F, 0F);
 		
@@ -19,7 +19,7 @@ public class AM_ModelWorker extends ModelBase
 		bod.rotateAngleZ = 0F;
 		bod.mirror = false;
 		
-		leg1 = new ModelRenderer(33, 21);
+		leg1 = new ModelRenderer(this,33, 21);
 		leg1.addBox(0F, 0F, -1F, 3, 8, 3, 0F);
 		leg1.setRotationPoint(2F, 16F, 0F);
 		
@@ -28,7 +28,7 @@ public class AM_ModelWorker extends ModelBase
 		leg1.rotateAngleZ = 0F;
 		leg1.mirror = false;
 		
-		leg2 = new ModelRenderer(33, 21);
+		leg2 = new ModelRenderer(this,33, 21);
 		leg2.addBox(-3F, 0F, -1F, 3, 8, 3, 0F);
 		leg2.setRotationPoint(-2F, 16F, 0F);
 		
@@ -37,7 +37,7 @@ public class AM_ModelWorker extends ModelBase
 		leg2.rotateAngleZ = 0F;
 		leg2.mirror = false;
 		
-		head = new ModelRenderer(7, 20);
+		head = new ModelRenderer(this,7, 20);
 		head.addBox(-2.5F, -5F, -4F, 5, 5, 7, 0F);
 		head.setRotationPoint(0F, 12F, -2F);
 		
@@ -46,7 +46,7 @@ public class AM_ModelWorker extends ModelBase
 		head.rotateAngleZ = 0F;
 		head.mirror = false;
 		
-		light = new ModelRenderer(28, 0);
+		light = new ModelRenderer(this,28, 0);
 		light.addBox(-1.5F, -6F, -1.5F, 3, 5, 3, 0F);
 		light.setRotationPoint(0F, 12F, -2F);
 		
@@ -60,9 +60,9 @@ public class AM_ModelWorker extends ModelBase
 		
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
     {
-        super.render(f, f1, f2, f3, f4, f5);
+        super.render(entity,f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		bod.render(f5);
 		head.render(f5);

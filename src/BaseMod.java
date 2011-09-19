@@ -10,7 +10,8 @@ import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
 //            World, ItemStack, KeyBinding, GuiScreen, 
-//            RenderBlocks, Block, IBlockAccess, EntityPlayer
+//            RenderBlocks, Block, IBlockAccess, EntityPlayer, 
+//            IInventory
 
 public abstract class BaseMod
 {
@@ -19,7 +20,7 @@ public abstract class BaseMod
     {
     }
 
-    public int AddFuel(int i)
+    public int AddFuel(int i, int j)
     {
         return 0;
     }
@@ -50,10 +51,28 @@ public abstract class BaseMod
     {
     }
 
+    public boolean OnTickInGame(float f, Minecraft minecraft)
+    {
+        return OnTickInGame(minecraft);
+    }
+
+    /**
+     * @deprecated Method OnTickInGame is deprecated
+     */
+
     public boolean OnTickInGame(Minecraft minecraft)
     {
         return false;
     }
+
+    public boolean OnTickInGUI(float f, Minecraft minecraft, GuiScreen guiscreen)
+    {
+        return OnTickInGUI(minecraft, guiscreen);
+    }
+
+    /**
+     * @deprecated Method OnTickInGUI is deprecated
+     */
 
     public boolean OnTickInGUI(Minecraft minecraft, GuiScreen guiscreen)
     {
@@ -73,7 +92,7 @@ public abstract class BaseMod
         return false;
     }
 
-    public void TakenFromCrafting(EntityPlayer entityplayer, ItemStack itemstack)
+    public void TakenFromCrafting(EntityPlayer entityplayer, ItemStack itemstack, IInventory iinventory)
     {
     }
 

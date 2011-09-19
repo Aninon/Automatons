@@ -18,6 +18,7 @@ public class TileEntity
 
     public TileEntity()
     {
+        field_35145_n = -1;
     }
 
     private static void addMapping(Class class1, String s)
@@ -87,14 +88,19 @@ public class TileEntity
 
     public int getBlockMetadata()
     {
-        return worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        if(field_35145_n == -1)
+        {
+            field_35145_n = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        }
+        return field_35145_n;
     }
 
     public void onInventoryChanged()
     {
         if(worldObj != null)
         {
-            worldObj.func_698_b(xCoord, yCoord, zCoord, this);
+            field_35145_n = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+            worldObj.updateTileEntityChunkAndDoNothing(xCoord, yCoord, zCoord, this);
         }
     }
 
@@ -108,22 +114,36 @@ public class TileEntity
 
     public Block getBlockType()
     {
-        return Block.blocksList[worldObj.getBlockId(xCoord, yCoord, zCoord)];
+        if(field_35146_o == null)
+        {
+            field_35146_o = Block.blocksList[worldObj.getBlockId(xCoord, yCoord, zCoord)];
+        }
+        return field_35146_o;
     }
 
-    public boolean func_31006_g()
+    public boolean isInvalid()
     {
         return tileEntityInvalid;
     }
 
-    public void func_31005_i()
+    public void invalidate()
     {
         tileEntityInvalid = true;
     }
 
-    public void func_31004_j()
+    public void validate()
     {
         tileEntityInvalid = false;
+    }
+
+    public void func_35143_b(int i, int j)
+    {
+    }
+
+    public void func_35144_b()
+    {
+        field_35146_o = null;
+        field_35145_n = -1;
     }
 
     static Class _mthclass$(String s)
@@ -145,6 +165,8 @@ public class TileEntity
     public int yCoord;
     public int zCoord;
     protected boolean tileEntityInvalid;
+    public int field_35145_n;
+    public Block field_35146_o;
 
     static 
     {

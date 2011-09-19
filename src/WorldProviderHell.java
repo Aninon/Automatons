@@ -18,7 +18,7 @@ public class WorldProviderHell extends WorldProvider
 
     public void registerWorldChunkManager()
     {
-        worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.hell, 1.0D, 0.0D);
+        worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.hell, 1.0F, 0.0F);
         isNether = true;
         isHellWorld = true;
         hasNoSky = true;

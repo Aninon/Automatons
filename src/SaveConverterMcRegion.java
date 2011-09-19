@@ -40,7 +40,7 @@ public class SaveConverterMcRegion extends SaveFormatOld
                 continue;
             }
             String s = file.getName();
-            WorldInfo worldinfo = func_22173_b(s);
+            WorldInfo worldinfo = getWorldInfo(s);
             if(worldinfo == null)
             {
                 continue;
@@ -51,7 +51,7 @@ public class SaveConverterMcRegion extends SaveFormatOld
             {
                 s1 = s;
             }
-            arraylist.add(new SaveFormatComparator(s, s1, worldinfo.getLastTimePlayed(), worldinfo.getSizeOnDisk(), flag));
+            arraylist.add(new SaveFormatComparator(s, s1, worldinfo.getLastTimePlayed(), worldinfo.getSizeOnDisk(), worldinfo.func_35918_q(), flag));
         }
 
         return arraylist;
@@ -59,7 +59,7 @@ public class SaveConverterMcRegion extends SaveFormatOld
 
     public void flushCache()
     {
-        RegionFileCache.dumpChunkMapCache();
+        RegionFileCache.clearRegionFileReferences();
     }
 
     public ISaveHandler getSaveLoader(String s, boolean flag)
@@ -69,7 +69,7 @@ public class SaveConverterMcRegion extends SaveFormatOld
 
     public boolean isOldMapFormat(String s)
     {
-        WorldInfo worldinfo = func_22173_b(s);
+        WorldInfo worldinfo = getWorldInfo(s);
         return worldinfo != null && worldinfo.getSaveVersion() == 0;
     }
 
@@ -92,7 +92,7 @@ public class SaveConverterMcRegion extends SaveFormatOld
         System.out.println((new StringBuilder()).append("Total conversion count is ").append(i).toString());
         func_22181_a(file, arraylist, 0, i, iprogressupdate);
         func_22181_a(file1, arraylist2, arraylist.size(), i, iprogressupdate);
-        WorldInfo worldinfo = func_22173_b(s);
+        WorldInfo worldinfo = getWorldInfo(s);
         worldinfo.setSaveVersion(19132);
         ISaveHandler isavehandler = getSaveLoader(s, false);
         isavehandler.saveWorldInfo(worldinfo);
@@ -144,14 +144,14 @@ public class SaveConverterMcRegion extends SaveFormatOld
         for(Iterator iterator = arraylist.iterator(); iterator.hasNext(); iprogressupdate.setLoadingProgress(i1))
         {
             ChunkFile chunkfile = (ChunkFile)iterator.next();
-            int k = chunkfile.func_22323_b();
-            int l = chunkfile.func_22321_c();
+            int k = chunkfile.getXChunk();
+            int l = chunkfile.getYChunk();
             RegionFile regionfile = RegionFileCache.createOrLoadRegionFile(file, k, l);
-            if(!regionfile.func_22202_c(k & 0x1f, l & 0x1f))
+            if(!regionfile.isChunkSaved(k & 0x1f, l & 0x1f))
             {
                 try
                 {
-                    DataInputStream datainputstream = new DataInputStream(new GZIPInputStream(new FileInputStream(chunkfile.func_22324_a())));
+                    DataInputStream datainputstream = new DataInputStream(new GZIPInputStream(new FileInputStream(chunkfile.getChunkFile())));
                     DataOutputStream dataoutputstream = regionfile.getChunkDataOutputStream(k & 0x1f, l & 0x1f);
                     for(int j1 = 0; (j1 = datainputstream.read(abyte0)) != -1;)
                     {
@@ -170,7 +170,7 @@ public class SaveConverterMcRegion extends SaveFormatOld
             i1 = (int)Math.round((100D * (double)i) / (double)j);
         }
 
-        RegionFileCache.dumpChunkMapCache();
+        RegionFileCache.clearRegionFileReferences();
     }
 
     private void func_22182_a(ArrayList arraylist, int i, int j, IProgressUpdate iprogressupdate)

@@ -72,10 +72,9 @@ public class GuiEditSign extends GuiScreen
         {
             entitySign.signText[editLine] = entitySign.signText[editLine].substring(0, entitySign.signText[editLine].length() - 1);
         }
-        if(allowedCharacters.indexOf(c) >= 0 && entitySign.signText[editLine].length() < 15)
-        {
-            entitySign.signText[editLine] += c;
-        }
+        if(allowedCharacters.indexOf(c) >= 0 && this.entitySign.signText[this.editLine].length() < 15) {
+            this.entitySign.signText[this.editLine] = this.entitySign.signText[this.editLine] + c;
+         }
     }
 
     public void drawScreen(int i, int j, float f)

@@ -13,74 +13,31 @@ public class MovementInputFromOptions extends MovementInput
 
     public MovementInputFromOptions(GameSettings gamesettings)
     {
-        movementKeyStates = new boolean[10];
         gameSettings = gamesettings;
-    }
-
-    public void checkKeyForMovementInput(int i, boolean flag)
-    {
-        byte byte0 = -1;
-        if(i == gameSettings.keyBindForward.keyCode)
-        {
-            byte0 = 0;
-        }
-        if(i == gameSettings.keyBindBack.keyCode)
-        {
-            byte0 = 1;
-        }
-        if(i == gameSettings.keyBindLeft.keyCode)
-        {
-            byte0 = 2;
-        }
-        if(i == gameSettings.keyBindRight.keyCode)
-        {
-            byte0 = 3;
-        }
-        if(i == gameSettings.keyBindJump.keyCode)
-        {
-            byte0 = 4;
-        }
-        if(i == gameSettings.keyBindSneak.keyCode)
-        {
-            byte0 = 5;
-        }
-        if(byte0 >= 0)
-        {
-            movementKeyStates[byte0] = flag;
-        }
-    }
-
-    public void resetKeyState()
-    {
-        for(int i = 0; i < 10; i++)
-        {
-            movementKeyStates[i] = false;
-        }
-
     }
 
     public void updatePlayerMoveState(EntityPlayer entityplayer)
     {
         moveStrafe = 0.0F;
         moveForward = 0.0F;
-        if(movementKeyStates[0])
+        if(gameSettings.keyBindForward.field_35965_e)
         {
             moveForward++;
         }
-        if(movementKeyStates[1])
+        if(gameSettings.keyBindBack.field_35965_e)
         {
             moveForward--;
         }
-        if(movementKeyStates[2])
+        if(gameSettings.keyBindLeft.field_35965_e)
         {
             moveStrafe++;
         }
-        if(movementKeyStates[3])
+        if(gameSettings.keyBindRight.field_35965_e)
         {
             moveStrafe--;
         }
-        jump = movementKeyStates[4];
-        sneak = movementKeyStates[5];
+        jump = gameSettings.keyBindJump.field_35965_e;
+        sneak = gameSettings.keyBindSneak.field_35965_e;
         if(sneak)
         {
             moveStrafe *= 0.29999999999999999D;
@@ -88,6 +45,5 @@ public class MovementInputFromOptions extends MovementInput
         }
     }
 
-    private boolean movementKeyStates[];
     private GameSettings gameSettings;
 }

@@ -52,6 +52,10 @@ public class AM_EntityHydra extends EntityMob
 	}
 	
 	
+	protected boolean attackEntityAsMob(Entity entity)
+    {
+        return entity.attackEntityFrom(DamageSource.func_35525_a(this), attackStrength);
+    }
 	
 	protected void attackEntity(Entity entity, float f)
 	{
@@ -68,7 +72,7 @@ public class AM_EntityHydra extends EntityMob
 		if(attackTime <= 0 && f < 5.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
 		{
 			attackTime = 20;
-			entity.attackEntityFrom(this, attackStrength);
+			attackEntityAsMob(entity);
 		}
 	}
 	
@@ -107,7 +111,7 @@ public class AM_EntityHydra extends EntityMob
 		return 1;
 	}
 
-	protected void updatePlayerActionState()
+	protected void updateEntityActionState()
 	{
 		hasAttacked = isMovementCeased();
 		float f = 16F;
@@ -147,7 +151,7 @@ public class AM_EntityHydra extends EntityMob
 		rotationPitch = 0.0F;
 		if(pathToEntity == null || rand.nextInt(100) == 0)
 		{
-			super.updatePlayerActionState();
+			super.updateEntityActionState();
 			pathToEntity = null;
 			return;
 		}
@@ -281,9 +285,24 @@ public class AM_EntityHydra extends EntityMob
 	}
 	
 	
-	protected void dropFewItems(){
-		Dropper();
-	}
+	public void onDeath(DamageSource damagesource)
+    {
+        Entity entity = damagesource.func_35532_a();
+        if(scoreValue >= 0 && entity != null)
+        {
+            entity.addToPlayerScore(this, scoreValue);
+        }
+        if(entity != null)
+        {
+            entity.onKillEntity(this);
+        }
+        unused_flag = true;
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 
 	void Dropper(){
 		
@@ -297,7 +316,7 @@ public class AM_EntityHydra extends EntityMob
 		
 		if(!AutomatonUniversal.otherWorld(worldObj)){
 			entityDropItem(new ItemStack(AutomatonLogger.automatonCore+256, 1,0), 0.0F);
-			setEntityDead();
+			deathTime=999;//setEntityDead();
 		}
 	}
 

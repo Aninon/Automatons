@@ -8,7 +8,7 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            Block, Material, World, AxisAlignedBB, 
-//            Entity
+//            DamageSource, Entity
 
 public class BlockCactus extends Block
 {
@@ -128,6 +128,6 @@ public class BlockCactus extends Block
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
-        entity.attackEntityFrom(null, 1);
+        entity.attackEntityFrom(DamageSource.field_35537_g, 1);
     }
 }

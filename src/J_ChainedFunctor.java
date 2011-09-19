@@ -14,48 +14,48 @@ final class J_ChainedFunctor
 
     J_ChainedFunctor(J_JsonNodeSelector j_jsonnodeselector, J_JsonNodeSelector j_jsonnodeselector1)
     {
-        field_27062_a = j_jsonnodeselector;
-        field_27061_b = j_jsonnodeselector1;
+        parentJsonNodeSelector = j_jsonnodeselector;
+        childJsonNodeSelector = j_jsonnodeselector1;
     }
 
-    public boolean func_27058_a(Object obj)
+    public boolean matchsNode(Object obj)
     {
-        return field_27062_a.func_27356_a(obj) && field_27061_b.func_27356_a(field_27062_a.func_27357_b(obj));
+        return parentJsonNodeSelector.matchs(obj) && childJsonNodeSelector.matchs(parentJsonNodeSelector.getValue(obj));
     }
 
-    public Object func_27059_b(Object obj)
+    public Object applyTo(Object obj)
     {
         Object obj1;
         try
         {
-            obj1 = field_27062_a.func_27357_b(obj);
+            obj1 = parentJsonNodeSelector.getValue(obj);
         }
         catch(J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException j_jsonnodedoesnotmatchchainedjsonnodeselectorexception)
         {
-            throw J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException.func_27321_b(j_jsonnodedoesnotmatchchainedjsonnodeselectorexception, field_27062_a);
+            throw J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException.func_27321_b(j_jsonnodedoesnotmatchchainedjsonnodeselectorexception, parentJsonNodeSelector);
         }
         Object obj2;
         try
         {
-            obj2 = field_27061_b.func_27357_b(obj1);
+            obj2 = childJsonNodeSelector.getValue(obj1);
         }
         catch(J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException j_jsonnodedoesnotmatchchainedjsonnodeselectorexception1)
         {
-            throw J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException.func_27323_a(j_jsonnodedoesnotmatchchainedjsonnodeselectorexception1, field_27062_a);
+            throw J_JsonNodeDoesNotMatchChainedJsonNodeSelectorException.func_27323_a(j_jsonnodedoesnotmatchchainedjsonnodeselectorexception1, parentJsonNodeSelector);
         }
         return obj2;
     }
 
-    public String func_27060_a()
+    public String shortForm()
     {
-        return field_27061_b.func_27358_a();
+        return childJsonNodeSelector.shortForm();
     }
 
     public String toString()
     {
-        return (new StringBuilder()).append(field_27062_a.toString()).append(", with ").append(field_27061_b.toString()).toString();
+        return (new StringBuilder()).append(parentJsonNodeSelector.toString()).append(", with ").append(childJsonNodeSelector.toString()).toString();
     }
 
-    private final J_JsonNodeSelector field_27062_a;
-    private final J_JsonNodeSelector field_27061_b;
+    private final J_JsonNodeSelector parentJsonNodeSelector;
+    private final J_JsonNodeSelector childJsonNodeSelector;
 }

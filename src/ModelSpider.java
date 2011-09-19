@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelBase, ModelRenderer, MathHelper
+//            ModelBase, ModelRenderer, MathHelper, Entity
 
 public class ModelSpider extends ModelBase
 {
@@ -15,42 +15,42 @@ public class ModelSpider extends ModelBase
     {
         float f = 0.0F;
         int i = 15;
-        spiderHead = new ModelRenderer(32, 4);
+        spiderHead = new ModelRenderer(this, 32, 4);
         spiderHead.addBox(-4F, -4F, -8F, 8, 8, 8, f);
         spiderHead.setRotationPoint(0.0F, 0 + i, -3F);
-        spiderNeck = new ModelRenderer(0, 0);
+        spiderNeck = new ModelRenderer(this, 0, 0);
         spiderNeck.addBox(-3F, -3F, -3F, 6, 6, 6, f);
         spiderNeck.setRotationPoint(0.0F, i, 0.0F);
-        spiderBody = new ModelRenderer(0, 12);
+        spiderBody = new ModelRenderer(this, 0, 12);
         spiderBody.addBox(-5F, -4F, -6F, 10, 8, 12, f);
         spiderBody.setRotationPoint(0.0F, 0 + i, 9F);
-        spiderLeg1 = new ModelRenderer(18, 0);
+        spiderLeg1 = new ModelRenderer(this, 18, 0);
         spiderLeg1.addBox(-15F, -1F, -1F, 16, 2, 2, f);
         spiderLeg1.setRotationPoint(-4F, 0 + i, 2.0F);
-        spiderLeg2 = new ModelRenderer(18, 0);
+        spiderLeg2 = new ModelRenderer(this, 18, 0);
         spiderLeg2.addBox(-1F, -1F, -1F, 16, 2, 2, f);
         spiderLeg2.setRotationPoint(4F, 0 + i, 2.0F);
-        spiderLeg3 = new ModelRenderer(18, 0);
+        spiderLeg3 = new ModelRenderer(this, 18, 0);
         spiderLeg3.addBox(-15F, -1F, -1F, 16, 2, 2, f);
         spiderLeg3.setRotationPoint(-4F, 0 + i, 1.0F);
-        spiderLeg4 = new ModelRenderer(18, 0);
+        spiderLeg4 = new ModelRenderer(this, 18, 0);
         spiderLeg4.addBox(-1F, -1F, -1F, 16, 2, 2, f);
         spiderLeg4.setRotationPoint(4F, 0 + i, 1.0F);
-        spiderLeg5 = new ModelRenderer(18, 0);
+        spiderLeg5 = new ModelRenderer(this, 18, 0);
         spiderLeg5.addBox(-15F, -1F, -1F, 16, 2, 2, f);
         spiderLeg5.setRotationPoint(-4F, 0 + i, 0.0F);
-        spiderLeg6 = new ModelRenderer(18, 0);
+        spiderLeg6 = new ModelRenderer(this, 18, 0);
         spiderLeg6.addBox(-1F, -1F, -1F, 16, 2, 2, f);
         spiderLeg6.setRotationPoint(4F, 0 + i, 0.0F);
-        spiderLeg7 = new ModelRenderer(18, 0);
+        spiderLeg7 = new ModelRenderer(this, 18, 0);
         spiderLeg7.addBox(-15F, -1F, -1F, 16, 2, 2, f);
         spiderLeg7.setRotationPoint(-4F, 0 + i, -1F);
-        spiderLeg8 = new ModelRenderer(18, 0);
+        spiderLeg8 = new ModelRenderer(this, 18, 0);
         spiderLeg8.addBox(-1F, -1F, -1F, 16, 2, 2, f);
         spiderLeg8.setRotationPoint(4F, 0 + i, -1F);
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         setRotationAngles(f, f1, f2, f3, f4, f5);
         spiderHead.render(f5);

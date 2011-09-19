@@ -26,7 +26,6 @@
 
 v0.5.8
 
-
 -added the slider pan for many lulz
 -added a naturalizing item to counter the ability of the bionic conversion item
 -frass can now spread to grass/dirt, im sure there will be horrifying repurcusions >:] , you can disable it in the config file though

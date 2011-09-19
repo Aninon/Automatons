@@ -16,13 +16,11 @@ public class EntityDiggingFX extends EntityFX
             int i, int j)
     {
         super(world, d, d1, d2, d3, d4, d5);
-        field_32001_o = 0;
         blockInstance = block;
         particleTextureIndex = block.getBlockTextureFromSideAndMetadata(0, j);
         particleGravity = block.blockParticleGravity;
         particleRed = particleGreen = particleBlue = 0.6F;
         particleScale /= 2.0F;
-        field_32001_o = i;
     }
 
     public EntityDiggingFX func_4041_a(int i, int j, int k)
@@ -55,7 +53,7 @@ public class EntityDiggingFX extends EntityFX
         float f11 = (float)((prevPosX + (posX - prevPosX) * (double)f) - interpPosX);
         float f12 = (float)((prevPosY + (posY - prevPosY) * (double)f) - interpPosY);
         float f13 = (float)((prevPosZ + (posZ - prevPosZ) * (double)f) - interpPosZ);
-        float f14 = getEntityBrightness(f);
+        float f14 = 1.0F;
         tessellator.setColorOpaque_F(f14 * particleRed, f14 * particleGreen, f14 * particleBlue);
         tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, f6, f9);
         tessellator.addVertexWithUV((f11 - f1 * f10) + f4 * f10, f12 + f2 * f10, (f13 - f3 * f10) + f5 * f10, f6, f8);
@@ -64,5 +62,4 @@ public class EntityDiggingFX extends EntityFX
     }
 
     private Block blockInstance;
-    private int field_32001_o;
 }

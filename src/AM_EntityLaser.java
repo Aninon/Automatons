@@ -160,7 +160,7 @@ public class AM_EntityLaser extends Entity
             {
                 if(movingobjectposition.entityHit != null)
                 {
-                    if(!movingobjectposition.entityHit.attackEntityFrom(shootingEntity, 2));
+                    //if(!movingobjectposition.entityHit.attackEntityFrom(shootingEntity, 2));
                 }
                 //worldObj.newExplosion(null, posX, posY, posZ, 1.0F, true);
             }

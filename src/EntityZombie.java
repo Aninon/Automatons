@@ -22,7 +22,7 @@ public class EntityZombie extends EntityMob
 
     public void onLivingUpdate()
     {
-        if(worldObj.isDaytime())
+        if(worldObj.isDaytime() && !worldObj.multiplayerWorld)
         {
             float f = getEntityBrightness(1.0F);
             if(f > 0.5F && worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) && rand.nextFloat() * 30F < (f - 0.4F) * 2.0F)
@@ -50,6 +50,6 @@ public class EntityZombie extends EntityMob
 
     protected int getDropItemId()
     {
-        return Item.feather.shiftedIndex;
+        return Item.field_35415_bn.shiftedIndex;
     }
 }

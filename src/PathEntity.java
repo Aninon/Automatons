@@ -27,7 +27,7 @@ public class PathEntity
         return pathIndex >= points.length;
     }
 
-    public PathPoint func_22328_c()
+    public PathPoint getPathEnd()
     {
         if(pathLength > 0)
         {

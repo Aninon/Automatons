@@ -58,6 +58,24 @@ public class AM_ItemAutomaton extends Item
         if(!AutomatonUniversal.otherWorld(world))
         {
 		if(bool){
+		
+		/*
+		EntitySheep es = new EntitySheep(world);
+		double d = i+0.5d;
+		double d1 = j+0.5d;
+		double d2 = k+0.5d;
+		
+		es.setPosition(d, d1 + (double)es.yOffset, d2);
+		es.motionX = 0.0D;
+		es.motionY = 0.0D;
+		es.motionZ = 0.0D;
+		es.prevPosX = d;
+		es.prevPosY = d1;
+		es.prevPosZ = d2;
+		
+		world.entityJoinedWorld(es);*/
+		//world.entityJoinedWorld(new AM_EntityWatcher(world, (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F));
+		
             world.entityJoinedWorld(new AM_EntityWorker(world, (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F,entityplayer.username));
         }else{
 			world.entityJoinedWorld(new AM_EntitySentry(world, (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F,entityplayer.username));

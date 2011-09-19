@@ -135,7 +135,7 @@ implements IInventory
 			int j = nbttagcompound1.getByte("Slot") & 0xff;
 			if(j >= 0 && j < cargoItems.length)
 			{
-				cargoItems[j] = new ItemStack(nbttagcompound1);
+				cargoItems[j] = ItemStack.func_35864_a(nbttagcompound1);
 			}
 		}
 		
@@ -175,9 +175,14 @@ implements IInventory
 		return 0.4F;
 	}
 
-	protected void dropFewItems(){
-		Dropper();
-	}
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 	
 	void Dropper(){
 		for(int j = 0; j < 20; j++)
@@ -226,15 +231,15 @@ implements IInventory
 		super.setEntityDead();
 	}
 	
-	protected void func_31021_B(){
-	}
+	/*protected void func_31026_E(){
+	}*/
 
 	protected int getDropItemId(){
 		return AutomatonLogger.itemFactotum+256;
 	}
 
-	protected void updatePlayerActionState(){
-		super.updatePlayerActionState();
+	protected void updateEntityActionState(){
+		super.updateEntityActionState();
 		if(entityplayer==null){
 			entityplayer = worldObj.getPlayerEntityByName(getBotOwner());
 		}else{
@@ -627,9 +632,20 @@ implements IInventory
 			return 100;
 		} else
 		{
-			return AutomatonUniversal.addFuel(i);
+			return AutomatonUniversal.addFuel(i,itemstack.getItemDamage());
 		}
 	}
+	
+	
+	//open inventory
+	public void func_35142_x_()
+    {
+    }
+
+	//close inventory
+    public void func_35141_y_()
+    {
+    }
 	
 	private ItemStack cargoItems[];
 	private EntityPlayer entityplayer;

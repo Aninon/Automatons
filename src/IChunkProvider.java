@@ -15,7 +15,7 @@ public interface IChunkProvider
 
     public abstract Chunk provideChunk(int i, int j);
 
-    public abstract Chunk prepareChunk(int i, int j);
+    public abstract Chunk loadChunk(int i, int j);
 
     public abstract void populate(IChunkProvider ichunkprovider, int i, int j);
 

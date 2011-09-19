@@ -32,7 +32,7 @@ public class NextTickListEntry
 
     public int hashCode()
     {
-        return (xCoord * 128 * 1024 + zCoord * 128 + yCoord) * 256 + blockID;
+        return (xCoord * 1024 * 1024 + zCoord * 1024 + yCoord) * 256 + blockID;
     }
 
     public NextTickListEntry setScheduledTime(long l)

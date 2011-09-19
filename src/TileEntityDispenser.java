@@ -101,7 +101,7 @@ public class TileEntityDispenser extends TileEntity
             int j = nbttagcompound1.getByte("Slot") & 0xff;
             if(j >= 0 && j < dispenserContents.length)
             {
-                dispenserContents[j] = new ItemStack(nbttagcompound1);
+                dispenserContents[j] = ItemStack.func_35864_a(nbttagcompound1);
             }
         }
 
@@ -137,6 +137,14 @@ public class TileEntityDispenser extends TileEntity
             return false;
         }
         return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
+    }
+
+    public void func_35142_x_()
+    {
+    }
+
+    public void func_35141_y_()
+    {
     }
 
     private ItemStack dispenserContents[];

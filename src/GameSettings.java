@@ -9,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 // Referenced classes of package net.minecraft.src:
-//            KeyBinding, StringTranslate, EnumOptions, SoundManager, 
-//            RenderGlobal, RenderEngine, EnumOptionsMappingHelper, StatCollector
+//            KeyBinding, StringTranslate, StatCollector, EnumOptions, 
+//            SoundManager, RenderGlobal, RenderEngine, EnumOptionsMappingHelper
 
 public class GameSettings
 {
@@ -37,10 +37,14 @@ public class GameSettings
         keyBindInventory = new KeyBinding("key.inventory", 18);
         keyBindDrop = new KeyBinding("key.drop", 16);
         keyBindChat = new KeyBinding("key.chat", 20);
-        keyBindToggleFog = new KeyBinding("key.fog", 33);
         keyBindSneak = new KeyBinding("key.sneak", 42);
+        field_35382_v = new KeyBinding("key.attack", -100);
+        field_35381_w = new KeyBinding("key.use", -99);
+        field_35384_x = new KeyBinding("key.playerlist", 15);
+        field_35383_y = new KeyBinding("key.pickItem", -98);
         keyBindings = (new KeyBinding[] {
-            keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindSneak, keyBindDrop, keyBindInventory, keyBindChat, keyBindToggleFog
+            field_35382_v, field_35381_w, keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindSneak, keyBindDrop, keyBindInventory, 
+            keyBindChat, field_35384_x, field_35383_y
         });
         difficulty = 2;
         hideGUI = false;
@@ -52,6 +56,8 @@ public class GameSettings
         debugCamEnable = false;
         field_22272_F = 1.0F;
         field_22271_G = 1.0F;
+        field_35379_L = 0.0F;
+        field_35380_M = 0.0F;
         guiScale = 0;
         mc = minecraft;
         optionsFile = new File(file, "options.txt");
@@ -80,10 +86,14 @@ public class GameSettings
         keyBindInventory = new KeyBinding("key.inventory", 18);
         keyBindDrop = new KeyBinding("key.drop", 16);
         keyBindChat = new KeyBinding("key.chat", 20);
-        keyBindToggleFog = new KeyBinding("key.fog", 33);
         keyBindSneak = new KeyBinding("key.sneak", 42);
+        field_35382_v = new KeyBinding("key.attack", -100);
+        field_35381_w = new KeyBinding("key.use", -99);
+        field_35384_x = new KeyBinding("key.playerlist", 15);
+        field_35383_y = new KeyBinding("key.pickItem", -98);
         keyBindings = (new KeyBinding[] {
-            keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindSneak, keyBindDrop, keyBindInventory, keyBindChat, keyBindToggleFog
+            field_35382_v, field_35381_w, keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindSneak, keyBindDrop, keyBindInventory, 
+            keyBindChat, field_35384_x, field_35383_y
         });
         difficulty = 2;
         hideGUI = false;
@@ -95,6 +105,8 @@ public class GameSettings
         debugCamEnable = false;
         field_22272_F = 1.0F;
         field_22271_G = 1.0F;
+        field_35379_L = 0.0F;
+        field_35380_M = 0.0F;
         guiScale = 0;
     }
 
@@ -106,7 +118,16 @@ public class GameSettings
 
     public String getOptionDisplayString(int i)
     {
-        return Keyboard.getKeyName(keyBindings[i].keyCode);
+        int j = keyBindings[i].keyCode;
+        if(j < 0)
+        {
+            return StatCollector.translateToLocalFormatted("key.mouseButton", new Object[] {
+                Integer.valueOf(j + 101)
+            });
+        } else
+        {
+            return Keyboard.getKeyName(j);
+        }
     }
 
     public void setKeyBinding(int i, int j)
@@ -130,6 +151,14 @@ public class GameSettings
         if(enumoptions == EnumOptions.SENSITIVITY)
         {
             mouseSensitivity = f;
+        }
+        if(enumoptions == EnumOptions.FOV)
+        {
+            field_35379_L = f;
+        }
+        if(enumoptions == EnumOptions.GAMMA)
+        {
+            field_35380_M = f;
         }
     }
 
@@ -184,6 +213,14 @@ public class GameSettings
 
     public float getOptionFloatValue(EnumOptions enumoptions)
     {
+        if(enumoptions == EnumOptions.FOV)
+        {
+            return field_35379_L;
+        }
+        if(enumoptions == EnumOptions.GAMMA)
+        {
+            return field_35380_M;
+        }
         if(enumoptions == EnumOptions.MUSIC)
         {
             return musicVolume;
@@ -242,6 +279,34 @@ public class GameSettings
                 } else
                 {
                     return (new StringBuilder()).append(s).append((int)(f * 200F)).append("%").toString();
+                }
+            }
+            if(enumoptions == EnumOptions.FOV)
+            {
+                if(f == 0.0F)
+                {
+                    return (new StringBuilder()).append(s).append(stringtranslate.translateKey("options.fov.min")).toString();
+                }
+                if(f == 1.0F)
+                {
+                    return (new StringBuilder()).append(s).append(stringtranslate.translateKey("options.fov.max")).toString();
+                } else
+                {
+                    return (new StringBuilder()).append(s).append((int)(70F + f * 40F)).toString();
+                }
+            }
+            if(enumoptions == EnumOptions.GAMMA)
+            {
+                if(f == 0.0F)
+                {
+                    return (new StringBuilder()).append(s).append(stringtranslate.translateKey("options.gamma.min")).toString();
+                }
+                if(f == 1.0F)
+                {
+                    return (new StringBuilder()).append(s).append(stringtranslate.translateKey("options.gamma.max")).toString();
+                } else
+                {
+                    return (new StringBuilder()).append(s).append("+").append((int)(f * 100F)).append("%").toString();
                 }
             }
             if(f == 0.0F)
@@ -320,6 +385,14 @@ public class GameSettings
                     {
                         mouseSensitivity = parseFloat(as[1]);
                     }
+                    if(as[0].equals("fov"))
+                    {
+                        field_35379_L = parseFloat(as[1]);
+                    }
+                    if(as[0].equals("gamma"))
+                    {
+                        field_35380_M = parseFloat(as[1]);
+                    }
                     if(as[0].equals("invertYMouse"))
                     {
                         invertMouse = as[1].equals("true");
@@ -384,6 +457,7 @@ public class GameSettings
                 }
             }
 
+            KeyBinding.func_35961_b();
             bufferedreader.close();
         }
         catch(Exception exception)
@@ -417,6 +491,8 @@ public class GameSettings
             printwriter.println((new StringBuilder()).append("sound:").append(soundVolume).toString());
             printwriter.println((new StringBuilder()).append("invertYMouse:").append(invertMouse).toString());
             printwriter.println((new StringBuilder()).append("mouseSensitivity:").append(mouseSensitivity).toString());
+            printwriter.println((new StringBuilder()).append("fov:").append(field_35379_L).toString());
+            printwriter.println((new StringBuilder()).append("gamma:").append(field_35380_M).toString());
             printwriter.println((new StringBuilder()).append("viewDistance:").append(renderDistance).toString());
             printwriter.println((new StringBuilder()).append("guiScale:").append(guiScale).toString());
             printwriter.println((new StringBuilder()).append("bobView:").append(viewBobbing).toString());
@@ -474,8 +550,11 @@ public class GameSettings
     public KeyBinding keyBindInventory;
     public KeyBinding keyBindDrop;
     public KeyBinding keyBindChat;
-    public KeyBinding keyBindToggleFog;
     public KeyBinding keyBindSneak;
+    public KeyBinding field_35382_v;
+    public KeyBinding field_35381_w;
+    public KeyBinding field_35384_x;
+    public KeyBinding field_35383_y;
     public KeyBinding keyBindings[];
     protected Minecraft mc;
     private File optionsFile;
@@ -489,6 +568,8 @@ public class GameSettings
     public boolean debugCamEnable;
     public float field_22272_F;
     public float field_22271_G;
+    public float field_35379_L;
+    public float field_35380_M;
     public int guiScale;
 
 }

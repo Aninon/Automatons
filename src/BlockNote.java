@@ -28,7 +28,7 @@ public class BlockNote extends BlockContainer
         {
             boolean flag = world.isBlockGettingPowered(i, j, k);
             TileEntityNote tileentitynote = (TileEntityNote)world.getBlockTileEntity(i, j, k);
-            if(tileentitynote.previousRedstoneState != flag)
+            if(tileentitynote != null && tileentitynote.previousRedstoneState != flag)
             {
                 if(flag)
                 {
@@ -44,13 +44,14 @@ public class BlockNote extends BlockContainer
         if(world.multiplayerWorld)
         {
             return true;
-        } else
+        }
+        TileEntityNote tileentitynote = (TileEntityNote)world.getBlockTileEntity(i, j, k);
+        if(tileentitynote != null)
         {
-            TileEntityNote tileentitynote = (TileEntityNote)world.getBlockTileEntity(i, j, k);
             tileentitynote.changePitch();
             tileentitynote.triggerNote(world, i, j, k);
-            return true;
         }
+        return true;
     }
 
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
@@ -58,15 +59,15 @@ public class BlockNote extends BlockContainer
         if(world.multiplayerWorld)
         {
             return;
-        } else
+        }
+        TileEntityNote tileentitynote = (TileEntityNote)world.getBlockTileEntity(i, j, k);
+        if(tileentitynote != null)
         {
-            TileEntityNote tileentitynote = (TileEntityNote)world.getBlockTileEntity(i, j, k);
             tileentitynote.triggerNote(world, i, j, k);
-            return;
         }
     }
 
-    protected TileEntity getBlockEntity()
+    public TileEntity getBlockEntity()
     {
         return new TileEntityNote();
     }

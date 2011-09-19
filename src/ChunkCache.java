@@ -7,7 +7,8 @@ package net.minecraft.src;
 
 // Referenced classes of package net.minecraft.src:
 //            IBlockAccess, World, Chunk, WorldProvider, 
-//            Block, Material, TileEntity, WorldChunkManager
+//            EnumSkyBlock, Block, Material, TileEntity, 
+//            WorldChunkManager
 
 public class ChunkCache
     implements IBlockAccess
@@ -38,6 +39,7 @@ public class ChunkCache
         {
             return 0;
         }
+        worldObj.getClass();
         if(j >= 128)
         {
             return 0;
@@ -75,6 +77,17 @@ public class ChunkCache
         return worldObj.worldProvider.lightBrightnessTable[i1];
     }
 
+    public int func_35451_b(int i, int j, int k, int l)
+    {
+        int i1 = func_35454_a(EnumSkyBlock.Sky, i, j, k);
+        int j1 = func_35454_a(EnumSkyBlock.Block, i, j, k);
+        if(j1 < l)
+        {
+            j1 = l;
+        }
+        return i1 << 20 | j1 << 4;
+    }
+
     public float getLightBrightness(int i, int j, int k)
     {
         return worldObj.worldProvider.lightBrightnessTable[getLightValue(i, j, k)];
@@ -87,7 +100,7 @@ public class ChunkCache
 
     public int getLightValueExt(int i, int j, int k, boolean flag)
     {
-        if(i < 0xfe17b800 || k < 0xfe17b800 || i >= 0x1e84800 || k > 0x1e84800)
+        if(i < 0xfe363c80 || k < 0xfe363c80 || i >= 0x1c9c380 || k > 0x1c9c380)
         {
             return 15;
         }
@@ -124,6 +137,7 @@ public class ChunkCache
         {
             return 0;
         }
+        worldObj.getClass();
         if(j >= 128)
         {
             int i1 = 15 - worldObj.skylightSubtracted;
@@ -146,6 +160,7 @@ public class ChunkCache
         {
             return 0;
         }
+        worldObj.getClass();
         if(j >= 128)
         {
             return 0;
@@ -196,6 +211,104 @@ public class ChunkCache
         {
             return block.blockMaterial.getIsSolid() && block.renderAsNormalBlock();
         }
+    }
+
+    public boolean isAirBlock(int i, int j, int k)
+    {
+        Block block = Block.blocksList[getBlockId(i, j, k)];
+        return block == null;
+    }
+
+    public int func_35454_a(EnumSkyBlock enumskyblock, int i, int j, int k)
+    {
+label0:
+        {
+            if(j < 0)
+            {
+                j = 0;
+            }
+            worldObj.getClass();
+            if(j >= 128)
+            {
+                worldObj.getClass();
+                j = 128 - 1;
+            }
+            if(j >= 0)
+            {
+                worldObj.getClass();
+                if(j < 128 && i >= 0xfe363c80 && k >= 0xfe363c80 && i < 0x1c9c380 && k <= 0x1c9c380)
+                {
+                    break label0;
+                }
+            }
+            return enumskyblock.field_1722_c;
+        }
+        int l = getBlockId(i, j, k);
+        if(l == Block.stairSingle.blockID || l == Block.tilledField.blockID || l == Block.stairCompactCobblestone.blockID || l == Block.stairCompactPlanks.blockID)
+        {
+            int j1 = func_35453_b(enumskyblock, i, j + 1, k);
+            int l1 = func_35453_b(enumskyblock, i + 1, j, k);
+            int i2 = func_35453_b(enumskyblock, i - 1, j, k);
+            int j2 = func_35453_b(enumskyblock, i, j, k + 1);
+            int k2 = func_35453_b(enumskyblock, i, j, k - 1);
+            if(l1 > j1)
+            {
+                j1 = l1;
+            }
+            if(i2 > j1)
+            {
+                j1 = i2;
+            }
+            if(j2 > j1)
+            {
+                j1 = j2;
+            }
+            if(k2 > j1)
+            {
+                j1 = k2;
+            }
+            return j1;
+        } else
+        {
+            int i1 = (i >> 4) - chunkX;
+            int k1 = (k >> 4) - chunkZ;
+            return chunkArray[i1][k1].getSavedLightValue(enumskyblock, i & 0xf, j, k & 0xf);
+        }
+    }
+
+    public int func_35453_b(EnumSkyBlock enumskyblock, int i, int j, int k)
+    {
+label0:
+        {
+            if(j < 0)
+            {
+                j = 0;
+            }
+            worldObj.getClass();
+            if(j >= 128)
+            {
+                worldObj.getClass();
+                j = 128 - 1;
+            }
+            if(j >= 0)
+            {
+                worldObj.getClass();
+                if(j < 128 && i >= 0xfe363c80 && k >= 0xfe363c80 && i < 0x1c9c380 && k <= 0x1c9c380)
+                {
+                    break label0;
+                }
+            }
+            return enumskyblock.field_1722_c;
+        }
+        int l = (i >> 4) - chunkX;
+        int i1 = (k >> 4) - chunkZ;
+        return chunkArray[l][i1].getSavedLightValue(enumskyblock, i & 0xf, j, k & 0xf);
+    }
+
+    public int func_35452_b()
+    {
+        worldObj.getClass();
+        return 128;
     }
 
     private int chunkX;

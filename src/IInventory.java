@@ -26,4 +26,8 @@ public interface IInventory
     public abstract void onInventoryChanged();
 
     public abstract boolean canInteractWith(EntityPlayer entityplayer);
+
+    public abstract void func_35142_x_();
+
+    public abstract void func_35141_y_();
 }

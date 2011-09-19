@@ -5,6 +5,7 @@
 package net.minecraft.src;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 // Referenced classes of package net.minecraft.src:
 //            RenderLiving, ModelSpider, EntitySpider, EntityLiving
@@ -35,13 +36,29 @@ public class RenderSpider extends RenderLiving
         } else
         {
             loadTexture("/mob/spider_eyes.png");
-            float f1 = (1.0F - entityspider.getEntityBrightness(1.0F)) * 0.5F;
+            float f1 = 1.0F;
             GL11.glEnable(3042 /*GL_BLEND*/);
             GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
-            GL11.glBlendFunc(770, 771);
+            GL11.glBlendFunc(1, 1);
+            int j = 61680;
+            int k = j % 0x10000;
+            int l = j / 0x10000;
+            GL13.glMultiTexCoord2f(33985 /*GL_TEXTURE1_ARB*/, (float)k / 1.0F, (float)l / 1.0F);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, f1);
             return true;
         }
+    }
+
+    protected void func_35446_a(EntitySpider entityspider, float f)
+    {
+        float f1 = entityspider.func_35188_k_();
+        GL11.glScalef(f1, f1, f1);
+    }
+
+    protected void preRenderCallback(EntityLiving entityliving, float f)
+    {
+        func_35446_a((EntitySpider)entityliving, f);
     }
 
     protected float getDeathMaxRotation(EntityLiving entityliving)

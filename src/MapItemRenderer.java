@@ -28,7 +28,7 @@ public class MapItemRenderer
 
     }
 
-    public void func_28157_a(EntityPlayer entityplayer, RenderEngine renderengine, MapData mapdata)
+    public void renderMap(EntityPlayer entityplayer, RenderEngine renderengine, MapData mapdata)
     {
         for(int i = 0; i < 16384 /*GL_LIGHT0*/; i++)
         {

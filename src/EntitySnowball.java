@@ -9,8 +9,9 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            Entity, AxisAlignedBB, EntityLiving, MathHelper, 
-//            World, Vec3D, MovingObjectPosition, NBTTagCompound, 
-//            EntityPlayer, ItemStack, Item, InventoryPlayer
+//            World, Vec3D, MovingObjectPosition, DamageSource, 
+//            NBTTagCompound, EntityPlayer, ItemStack, Item, 
+//            InventoryPlayer
 
 public class EntitySnowball extends Entity
 {
@@ -49,7 +50,7 @@ public class EntitySnowball extends Entity
         inGroundSnowball = false;
         shakeSnowball = 0;
         ticksInAirSnowball = 0;
-        thrower = entityliving;
+        shootingEntity = entityliving;
         setSize(0.25F, 0.25F);
         setLocationAndAngles(entityliving.posX, entityliving.posY + (double)entityliving.getEyeHeight(), entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
         posX -= MathHelper.cos((rotationYaw / 180F) * 3.141593F) * 0.16F;
@@ -166,7 +167,7 @@ public class EntitySnowball extends Entity
             for(int l = 0; l < list.size(); l++)
             {
                 Entity entity1 = (Entity)list.get(l);
-                if(!entity1.canBeCollidedWith() || entity1 == thrower && ticksInAirSnowball < 5)
+                if(!entity1.canBeCollidedWith() || entity1 == shootingEntity && ticksInAirSnowball < 5)
                 {
                     continue;
                 }
@@ -194,7 +195,7 @@ public class EntitySnowball extends Entity
         {
             if(movingobjectposition.entityHit != null)
             {
-                if(!movingobjectposition.entityHit.attackEntityFrom(thrower, 0));
+                if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35524_a(this, shootingEntity), 0));
             }
             for(int j = 0; j < 8; j++)
             {
@@ -255,7 +256,7 @@ public class EntitySnowball extends Entity
 
     public void onCollideWithPlayer(EntityPlayer entityplayer)
     {
-        if(inGroundSnowball && thrower == entityplayer && shakeSnowball <= 0 && entityplayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow, 1)))
+        if(inGroundSnowball && shootingEntity == entityplayer && shakeSnowball <= 0 && entityplayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow, 1)))
         {
             worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityplayer.onItemPickup(this, 1);
@@ -274,7 +275,7 @@ public class EntitySnowball extends Entity
     private int inTileSnowball;
     private boolean inGroundSnowball;
     public int shakeSnowball;
-    private EntityLiving thrower;
+    private EntityLiving shootingEntity;
     private int ticksInGroundSnowball;
     private int ticksInAirSnowball;
 }

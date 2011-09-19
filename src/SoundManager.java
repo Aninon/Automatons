@@ -4,18 +4,18 @@
 
 package net.minecraft.src;
 
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
+import java.lang.reflect.Field;
 import java.util.Random;
+import net.minecraft.client.Minecraft;
 import paulscode.sound.SoundSystem;
 import paulscode.sound.SoundSystemConfig;
-import paulscode.sound.codecs.CodecJOrbis;
-import paulscode.sound.codecs.CodecWav;
+import paulscode.sound.codecs.*;
 import paulscode.sound.libraries.LibraryLWJGLOpenAL;
 
 // Referenced classes of package net.minecraft.src:
-//            SoundPool, GameSettings, CodecMus, SoundPoolEntry, 
-//            EntityLiving, MathHelper
+//            SoundPool, GameSettings, CodecMus, EntityPlayerSP, 
+//            MathHelper, World, SoundPoolEntry, EntityLiving
 
 public class SoundManager
 {
@@ -25,9 +25,10 @@ public class SoundManager
         soundPoolSounds = new SoundPool();
         soundPoolStreaming = new SoundPool();
         soundPoolMusic = new SoundPool();
+        cave = new SoundPool();
         latestSoundID = 0;
         rand = new Random();
-        ticksBeforeMusic = rand.nextInt(12000);
+        ticksBeforeMusic = rand.nextInt(6000);
     }
 
     public void loadSoundSettings(GameSettings gamesettings)
@@ -37,6 +38,58 @@ public class SoundManager
         if(!loaded && (gamesettings == null || gamesettings.soundVolume != 0.0F || gamesettings.musicVolume != 0.0F))
         {
             tryToSetLibraryAndCodecs();
+        }
+        loadModAudio("minecraft/resources/mod/sound", soundPoolSounds);
+        loadModAudio("minecraft/resources/mod/streaming", soundPoolStreaming);
+        loadModAudio("minecraft/resources/mod/music", soundPoolMusic);
+        loadModAudio("minecraft/resources/mod/cavemusic", cave);
+        try
+        {
+            Field field = (net.minecraft.client.Minecraft.class).getDeclaredFields()[1];
+            field.setAccessible(true);
+            mc = (Minecraft)field.get(null);
+        }
+        catch(Throwable throwable) { }
+    }
+
+    private static void loadModAudio(String s, SoundPool soundpool)
+    {
+        File file = Minecraft.getAppDir(s);
+        try
+        {
+            walkFolder(file, file, soundpool);
+        }
+        catch(IOException ioexception)
+        {
+            ioexception.printStackTrace();
+        }
+    }
+
+    private static void walkFolder(File file, File file1, SoundPool soundpool)
+        throws IOException
+    {
+        if(file1.exists() || file1.mkdirs())
+        {
+            File afile[] = file1.listFiles();
+            if(afile != null && afile.length > 0)
+            {
+                for(int i = 0; i < afile.length; i++)
+                {
+                    if(!afile[i].getName().startsWith("."))
+                    {
+                        if(afile[i].isDirectory())
+                        {
+                            walkFolder(file, afile[i], soundpool);
+                        } else
+                        if(afile[i].isFile())
+                        {
+                            String s = afile[i].getPath().substring(file.getPath().length() + 1).replace('\\', '/');
+                            soundpool.addSound(s, afile[i]);
+                        }
+                    }
+                }
+
+            }
         }
     }
 
@@ -53,6 +106,16 @@ public class SoundManager
             SoundSystemConfig.setCodec("ogg", paulscode.sound.codecs.CodecJOrbis.class);
             SoundSystemConfig.setCodec("mus", net.minecraft.src.CodecMus.class);
             SoundSystemConfig.setCodec("wav", paulscode.sound.codecs.CodecWav.class);
+            try
+            {
+                if(Class.forName("paulscode.sound.codecs.CodecIBXM") != null)
+                {
+                    SoundSystemConfig.setCodec("xm", paulscode.sound.codecs.CodecIBXM.class);
+                    SoundSystemConfig.setCodec("s3m", paulscode.sound.codecs.CodecIBXM.class);
+                    SoundSystemConfig.setCodec("mod", paulscode.sound.codecs.CodecIBXM.class);
+                }
+            }
+            catch(ClassNotFoundException classnotfoundexception) { }
             sndSystem = new SoundSystem();
             options.soundVolume = f;
             options.musicVolume = f1;
@@ -121,9 +184,16 @@ public class SoundManager
                 return;
             }
             SoundPoolEntry soundpoolentry = soundPoolMusic.getRandomSound();
+            if(mc != null && mc.thePlayer != null && !mc.thePlayer.worldObj.canBlockSeeTheSky(MathHelper.floor_double(mc.thePlayer.posX), MathHelper.floor_double(mc.thePlayer.posY), MathHelper.floor_double(mc.thePlayer.posZ)))
+            {
+                soundpoolentry = cave.getRandomSound();
+            } else
+            {
+                soundpoolentry = soundPoolMusic.getRandomSound();
+            }
             if(soundpoolentry != null)
             {
-                ticksBeforeMusic = rand.nextInt(12000) + 12000;
+                ticksBeforeMusic = rand.nextInt(6000) + 6000;
                 sndSystem.backgroundMusic("BgMusic", soundpoolentry.soundUrl, soundpoolentry.soundName, false);
                 sndSystem.setVolume("BgMusic", options.musicVolume);
                 sndSystem.play("BgMusic");
@@ -199,7 +269,7 @@ public class SoundManager
         if(soundpoolentry != null && f3 > 0.0F)
         {
             latestSoundID = (latestSoundID + 1) % 256;
-            String s1 = (new StringBuilder()).append("sound_").append(latestSoundID).toString();
+            String s1 = (new StringBuilder("sound_")).append(latestSoundID).toString();
             float f5 = 16F;
             if(f3 > 1.0F)
             {
@@ -226,7 +296,7 @@ public class SoundManager
         if(soundpoolentry != null)
         {
             latestSoundID = (latestSoundID + 1) % 256;
-            String s1 = (new StringBuilder()).append("sound_").append(latestSoundID).toString();
+            String s1 = (new StringBuilder("sound_")).append(latestSoundID).toString();
             sndSystem.newSource(false, s1, soundpoolentry.soundUrl, soundpoolentry.soundName, false, 0.0F, 0.0F, 0.0F, 0, 0.0F);
             if(f > 1.0F)
             {
@@ -243,10 +313,13 @@ public class SoundManager
     private SoundPool soundPoolSounds;
     private SoundPool soundPoolStreaming;
     private SoundPool soundPoolMusic;
+    private SoundPool cave;
     private int latestSoundID;
     private GameSettings options;
     private static boolean loaded = false;
     private Random rand;
+    private Minecraft mc;
+    private static final int MUSINTERVAL = 6000;
     private int ticksBeforeMusic;
 
 }

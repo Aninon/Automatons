@@ -15,7 +15,7 @@ class GuiSlotStatsGeneral extends GuiSlot
 
     public GuiSlotStatsGeneral(GuiStats guistats)
     {
-        super(GuiStats.func_27141_a(guistats), guistats.width, guistats.height, 32, guistats.height - 64, 10);
+        super(GuiStats.getMinecraft(guistats), guistats.width, guistats.height, 32, guistats.height - 64, 10);
         field_27276_a = guistats;
         func_27258_a(false);
     }
@@ -47,9 +47,9 @@ class GuiSlotStatsGeneral extends GuiSlot
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator)
     {
         StatBase statbase = (StatBase)StatList.field_25187_b.get(i);
-        field_27276_a.drawString(GuiStats.func_27145_b(field_27276_a), statbase.statName, j + 2, k + 1, i % 2 != 0 ? 0x909090 : 0xffffff);
-        String s = statbase.func_27084_a(GuiStats.func_27142_c(field_27276_a).writeStat(statbase));
-        field_27276_a.drawString(GuiStats.func_27140_d(field_27276_a), s, (j + 2 + 213) - GuiStats.func_27146_e(field_27276_a).getStringWidth(s), k + 1, i % 2 != 0 ? 0x909090 : 0xffffff);
+        field_27276_a.drawString(GuiStats.getFontRenderer1(field_27276_a), statbase.statName, j + 2, k + 1, i % 2 != 0 ? 0x909090 : 0xffffff);
+        String s = statbase.func_27084_a(GuiStats.getStatsFileWriter(field_27276_a).writeStat(statbase));
+        field_27276_a.drawString(GuiStats.getFontRenderer2(field_27276_a), s, (j + 2 + 213) - GuiStats.getFontRenderer3(field_27276_a).getStringWidth(s), k + 1, i % 2 != 0 ? 0x909090 : 0xffffff);
     }
 
     final GuiStats field_27276_a; /* synthetic field */

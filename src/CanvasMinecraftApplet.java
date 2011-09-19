@@ -12,7 +12,6 @@ public class CanvasMinecraftApplet extends Canvas
 
     public CanvasMinecraftApplet(MinecraftApplet minecraftapplet)
     {
-//        super();
         mcApplet = minecraftapplet;
     }
 

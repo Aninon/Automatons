@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelBase, ModelRenderer, MathHelper
+//            ModelBase, ModelRenderer, MathHelper, Entity
 
 public class ModelChicken extends ModelBase
 {
@@ -14,33 +14,33 @@ public class ModelChicken extends ModelBase
     public ModelChicken()
     {
         byte byte0 = 16;
-        head = new ModelRenderer(0, 0);
+        head = new ModelRenderer(this, 0, 0);
         head.addBox(-2F, -6F, -2F, 4, 6, 3, 0.0F);
         head.setRotationPoint(0.0F, -1 + byte0, -4F);
-        bill = new ModelRenderer(14, 0);
+        bill = new ModelRenderer(this, 14, 0);
         bill.addBox(-2F, -4F, -4F, 4, 2, 2, 0.0F);
         bill.setRotationPoint(0.0F, -1 + byte0, -4F);
-        chin = new ModelRenderer(14, 4);
+        chin = new ModelRenderer(this, 14, 4);
         chin.addBox(-1F, -2F, -3F, 2, 2, 2, 0.0F);
         chin.setRotationPoint(0.0F, -1 + byte0, -4F);
-        body = new ModelRenderer(0, 9);
+        body = new ModelRenderer(this, 0, 9);
         body.addBox(-3F, -4F, -3F, 6, 8, 6, 0.0F);
         body.setRotationPoint(0.0F, 0 + byte0, 0.0F);
-        rightLeg = new ModelRenderer(26, 0);
+        rightLeg = new ModelRenderer(this, 26, 0);
         rightLeg.addBox(-1F, 0.0F, -3F, 3, 5, 3);
         rightLeg.setRotationPoint(-2F, 3 + byte0, 1.0F);
-        leftLeg = new ModelRenderer(26, 0);
+        leftLeg = new ModelRenderer(this, 26, 0);
         leftLeg.addBox(-1F, 0.0F, -3F, 3, 5, 3);
         leftLeg.setRotationPoint(1.0F, 3 + byte0, 1.0F);
-        rightWing = new ModelRenderer(24, 13);
+        rightWing = new ModelRenderer(this, 24, 13);
         rightWing.addBox(0.0F, 0.0F, -3F, 1, 4, 6);
         rightWing.setRotationPoint(-4F, -3 + byte0, 0.0F);
-        leftWing = new ModelRenderer(24, 13);
+        leftWing = new ModelRenderer(this, 24, 13);
         leftWing.addBox(-1F, 0.0F, -3F, 1, 4, 6);
         leftWing.setRotationPoint(4F, -3 + byte0, 0.0F);
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         setRotationAngles(f, f1, f2, f3, f4, f5);
         head.render(f5);

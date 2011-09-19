@@ -27,6 +27,23 @@ public class EntityLavaFX extends EntityFX
         particleTextureIndex = 49;
     }
 
+    public int func_35115_a(float f)
+    {
+        float f1 = ((float)particleAge + f) / (float)particleMaxAge;
+        if(f1 < 0.0F)
+        {
+            f1 = 0.0F;
+        }
+        if(f1 > 1.0F)
+        {
+            f1 = 1.0F;
+        }
+        int i = super.func_35115_a(f);
+        char c = '\360';
+        int j = i >> 16 & 0xff;
+        return c | j << 16;
+    }
+
     public float getEntityBrightness(float f)
     {
         return 1.0F;

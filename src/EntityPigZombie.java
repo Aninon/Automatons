@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            EntityZombie, World, NBTTagCompound, EntityPlayer, 
-//            AxisAlignedBB, Entity, Item, ItemStack
+//            EntityZombie, World, NBTTagCompound, DamageSource, 
+//            EntityPlayer, AxisAlignedBB, Entity, Item, 
+//            ItemStack
 
 public class EntityPigZombie extends EntityZombie
 {
@@ -68,8 +69,9 @@ public class EntityPigZombie extends EntityZombie
         super.onLivingUpdate();
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
+        Entity entity = damagesource.func_35532_a();
         if(entity instanceof EntityPlayer)
         {
             List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(32D, 32D, 32D));
@@ -85,7 +87,7 @@ public class EntityPigZombie extends EntityZombie
 
             becomeAngryAt(entity);
         }
-        return super.attackEntityFrom(entity, i);
+        return super.attackEntityFrom(damagesource, i);
     }
 
     private void becomeAngryAt(Entity entity)

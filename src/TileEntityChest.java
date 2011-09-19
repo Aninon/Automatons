@@ -4,10 +4,11 @@
 
 package net.minecraft.src;
 
+import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            TileEntity, IInventory, ItemStack, NBTTagCompound, 
-//            NBTTagList, World, EntityPlayer
+//            NBTTagList, World, EntityPlayer, Block
 
 public class TileEntityChest extends TileEntity
     implements IInventory
@@ -16,6 +17,7 @@ public class TileEntityChest extends TileEntity
     public TileEntityChest()
     {
         chestContents = new ItemStack[36];
+        field_35155_a = false;
     }
 
     public int getSizeInventory()
@@ -78,7 +80,7 @@ public class TileEntityChest extends TileEntity
             int j = nbttagcompound1.getByte("Slot") & 0xff;
             if(j >= 0 && j < chestContents.length)
             {
-                chestContents[j] = new ItemStack(nbttagcompound1);
+                chestContents[j] = ItemStack.func_35864_a(nbttagcompound1);
             }
         }
 
@@ -116,5 +118,150 @@ public class TileEntityChest extends TileEntity
         return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
+    public void func_35144_b()
+    {
+        super.func_35144_b();
+        field_35155_a = false;
+    }
+
+    public void func_35147_g()
+    {
+        if(field_35155_a)
+        {
+            return;
+        }
+        field_35155_a = true;
+        field_35152_b = null;
+        field_35153_c = null;
+        field_35150_d = null;
+        field_35151_e = null;
+        if(worldObj.getBlockId(xCoord - 1, yCoord, zCoord) == Block.chest.blockID)
+        {
+            field_35150_d = (TileEntityChest)worldObj.getBlockTileEntity(xCoord - 1, yCoord, zCoord);
+        }
+        if(worldObj.getBlockId(xCoord + 1, yCoord, zCoord) == Block.chest.blockID)
+        {
+            field_35153_c = (TileEntityChest)worldObj.getBlockTileEntity(xCoord + 1, yCoord, zCoord);
+        }
+        if(worldObj.getBlockId(xCoord, yCoord, zCoord - 1) == Block.chest.blockID)
+        {
+            field_35152_b = (TileEntityChest)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - 1);
+        }
+        if(worldObj.getBlockId(xCoord, yCoord, zCoord + 1) == Block.chest.blockID)
+        {
+            field_35151_e = (TileEntityChest)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + 1);
+        }
+        if(field_35152_b != null)
+        {
+            field_35152_b.func_35144_b();
+        }
+        if(field_35151_e != null)
+        {
+            field_35151_e.func_35144_b();
+        }
+        if(field_35153_c != null)
+        {
+            field_35153_c.func_35144_b();
+        }
+        if(field_35150_d != null)
+        {
+            field_35150_d.func_35144_b();
+        }
+    }
+
+    public void updateEntity()
+    {
+        super.updateEntity();
+        func_35147_g();
+        if((++field_35154_q % 20) * 4 == 0)
+        {
+            worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, field_35156_h);
+        }
+        field_35149_g = field_35148_f;
+        float f = 0.1F;
+        if(field_35156_h > 0 && field_35148_f == 0.0F && field_35152_b == null && field_35150_d == null)
+        {
+            double d = (double)xCoord + 0.5D;
+            double d2 = (double)zCoord + 0.5D;
+            if(field_35151_e != null)
+            {
+                d2 += 0.5D;
+            }
+            if(field_35153_c != null)
+            {
+                d += 0.5D;
+            }
+            worldObj.playSoundEffect(d, (double)yCoord + 0.5D, d2, "random.door_open", 1.0F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+        }
+        if(field_35156_h == 0 && field_35148_f > 0.0F || field_35156_h > 0 && field_35148_f < 1.0F)
+        {
+            if(field_35156_h > 0)
+            {
+                field_35148_f += f;
+            } else
+            {
+                field_35148_f -= f;
+            }
+            if(field_35148_f > 1.0F)
+            {
+                field_35148_f = 1.0F;
+            }
+            if(field_35148_f < 0.0F)
+            {
+                field_35148_f = 0.0F;
+                if(field_35152_b == null && field_35150_d == null)
+                {
+                    double d1 = (double)xCoord + 0.5D;
+                    double d3 = (double)zCoord + 0.5D;
+                    if(field_35151_e != null)
+                    {
+                        d3 += 0.5D;
+                    }
+                    if(field_35153_c != null)
+                    {
+                        d1 += 0.5D;
+                    }
+                    worldObj.playSoundEffect(d1, (double)yCoord + 0.5D, d3, "random.door_close", 1.0F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                }
+            }
+        }
+    }
+
+    public void func_35143_b(int i, int j)
+    {
+        if(i == 1)
+        {
+            field_35156_h = j;
+        }
+    }
+
+    public void func_35142_x_()
+    {
+        field_35156_h++;
+        worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, field_35156_h);
+    }
+
+    public void func_35141_y_()
+    {
+        field_35156_h--;
+        worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, field_35156_h);
+    }
+
+    public void invalidate()
+    {
+        func_35144_b();
+        func_35147_g();
+        super.invalidate();
+    }
+
     private ItemStack chestContents[];
+    public boolean field_35155_a;
+    public TileEntityChest field_35152_b;
+    public TileEntityChest field_35153_c;
+    public TileEntityChest field_35150_d;
+    public TileEntityChest field_35151_e;
+    public float field_35148_f;
+    public float field_35149_g;
+    public int field_35156_h;
+    private int field_35154_q;
 }

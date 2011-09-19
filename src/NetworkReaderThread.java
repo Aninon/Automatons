@@ -23,24 +23,21 @@ class NetworkReaderThread extends Thread
         {
             NetworkManager.numReadThreads++;
         }
-        try
+        try {
+        while(NetworkManager.isRunning(netManager) && !NetworkManager.isServerTerminating(netManager)) 
         {
-            while(NetworkManager.isRunning(netManager) && !NetworkManager.isServerTerminating(netManager)) 
+            while(NetworkManager.readNetworkPacket(netManager)) ;
+            try
             {
-                while(NetworkManager.readNetworkPacket(netManager)) ;
-                try
-                {
-                    sleep(100L);
-                }
-                catch(InterruptedException interruptedexception) { }
+                sleep(2L);
             }
+            catch(InterruptedException interruptedexception) { }
         }
-        finally
+        } finally {
+        synchronized(NetworkManager.threadSyncObject)
         {
-            synchronized(NetworkManager.threadSyncObject)
-            {
-                NetworkManager.numReadThreads--;
-            }
+            NetworkManager.numReadThreads--;
+        }
         }
     }
 

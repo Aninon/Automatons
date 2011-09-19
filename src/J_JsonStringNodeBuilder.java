@@ -22,7 +22,7 @@ public final class J_JsonStringNodeBuilder
         return J_JsonNodeFactories.func_27316_a(field_27244_a);
     }
 
-    public J_JsonNode func_27234_b()
+    public J_JsonNode buildNode()
     {
         return func_27243_a();
     }

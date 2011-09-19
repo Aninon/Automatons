@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelBase, ModelRenderer, MathHelper
+//            ModelBase, ModelRenderer, MathHelper, Entity
 
 public class ModelBiped extends ModelBase
 {
@@ -26,36 +26,36 @@ public class ModelBiped extends ModelBase
         field_1279_h = false;
         field_1278_i = false;
         isSneak = false;
-        bipedCloak = new ModelRenderer(0, 0);
+        bipedCloak = new ModelRenderer(this, 0, 0);
         bipedCloak.addBox(-5F, 0.0F, -1F, 10, 16, 1, f);
-        bipedEars = new ModelRenderer(24, 0);
+        bipedEars = new ModelRenderer(this, 24, 0);
         bipedEars.addBox(-3F, -6F, -1F, 6, 6, 1, f);
-        bipedHead = new ModelRenderer(0, 0);
+        bipedHead = new ModelRenderer(this, 0, 0);
         bipedHead.addBox(-4F, -8F, -4F, 8, 8, 8, f);
         bipedHead.setRotationPoint(0.0F, 0.0F + f1, 0.0F);
-        bipedHeadwear = new ModelRenderer(32, 0);
+        bipedHeadwear = new ModelRenderer(this, 32, 0);
         bipedHeadwear.addBox(-4F, -8F, -4F, 8, 8, 8, f + 0.5F);
         bipedHeadwear.setRotationPoint(0.0F, 0.0F + f1, 0.0F);
-        bipedBody = new ModelRenderer(16, 16);
+        bipedBody = new ModelRenderer(this, 16, 16);
         bipedBody.addBox(-4F, 0.0F, -2F, 8, 12, 4, f);
         bipedBody.setRotationPoint(0.0F, 0.0F + f1, 0.0F);
-        bipedRightArm = new ModelRenderer(40, 16);
+        bipedRightArm = new ModelRenderer(this, 40, 16);
         bipedRightArm.addBox(-3F, -2F, -2F, 4, 12, 4, f);
         bipedRightArm.setRotationPoint(-5F, 2.0F + f1, 0.0F);
-        bipedLeftArm = new ModelRenderer(40, 16);
+        bipedLeftArm = new ModelRenderer(this, 40, 16);
         bipedLeftArm.mirror = true;
         bipedLeftArm.addBox(-1F, -2F, -2F, 4, 12, 4, f);
         bipedLeftArm.setRotationPoint(5F, 2.0F + f1, 0.0F);
-        bipedRightLeg = new ModelRenderer(0, 16);
+        bipedRightLeg = new ModelRenderer(this, 0, 16);
         bipedRightLeg.addBox(-2F, 0.0F, -2F, 4, 12, 4, f);
         bipedRightLeg.setRotationPoint(-2F, 12F + f1, 0.0F);
-        bipedLeftLeg = new ModelRenderer(0, 16);
+        bipedLeftLeg = new ModelRenderer(this, 0, 16);
         bipedLeftLeg.mirror = true;
         bipedLeftLeg.addBox(-2F, 0.0F, -2F, 4, 12, 4, f);
         bipedLeftLeg.setRotationPoint(2.0F, 12F + f1, 0.0F);
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         setRotationAngles(f, f1, f2, f3, f4, f5);
         bipedHead.render(f5);

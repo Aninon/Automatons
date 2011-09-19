@@ -45,17 +45,17 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 // Referenced classes of package net.minecraft.src:
-//            Achievement, StatBase, StringTranslate, BaseMod, 
-//            TextureFX, Item, Block, ItemStack, 
-//            CraftingManager, FurnaceRecipes, BiomeGenBase, EnumCreatureType, 
-//            SpawnListEntry, EntityLiving, EntityRendererProxy, EntityList, 
-//            Session, TileEntityRenderer, RenderPlayer, RenderEngine, 
+//            Achievement, StatBase, StatCollector, BaseMod, 
+//            TextureFX, StringTranslate, Item, Block, 
+//            ItemStack, CraftingManager, FurnaceRecipes, BiomeGenBase, 
+//            EnumCreatureType, SpawnListEntry, EntityLiving, EntityRendererProxy, 
+//            EntityList, TileEntityRenderer, RenderPlayer, RenderEngine, 
 //            BiomeGenHell, BiomeGenSky, TileEntity, RenderBlocks, 
-//            GameSettings, StatList, StatCrafting, IRecipe, 
-//            TexturePackList, TexturePackBase, EntityPlayer, World, 
-//            KeyBinding, IChunkProvider, ModTextureStatic, ItemBlock, 
-//            TileEntitySpecialRenderer, MLProp, UnexpectedThrowable, GuiScreen, 
-//            IBlockAccess
+//            GameSettings, StatList, StatCrafting, BlockPistonMoving, 
+//            IRecipe, TexturePackList, TexturePackBase, EntityPlayer, 
+//            World, KeyBinding, IChunkProvider, ModTextureStatic, 
+//            ItemBlock, TileEntitySpecialRenderer, MLProp, IInventory, 
+//            UnexpectedThrowable, GuiScreen, IBlockAccess
 
 public final class ModLoader
 {
@@ -72,8 +72,8 @@ public final class ModLoader
                     String s2 = as[1];
                     AddLocalization((new StringBuilder("achievement.")).append(s2).toString(), s);
                     AddLocalization((new StringBuilder("achievement.")).append(s2).append(".desc").toString(), s1);
-                    setPrivateValue(net.minecraft.src.StatBase.class, achievement, 1, StringTranslate.getInstance().translateKey((new StringBuilder("achievement.")).append(s2).toString()));
-                    setPrivateValue(net.minecraft.src.Achievement.class, achievement, 3, StringTranslate.getInstance().translateKey((new StringBuilder("achievement.")).append(s2).append(".desc").toString()));
+                    setPrivateValue(net.minecraft.src.StatBase.class, achievement, 1, StatCollector.translateToLocal((new StringBuilder("achievement.")).append(s2).toString()));
+                    setPrivateValue(net.minecraft.src.Achievement.class, achievement, 3, StatCollector.translateToLocal((new StringBuilder("achievement.")).append(s2).append(".desc").toString()));
                 } else
                 {
                     setPrivateValue(net.minecraft.src.StatBase.class, achievement, 1, s);
@@ -102,16 +102,16 @@ public final class ModLoader
         }
     }
 
-    public static int AddAllFuel(int i)
+    public static int AddAllFuel(int i, int j)
     {
         logger.finest((new StringBuilder("Finding fuel for ")).append(i).toString());
-        int j = 0;
-        for(Iterator iterator = modList.iterator(); iterator.hasNext() && j == 0; j = ((BaseMod)iterator.next()).AddFuel(i)) { }
-        if(j != 0)
+        int k = 0;
+        for(Iterator iterator = modList.iterator(); iterator.hasNext() && k == 0; k = ((BaseMod)iterator.next()).AddFuel(i, j)) { }
+        if(k != 0)
         {
-            logger.finest((new StringBuilder("Returned ")).append(j).toString());
+            logger.finest((new StringBuilder("Returned ")).append(k).toString());
         }
-        return j;
+        return k;
     }
 
     public static void AddAllRenderers(Map map)
@@ -135,7 +135,7 @@ public final class ModLoader
         for(Iterator iterator = animList.iterator(); iterator.hasNext();)
         {
             TextureFX texturefx1 = (TextureFX)iterator.next();
-            if(texturefx1.tileImage == texturefx.tileImage && texturefx1.iconIndex == texturefx.iconIndex)
+            if(texturefx1.iconIndex == texturefx.iconIndex && texturefx1.tileImage == texturefx.tileImage)
             {
                 animList.remove(texturefx);
                 break;
@@ -340,12 +340,12 @@ public final class ModLoader
         FurnaceRecipes.smelting().addSmelting(i, itemstack);
     }
 
-    public static void AddSpawn(Class class1, int i, EnumCreatureType enumcreaturetype)
+    public static void AddSpawn(Class class1, int i, int j, int k, EnumCreatureType enumcreaturetype)
     {
-        AddSpawn(class1, i, enumcreaturetype, null);
+        AddSpawn(class1, i, j, k, enumcreaturetype, null);
     }
 
-    public static void AddSpawn(Class class1, int i, EnumCreatureType enumcreaturetype, BiomeGenBase abiomegenbase[])
+    public static void AddSpawn(Class class1, int i, int j, int k, EnumCreatureType enumcreaturetype, BiomeGenBase abiomegenbase[])
     {
         if(class1 == null)
         {
@@ -359,9 +359,9 @@ public final class ModLoader
         {
             abiomegenbase = standardBiomes;
         }
-        for(int j = 0; j < abiomegenbase.length; j++)
+        for(int l = 0; l < abiomegenbase.length; l++)
         {
-            List list = abiomegenbase[j].getSpawnableList(enumcreaturetype);
+            List list = abiomegenbase[l].getSpawnableList(enumcreaturetype);
             if(list != null)
             {
                 boolean flag = false;
@@ -370,7 +370,9 @@ public final class ModLoader
                     SpawnListEntry spawnlistentry = (SpawnListEntry)iterator.next();
                     if(spawnlistentry.entityClass == class1)
                     {
-                        spawnlistentry.spawnRarityRate = i;
+                        spawnlistentry.field_35590_d = i;
+                        spawnlistentry.field_35591_b = j;
+                        spawnlistentry.field_35592_c = k;
                         flag = true;
                         break;
                     }
@@ -378,24 +380,24 @@ public final class ModLoader
 
                 if(!flag)
                 {
-                    list.add(new SpawnListEntry(class1, i));
+                    list.add(new SpawnListEntry(class1, i, j, k));
                 }
             }
         }
 
     }
 
-    public static void AddSpawn(String s, int i, EnumCreatureType enumcreaturetype)
+    public static void AddSpawn(String s, int i, int j, int k, EnumCreatureType enumcreaturetype)
     {
-        AddSpawn(s, i, enumcreaturetype, null);
+        AddSpawn(s, i, j, k, enumcreaturetype, null);
     }
 
-    public static void AddSpawn(String s, int i, EnumCreatureType enumcreaturetype, BiomeGenBase abiomegenbase[])
+    public static void AddSpawn(String s, int i, int j, int k, EnumCreatureType enumcreaturetype, BiomeGenBase abiomegenbase[])
     {
         Class class1 = (Class)classMap.get(s);
         if(class1 != null && (net.minecraft.src.EntityLiving.class).isAssignableFrom(class1))
         {
-            AddSpawn(class1, i, enumcreaturetype, abiomegenbase);
+            AddSpawn(class1, i, j, k, enumcreaturetype, abiomegenbase);
         }
     }
 
@@ -429,11 +431,16 @@ public final class ModLoader
                 threadgroup.enumerate(athread);
                 for(int j = 0; j < athread.length; j++)
                 {
-                    if(!athread[j].getName().equals("Minecraft main thread"))
+                    System.out.println(athread[j].getName());
+                }
+
+                for(int k = 0; k < athread.length; k++)
+                {
+                    if(!athread[k].getName().equals("Minecraft main thread"))
                     {
                         continue;
                     }
-                    instance = (Minecraft)getPrivateValue(java.lang.Thread.class, athread[j], "target");
+                    instance = (Minecraft)getPrivateValue(java.lang.Thread.class, athread[k], "target");
                     break;
                 }
 
@@ -556,8 +563,8 @@ public final class ModLoader
     private static void init()
     {
         hasInit = true;
-        String s = "1111111111111111111111111111111111111101111111011111111111111001111111111111111111111111111011111111100110000011111110000000001111111001100000110000000100000011000000010000001100000000000000110000000000000000000000000000000000000000000000001100000000000000";
-        String s1 = "1111111111111111111111111111110111111111111111111111110111111111111111111111000111111011111111111111001111111110111111111111100011111111000010001111011110000000111111000000000011111100000000001111000000000111111000000000001101000000000001111111111111000011";
+        String s = "1111111111111111111111111111111111111101111111011111111111111111111111111111111111111111111111111111110111110111111111000110001111111101100000110000000100000011000000010000001100000000000000110000000000000000000000000000000000000000000000001100000000000000";
+        String s1 = "1111111111111111111111111111110111111111111111111111111111111111111111111111000111111111111111111111111111111111111111111111111111111111110011111111111110000000111111000000000011111100000000001111000000000111111000000000001101000000000001111111111111111111";
         for(int i = 0; i < 256; i++)
         {
             usedItemSprites[i] = s.charAt(i) == '1';
@@ -579,8 +586,6 @@ public final class ModLoader
             classMap = (Map)getPrivateValue(net.minecraft.src.EntityList.class, null, 0);
             field_modifiers = (java.lang.reflect.Field.class).getDeclaredField("modifiers");
             field_modifiers.setAccessible(true);
-            field_blockList = (net.minecraft.src.Session.class).getDeclaredFields()[0];
-            field_blockList.setAccessible(true);
             field_TileEntityRenderers = (net.minecraft.src.TileEntityRenderer.class).getDeclaredFields()[0];
             field_TileEntityRenderers.setAccessible(true);
             field_armorList = (net.minecraft.src.RenderPlayer.class).getDeclaredFields()[3];
@@ -679,8 +684,8 @@ public final class ModLoader
                 logHandler.setFormatter(new SimpleFormatter());
                 logger.addHandler(logHandler);
             }
-            logger.fine("ModLoader Beta 1.7.3 Initializing...");
-            System.out.println("ModLoader Beta 1.7.3 Initializing...");
+            logger.fine("ModLoader Beta 1.8.1 Initializing...");
+            System.out.println("ModLoader Beta 1.8.1 Initializing...");
             File file = new File((net.minecraft.src.ModLoader.class).getProtectionDomain().getCodeSource().getLocation().toURI());
             modDir.mkdirs();
             readFromModFolder(modDir);
@@ -737,12 +742,12 @@ public final class ModLoader
                     Item.itemsList[j].getStatName()
                 });
                 StatList.objectUseStats[j] = (new StatCrafting(0x1020000 + j, s1, j)).registerStat();
-                if(j >= Block.blocksList.length)
+                if(j >= BlockPistonMoving.blocksList.length)
                 {
                     StatList.field_25186_c.add(StatList.objectUseStats[j]);
                 }
             }
-            if(!StatList.oneShotStats.containsKey(Integer.valueOf(0x1030000 + j)) && Item.itemsList[j] != null && Item.itemsList[j].isDamagable())
+            if(!StatList.oneShotStats.containsKey(Integer.valueOf(0x1030000 + j)) && Item.itemsList[j] != null && Item.itemsList[j].isDamageable())
             {
                 String s2 = StringTranslate.getInstance().translateKeyFormat("stat.breakItem", new Object[] {
                     Item.itemsList[j].getStatName()
@@ -865,7 +870,7 @@ public final class ModLoader
 
     }
 
-    public static void OnTick(Minecraft minecraft)
+    public static void OnTick(float f, Minecraft minecraft)
     {
         if(!hasInit)
         {
@@ -889,7 +894,7 @@ public final class ModLoader
             for(Iterator iterator = inGameHooks.entrySet().iterator(); iterator.hasNext();)
             {
                 java.util.Map.Entry entry1 = (java.util.Map.Entry)iterator.next();
-                if((clock != l || !((Boolean)entry1.getValue()).booleanValue()) && !((BaseMod)entry1.getKey()).OnTickInGame(minecraft))
+                if((clock != l || !((Boolean)entry1.getValue()).booleanValue()) && !((BaseMod)entry1.getKey()).OnTickInGame(f, minecraft))
                 {
                     iterator.remove();
                 }
@@ -901,7 +906,7 @@ public final class ModLoader
             for(Iterator iterator1 = inGUIHooks.entrySet().iterator(); iterator1.hasNext();)
             {
                 java.util.Map.Entry entry2 = (java.util.Map.Entry)iterator1.next();
-                if((clock != l || !(((Boolean)entry2.getValue()).booleanValue() & (minecraft.theWorld != null))) && !((BaseMod)entry2.getKey()).OnTickInGUI(minecraft, minecraft.currentScreen))
+                if((clock != l || !(((Boolean)entry2.getValue()).booleanValue() & (minecraft.theWorld != null))) && !((BaseMod)entry2.getKey()).OnTickInGUI(f, minecraft, minecraft.currentScreen))
                 {
                     iterator1.remove();
                 }
@@ -1179,8 +1184,6 @@ public final class ModLoader
             {
                 throw new IllegalArgumentException("block parameter cannot be null.");
             }
-            List list = (List)field_blockList.get(null);
-            list.add(block);
             int i = block.blockID;
             ItemBlock itemblock = null;
             if(class1 != null)
@@ -1581,10 +1584,10 @@ public final class ModLoader
         }
     }
 
-    public static void TakenFromCrafting(EntityPlayer entityplayer, ItemStack itemstack)
+    public static void TakenFromCrafting(EntityPlayer entityplayer, ItemStack itemstack, IInventory iinventory)
     {
         BaseMod basemod;
-        for(Iterator iterator = modList.iterator(); iterator.hasNext(); basemod.TakenFromCrafting(entityplayer, itemstack))
+        for(Iterator iterator = modList.iterator(); iterator.hasNext(); basemod.TakenFromCrafting(entityplayer, itemstack, iinventory))
         {
             basemod = (BaseMod)iterator.next();
         }
@@ -1633,7 +1636,6 @@ public final class ModLoader
     public static final boolean DEBUG = false;
     private static Field field_animList = null;
     private static Field field_armorList = null;
-    private static Field field_blockList = null;
     private static Field field_modifiers = null;
     private static Field field_TileEntityRenderers = null;
     private static boolean hasInit = false;
@@ -1661,7 +1663,7 @@ public final class ModLoader
     private static boolean texturesAdded = false;
     private static final boolean usedItemSprites[] = new boolean[256];
     private static final boolean usedTerrainSprites[] = new boolean[256];
-    public static final String VERSION = "ModLoader Beta 1.7.3";
+    public static final String VERSION = "ModLoader Beta 1.8.1";
 
     static 
     {

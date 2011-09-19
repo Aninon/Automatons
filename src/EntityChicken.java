@@ -20,7 +20,7 @@ public class EntityChicken extends EntityAnimal
         destPos = 0.0F;
         field_755_h = 1.0F;
         texture = "/mob/chicken.png";
-        setSize(0.3F, 0.4F);
+        setSize(0.3F, 0.7F);
         health = 4;
         timeUntilNextEgg = rand.nextInt(6000) + 6000;
     }
@@ -89,6 +89,23 @@ public class EntityChicken extends EntityAnimal
     protected int getDropItemId()
     {
         return Item.feather.shiftedIndex;
+    }
+
+    protected void a(boolean flag)
+    {
+        int i = rand.nextInt(3);
+        for(int j = 0; j < i; j++)
+        {
+            dropItem(Item.feather.shiftedIndex, 1);
+        }
+
+        if(fire > 0)
+        {
+            dropItem(Item.field_35420_bm.shiftedIndex, 1);
+        } else
+        {
+            dropItem(Item.field_35419_bl.shiftedIndex, 1);
+        }
     }
 
     public boolean field_753_a;

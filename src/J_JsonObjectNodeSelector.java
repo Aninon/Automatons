@@ -18,17 +18,17 @@ final class J_JsonObjectNodeSelector extends J_LeafFunctor
 
     public boolean func_27070_a(J_JsonNode j_jsonnode)
     {
-        return EnumJsonNodeType.OBJECT == j_jsonnode.func_27218_a();
+        return EnumJsonNodeType.OBJECT == j_jsonnode.getType();
     }
 
-    public String func_27060_a()
+    public String shortForm()
     {
         return "A short form object";
     }
 
     public Map func_27071_b(J_JsonNode j_jsonnode)
     {
-        return j_jsonnode.func_27214_c();
+        return j_jsonnode.getFields();
     }
 
     public String toString()
@@ -36,12 +36,12 @@ final class J_JsonObjectNodeSelector extends J_LeafFunctor
         return "an object";
     }
 
-    public Object func_27063_c(Object obj)
+    public Object typeSafeApplyTo(Object obj)
     {
         return func_27071_b((J_JsonNode)obj);
     }
 
-    public boolean func_27058_a(Object obj)
+    public boolean matchsNode(Object obj)
     {
         return func_27070_a((J_JsonNode)obj);
     }

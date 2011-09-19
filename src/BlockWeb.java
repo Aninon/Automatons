@@ -20,7 +20,7 @@ public class BlockWeb extends Block
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
-        entity.isInWeb = true;
+        entity.func_35112_o();
     }
 
     public boolean isOpaqueCube()

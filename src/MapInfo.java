@@ -13,7 +13,6 @@ public class MapInfo
 
     public MapInfo(MapData mapdata, EntityPlayer entityplayer)
     {
-//        super();
         mapDataObj = mapdata;
         field_28119_b = new int[128];
         field_28124_c = new int[128];

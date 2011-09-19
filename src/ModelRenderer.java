@@ -4,16 +4,20 @@
 
 package net.minecraft.src;
 
+import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
-//            PositionTextureVertex, TexturedQuad, GLAllocation, Tessellator
+//            ModelBase, PositionTextureVertex, TexturedQuad, GLAllocation, 
+//            Tessellator
 
 public class ModelRenderer
 {
 
-    public ModelRenderer(int i, int j)
+    public ModelRenderer(ModelBase modelbase, int i, int j)
     {
+        field_35971_a = 64F;
+        field_35970_b = 32F;
         compiled = false;
         displayList = 0;
         mirror = false;
@@ -21,6 +25,7 @@ public class ModelRenderer
         field_1402_i = false;
         textureOffsetX = i;
         textureOffsetY = j;
+        modelbase.field_35394_j.add(this);
     }
 
     public void addBox(float f, float f1, float f2, int i, int j, int k)
@@ -30,7 +35,13 @@ public class ModelRenderer
 
     public void addBox(float f, float f1, float f2, int i, int j, int k, float f3)
     {
-        corners = new PositionTextureVertex[8];
+        field_35977_i = f;
+        field_35975_j = f1;
+        field_35976_k = f2;
+        field_35973_l = f + (float)i;
+        field_35974_m = f1 + (float)j;
+        field_35972_n = f2 + (float)k;
+        field_35978_r = new PositionTextureVertex[8];
         faces = new TexturedQuad[6];
         float f4 = f + (float)i;
         float f5 = f1 + (float)j;
@@ -55,32 +66,32 @@ public class ModelRenderer
         PositionTextureVertex positiontexturevertex5 = new PositionTextureVertex(f4, f1, f6, 0.0F, 8F);
         PositionTextureVertex positiontexturevertex6 = new PositionTextureVertex(f4, f5, f6, 8F, 8F);
         PositionTextureVertex positiontexturevertex7 = new PositionTextureVertex(f, f5, f6, 8F, 0.0F);
-        corners[0] = positiontexturevertex;
-        corners[1] = positiontexturevertex1;
-        corners[2] = positiontexturevertex2;
-        corners[3] = positiontexturevertex3;
-        corners[4] = positiontexturevertex4;
-        corners[5] = positiontexturevertex5;
-        corners[6] = positiontexturevertex6;
-        corners[7] = positiontexturevertex7;
+        field_35978_r[0] = positiontexturevertex;
+        field_35978_r[1] = positiontexturevertex1;
+        field_35978_r[2] = positiontexturevertex2;
+        field_35978_r[3] = positiontexturevertex3;
+        field_35978_r[4] = positiontexturevertex4;
+        field_35978_r[5] = positiontexturevertex5;
+        field_35978_r[6] = positiontexturevertex6;
+        field_35978_r[7] = positiontexturevertex7;
         faces[0] = new TexturedQuad(new PositionTextureVertex[] {
             positiontexturevertex5, positiontexturevertex1, positiontexturevertex2, positiontexturevertex6
-        }, textureOffsetX + k + i, textureOffsetY + k, textureOffsetX + k + i + k, textureOffsetY + k + j);
+        }, textureOffsetX + k + i, textureOffsetY + k, textureOffsetX + k + i + k, textureOffsetY + k + j, field_35971_a, field_35970_b);
         faces[1] = new TexturedQuad(new PositionTextureVertex[] {
             positiontexturevertex, positiontexturevertex4, positiontexturevertex7, positiontexturevertex3
-        }, textureOffsetX + 0, textureOffsetY + k, textureOffsetX + k, textureOffsetY + k + j);
+        }, textureOffsetX + 0, textureOffsetY + k, textureOffsetX + k, textureOffsetY + k + j, field_35971_a, field_35970_b);
         faces[2] = new TexturedQuad(new PositionTextureVertex[] {
             positiontexturevertex5, positiontexturevertex4, positiontexturevertex, positiontexturevertex1
-        }, textureOffsetX + k, textureOffsetY + 0, textureOffsetX + k + i, textureOffsetY + k);
+        }, textureOffsetX + k, textureOffsetY + 0, textureOffsetX + k + i, textureOffsetY + k, field_35971_a, field_35970_b);
         faces[3] = new TexturedQuad(new PositionTextureVertex[] {
             positiontexturevertex2, positiontexturevertex3, positiontexturevertex7, positiontexturevertex6
-        }, textureOffsetX + k + i, textureOffsetY + 0, textureOffsetX + k + i + i, textureOffsetY + k);
+        }, textureOffsetX + k + i, textureOffsetY + 0, textureOffsetX + k + i + i, textureOffsetY + k, field_35971_a, field_35970_b);
         faces[4] = new TexturedQuad(new PositionTextureVertex[] {
             positiontexturevertex1, positiontexturevertex, positiontexturevertex3, positiontexturevertex2
-        }, textureOffsetX + k, textureOffsetY + k, textureOffsetX + k + i, textureOffsetY + k + j);
+        }, textureOffsetX + k, textureOffsetY + k, textureOffsetX + k + i, textureOffsetY + k + j, field_35971_a, field_35970_b);
         faces[5] = new TexturedQuad(new PositionTextureVertex[] {
             positiontexturevertex4, positiontexturevertex5, positiontexturevertex6, positiontexturevertex7
-        }, textureOffsetX + k + i + k, textureOffsetY + k, textureOffsetX + k + i + k + i, textureOffsetY + k + j);
+        }, textureOffsetX + k + i + k, textureOffsetY + k, textureOffsetX + k + i + k + i, textureOffsetY + k + j, field_35971_a, field_35970_b);
         if(mirror)
         {
             for(int l = 0; l < faces.length; l++)
@@ -224,7 +235,26 @@ public class ModelRenderer
         compiled = true;
     }
 
-    private PositionTextureVertex corners[];
+    public ModelRenderer func_35968_a(int i, int j)
+    {
+        field_35971_a = i;
+        field_35970_b = j;
+        return this;
+    }
+
+    public void func_35969_a(ModelRenderer modelrenderer)
+    {
+        rotationPointX = modelrenderer.rotationPointX;
+        rotationPointY = modelrenderer.rotationPointY;
+        rotationPointZ = modelrenderer.rotationPointZ;
+        rotateAngleX = modelrenderer.rotateAngleX;
+        rotateAngleY = modelrenderer.rotateAngleY;
+        rotateAngleZ = modelrenderer.rotateAngleZ;
+    }
+
+    public float field_35971_a;
+    public float field_35970_b;
+    private PositionTextureVertex field_35978_r[];
     private TexturedQuad faces[];
     private int textureOffsetX;
     private int textureOffsetY;
@@ -234,6 +264,12 @@ public class ModelRenderer
     public float rotateAngleX;
     public float rotateAngleY;
     public float rotateAngleZ;
+    public float field_35977_i;
+    public float field_35975_j;
+    public float field_35976_k;
+    public float field_35973_l;
+    public float field_35974_m;
+    public float field_35972_n;
     private boolean compiled;
     private int displayList;
     public boolean mirror;

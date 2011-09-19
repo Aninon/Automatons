@@ -121,6 +121,10 @@ label0:
                 }
                 world.setBlockWithNotify(k3, l3, i4, Block.chest.blockID);
                 TileEntityChest tileentitychest = (TileEntityChest)world.getBlockTileEntity(k3, l3, i4);
+                if(tileentitychest == null)
+                {
+                    break;
+                }
                 int k4 = 0;
                 do
                 {

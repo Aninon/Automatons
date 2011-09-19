@@ -19,12 +19,12 @@ public final class J_CompactJsonFormatter
     {
     }
 
-    public String func_27327_a(J_JsonRootNode j_jsonrootnode)
+    public String format(J_JsonRootNode j_jsonrootnode)
     {
         StringWriter stringwriter = new StringWriter();
         try
         {
-            func_27329_a(j_jsonrootnode, stringwriter);
+            format(j_jsonrootnode, stringwriter);
         }
         catch(IOException ioexception)
         {
@@ -33,22 +33,22 @@ public final class J_CompactJsonFormatter
         return stringwriter.toString();
     }
 
-    public void func_27329_a(J_JsonRootNode j_jsonrootnode, Writer writer)
+    public void format(J_JsonRootNode j_jsonrootnode, Writer writer)
         throws IOException
     {
-        func_27328_a(j_jsonrootnode, writer);
+        formatJsonNode(j_jsonrootnode, writer);
     }
 
-    private void func_27328_a(J_JsonNode j_jsonnode, Writer writer)
+    private void formatJsonNode(J_JsonNode j_jsonnode, Writer writer)
         throws IOException
     {
         boolean flag = true;
-        switch(EnumJsonNodeTypeMappingHelper.enumJsonNodeTypeMappingArray[j_jsonnode.func_27218_a().ordinal()])
+        switch(EnumJsonNodeTypeMappingHelper.enumJsonNodeTypeMappingArray[j_jsonnode.getType().ordinal()])
         {
         case 1: // '\001'
             writer.append('[');
             J_JsonNode j_jsonnode1;
-            for(Iterator iterator = j_jsonnode.func_27215_d().iterator(); iterator.hasNext(); func_27328_a(j_jsonnode1, writer))
+            for(Iterator iterator = j_jsonnode.getElements().iterator(); iterator.hasNext(); formatJsonNode(j_jsonnode1, writer))
             {
                 j_jsonnode1 = (J_JsonNode)iterator.next();
                 if(!flag)
@@ -64,7 +64,7 @@ public final class J_CompactJsonFormatter
         case 2: // '\002'
             writer.append('{');
             J_JsonStringNode j_jsonstringnode;
-            for(Iterator iterator1 = (new TreeSet(j_jsonnode.func_27214_c().keySet())).iterator(); iterator1.hasNext(); func_27328_a((J_JsonNode)j_jsonnode.func_27214_c().get(j_jsonstringnode), writer))
+            for(Iterator iterator1 = (new TreeSet(j_jsonnode.getFields().keySet())).iterator(); iterator1.hasNext(); formatJsonNode((J_JsonNode)j_jsonnode.getFields().get(j_jsonstringnode), writer))
             {
                 j_jsonstringnode = (J_JsonStringNode)iterator1.next();
                 if(!flag)
@@ -72,7 +72,7 @@ public final class J_CompactJsonFormatter
                     writer.append(',');
                 }
                 flag = false;
-                func_27328_a(((J_JsonNode) (j_jsonstringnode)), writer);
+                formatJsonNode(((J_JsonNode) (j_jsonstringnode)), writer);
                 writer.append(':');
             }
 
@@ -80,11 +80,11 @@ public final class J_CompactJsonFormatter
             break;
 
         case 3: // '\003'
-            writer.append('"').append((new J_JsonEscapedString(j_jsonnode.func_27216_b())).toString()).append('"');
+            writer.append('"').append((new J_JsonEscapedString(j_jsonnode.getText())).toString()).append('"');
             break;
 
         case 4: // '\004'
-            writer.append(j_jsonnode.func_27216_b());
+            writer.append(j_jsonnode.getText());
             break;
 
         case 5: // '\005'
@@ -100,7 +100,7 @@ public final class J_CompactJsonFormatter
             break;
 
         default:
-            throw new RuntimeException((new StringBuilder()).append("Coding failure in Argo:  Attempt to format a JsonNode of unknown type [").append(j_jsonnode.func_27218_a()).append("];").toString());
+            throw new RuntimeException((new StringBuilder()).append("Coding failure in Argo:  Attempt to format a JsonNode of unknown type [").append(j_jsonnode.getType()).append("];").toString());
         }
     }
 }

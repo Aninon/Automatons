@@ -8,7 +8,8 @@ import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
 //            World, MathHelper, Block, ChunkPosition, 
-//            AxisAlignedBB, Vec3D, Entity, BlockFire
+//            AxisAlignedBB, Vec3D, Entity, DamageSource, 
+//            BlockFire
 
 public class Explosion
 {
@@ -106,7 +107,7 @@ label0:
                 d10 /= d11;
                 double d12 = worldObj.func_675_a(vec3d, entity.boundingBox);
                 double d13 = (1.0D - d4) * d12;
-                entity.attackEntityFrom(exploder, (int)(((d13 * d13 + d13) / 2D) * 8D * (double)explosionSize + 1.0D));
+                entity.attackEntityFrom(DamageSource.field_35548_k, (int)(((d13 * d13 + d13) / 2D) * 8D * (double)explosionSize + 1.0D));
                 double d14 = d13;
                 entity.motionX += d6 * d14;
                 entity.motionY += d8 * d14;
@@ -139,6 +140,7 @@ label0:
     public void doExplosionB(boolean flag)
     {
         worldObj.playSoundEffect(explosionX, explosionY, explosionZ, "random.explode", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+        worldObj.spawnParticle("hugeexplosion", explosionX, explosionY, explosionZ, 0.0D, 0.0D, 0.0D);
         ArrayList arraylist = new ArrayList();
         arraylist.addAll(destroyedBlockPositions);
         for(int i = arraylist.size() - 1; i >= 0; i--)

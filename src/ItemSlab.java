@@ -6,7 +6,7 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ItemBlock, Block, BlockStep, ItemStack
+//            ItemBlock, Block, ItemStack, BlockStep
 
 public class ItemSlab extends ItemBlock
 {
@@ -30,6 +30,11 @@ public class ItemSlab extends ItemBlock
 
     public String getItemNameIS(ItemStack itemstack)
     {
-        return (new StringBuilder()).append(super.getItemName()).append(".").append(BlockStep.field_22037_a[itemstack.getItemDamage()]).toString();
+        int i = itemstack.getItemDamage();
+        if(i < 0 || i >= BlockStep.field_22037_a.length)
+        {
+            i = 0;
+        }
+        return (new StringBuilder()).append(super.getItemName()).append(".").append(BlockStep.field_22037_a[i]).toString();
     }
 }

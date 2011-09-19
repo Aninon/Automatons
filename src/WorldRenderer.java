@@ -138,6 +138,10 @@ public class WorldRenderer
                         }
                         Block block = Block.blocksList[i3];
                         int j3 = block.getRenderBlockPass();
+                        if(i2 == 0 && renderblocks.func_35927_a(l2, j2, k2, i2))
+                        {
+                            flag1 = true;
+                        }
                         if(j3 != i2)
                         {
                             flag = true;
@@ -202,7 +206,7 @@ public class WorldRenderer
         isInitialized = false;
     }
 
-    public void func_1204_c()
+    public void stopRendering()
     {
         setDontDraw();
         worldObj = null;

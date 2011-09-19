@@ -71,7 +71,7 @@ public class EntitySquid extends EntityWaterMob
         return 0;
     }
 
-    protected void dropFewItems()
+    protected void a(boolean flag)
     {
         int i = rand.nextInt(3) + 1;
         for(int j = 0; j < i; j++)
@@ -157,7 +157,7 @@ public class EntitySquid extends EntityWaterMob
         moveEntity(motionX, motionY, motionZ);
     }
 
-    protected void updatePlayerActionState()
+    protected void updateEntityActionState()
     {
         if(rand.nextInt(50) == 0 || !inWater || randomMotionVecX == 0.0F && randomMotionVecY == 0.0F && randomMotionVecZ == 0.0F)
         {

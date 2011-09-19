@@ -12,12 +12,13 @@ import java.util.List;
 public class BiomeGenSky extends BiomeGenBase
 {
 
-    public BiomeGenSky()
+    public BiomeGenSky(int i)
     {
+        super(i);
         spawnableMonsterList.clear();
         spawnableCreatureList.clear();
         spawnableWaterCreatureList.clear();
-        spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityChicken.class, 10));
+        spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityChicken.class, 10, 4, 4));
     }
 
     public int getSkyColorByTemp(float f)

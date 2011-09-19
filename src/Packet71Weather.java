@@ -19,34 +19,34 @@ public class Packet71Weather extends Packet
 
     public Packet71Weather(Entity entity)
     {
-        field_27054_a = entity.entityId;
-        field_27053_b = MathHelper.floor_double(entity.posX * 32D);
-        field_27057_c = MathHelper.floor_double(entity.posY * 32D);
-        field_27056_d = MathHelper.floor_double(entity.posZ * 32D);
+        entityID = entity.entityId;
+        posX = MathHelper.floor_double(entity.posX * 32D);
+        posY = MathHelper.floor_double(entity.posY * 32D);
+        posZ = MathHelper.floor_double(entity.posZ * 32D);
         if(entity instanceof EntityLightningBolt)
         {
-            field_27055_e = 1;
+            isLightningBolt = 1;
         }
     }
 
     public void readPacketData(DataInputStream datainputstream)
         throws IOException
     {
-        field_27054_a = datainputstream.readInt();
-        field_27055_e = datainputstream.readByte();
-        field_27053_b = datainputstream.readInt();
-        field_27057_c = datainputstream.readInt();
-        field_27056_d = datainputstream.readInt();
+        entityID = datainputstream.readInt();
+        isLightningBolt = datainputstream.readByte();
+        posX = datainputstream.readInt();
+        posY = datainputstream.readInt();
+        posZ = datainputstream.readInt();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
-        dataoutputstream.writeInt(field_27054_a);
-        dataoutputstream.writeByte(field_27055_e);
-        dataoutputstream.writeInt(field_27053_b);
-        dataoutputstream.writeInt(field_27057_c);
-        dataoutputstream.writeInt(field_27056_d);
+        dataoutputstream.writeInt(entityID);
+        dataoutputstream.writeByte(isLightningBolt);
+        dataoutputstream.writeInt(posX);
+        dataoutputstream.writeInt(posY);
+        dataoutputstream.writeInt(posZ);
     }
 
     public void processPacket(NetHandler nethandler)
@@ -59,9 +59,9 @@ public class Packet71Weather extends Packet
         return 17;
     }
 
-    public int field_27054_a;
-    public int field_27053_b;
-    public int field_27057_c;
-    public int field_27056_d;
-    public int field_27055_e;
+    public int entityID;
+    public int posX;
+    public int posY;
+    public int posZ;
+    public int isLightningBolt;
 }

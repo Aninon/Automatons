@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, World, Block, ItemStack, 
-//            EntityPlayer
+//            Item, EntityPlayer, World, Block, 
+//            ItemStack
 
 public class ItemSeeds extends Item
 {
@@ -21,6 +21,10 @@ public class ItemSeeds extends Item
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
         if(l != 1)
+        {
+            return false;
+        }
+        if(!entityplayer.func_35190_e(i, j, k) || !entityplayer.func_35190_e(i, j + 1, k))
         {
             return false;
         }

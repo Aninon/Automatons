@@ -44,7 +44,7 @@ public class AM_EntityGolem extends EntityAnimal
 		health=h;
 		
 	}
-	
+	/*
 	public String getEntityTexture(){
 		if(getType()==2){
 			return "/automatons/agol1.png"; 
@@ -52,7 +52,7 @@ public class AM_EntityGolem extends EntityAnimal
 			return "/automatons/agol2.png";
 		}
 	}
-	
+	*/
 	public int type=0;
 	public int colo=0;
 	
@@ -137,9 +137,14 @@ public class AM_EntityGolem extends EntityAnimal
 	}
 	
 	
-	protected void dropFewItems(){
-		Dropper();
-	}
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
 
 	void Dropper(){
 		

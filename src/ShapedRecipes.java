@@ -66,7 +66,7 @@ public class ShapedRecipes
                         itemstack = recipeItems[i1 + j1 * recipeWidth];
                     }
                 }
-                ItemStack itemstack1 = inventorycrafting.func_21103_b(k, l);
+                ItemStack itemstack1 = inventorycrafting.getStackInRowAndColumn(k, l);
                 if(itemstack1 == null && itemstack == null)
                 {
                     continue;

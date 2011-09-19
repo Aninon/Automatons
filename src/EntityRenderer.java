@@ -4,25 +4,29 @@
 
 package net.minecraft.src;
 
+import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
-import java.util.List;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.ContextCapabilities;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 
 // Referenced classes of package net.minecraft.src:
-//            MouseFilter, GLAllocation, ItemRenderer, EntityLiving, 
-//            MathHelper, World, GameSettings, PlayerController, 
-//            MovingObjectPosition, Vec3D, PlayerControllerTest, AxisAlignedBB, 
-//            Entity, Material, EntityPlayer, Block, 
-//            RenderGlobal, EntityPlayerSP, MouseHelper, ScaledResolution, 
-//            GuiIngame, GuiScreen, GuiParticle, ChunkProviderLoadOrGenerate, 
-//            ClippingHelperImpl, Frustrum, ICamera, RenderEngine, 
-//            RenderHelper, EffectRenderer, InventoryPlayer, WorldChunkManager, 
-//            BiomeGenBase, EntitySmokeFX, EntityRainFX, Tessellator, 
-//            WorldProvider
+//            MouseFilter, GLAllocation, ItemRenderer, RenderEngine, 
+//            EntityLiving, MathHelper, World, GameSettings, 
+//            PlayerController, MovingObjectPosition, Vec3D, AxisAlignedBB, 
+//            Entity, EntityPlayerSP, EntityPlayer, Material, 
+//            Block, RenderGlobal, Potion, WorldProvider, 
+//            MouseHelper, ScaledResolution, GuiIngame, GuiScreen, 
+//            GuiParticle, ChunkProviderLoadOrGenerate, ClippingHelperImpl, Frustrum, 
+//            ICamera, RenderHelper, EffectRenderer, InventoryPlayer, 
+//            WorldChunkManager, BiomeGenBase, EntitySmokeFX, EntityRainFX, 
+//            Tessellator
 
 public class EntityRenderer
 {
@@ -53,6 +57,11 @@ public class EntityRenderer
         cameraPitch = 0.0D;
         prevFrameTime = System.currentTimeMillis();
         renderEndNanoTime = 0L;
+        field_35815_V = false;
+        field_35819_e = 0.0F;
+        field_35816_f = 0.0F;
+        field_35817_g = 0.0F;
+        field_35821_h = 0.0F;
         random = new Random();
         rainSoundCounter = 0;
         unusedVolatile0 = 0;
@@ -60,10 +69,14 @@ public class EntityRenderer
         fogColorBuffer = GLAllocation.createDirectFloatBuffer(16);
         mc = minecraft;
         itemRenderer = new ItemRenderer(minecraft);
+        field_35818_d = minecraft.renderEngine.allocateAndSetupTexture(new BufferedImage(16, 16, 1));
+        field_35811_L = new int[256];
     }
 
     public void updateRenderer()
     {
+        func_35809_c();
+        func_35807_d();
         fogColor2 = fogColor1;
         field_22227_s = thirdPersonDistance;
         prevDebugCamYaw = debugCamYaw;
@@ -101,7 +114,7 @@ public class EntityRenderer
         {
             d1 = mc.objectMouseOver.hitVec.distanceTo(vec3d);
         }
-        if(mc.playerController instanceof PlayerControllerTest)
+        if(mc.playerController.func_35636_i())
         {
             d1 = d = 32D;
         } else
@@ -116,7 +129,7 @@ public class EntityRenderer
         Vec3D vec3d2 = vec3d.addVector(vec3d1.xCoord * d, vec3d1.yCoord * d, vec3d1.zCoord * d);
         pointedEntity = null;
         float f1 = 1.0F;
-        List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.renderViewEntity, mc.renderViewEntity.boundingBox.addCoord(vec3d1.xCoord * d, vec3d1.yCoord * d, vec3d1.zCoord * d).expand(f1, f1, f1));
+        java.util.List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.renderViewEntity, mc.renderViewEntity.boundingBox.addCoord(vec3d1.xCoord * d, vec3d1.yCoord * d, vec3d1.zCoord * d).expand(f1, f1, f1));
         double d2 = 0.0D;
         for(int i = 0; i < list.size(); i++)
         {
@@ -149,24 +162,41 @@ public class EntityRenderer
             }
         }
 
-        if(pointedEntity != null && !(mc.playerController instanceof PlayerControllerTest))
+        if(pointedEntity != null)
         {
             mc.objectMouseOver = new MovingObjectPosition(pointedEntity);
         }
     }
 
-    private float getFOVModifier(float f)
+    private void func_35809_c()
     {
-        EntityLiving entityliving = mc.renderViewEntity;
-        float f1 = 70F;
-        if(entityliving.isInsideOfMaterial(Material.water))
+        EntityPlayerSP entityplayersp = (EntityPlayerSP)mc.renderViewEntity;
+        field_35814_O = entityplayersp.func_35220_u_();
+        field_35813_N = field_35812_M;
+        field_35812_M += (field_35814_O - field_35812_M) * 0.5F;
+    }
+
+    private float getFOVModifier(float f, boolean flag)
+    {
+        if(field_35823_q > 0)
         {
-            f1 = 60F;
+            return 90F;
         }
-        if(entityliving.health <= 0)
+        EntityPlayer entityplayer = (EntityPlayer)mc.renderViewEntity;
+        float f1 = 70F;
+        if(flag)
         {
-            float f2 = (float)entityliving.deathTime + f;
+            f1 += mc.gameSettings.field_35379_L * 40F;
+            f1 *= field_35813_N + (field_35812_M - field_35813_N) * f;
+        }
+        if(entityplayer.health <= 0)
+        {
+            float f2 = (float)entityplayer.deathTime + f;
             f1 /= (1.0F - 500F / (f2 + 500F)) * 2.0F + 1.0F;
+        }
+        if(entityplayer.isInsideOfMaterial(Material.water))
+        {
+            f1 = (f1 * 60F) / 70F;
         }
         return f1 + prevDebugCamFOV + (debugCamFOV - prevDebugCamFOV) * f;
     }
@@ -313,10 +343,15 @@ public class EntityRenderer
         {
             GL11.glTranslatef((float)cameraYaw, (float)(-cameraPitch), 0.0F);
             GL11.glScaled(cameraZoom, cameraZoom, 1.0D);
-            GLU.gluPerspective(getFOVModifier(f), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+            GLU.gluPerspective(getFOVModifier(f, true), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
         } else
         {
-            GLU.gluPerspective(getFOVModifier(f), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+            GLU.gluPerspective(getFOVModifier(f, true), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+        }
+        if(mc.playerController.func_35643_e())
+        {
+            float f2 = 0.6666667F;
+            GL11.glScalef(1.0F, f2, 1.0F);
         }
         GL11.glMatrixMode(5888 /*GL_MODELVIEW0_ARB*/);
         GL11.glLoadIdentity();
@@ -329,20 +364,75 @@ public class EntityRenderer
         {
             setupViewBobbing(f);
         }
-        float f2 = mc.thePlayer.prevTimeInPortal + (mc.thePlayer.timeInPortal - mc.thePlayer.prevTimeInPortal) * f;
-        if(f2 > 0.0F)
+        float f3 = mc.thePlayer.prevTimeInPortal + (mc.thePlayer.timeInPortal - mc.thePlayer.prevTimeInPortal) * f;
+        if(f3 > 0.0F)
         {
-            float f3 = 5F / (f2 * f2 + 5F) - f2 * 0.04F;
-            f3 *= f3;
-            GL11.glRotatef(((float)rendererUpdateCount + f) * 20F, 0.0F, 1.0F, 1.0F);
-            GL11.glScalef(1.0F / f3, 1.0F, 1.0F);
-            GL11.glRotatef(-((float)rendererUpdateCount + f) * 20F, 0.0F, 1.0F, 1.0F);
+            int j = 20;
+            if(mc.thePlayer.func_35160_a(Potion.field_35684_k))
+            {
+                j = 7;
+            }
+            float f4 = 5F / (f3 * f3 + 5F) - f3 * 0.04F;
+            f4 *= f4;
+            GL11.glRotatef(((float)rendererUpdateCount + f) * (float)j, 0.0F, 1.0F, 1.0F);
+            GL11.glScalef(1.0F / f4, 1.0F, 1.0F);
+            GL11.glRotatef(-((float)rendererUpdateCount + f) * (float)j, 0.0F, 1.0F, 1.0F);
         }
         orientCamera(f);
+        if(field_35823_q > 0)
+        {
+            int k = field_35823_q - 1;
+            if(k == 1)
+            {
+                GL11.glRotatef(90F, 0.0F, 1.0F, 0.0F);
+            }
+            if(k == 2)
+            {
+                GL11.glRotatef(180F, 0.0F, 1.0F, 0.0F);
+            }
+            if(k == 3)
+            {
+                GL11.glRotatef(-90F, 0.0F, 1.0F, 0.0F);
+            }
+            if(k == 4)
+            {
+                GL11.glRotatef(90F, 1.0F, 0.0F, 0.0F);
+            }
+            if(k == 5)
+            {
+                GL11.glRotatef(-90F, 1.0F, 0.0F, 0.0F);
+            }
+        }
     }
 
     private void func_4135_b(float f, int i)
     {
+        if(field_35823_q > 0)
+        {
+            return;
+        }
+        GL11.glMatrixMode(5889 /*GL_PROJECTION*/);
+        GL11.glLoadIdentity();
+        float f1 = 0.07F;
+        if(mc.gameSettings.anaglyph)
+        {
+            GL11.glTranslatef((float)(-(i * 2 - 1)) * f1, 0.0F, 0.0F);
+        }
+        if(cameraZoom != 1.0D)
+        {
+            GL11.glTranslatef((float)cameraYaw, (float)(-cameraPitch), 0.0F);
+            GL11.glScaled(cameraZoom, cameraZoom, 1.0D);
+            GLU.gluPerspective(getFOVModifier(f, false), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+        } else
+        {
+            GLU.gluPerspective(getFOVModifier(f, false), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+        }
+        if(mc.playerController.func_35643_e())
+        {
+            float f2 = 0.6666667F;
+            GL11.glScalef(1.0F, f2, 1.0F);
+        }
+        GL11.glMatrixMode(5888 /*GL_MODELVIEW0_ARB*/);
         GL11.glLoadIdentity();
         if(mc.gameSettings.anaglyph)
         {
@@ -354,9 +444,11 @@ public class EntityRenderer
         {
             setupViewBobbing(f);
         }
-        if(!mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping() && !mc.gameSettings.hideGUI)
+        if(!mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping() && !mc.gameSettings.hideGUI && !mc.playerController.func_35643_e())
         {
+            func_35806_b(f);
             itemRenderer.renderItemInFirstPerson(f);
+            func_35810_a(f);
         }
         GL11.glPopMatrix();
         if(!mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping())
@@ -370,8 +462,142 @@ public class EntityRenderer
         }
     }
 
+    public void func_35810_a(double d)
+    {
+        GL13.glClientActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
+        GL13.glActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
+        GL11.glDisable(3553 /*GL_TEXTURE_2D*/);
+        GL13.glClientActiveTexture(33984 /*GL_TEXTURE0_ARB*/);
+        GL13.glActiveTexture(33984 /*GL_TEXTURE0_ARB*/);
+    }
+
+    public void func_35806_b(double d)
+    {
+        GL13.glClientActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
+        GL13.glActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
+        GL11.glMatrixMode(5890 /*GL_TEXTURE*/);
+        GL11.glLoadIdentity();
+        float f = 0.00390625F;
+        GL11.glScalef(f, f, f);
+        GL11.glTranslatef(8F, 8F, 8F);
+        GL11.glMatrixMode(5888 /*GL_MODELVIEW0_ARB*/);
+        mc.renderEngine.bindTexture(field_35818_d);
+        GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10241 /*GL_TEXTURE_MIN_FILTER*/, 9729 /*GL_LINEAR*/);
+        GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10240 /*GL_TEXTURE_MAG_FILTER*/, 9729 /*GL_LINEAR*/);
+        GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10241 /*GL_TEXTURE_MIN_FILTER*/, 9729 /*GL_LINEAR*/);
+        GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10240 /*GL_TEXTURE_MAG_FILTER*/, 9729 /*GL_LINEAR*/);
+        GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10242 /*GL_TEXTURE_WRAP_S*/, 10496 /*GL_CLAMP*/);
+        GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10243 /*GL_TEXTURE_WRAP_T*/, 10496 /*GL_CLAMP*/);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glEnable(3553 /*GL_TEXTURE_2D*/);
+        GL13.glClientActiveTexture(33984 /*GL_TEXTURE0_ARB*/);
+        GL13.glActiveTexture(33984 /*GL_TEXTURE0_ARB*/);
+    }
+
+    private void func_35807_d()
+    {
+        field_35816_f += (Math.random() - Math.random()) * Math.random() * Math.random();
+        field_35821_h += (Math.random() - Math.random()) * Math.random() * Math.random();
+        field_35816_f *= 0.90000000000000002D;
+        field_35821_h *= 0.90000000000000002D;
+        field_35819_e += (field_35816_f - field_35819_e) * 1.0F;
+        field_35817_g += (field_35821_h - field_35817_g) * 1.0F;
+        field_35815_V = true;
+    }
+
+    private void func_35808_e()
+    {
+        World world = mc.theWorld;
+        if(world == null)
+        {
+            return;
+        }
+        for(int i = 0; i < 256; i++)
+        {
+            float f = world.func_35464_b(1.0F) * 0.95F + 0.05F;
+            float f1 = world.worldProvider.lightBrightnessTable[i / 16] * f;
+            float f2 = world.worldProvider.lightBrightnessTable[i % 16] * (field_35819_e * 0.1F + 1.5F);
+            if(world.field_27172_i > 0)
+            {
+                f1 = world.worldProvider.lightBrightnessTable[i / 16];
+            }
+            float f3 = f1 * (world.func_35464_b(1.0F) * 0.65F + 0.35F);
+            float f4 = f1 * (world.func_35464_b(1.0F) * 0.65F + 0.35F);
+            float f5 = f1;
+            float f6 = f2;
+            float f7 = f2 * ((f2 * 0.6F + 0.4F) * 0.6F + 0.4F);
+            float f8 = f2 * (f2 * f2 * 0.6F + 0.4F);
+            float f9 = f3 + f6;
+            float f10 = f4 + f7;
+            float f11 = f5 + f8;
+            f9 = f9 * 0.96F + 0.03F;
+            f10 = f10 * 0.96F + 0.03F;
+            f11 = f11 * 0.96F + 0.03F;
+            float f12 = mc.gameSettings.field_35380_M;
+            if(f9 > 1.0F)
+            {
+                f9 = 1.0F;
+            }
+            if(f10 > 1.0F)
+            {
+                f10 = 1.0F;
+            }
+            if(f11 > 1.0F)
+            {
+                f11 = 1.0F;
+            }
+            float f13 = 1.0F - f9;
+            float f14 = 1.0F - f10;
+            float f15 = 1.0F - f11;
+            f13 = 1.0F - f13 * f13 * f13 * f13;
+            f14 = 1.0F - f14 * f14 * f14 * f14;
+            f15 = 1.0F - f15 * f15 * f15 * f15;
+            f9 = f9 * (1.0F - f12) + f13 * f12;
+            f10 = f10 * (1.0F - f12) + f14 * f12;
+            f11 = f11 * (1.0F - f12) + f15 * f12;
+            f9 = f9 * 0.96F + 0.03F;
+            f10 = f10 * 0.96F + 0.03F;
+            f11 = f11 * 0.96F + 0.03F;
+            if(f9 > 1.0F)
+            {
+                f9 = 1.0F;
+            }
+            if(f10 > 1.0F)
+            {
+                f10 = 1.0F;
+            }
+            if(f11 > 1.0F)
+            {
+                f11 = 1.0F;
+            }
+            if(f9 < 0.0F)
+            {
+                f9 = 0.0F;
+            }
+            if(f10 < 0.0F)
+            {
+                f10 = 0.0F;
+            }
+            if(f11 < 0.0F)
+            {
+                f11 = 0.0F;
+            }
+            char c = '\377';
+            int j = (int)(f9 * 255F);
+            int k = (int)(f10 * 255F);
+            int l = (int)(f11 * 255F);
+            field_35811_L[i] = c << 24 | j << 16 | k << 8 | l;
+        }
+
+        mc.renderEngine.createTextureFromBytes(field_35811_L, 16, 16, field_35818_d);
+    }
+
     public void updateCameraAndRender(float f)
     {
+        if(field_35815_V)
+        {
+            func_35808_e();
+        }
         if(!Display.isActive())
         {
             if(System.currentTimeMillis() - prevFrameTime > 500L)
@@ -399,7 +625,7 @@ public class EntityRenderer
                 f3 = mouseFilterXAxis.func_22386_a(f3, 0.05F * f2);
                 f4 = mouseFilterYAxis.func_22386_a(f4, 0.05F * f2);
             }
-            mc.thePlayer.func_346_d(f3, f4 * (float)l);
+            mc.thePlayer.setAngles(f3, f4 * (float)l);
         }
         if(mc.skipRenderWorld)
         {
@@ -563,21 +789,29 @@ public class EntityRenderer
             RenderHelper.disableStandardItemLighting();
             renderglobal.sortAndRender(entityliving, 0, f);
             GL11.glShadeModel(7424 /*GL_FLAT*/);
-            RenderHelper.enableStandardItemLighting();
-            renderglobal.renderEntities(entityliving.getPosition(f), frustrum, f);
-            effectrenderer.func_1187_b(entityliving, f);
-            RenderHelper.disableStandardItemLighting();
-            setupFog(0, f);
-            effectrenderer.renderParticles(entityliving, f);
-            if(mc.objectMouseOver != null && entityliving.isInsideOfMaterial(Material.water) && (entityliving instanceof EntityPlayer))
+            if(field_35823_q == 0)
             {
-                EntityPlayer entityplayer = (EntityPlayer)entityliving;
-                GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
-                renderglobal.drawBlockBreaking(entityplayer, mc.objectMouseOver, 0, entityplayer.inventory.getCurrentItem(), f);
-                renderglobal.drawSelectionBox(entityplayer, mc.objectMouseOver, 0, entityplayer.inventory.getCurrentItem(), f);
-                GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
+                RenderHelper.enableStandardItemLighting();
+                renderglobal.renderEntities(entityliving.getPosition(f), frustrum, f);
+                func_35806_b(f);
+                effectrenderer.func_1187_b(entityliving, f);
+                RenderHelper.disableStandardItemLighting();
+                setupFog(0, f);
+                effectrenderer.renderParticles(entityliving, f);
+                func_35810_a(f);
+                if(mc.objectMouseOver != null && entityliving.isInsideOfMaterial(Material.water) && (entityliving instanceof EntityPlayer))
+                {
+                    EntityPlayer entityplayer = (EntityPlayer)entityliving;
+                    GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
+                    renderglobal.drawBlockBreaking(entityplayer, mc.objectMouseOver, 0, entityplayer.inventory.getCurrentItem(), f);
+                    renderglobal.drawSelectionBox(entityplayer, mc.objectMouseOver, 0, entityplayer.inventory.getCurrentItem(), f);
+                    GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
+                }
             }
+            GL11.glDisable(3042 /*GL_BLEND*/);
+            GL11.glEnable(2884 /*GL_CULL_FACE*/);
             GL11.glBlendFunc(770, 771);
+            GL11.glDepthMask(true);
             setupFog(0, f);
             GL11.glEnable(3042 /*GL_BLEND*/);
             GL11.glDisable(2884 /*GL_CULL_FACE*/);
@@ -626,11 +860,13 @@ public class EntityRenderer
             renderRainSnow(f);
             GL11.glDisable(2912 /*GL_FOG*/);
             if(pointedEntity == null);
+            GL11.glPushMatrix();
             setupFog(0, f);
             GL11.glEnable(2912 /*GL_FOG*/);
             renderglobal.renderClouds(f);
             GL11.glDisable(2912 /*GL_FOG*/);
             setupFog(1, f);
+            GL11.glPopMatrix();
             if(cameraZoom == 1.0D)
             {
                 GL11.glClear(256);
@@ -671,7 +907,7 @@ public class EntityRenderer
         {
             int j1 = (i + random.nextInt(byte0)) - random.nextInt(byte0);
             int k1 = (k + random.nextInt(byte0)) - random.nextInt(byte0);
-            int l1 = world.findTopSolidBlock(j1, k1);
+            int l1 = world.func_35461_e(j1, k1);
             int i2 = world.getBlockId(j1, l1 - 1, k1);
             if(l1 > j + byte0 || l1 < j - byte0 || !world.getWorldChunkManager().getBiomeGenAt(j1, k1).canSpawnLightningBolt())
             {
@@ -700,7 +936,7 @@ public class EntityRenderer
         if(l > 0 && random.nextInt(3) < rainSoundCounter++)
         {
             rainSoundCounter = 0;
-            if(d1 > entityliving.posY + 1.0D && world.findTopSolidBlock(MathHelper.floor_double(entityliving.posX), MathHelper.floor_double(entityliving.posZ)) > MathHelper.floor_double(entityliving.posY))
+            if(d1 > entityliving.posY + 1.0D && world.func_35461_e(MathHelper.floor_double(entityliving.posX), MathHelper.floor_double(entityliving.posZ)) > MathHelper.floor_double(entityliving.posY))
             {
                 mc.theWorld.playSoundEffect(d, d1, d2, "ambient.weather.rain", 0.1F, 0.5F);
             } else
@@ -717,11 +953,30 @@ public class EntityRenderer
         {
             return;
         }
+        func_35806_b(f);
+        if(field_35822_i == null)
+        {
+            field_35822_i = new float[1024 /*GL_FRONT_LEFT*/];
+            field_35820_j = new float[1024 /*GL_FRONT_LEFT*/];
+            for(int i = 0; i < 32; i++)
+            {
+                for(int j = 0; j < 32; j++)
+                {
+                    float f2 = j - 16;
+                    float f3 = i - 16;
+                    float f4 = MathHelper.sqrt_float(f2 * f2 + f3 * f3);
+                    field_35822_i[i << 5 | j] = -f3 / f4;
+                    field_35820_j[i << 5 | j] = f2 / f4;
+                }
+
+            }
+
+        }
         EntityLiving entityliving = mc.renderViewEntity;
         World world = mc.theWorld;
-        int i = MathHelper.floor_double(entityliving.posX);
-        int j = MathHelper.floor_double(entityliving.posY);
-        int k = MathHelper.floor_double(entityliving.posZ);
+        int k = MathHelper.floor_double(entityliving.posX);
+        int l = MathHelper.floor_double(entityliving.posY);
+        int i1 = MathHelper.floor_double(entityliving.posZ);
         Tessellator tessellator = Tessellator.instance;
         GL11.glDisable(2884 /*GL_CULL_FACE*/);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
@@ -732,129 +987,120 @@ public class EntityRenderer
         double d = entityliving.lastTickPosX + (entityliving.posX - entityliving.lastTickPosX) * (double)f;
         double d1 = entityliving.lastTickPosY + (entityliving.posY - entityliving.lastTickPosY) * (double)f;
         double d2 = entityliving.lastTickPosZ + (entityliving.posZ - entityliving.lastTickPosZ) * (double)f;
-        int l = MathHelper.floor_double(d1);
-        int i1 = 5;
+        int j1 = MathHelper.floor_double(d1);
+        int k1 = 5;
         if(mc.gameSettings.fancyGraphics)
         {
-            i1 = 10;
+            k1 = 10;
         }
-        BiomeGenBase abiomegenbase[] = world.getWorldChunkManager().func_4069_a(i - i1, k - i1, i1 * 2 + 1, i1 * 2 + 1);
-        int j1 = 0;
-        for(int k1 = i - i1; k1 <= i + i1; k1++)
+        BiomeGenBase abiomegenbase[] = world.getWorldChunkManager().func_4069_a(k - k1, i1 - k1, k1 * 2 + 1, k1 * 2 + 1);
+        int l1 = 0;
+        byte byte0 = -1;
+        float f5 = (float)rendererUpdateCount + f;
+        if(mc.gameSettings.fancyGraphics)
         {
-            for(int i2 = k - i1; i2 <= k + i1; i2++)
+            k1 = 10;
+        }
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        l1 = 0;
+        for(int i2 = k - k1; i2 <= k + k1; i2++)
+        {
+            for(int j2 = i1 - k1; j2 <= i1 + k1; j2++)
             {
-                BiomeGenBase biomegenbase = abiomegenbase[j1++];
-                if(!biomegenbase.getEnableSnow())
+                int k2 = ((j2 - i1) + 16) * 32 + ((i2 - k) + 16);
+                float f6 = field_35822_i[k2] * 0.5F;
+                float f7 = field_35820_j[k2] * 0.5F;
+                BiomeGenBase biomegenbase = abiomegenbase[l1++];
+                if(!biomegenbase.canSpawnLightningBolt() && !biomegenbase.getEnableSnow())
                 {
                     continue;
                 }
-                int k2 = world.findTopSolidBlock(k1, i2);
-                if(k2 < 0)
+                int l2 = world.func_35461_e(i2, j2);
+                int i3 = l - k1;
+                int j3 = l + k1;
+                if(i3 < l2)
                 {
-                    k2 = 0;
+                    i3 = l2;
                 }
-                int i3 = k2;
-                if(i3 < l)
-                {
-                    i3 = l;
-                }
-                int k3 = j - i1;
-                int i4 = j + i1;
-                if(k3 < k2)
-                {
-                    k3 = k2;
-                }
-                if(i4 < k2)
-                {
-                    i4 = k2;
-                }
-                float f3 = 1.0F;
-                if(k3 != i4)
-                {
-                    random.setSeed(k1 * k1 * 3121 /*GL_RGBA_MODE*/ + k1 * 0x2b24abb + i2 * i2 * 0x66397 + i2 * 13761);
-                    float f5 = (float)rendererUpdateCount + f;
-                    float f6 = ((float)(rendererUpdateCount & 0x1ff) + f) / 512F;
-                    float f7 = random.nextFloat() + f5 * 0.01F * (float)random.nextGaussian();
-                    float f8 = random.nextFloat() + f5 * (float)random.nextGaussian() * 0.001F;
-                    double d5 = (double)((float)k1 + 0.5F) - entityliving.posX;
-                    double d6 = (double)((float)i2 + 0.5F) - entityliving.posZ;
-                    float f11 = MathHelper.sqrt_double(d5 * d5 + d6 * d6) / (float)i1;
-                    tessellator.startDrawingQuads();
-                    float f12 = world.getLightBrightness(k1, i3, i2);
-                    GL11.glColor4f(f12, f12, f12, ((1.0F - f11 * f11) * 0.3F + 0.5F) * f1);
-                    tessellator.setTranslationD(-d * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
-                    tessellator.addVertexWithUV(k1 + 0, k3, (double)i2 + 0.5D, 0.0F * f3 + f7, ((float)k3 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV(k1 + 1, k3, (double)i2 + 0.5D, 1.0F * f3 + f7, ((float)k3 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV(k1 + 1, i4, (double)i2 + 0.5D, 1.0F * f3 + f7, ((float)i4 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV(k1 + 0, i4, (double)i2 + 0.5D, 0.0F * f3 + f7, ((float)i4 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV((double)k1 + 0.5D, k3, i2 + 0, 0.0F * f3 + f7, ((float)k3 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV((double)k1 + 0.5D, k3, i2 + 1, 1.0F * f3 + f7, ((float)k3 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV((double)k1 + 0.5D, i4, i2 + 1, 1.0F * f3 + f7, ((float)i4 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.addVertexWithUV((double)k1 + 0.5D, i4, i2 + 0, 0.0F * f3 + f7, ((float)i4 * f3) / 4F + f6 * f3 + f8);
-                    tessellator.setTranslationD(0.0D, 0.0D, 0.0D);
-                    tessellator.draw();
-                }
-            }
-
-        }
-
-        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, mc.renderEngine.getTexture("/environment/rain.png"));
-        if(mc.gameSettings.fancyGraphics)
-        {
-            i1 = 10;
-        }
-        j1 = 0;
-        for(int l1 = i - i1; l1 <= i + i1; l1++)
-        {
-            for(int j2 = k - i1; j2 <= k + i1; j2++)
-            {
-                BiomeGenBase biomegenbase1 = abiomegenbase[j1++];
-                if(!biomegenbase1.canSpawnLightningBolt())
-                {
-                    continue;
-                }
-                int l2 = world.findTopSolidBlock(l1, j2);
-                int j3 = j - i1;
-                int l3 = j + i1;
                 if(j3 < l2)
                 {
                     j3 = l2;
                 }
-                if(l3 < l2)
+                float f8 = 1.0F;
+                int k3 = l2;
+                if(k3 < j1)
                 {
-                    l3 = l2;
+                    k3 = j1;
                 }
-                float f2 = 1.0F;
-                if(j3 != l3)
+                if(i3 == j3)
                 {
-                    random.setSeed(l1 * l1 * 3121 /*GL_RGBA_MODE*/ + l1 * 0x2b24abb + j2 * j2 * 0x66397 + j2 * 13761);
-                    float f4 = (((float)(rendererUpdateCount + l1 * l1 * 3121 /*GL_RGBA_MODE*/ + l1 * 0x2b24abb + j2 * j2 * 0x66397 + j2 * 13761 & 0x1f) + f) / 32F) * (3F + random.nextFloat());
-                    double d3 = (double)((float)l1 + 0.5F) - entityliving.posX;
+                    continue;
+                }
+                random.setSeed(i2 * i2 * 3121 /*GL_RGBA_MODE*/ + i2 * 0x2b24abb ^ j2 * j2 * 0x66397 + j2 * 13761);
+                if(biomegenbase.canSpawnLightningBolt())
+                {
+                    if(byte0 != 0)
+                    {
+                        if(byte0 >= 0)
+                        {
+                            tessellator.draw();
+                        }
+                        byte0 = 0;
+                        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, mc.renderEngine.getTexture("/environment/rain.png"));
+                        tessellator.startDrawingQuads();
+                    }
+                    float f9 = (((float)(rendererUpdateCount + i2 * i2 * 3121 /*GL_RGBA_MODE*/ + i2 * 0x2b24abb + j2 * j2 * 0x66397 + j2 * 13761 & 0x1f) + f) / 32F) * (3F + random.nextFloat());
+                    double d3 = (double)((float)i2 + 0.5F) - entityliving.posX;
                     double d4 = (double)((float)j2 + 0.5F) - entityliving.posZ;
-                    float f9 = MathHelper.sqrt_double(d3 * d3 + d4 * d4) / (float)i1;
-                    tessellator.startDrawingQuads();
-                    float f10 = world.getLightBrightness(l1, 128, j2) * 0.85F + 0.15F;
-                    GL11.glColor4f(f10, f10, f10, ((1.0F - f9 * f9) * 0.5F + 0.5F) * f1);
+                    float f13 = MathHelper.sqrt_double(d3 * d3 + d4 * d4) / (float)k1;
+                    float f14 = 1.0F;
+                    tessellator.func_35835_b(world.func_35451_b(i2, k3, j2, 0));
+                    tessellator.setColorRGBA_F(f14, f14, f14, ((1.0F - f13 * f13) * 0.5F + 0.5F) * f1);
                     tessellator.setTranslationD(-d * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
-                    tessellator.addVertexWithUV(l1 + 0, j3, (double)j2 + 0.5D, 0.0F * f2, ((float)j3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV(l1 + 1, j3, (double)j2 + 0.5D, 1.0F * f2, ((float)j3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV(l1 + 1, l3, (double)j2 + 0.5D, 1.0F * f2, ((float)l3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV(l1 + 0, l3, (double)j2 + 0.5D, 0.0F * f2, ((float)l3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV((double)l1 + 0.5D, j3, j2 + 0, 0.0F * f2, ((float)j3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV((double)l1 + 0.5D, j3, j2 + 1, 1.0F * f2, ((float)j3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV((double)l1 + 0.5D, l3, j2 + 1, 1.0F * f2, ((float)l3 * f2) / 4F + f4 * f2);
-                    tessellator.addVertexWithUV((double)l1 + 0.5D, l3, j2 + 0, 0.0F * f2, ((float)l3 * f2) / 4F + f4 * f2);
+                    tessellator.addVertexWithUV((double)((float)i2 - f6) + 0.5D, i3, (double)((float)j2 - f7) + 0.5D, 0.0F * f8, ((float)i3 * f8) / 4F + f9 * f8);
+                    tessellator.addVertexWithUV((double)((float)i2 + f6) + 0.5D, i3, (double)((float)j2 + f7) + 0.5D, 1.0F * f8, ((float)i3 * f8) / 4F + f9 * f8);
+                    tessellator.addVertexWithUV((double)((float)i2 + f6) + 0.5D, j3, (double)((float)j2 + f7) + 0.5D, 1.0F * f8, ((float)j3 * f8) / 4F + f9 * f8);
+                    tessellator.addVertexWithUV((double)((float)i2 - f6) + 0.5D, j3, (double)((float)j2 - f7) + 0.5D, 0.0F * f8, ((float)j3 * f8) / 4F + f9 * f8);
                     tessellator.setTranslationD(0.0D, 0.0D, 0.0D);
-                    tessellator.draw();
+                    continue;
                 }
+                if(byte0 != 1)
+                {
+                    if(byte0 >= 0)
+                    {
+                        tessellator.draw();
+                    }
+                    byte0 = 1;
+                    GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, mc.renderEngine.getTexture("/environment/snow.png"));
+                    tessellator.startDrawingQuads();
+                }
+                float f10 = ((float)(rendererUpdateCount & 0x1ff) + f) / 512F;
+                float f11 = random.nextFloat() + f5 * 0.01F * (float)random.nextGaussian();
+                float f12 = random.nextFloat() + f5 * (float)random.nextGaussian() * 0.001F;
+                double d5 = (double)((float)i2 + 0.5F) - entityliving.posX;
+                double d6 = (double)((float)j2 + 0.5F) - entityliving.posZ;
+                float f15 = MathHelper.sqrt_double(d5 * d5 + d6 * d6) / (float)k1;
+                float f16 = 1.0F;
+                tessellator.func_35835_b((world.func_35451_b(i2, k3, j2, 0) * 3 + 0xf000f0) / 4);
+                tessellator.setColorRGBA_F(f16, f16, f16, ((1.0F - f15 * f15) * 0.3F + 0.5F) * f1);
+                tessellator.setTranslationD(-d * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
+                tessellator.addVertexWithUV((double)((float)i2 - f6) + 0.5D, i3, (double)((float)j2 - f7) + 0.5D, 0.0F * f8 + f11, ((float)i3 * f8) / 4F + f10 * f8 + f12);
+                tessellator.addVertexWithUV((double)((float)i2 + f6) + 0.5D, i3, (double)((float)j2 + f7) + 0.5D, 1.0F * f8 + f11, ((float)i3 * f8) / 4F + f10 * f8 + f12);
+                tessellator.addVertexWithUV((double)((float)i2 + f6) + 0.5D, j3, (double)((float)j2 + f7) + 0.5D, 1.0F * f8 + f11, ((float)j3 * f8) / 4F + f10 * f8 + f12);
+                tessellator.addVertexWithUV((double)((float)i2 - f6) + 0.5D, j3, (double)((float)j2 - f7) + 0.5D, 0.0F * f8 + f11, ((float)j3 * f8) / 4F + f10 * f8 + f12);
+                tessellator.setTranslationD(0.0D, 0.0D, 0.0D);
             }
 
         }
 
+        if(byte0 >= 0)
+        {
+            tessellator.draw();
+        }
         GL11.glEnable(2884 /*GL_CULL_FACE*/);
         GL11.glDisable(3042 /*GL_BLEND*/);
         GL11.glAlphaFunc(516, 0.1F);
+        func_35810_a(f);
     }
 
     public void func_905_b()
@@ -875,7 +1121,7 @@ public class EntityRenderer
         EntityLiving entityliving = mc.renderViewEntity;
         float f1 = 1.0F / (float)(4 - mc.gameSettings.renderDistance);
         f1 = 1.0F - (float)Math.pow(f1, 0.25D);
-        Vec3D vec3d = world.func_4079_a(mc.renderViewEntity, f);
+        Vec3D vec3d = world.getSkyColor(mc.renderViewEntity, f);
         float f2 = (float)vec3d.xCoord;
         float f3 = (float)vec3d.yCoord;
         float f4 = (float)vec3d.zCoord;
@@ -883,32 +1129,52 @@ public class EntityRenderer
         fogColorRed = (float)vec3d1.xCoord;
         fogColorGreen = (float)vec3d1.yCoord;
         fogColorBlue = (float)vec3d1.zCoord;
+        if(mc.gameSettings.renderDistance < 2)
+        {
+            Vec3D vec3d2 = MathHelper.sin(world.func_35456_d(f)) <= 0.0F ? Vec3D.createVector(0.0D, 0.0D, -1D) : Vec3D.createVector(0.0D, 0.0D, 1.0D);
+            float f6 = (float)entityliving.getLook(f).func_35612_b(vec3d2);
+            if(f6 < 0.0F)
+            {
+                f6 = 0.0F;
+            }
+            if(f6 > 0.0F)
+            {
+                float af[] = world.worldProvider.calcSunriseSunsetColors(world.getCelestialAngle(f), f);
+                if(af != null)
+                {
+                    f6 *= af[3];
+                    fogColorRed = fogColorRed * (1.0F - f6) + af[0] * f6;
+                    fogColorGreen = fogColorGreen * (1.0F - f6) + af[1] * f6;
+                    fogColorBlue = fogColorBlue * (1.0F - f6) + af[2] * f6;
+                }
+            }
+        }
         fogColorRed += (f2 - fogColorRed) * f1;
         fogColorGreen += (f3 - fogColorGreen) * f1;
         fogColorBlue += (f4 - fogColorBlue) * f1;
         float f5 = world.getRainStrength(f);
         if(f5 > 0.0F)
         {
-            float f6 = 1.0F - f5 * 0.5F;
-            float f8 = 1.0F - f5 * 0.4F;
-            fogColorRed *= f6;
-            fogColorGreen *= f6;
-            fogColorBlue *= f8;
-        }
-        float f7 = world.getWeightedThunderStrength(f);
-        if(f7 > 0.0F)
-        {
-            float f9 = 1.0F - f7 * 0.5F;
-            fogColorRed *= f9;
-            fogColorGreen *= f9;
+            float f7 = 1.0F - f5 * 0.5F;
+            float f9 = 1.0F - f5 * 0.4F;
+            fogColorRed *= f7;
+            fogColorGreen *= f7;
             fogColorBlue *= f9;
+        }
+        float f8 = world.getWeightedThunderStrength(f);
+        if(f8 > 0.0F)
+        {
+            float f10 = 1.0F - f8 * 0.5F;
+            fogColorRed *= f10;
+            fogColorGreen *= f10;
+            fogColorBlue *= f10;
         }
         if(cloudFog)
         {
-            Vec3D vec3d2 = world.func_628_d(f);
-            fogColorRed = (float)vec3d2.xCoord;
-            fogColorGreen = (float)vec3d2.yCoord;
-            fogColorBlue = (float)vec3d2.zCoord;
+            Vec3D vec3d3 = world.drawClouds(f);
+            fogColorRed = (float)vec3d3.xCoord;
+            fogColorGreen = (float)vec3d3.yCoord;
+            fogColorBlue = (float)vec3d3.zCoord;
         } else
         if(entityliving.isInsideOfMaterial(Material.water))
         {
@@ -922,18 +1188,30 @@ public class EntityRenderer
             fogColorGreen = 0.1F;
             fogColorBlue = 0.0F;
         }
-        float f10 = fogColor2 + (fogColor1 - fogColor2) * f;
-        fogColorRed *= f10;
-        fogColorGreen *= f10;
-        fogColorBlue *= f10;
+        float f11 = fogColor2 + (fogColor1 - fogColor2) * f;
+        fogColorRed *= f11;
+        fogColorGreen *= f11;
+        fogColorBlue *= f11;
+        double d = (entityliving.lastTickPosY + (entityliving.posY - entityliving.lastTickPosY) * (double)f) / 32D;
+        if(d < 1.0D)
+        {
+            if(d < 0.0D)
+            {
+                d = 0.0D;
+            }
+            d *= d;
+            fogColorRed *= d;
+            fogColorGreen *= d;
+            fogColorBlue *= d;
+        }
         if(mc.gameSettings.anaglyph)
         {
-            float f11 = (fogColorRed * 30F + fogColorGreen * 59F + fogColorBlue * 11F) / 100F;
-            float f12 = (fogColorRed * 30F + fogColorGreen * 70F) / 100F;
-            float f13 = (fogColorRed * 30F + fogColorBlue * 70F) / 100F;
-            fogColorRed = f11;
-            fogColorGreen = f12;
-            fogColorBlue = f13;
+            float f12 = (fogColorRed * 30F + fogColorGreen * 59F + fogColorBlue * 11F) / 100F;
+            float f13 = (fogColorRed * 30F + fogColorGreen * 70F) / 100F;
+            float f14 = (fogColorRed * 30F + fogColorBlue * 70F) / 100F;
+            fogColorRed = f12;
+            fogColorGreen = f13;
+            fogColorBlue = f14;
         }
         GL11.glClearColor(fogColorRed, fogColorGreen, fogColorBlue, 0.0F);
     }
@@ -941,6 +1219,19 @@ public class EntityRenderer
     private void setupFog(int i, float f)
     {
         EntityLiving entityliving = mc.renderViewEntity;
+        if(i == 999)
+        {
+            GL11.glFog(2918 /*GL_FOG_COLOR*/, func_908_a(0.0F, 0.0F, 0.0F, 1.0F));
+            GL11.glFogi(2917 /*GL_FOG_MODE*/, 9729 /*GL_LINEAR*/);
+            GL11.glFogf(2915 /*GL_FOG_START*/, 0.0F);
+            GL11.glFogf(2916 /*GL_FOG_END*/, 8F);
+            if(GLContext.getCapabilities().GL_NV_fog_distance)
+            {
+                GL11.glFogi(34138, 34139);
+            }
+            GL11.glFogf(2915 /*GL_FOG_START*/, 0.0F);
+            return;
+        }
         GL11.glFog(2918 /*GL_FOG_COLOR*/, func_908_a(fogColorRed, fogColorGreen, fogColorBlue, 1.0F));
         GL11.glNormal3f(0.0F, -1F, 0.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -949,16 +1240,16 @@ public class EntityRenderer
             GL11.glFogi(2917 /*GL_FOG_MODE*/, 2048 /*GL_EXP*/);
             GL11.glFogf(2914 /*GL_FOG_DENSITY*/, 0.1F);
             float f1 = 1.0F;
-            float f4 = 1.0F;
-            float f7 = 1.0F;
+            float f5 = 1.0F;
+            float f8 = 1.0F;
             if(mc.gameSettings.anaglyph)
             {
-                float f10 = (f1 * 30F + f4 * 59F + f7 * 11F) / 100F;
-                float f13 = (f1 * 30F + f4 * 70F) / 100F;
-                float f16 = (f1 * 30F + f7 * 70F) / 100F;
-                f1 = f10;
-                f4 = f13;
-                f7 = f16;
+                float f11 = (f1 * 30F + f5 * 59F + f8 * 11F) / 100F;
+                float f15 = (f1 * 30F + f5 * 70F) / 100F;
+                float f18 = (f1 * 30F + f8 * 70F) / 100F;
+                f1 = f11;
+                f5 = f15;
+                f8 = f18;
             }
         } else
         if(entityliving.isInsideOfMaterial(Material.water))
@@ -966,16 +1257,16 @@ public class EntityRenderer
             GL11.glFogi(2917 /*GL_FOG_MODE*/, 2048 /*GL_EXP*/);
             GL11.glFogf(2914 /*GL_FOG_DENSITY*/, 0.1F);
             float f2 = 0.4F;
-            float f5 = 0.4F;
-            float f8 = 0.9F;
+            float f6 = 0.4F;
+            float f9 = 0.9F;
             if(mc.gameSettings.anaglyph)
             {
-                float f11 = (f2 * 30F + f5 * 59F + f8 * 11F) / 100F;
-                float f14 = (f2 * 30F + f5 * 70F) / 100F;
-                float f17 = (f2 * 30F + f8 * 70F) / 100F;
-                f2 = f11;
-                f5 = f14;
-                f8 = f17;
+                float f12 = (f2 * 30F + f6 * 59F + f9 * 11F) / 100F;
+                float f16 = (f2 * 30F + f6 * 70F) / 100F;
+                float f19 = (f2 * 30F + f9 * 70F) / 100F;
+                f2 = f12;
+                f6 = f16;
+                f9 = f19;
             }
         } else
         if(entityliving.isInsideOfMaterial(Material.lava))
@@ -983,26 +1274,45 @@ public class EntityRenderer
             GL11.glFogi(2917 /*GL_FOG_MODE*/, 2048 /*GL_EXP*/);
             GL11.glFogf(2914 /*GL_FOG_DENSITY*/, 2.0F);
             float f3 = 0.4F;
-            float f6 = 0.3F;
-            float f9 = 0.3F;
+            float f7 = 0.3F;
+            float f10 = 0.3F;
             if(mc.gameSettings.anaglyph)
             {
-                float f12 = (f3 * 30F + f6 * 59F + f9 * 11F) / 100F;
-                float f15 = (f3 * 30F + f6 * 70F) / 100F;
-                float f18 = (f3 * 30F + f9 * 70F) / 100F;
-                f3 = f12;
-                f6 = f15;
-                f9 = f18;
+                float f13 = (f3 * 30F + f7 * 59F + f10 * 11F) / 100F;
+                float f17 = (f3 * 30F + f7 * 70F) / 100F;
+                float f20 = (f3 * 30F + f10 * 70F) / 100F;
+                f3 = f13;
+                f7 = f17;
+                f10 = f20;
             }
         } else
         {
+            float f4 = farPlaneDistance;
+            double d = (double)((entityliving.func_35115_a(f) & 0xf00000) >> 20) / 16D + (entityliving.lastTickPosY + (entityliving.posY - entityliving.lastTickPosY) * (double)f + 4D) / 32D;
+            if(d < 1.0D)
+            {
+                if(d < 0.0D)
+                {
+                    d = 0.0D;
+                }
+                d *= d;
+                float f14 = 100F * (float)d;
+                if(f14 < 5F)
+                {
+                    f14 = 5F;
+                }
+                if(f4 > f14)
+                {
+                    f4 = f14;
+                }
+            }
             GL11.glFogi(2917 /*GL_FOG_MODE*/, 9729 /*GL_LINEAR*/);
-            GL11.glFogf(2915 /*GL_FOG_START*/, farPlaneDistance * 0.25F);
-            GL11.glFogf(2916 /*GL_FOG_END*/, farPlaneDistance);
+            GL11.glFogf(2915 /*GL_FOG_START*/, f4 * 0.25F);
+            GL11.glFogf(2916 /*GL_FOG_END*/, f4);
             if(i < 0)
             {
                 GL11.glFogf(2915 /*GL_FOG_START*/, 0.0F);
-                GL11.glFogf(2916 /*GL_FOG_END*/, farPlaneDistance * 0.8F);
+                GL11.glFogf(2916 /*GL_FOG_END*/, f4 * 0.8F);
             }
             if(GLContext.getCapabilities().GL_NV_fog_distance)
             {
@@ -1048,14 +1358,26 @@ public class EntityRenderer
     private float prevDebugCamFOV;
     private float camRoll;
     private float prevCamRoll;
+    public int field_35818_d;
+    private int field_35811_L[];
+    private float field_35812_M;
+    private float field_35813_N;
+    private float field_35814_O;
     private boolean cloudFog;
     private double cameraZoom;
     private double cameraYaw;
     private double cameraPitch;
     private long prevFrameTime;
     private long renderEndNanoTime;
+    private boolean field_35815_V;
+    float field_35819_e;
+    float field_35816_f;
+    float field_35817_g;
+    float field_35821_h;
     private Random random;
     private int rainSoundCounter;
+    float field_35822_i[];
+    float field_35820_j[];
     volatile int unusedVolatile0;
     volatile int unusedVolatile1;
     FloatBuffer fogColorBuffer;
@@ -1064,5 +1386,6 @@ public class EntityRenderer
     float fogColorBlue;
     private float fogColor2;
     private float fogColor1;
+    public int field_35823_q;
 
 }

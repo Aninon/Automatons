@@ -7,7 +7,7 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            ModelBase, ModelRenderer, MathHelper
+//            ModelBase, ModelRenderer, MathHelper, Entity
 
 public class ModelGhast extends ModelBase
 {
@@ -16,13 +16,13 @@ public class ModelGhast extends ModelBase
     {
         tentacles = new ModelRenderer[9];
         byte byte0 = -16;
-        body = new ModelRenderer(0, 0);
+        body = new ModelRenderer(this, 0, 0);
         body.addBox(-8F, -8F, -8F, 16, 16, 16);
         body.rotationPointY += 24 + byte0;
         Random random = new Random(1660L);
         for(int i = 0; i < tentacles.length; i++)
         {
-            tentacles[i] = new ModelRenderer(0, 0);
+            tentacles[i] = new ModelRenderer(this, 0, 0);
             float f = (((((float)(i % 3) - (float)((i / 3) % 2) * 0.5F) + 0.25F) / 2.0F) * 2.0F - 1.0F) * 5F;
             float f1 = (((float)(i / 3) / 2.0F) * 2.0F - 1.0F) * 5F;
             int j = random.nextInt(7) + 8;
@@ -43,7 +43,7 @@ public class ModelGhast extends ModelBase
 
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         setRotationAngles(f, f1, f2, f3, f4, f5);
         body.render(f5);

@@ -14,17 +14,17 @@ public class AM_ModelRemnant extends ModelBiped
     public AM_ModelRemnant()
     {
         float f = 0.0F;
-        RightArm = new ModelRenderer(56, 18);
+        RightArm = new ModelRenderer(this,56, 18);
         RightArm.addBox(-1F, -2F, -1F, 2, 12, 2, f);
         RightArm.setRotationPoint(-5F, 2.0F, 0.0F);
-        LeftArm = new ModelRenderer(56, 18);
+        LeftArm = new ModelRenderer(this,56, 18);
         LeftArm.mirror = true;
         LeftArm.addBox(-1F, -2F, -1F, 2, 12, 2, f);
 		LeftArm.setRotationPoint(5F, 2.0F, 0.0F);
-        RightLeg = new ModelRenderer(56, 18);
+        RightLeg = new ModelRenderer(this,56, 18);
         RightLeg.addBox(-1F, 0.0F, -1F, 2, 12, 2, f);
         RightLeg.setRotationPoint(-2F, 12F, 0.0F);
-        LeftLeg = new ModelRenderer(56, 18);
+        LeftLeg = new ModelRenderer(this,56, 18);
         LeftLeg.mirror = true;
         LeftLeg.addBox(-1F, 0.0F, -1F, 2, 12, 2, f);
         LeftLeg.setRotationPoint(2.0F, 12F, 0.0F);
@@ -42,9 +42,9 @@ public class AM_ModelRemnant extends ModelBiped
 		bipedLeftArm.rotationPointZ-=5f;
     }
 	
-	public void render(float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
     {
-        super.render(f, f1, f2, f3, f4, f5);
+        super.render(entity,f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		RightArm.render(f5);
 		LeftArm.render(f5);

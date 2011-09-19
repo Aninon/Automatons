@@ -7,7 +7,7 @@ public class AM_ModelBeacon extends ModelBase
 {
 	public 	AM_ModelBeacon	()
 	{
-		top = new ModelRenderer(0, 0);
+		top = new ModelRenderer(this,0, 0);
 		top.addBox(-2.5F, -12F, -2.5F, 5, 12, 5, 0F);
 		top.setRotationPoint(0F, 20F, 0F);
 		
@@ -16,7 +16,7 @@ public class AM_ModelBeacon extends ModelBase
 		top.rotateAngleZ = 0F;
 		top.mirror = false;
 		
-		bottom = new ModelRenderer(12, 15);
+		bottom = new ModelRenderer(this,12, 15);
 		bottom.addBox(-6.5F, -4F, -6.5F, 13, 4, 13, 0F);
 		bottom.setRotationPoint(0F, 24F, 0F);
 		
@@ -28,7 +28,7 @@ public class AM_ModelBeacon extends ModelBase
 		
 	}
 
-	public void render(float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity,float f, float f1, float f2, float f3, float f4, float f5)
 	{
 		//super.render(f, f1, f2, f3, f4, f5);
 		//setRotationAngles(f, f1, f2, f3, f4, f5);

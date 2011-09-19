@@ -14,14 +14,19 @@ public class ChunkCoordIntPair
         chunkZPos = j;
     }
 
-    public static int chunkXZ2Int(int i, int j)
+    public static long chunkXZ2Int(int i, int j)
     {
-        return (i >= 0 ? 0 : 0x80000000) | (i & 0x7fff) << 16 | (j >= 0 ? 0 : 0x8000) | j & 0x7fff;
+        long l = i;
+        long l1 = j;
+        return l & 0xffffffffL | (l1 & 0xffffffffL) << 32;
     }
 
     public int hashCode()
     {
-        return chunkXZ2Int(chunkXPos, chunkZPos);
+        long l = chunkXZ2Int(chunkXPos, chunkZPos);
+        int i = (int)l;
+        int j = (int)(l >> 32);
+        return i ^ j;
     }
 
     public boolean equals(Object obj)

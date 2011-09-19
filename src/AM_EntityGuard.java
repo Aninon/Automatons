@@ -36,8 +36,13 @@ public class AM_EntityGuard extends EntityCreature
     }
 	
 	
-	protected void dropFewItems(){
-            Dropper();
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
     }
 	
 	void Dropper(){
@@ -73,7 +78,7 @@ public class AM_EntityGuard extends EntityCreature
 			if(!worldObj.getBlockMaterial(MathHelper.floor_double(posX),MathHelper.floor_double(posY)-1,MathHelper.floor_double(posZ)).getIsSolid()){
 				Dropper();
 			}
-			updatePlayerActionState();
+			updateEntityActionState();
 			
         }	
     }
@@ -180,17 +185,14 @@ public class AM_EntityGuard extends EntityCreature
 		return ent;
 	}
 	
-	public boolean attackEntityFrom(Entity entity, int i)
+	public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-	
-        if(entity != null && (entity instanceof EntityPlayer))
-        {
-            i=20;
-        }
-		super.attackEntityFrom(entity,i);
-		return true;
-        
-		
+            Entity entity = damagesource.func_35532_a();
+            if(entity != null && entity != this && (entity instanceof EntityPlayer) )
+            {
+               i=20;
+            }
+		return super.attackEntityFrom(damagesource, i);
     }
 
     

@@ -16,9 +16,13 @@ public class Packet9Respawn extends Packet
     {
     }
 
-    public Packet9Respawn(byte byte0)
+    public Packet9Respawn(byte byte0, byte byte1, long l, int i, int j)
     {
-        respawnDimension = byte0;
+        field_35244_b = byte0;
+        field_35245_c = byte1;
+        field_35246_a = l;
+        field_35242_d = i;
+        field_35243_e = j;
     }
 
     public void processPacket(NetHandler nethandler)
@@ -29,19 +33,31 @@ public class Packet9Respawn extends Packet
     public void readPacketData(DataInputStream datainputstream)
         throws IOException
     {
-        respawnDimension = datainputstream.readByte();
+        field_35244_b = datainputstream.readByte();
+        field_35245_c = datainputstream.readByte();
+        field_35243_e = datainputstream.readByte();
+        field_35242_d = datainputstream.readShort();
+        field_35246_a = datainputstream.readLong();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream)
         throws IOException
     {
-        dataoutputstream.writeByte(respawnDimension);
+        dataoutputstream.writeByte(field_35244_b);
+        dataoutputstream.writeByte(field_35245_c);
+        dataoutputstream.writeByte(field_35243_e);
+        dataoutputstream.writeShort(field_35242_d);
+        dataoutputstream.writeLong(field_35246_a);
     }
 
     public int getPacketSize()
     {
-        return 1;
+        return 13;
     }
 
-    public byte respawnDimension;
+    public long field_35246_a;
+    public int field_35244_b;
+    public int field_35245_c;
+    public int field_35242_d;
+    public int field_35243_e;
 }

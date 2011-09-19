@@ -35,10 +35,10 @@ public class GuiStats extends GuiScreen
         slotBlock = new GuiSlotStatsBlock(this);
         slotBlock.registerScrollButtons(controlList, 1, 1);
         selectedSlot = slotGeneral;
-        func_27130_k();
+        addHeaderButtons();
     }
 
-    public void func_27130_k()
+    public void addHeaderButtons()
     {
         StringTranslate stringtranslate = StringTranslate.getInstance();
         controlList.add(new GuiButton(0, width / 2 + 4, height - 28, 150, 20, stringtranslate.translateKey("gui.done")));
@@ -91,9 +91,9 @@ public class GuiStats extends GuiScreen
         super.drawScreen(i, j, f);
     }
 
-    private void func_27138_c(int i, int j, int k)
+    private void drawItemSprite(int i, int j, int k)
     {
-        func_27147_a(i + 1, j + 1);
+        drawButtonBackground(i + 1, j + 1);
         GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
@@ -104,12 +104,12 @@ public class GuiStats extends GuiScreen
         GL11.glDisable(32826 /*GL_RESCALE_NORMAL_EXT*/);
     }
 
-    private void func_27147_a(int i, int j)
+    private void drawButtonBackground(int i, int j)
     {
-        func_27136_c(i, j, 0, 0);
+        drawSprite(i, j, 0, 0);
     }
 
-    private void func_27136_c(int i, int j, int k, int l)
+    private void drawSprite(int i, int j, int k, int l)
     {
         int i1 = mc.renderEngine.getTexture("/gui/slot.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -123,99 +123,99 @@ public class GuiStats extends GuiScreen
         tessellator.draw();
     }
 
-    static Minecraft func_27141_a(GuiStats guistats)
+    static Minecraft getMinecraft(GuiStats guistats)
     {
         return guistats.mc;
     }
 
-    static FontRenderer func_27145_b(GuiStats guistats)
+    static FontRenderer getFontRenderer1(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static StatFileWriter func_27142_c(GuiStats guistats)
+    static StatFileWriter getStatsFileWriter(GuiStats guistats)
     {
         return guistats.statFileWriter;
     }
 
-    static FontRenderer func_27140_d(GuiStats guistats)
+    static FontRenderer getFontRenderer2(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static FontRenderer func_27146_e(GuiStats guistats)
+    static FontRenderer getFontRenderer3(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static Minecraft func_27143_f(GuiStats guistats)
+    static Minecraft getMinecraft1(GuiStats guistats)
     {
         return guistats.mc;
     }
 
-    static void func_27128_a(GuiStats guistats, int i, int j, int k, int l)
+    static void drawSprite(GuiStats guistats, int i, int j, int k, int l)
     {
-        guistats.func_27136_c(i, j, k, l);
+        guistats.drawSprite(i, j, k, l);
     }
 
-    static Minecraft func_27149_g(GuiStats guistats)
+    static Minecraft getMinecraft2(GuiStats guistats)
     {
         return guistats.mc;
     }
 
-    static FontRenderer func_27133_h(GuiStats guistats)
+    static FontRenderer getFontRenderer4(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static FontRenderer func_27137_i(GuiStats guistats)
+    static FontRenderer getFontRenderer5(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static FontRenderer func_27132_j(GuiStats guistats)
+    static FontRenderer getFontRenderer6(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static FontRenderer func_27134_k(GuiStats guistats)
+    static FontRenderer getFontRenderer7(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static FontRenderer func_27139_l(GuiStats guistats)
+    static FontRenderer getFontRenderer8(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static void func_27129_a(GuiStats guistats, int i, int j, int k, int l, int i1, int j1)
+    static void drawGradientRect(GuiStats guistats, int i, int j, int k, int l, int i1, int j1)
     {
         guistats.drawGradientRect(i, j, k, l, i1, j1);
     }
 
-    static FontRenderer func_27144_m(GuiStats guistats)
+    static FontRenderer getFontRenderer9(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static FontRenderer func_27127_n(GuiStats guistats)
+    static FontRenderer getFontRenderer10(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static void func_27135_b(GuiStats guistats, int i, int j, int k, int l, int i1, int j1)
+    static void drawGradientRect1(GuiStats guistats, int i, int j, int k, int l, int i1, int j1)
     {
         guistats.drawGradientRect(i, j, k, l, i1, j1);
     }
 
-    static FontRenderer func_27131_o(GuiStats guistats)
+    static FontRenderer getFontRenderer11(GuiStats guistats)
     {
         return guistats.fontRenderer;
     }
 
-    static void func_27148_a(GuiStats guistats, int i, int j, int k)
+    static void drawItemSprite(GuiStats guistats, int i, int j, int k)
     {
-        guistats.func_27138_c(i, j, k);
+        guistats.drawItemSprite(i, j, k);
     }
 
     private static RenderItem renderItem = new RenderItem();

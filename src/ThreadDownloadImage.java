@@ -16,7 +16,6 @@ class ThreadDownloadImage extends Thread
 
     ThreadDownloadImage(ThreadDownloadImageData threaddownloadimagedata, String s, ImageBuffer imagebuffer)
     {
-//        super();
         imageData = threaddownloadimagedata;
         location = s;
         buffer = imagebuffer;

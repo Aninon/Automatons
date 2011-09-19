@@ -16,7 +16,6 @@ class SorterStatsItem
 
     SorterStatsItem(GuiSlotStatsItem guislotstatsitem, GuiStats guistats)
     {
-//        super();
         slotStatsItemGUI = guislotstatsitem;
         statsGUI = guistats;
     }
@@ -52,8 +51,8 @@ class SorterStatsItem
             {
                 return -1;
             }
-            int k = GuiStats.func_27142_c(slotStatsItemGUI.field_27275_a).writeStat(statbase);
-            int l = GuiStats.func_27142_c(slotStatsItemGUI.field_27275_a).writeStat(statbase1);
+            int k = GuiStats.getStatsFileWriter(slotStatsItemGUI.field_27275_a).writeStat(statbase);
+            int l = GuiStats.getStatsFileWriter(slotStatsItemGUI.field_27275_a).writeStat(statbase1);
             if(k != l)
             {
                 return (k - l) * slotStatsItemGUI.field_27270_f;

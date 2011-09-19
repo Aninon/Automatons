@@ -89,7 +89,18 @@ public class AM_EntityBeacon extends EntityLiving
 		return 0.4F;
 	}
 	
-	protected void dropFewItems(){
+	public void onDeath(DamageSource damagesource)
+    {
+        if(!AutomatonUniversal.otherWorld(worldObj))
+        {
+            Dropper();//a(field_34905_c > 0);
+        }
+        worldObj.setEntityState(this, (byte)3);
+    }
+	
+	
+	
+	protected void Dropper(){
 		
 		for(int j = 0; j < 20; j++)
 		{

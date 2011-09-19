@@ -59,10 +59,9 @@ public class GuiChat extends GuiScreen
         {
             message = message.substring(0, message.length() - 1);
         }
-        if(allowedCharacters.indexOf(c) >= 0 && message.length() < 100)
-        {
-            message += c;
-        }
+        if(allowedCharacters.indexOf(c) >= 0 && this.message.length() < 100) {
+            this.message = this.message + c;
+         }
     }
 
     public void drawScreen(int i, int j, float f)
@@ -72,28 +71,24 @@ public class GuiChat extends GuiScreen
         super.drawScreen(i, j, f);
     }
 
-    protected void mouseClicked(int i, int j, int k)
-    {
-        if(k != 0)
-        {
-            return;
+    protected void mouseClicked(int var1, int var2, int var3) {
+        if(var3 == 0) {
+           if(this.mc.ingameGUI.field_933_a != null) {
+              if(this.message.length() > 0 && !this.message.endsWith(" ")) {
+                 this.message = this.message + " ";
+              }
+
+              this.message = this.message + this.mc.ingameGUI.field_933_a;
+              byte var4 = 100;
+              if(this.message.length() > var4) {
+                 this.message = this.message.substring(0, var4);
+              }
+           } else {
+              super.mouseClicked(var1, var2, var3);
+           }
         }
-        if(mc.ingameGUI.field_933_a == null)
-        {
-            super.mouseClicked(i, j, k);
-            return;
-        }
-        if(message.length() > 0 && !message.endsWith(" "))
-        {
-            message += " ";
-        }
-        message += mc.ingameGUI.field_933_a;
-        byte byte0 = 100;
-        if(message.length() > byte0)
-        {
-            message = message.substring(0, byte0);
-        }
-    }
+
+     }
 
     protected String message;
     private int updateCounter;

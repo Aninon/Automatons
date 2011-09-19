@@ -7,8 +7,8 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            Item, World, Block, BlockFire, 
-//            ItemStack, EntityPlayer
+//            Item, EntityPlayer, World, Block, 
+//            BlockFire, ItemStack
 
 public class ItemFlintAndSteel extends Item
 {
@@ -45,6 +45,10 @@ public class ItemFlintAndSteel extends Item
         if(l == 5)
         {
             i++;
+        }
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
         }
         int i1 = world.getBlockId(i, j, k);
         if(i1 == 0)

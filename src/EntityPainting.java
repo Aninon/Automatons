@@ -9,7 +9,7 @@ import java.util.*;
 // Referenced classes of package net.minecraft.src:
 //            Entity, EnumArt, AxisAlignedBB, World, 
 //            EntityItem, ItemStack, Item, MathHelper, 
-//            Material, NBTTagCompound
+//            Material, NBTTagCompound, DamageSource
 
 public class EntityPainting extends Entity
 {
@@ -226,7 +226,7 @@ public class EntityPainting extends Entity
         return true;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         if(!isDead && !worldObj.multiplayerWorld)
         {

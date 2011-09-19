@@ -9,7 +9,7 @@ import java.util.Random;
 // Referenced classes of package net.minecraft.src:
 //            EntityAnimal, DataWatcher, ItemStack, Block, 
 //            EntityPlayer, InventoryPlayer, Item, ItemShears, 
-//            World, EntityItem, NBTTagCompound, Entity
+//            World, EntityItem, NBTTagCompound
 
 public class EntitySheep extends EntityAnimal
 {
@@ -27,12 +27,7 @@ public class EntitySheep extends EntityAnimal
         dataWatcher.addObject(16, new Byte((byte)0));
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
-    {
-        return super.attackEntityFrom(entity, i);
-    }
-
-    protected void dropFewItems()
+    protected void a(boolean flag)
     {
         if(!getSheared())
         {

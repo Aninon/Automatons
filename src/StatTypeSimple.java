@@ -19,6 +19,6 @@ final class StatTypeSimple
 
     public String format(int i)
     {
-        return StatBase.func_27083_i().format(i);
+        return StatBase.getNumberFormat().format(i);
     }
 }

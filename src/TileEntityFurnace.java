@@ -80,7 +80,7 @@ public class TileEntityFurnace extends TileEntity
             byte byte0 = nbttagcompound1.getByte("Slot");
             if(byte0 >= 0 && byte0 < furnaceItemStacks.length)
             {
-                furnaceItemStacks[byte0] = new ItemStack(nbttagcompound1);
+                furnaceItemStacks[byte0] = ItemStack.func_35864_a(nbttagcompound1);
             }
         }
 
@@ -229,7 +229,7 @@ public class TileEntityFurnace extends TileEntity
         } else
         if(furnaceItemStacks[2].itemID == itemstack.itemID)
         {
-            furnaceItemStacks[2].stackSize += itemstack.stackSize;
+            furnaceItemStacks[2].stackSize++;
         }
         if(furnaceItemStacks[0].getItem().hasContainerItem())
         {
@@ -272,7 +272,7 @@ public class TileEntityFurnace extends TileEntity
             return 100;
         } else
         {
-            return ModLoader.AddAllFuel(i);
+            return ModLoader.AddAllFuel(i, itemstack.getItemDamage());
         }
     }
 
@@ -283,6 +283,14 @@ public class TileEntityFurnace extends TileEntity
             return false;
         }
         return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
+    }
+
+    public void func_35142_x_()
+    {
+    }
+
+    public void func_35141_y_()
+    {
     }
 
     private ItemStack furnaceItemStacks[];

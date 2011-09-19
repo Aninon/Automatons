@@ -9,8 +9,8 @@ import org.lwjgl.opengl.GL11;
 // Referenced classes of package net.minecraft.src:
 //            ModelBiped, RenderBlocks, RenderManager, RenderEngine, 
 //            Block, BlockFire, Entity, Tessellator, 
-//            AxisAlignedBB, MathHelper, World, GameSettings, 
-//            ModelBase, FontRenderer
+//            AxisAlignedBB, EntityLiving, MathHelper, World, 
+//            GameSettings, ModelBase, FontRenderer
 
 public abstract class Render
 {
@@ -123,6 +123,10 @@ public abstract class Render
         World world = getWorldFromRenderManager();
         GL11.glDepthMask(false);
         float f2 = shadowSize;
+        if(entity instanceof EntityLiving)
+        {
+            f2 *= ((EntityLiving)entity).func_35159_aC();
+        }
         double d3 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)f1;
         double d4 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)f1 + (double)entity.getShadowSize();
         double d5 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)f1;
@@ -302,7 +306,7 @@ public abstract class Render
 
     protected RenderManager renderManager;
     private ModelBase modelBase;
-    private RenderBlocks renderBlocks;
+    protected RenderBlocks renderBlocks;
     protected float shadowSize;
     protected float field_194_c;
 }

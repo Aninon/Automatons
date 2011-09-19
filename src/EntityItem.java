@@ -8,9 +8,9 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            Entity, MathHelper, World, Material, 
-//            AxisAlignedBB, Block, NBTTagCompound, ItemStack, 
-//            EntityPlayer, InventoryPlayer, AchievementList, Item, 
-//            ModLoader
+//            AxisAlignedBB, Block, DamageSource, NBTTagCompound, 
+//            ItemStack, EntityPlayer, InventoryPlayer, AchievementList, 
+//            Item, ModLoader
 
 public class EntityItem extends Entity
 {
@@ -103,10 +103,10 @@ public class EntityItem extends Entity
 
     protected void dealFireDamage(int i)
     {
-        attackEntityFrom(null, i);
+        attackEntityFrom(DamageSource.field_35542_a, i);
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         setBeenAttacked();
         health -= i;
@@ -129,7 +129,11 @@ public class EntityItem extends Entity
         health = nbttagcompound.getShort("Health") & 0xff;
         age = nbttagcompound.getShort("Age");
         NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Item");
-        item = new ItemStack(nbttagcompound1);
+        item = ItemStack.func_35864_a(nbttagcompound1);
+        if(item == null)
+        {
+            setEntityDead();
+        }
     }
 
     public void onCollideWithPlayer(EntityPlayer entityplayer)

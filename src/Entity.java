@@ -9,10 +9,10 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            AxisAlignedBB, DataWatcher, World, MathHelper, 
-//            Block, StepSound, Material, BlockFluid, 
-//            Vec3D, NBTTagCompound, NBTTagList, NBTTagDouble, 
-//            NBTTagFloat, EntityList, ItemStack, EntityItem, 
-//            EntityPlayer, EntityLightningBolt, EntityLiving
+//            DamageSource, Block, StepSound, Material, 
+//            BlockFluid, Vec3D, NBTTagCompound, NBTTagList, 
+//            NBTTagDouble, NBTTagFloat, EntityList, ItemStack, 
+//            EntityItem, EntityPlayer, EntityLightningBolt, EntityLiving
 
 public abstract class Entity
 {
@@ -46,10 +46,9 @@ public abstract class Entity
         inWater = false;
         heartsLife = 0;
         air = 300;
-        isFirstUpdate = true;
+        firstUpdate = true;
         isImmuneToFire = false;
         dataWatcher = new DataWatcher();
-        entityBrightness = 0.0F;
         addedToChunk = false;
         worldObj = world;
         setPosition(0.0D, 0.0D, 0.0D);
@@ -130,7 +129,7 @@ public abstract class Entity
         boundingBox.setBounds(d - (double)f, (d1 - (double)yOffset) + (double)ySize, d2 - (double)f, d + (double)f, (d1 - (double)yOffset) + (double)ySize + (double)f1, d2 + (double)f);
     }
 
-    public void func_346_d(float f, float f1)
+    public void setAngles(float f, float f1)
     {
         float f2 = rotationPitch;
         float f3 = rotationYaw;
@@ -166,9 +165,20 @@ public abstract class Entity
         prevPosZ = posZ;
         prevRotationPitch = rotationPitch;
         prevRotationYaw = rotationYaw;
+        if(func_35117_Q())
+        {
+            int i = MathHelper.floor_double(posX);
+            int j = MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset);
+            int k = MathHelper.floor_double(posZ);
+            int j1 = worldObj.getBlockId(i, j, k);
+            if(j1 > 0)
+            {
+                worldObj.spawnParticle((new StringBuilder()).append("tilecrack_").append(j1).toString(), posX + ((double)rand.nextFloat() - 0.5D) * (double)width, boundingBox.minY + 0.10000000000000001D, posZ + ((double)rand.nextFloat() - 0.5D) * (double)width, -motionX * 4D, 1.5D, -motionZ * 4D);
+            }
+        }
         if(handleWaterMovement())
         {
-            if(!inWater && !isFirstUpdate)
+            if(!inWater && !firstUpdate)
             {
                 float f = MathHelper.sqrt_double(motionX * motionX * 0.20000000298023224D + motionY * motionY + motionZ * motionZ * 0.20000000298023224D) * 0.2F;
                 if(f > 1.0F)
@@ -177,14 +187,14 @@ public abstract class Entity
                 }
                 worldObj.playSoundAtEntity(this, "random.splash", f, 1.0F + (rand.nextFloat() - rand.nextFloat()) * 0.4F);
                 float f1 = MathHelper.floor_double(boundingBox.minY);
-                for(int i = 0; (float)i < 1.0F + width * 20F; i++)
+                for(int l = 0; (float)l < 1.0F + width * 20F; l++)
                 {
                     float f2 = (rand.nextFloat() * 2.0F - 1.0F) * width;
                     float f4 = (rand.nextFloat() * 2.0F - 1.0F) * width;
                     worldObj.spawnParticle("bubble", posX + (double)f2, f1 + 1.0F, posZ + (double)f4, motionX, motionY - (double)(rand.nextFloat() * 0.2F), motionZ);
                 }
 
-                for(int j = 0; (float)j < 1.0F + width * 20F; j++)
+                for(int i1 = 0; (float)i1 < 1.0F + width * 20F; i1++)
                 {
                     float f3 = (rand.nextFloat() * 2.0F - 1.0F) * width;
                     float f5 = (rand.nextFloat() * 2.0F - 1.0F) * width;
@@ -216,7 +226,7 @@ public abstract class Entity
             {
                 if(fire % 20 == 0)
                 {
-                    attackEntityFrom(null, 1);
+                    attackEntityFrom(DamageSource.field_35540_b, 1);
                 }
                 fire--;
             }
@@ -231,17 +241,17 @@ public abstract class Entity
         }
         if(!worldObj.multiplayerWorld)
         {
-            setEntityFlag(0, fire > 0);
-            setEntityFlag(2, ridingEntity != null);
+            setFlag(0, fire > 0);
+            setFlag(2, ridingEntity != null);
         }
-        isFirstUpdate = false;
+        firstUpdate = false;
     }
 
     protected void setOnFireFromLava()
     {
         if(!isImmuneToFire)
         {
-            attackEntityFrom(null, 4);
+            attackEntityFrom(DamageSource.field_35541_c, 4);
             fire = 600;
         }
     }
@@ -462,16 +472,16 @@ public abstract class Entity
             }
             if(distanceWalkedModified > (float)nextStepDistance && j3 > 0)
             {
-                nextStepDistance++;
+                nextStepDistance = (int)distanceWalkedModified + 1;
                 StepSound stepsound = Block.blocksList[j3].stepSound;
                 if(worldObj.getBlockId(l, j1 + 1, l1) == Block.snow.blockID)
                 {
                     stepsound = Block.snow.stepSound;
-                    worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
+                    worldObj.playSoundAtEntity(this, stepsound.stepSoundDir2(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                 } else
                 if(!Block.blocksList[j3].blockMaterial.getIsLiquid())
                 {
-                    worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
+                    worldObj.playSoundAtEntity(this, stepsound.stepSoundDir2(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                 }
                 Block.blocksList[j3].onEntityWalking(worldObj, l, j1, l1, this);
             }
@@ -556,7 +566,7 @@ public abstract class Entity
     {
         if(!isImmuneToFire)
         {
-            attackEntityFrom(null, i);
+            attackEntityFrom(DamageSource.field_35542_a, i);
         }
     }
 
@@ -570,7 +580,7 @@ public abstract class Entity
 
     public boolean isWet()
     {
-        return inWater || worldObj.canBlockBeRainedOn(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ));
+        return inWater || worldObj.canLightningStrikeAt(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ));
     }
 
     public boolean isInWater()
@@ -592,7 +602,7 @@ public abstract class Entity
         int l = worldObj.getBlockId(i, j, k);
         if(l != 0 && Block.blocksList[l].blockMaterial == material)
         {
-            float f = BlockFluid.getPercentAir(worldObj.getBlockMetadata(i, j, k)) - 0.1111111F;
+            float f = BlockFluid.getFluidHeightPercent(worldObj.getBlockMetadata(i, j, k)) - 0.1111111F;
             float f1 = (float)(j + 1) - f;
             return d < (double)f1;
         } else
@@ -631,23 +641,35 @@ public abstract class Entity
         motionZ += f1 * f5 + f * f4;
     }
 
+    public int func_35115_a(float f)
+    {
+        int i = MathHelper.floor_double(posX);
+        int j = MathHelper.floor_double(posZ);
+        worldObj.getClass();
+        if(worldObj.blockExists(i, 128 / 2, j))
+        {
+            double d = (boundingBox.maxY - boundingBox.minY) * 0.66000000000000003D;
+            int k = MathHelper.floor_double((posY - (double)yOffset) + d);
+            return worldObj.func_35451_b(i, k, j, 0);
+        } else
+        {
+            return 0;
+        }
+    }
+
     public float getEntityBrightness(float f)
     {
         int i = MathHelper.floor_double(posX);
-        double d = (boundingBox.maxY - boundingBox.minY) * 0.66000000000000003D;
-        int j = MathHelper.floor_double((posY - (double)yOffset) + d);
-        int k = MathHelper.floor_double(posZ);
-        if(worldObj.checkChunksExist(MathHelper.floor_double(boundingBox.minX), MathHelper.floor_double(boundingBox.minY), MathHelper.floor_double(boundingBox.minZ), MathHelper.floor_double(boundingBox.maxX), MathHelper.floor_double(boundingBox.maxY), MathHelper.floor_double(boundingBox.maxZ)))
+        int j = MathHelper.floor_double(posZ);
+        worldObj.getClass();
+        if(worldObj.blockExists(i, 128 / 2, j))
         {
-            float f1 = worldObj.getLightBrightness(i, j, k);
-            if(f1 < entityBrightness)
-            {
-                f1 = entityBrightness;
-            }
-            return f1;
+            double d = (boundingBox.maxY - boundingBox.minY) * 0.66000000000000003D;
+            int k = MathHelper.floor_double((posY - (double)yOffset) + d);
+            return worldObj.getLightBrightness(i, k, j);
         } else
         {
-            return entityBrightness;
+            return 0.0F;
         }
     }
 
@@ -760,6 +782,7 @@ public abstract class Entity
         motionX += d;
         motionY += d1;
         motionZ += d2;
+        field_35118_ao = true;
     }
 
     protected void setBeenAttacked()
@@ -767,7 +790,7 @@ public abstract class Entity
         beenAttacked = true;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         setBeenAttacked();
         return false;
@@ -1138,12 +1161,32 @@ public abstract class Entity
         return getEntityFlag(1);
     }
 
+    public boolean func_35117_Q()
+    {
+        return getEntityFlag(3);
+    }
+
+    public void func_35113_c(boolean flag)
+    {
+        setFlag(3, flag);
+    }
+
+    public boolean func_35114_R()
+    {
+        return getEntityFlag(4);
+    }
+
+    public void func_35116_d(boolean flag)
+    {
+        setFlag(4, flag);
+    }
+
     protected boolean getEntityFlag(int i)
     {
         return (dataWatcher.getWatchableObjectByte(0) & 1 << i) != 0;
     }
 
-    protected void setEntityFlag(int i, boolean flag)
+    protected void setFlag(int i, boolean flag)
     {
         byte byte0 = dataWatcher.getWatchableObjectByte(0);
         if(flag)
@@ -1246,6 +1289,11 @@ public abstract class Entity
         return false;
     }
 
+    public void func_35112_o()
+    {
+        isInWeb = true;
+    }
+
     private static int nextEntityID = 0;
     public int entityId;
     public double renderDistanceWeight;
@@ -1272,7 +1320,7 @@ public abstract class Entity
     public boolean isCollidedVertically;
     public boolean isCollided;
     public boolean beenAttacked;
-    public boolean isInWeb;
+    protected boolean isInWeb;
     public boolean field_9293_aM;
     public boolean isDead;
     public float yOffset;
@@ -1297,12 +1345,11 @@ public abstract class Entity
     protected boolean inWater;
     public int heartsLife;
     public int air;
-    private boolean isFirstUpdate;
+    private boolean firstUpdate;
     public String skinUrl;
     public String cloakUrl;
     protected boolean isImmuneToFire;
     protected DataWatcher dataWatcher;
-    public float entityBrightness;
     private double entityRiderPitchDelta;
     private double entityRiderYawDelta;
     public boolean addedToChunk;
@@ -1313,5 +1360,6 @@ public abstract class Entity
     public int serverPosY;
     public int serverPosZ;
     public boolean ignoreFrustumCheck;
+    public boolean field_35118_ao;
 
 }

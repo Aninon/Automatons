@@ -50,7 +50,7 @@ public class AM_EntityOmni extends EntityLiving
 		return 0.4F;
 	}
 	
-	protected void dropFewItems(){
+	protected void a(Boolean b){
 		for(int j = 0; j < 20; j++)
 		{
 			double d = rand.nextGaussian() * 0.02D;

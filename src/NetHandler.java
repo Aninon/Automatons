@@ -18,7 +18,9 @@ package net.minecraft.src;
 //            Packet103SetSlot, Packet104WindowItems, Packet130UpdateSign, Packet105UpdateProgressbar, 
 //            Packet5PlayerInventory, Packet106Transaction, Packet25EntityPainting, Packet54PlayNoteBlock, 
 //            Packet200Statistic, Packet17Sleep, Packet27Position, Packet70Bed, 
-//            Packet71Weather, Packet131MapData, Packet61DoorChange
+//            Packet71Weather, Packet131MapData, Packet61DoorChange, Packet254ServerPing, 
+//            Packet41EntityEffect, Packet42RemoveEntityEffect, Packet201PlayerInfo, Packet0KeepAlive, 
+//            Packet43Experience, Packet107CreativeSetSlot, Packet26EntityExpOrb
 
 public abstract class NetHandler
 {
@@ -131,7 +133,7 @@ public abstract class NetHandler
         registerPacket(packet18animation);
     }
 
-    public void func_21147_a(Packet19EntityAction packet19entityaction)
+    public void handleEntityAction(Packet19EntityAction packet19entityaction)
     {
         registerPacket(packet19entityaction);
     }
@@ -156,17 +158,17 @@ public abstract class NetHandler
         registerPacket(packet6spawnposition);
     }
 
-    public void func_6498_a(Packet28EntityVelocity packet28entityvelocity)
+    public void handleEntityVelocity(Packet28EntityVelocity packet28entityvelocity)
     {
         registerPacket(packet28entityvelocity);
     }
 
-    public void func_21148_a(Packet40EntityMetadata packet40entitymetadata)
+    public void handleEntityMetadata(Packet40EntityMetadata packet40entitymetadata)
     {
         registerPacket(packet40entitymetadata);
     }
 
-    public void func_6497_a(Packet39AttachEntity packet39attachentity)
+    public void handleAttachEntity(Packet39AttachEntity packet39attachentity)
     {
         registerPacket(packet39attachentity);
     }
@@ -176,7 +178,7 @@ public abstract class NetHandler
         registerPacket(packet7useentity);
     }
 
-    public void func_9447_a(Packet38EntityStatus packet38entitystatus)
+    public void handleEntityStatus(Packet38EntityStatus packet38entitystatus)
     {
         registerPacket(packet38entitystatus);
     }
@@ -221,7 +223,7 @@ public abstract class NetHandler
         registerPacket(packet104windowitems);
     }
 
-    public void handleSignUpdate(Packet130UpdateSign packet130updatesign)
+    public void handleUpdateSign(Packet130UpdateSign packet130updatesign)
     {
         registerPacket(packet130updatesign);
     }
@@ -241,7 +243,7 @@ public abstract class NetHandler
         registerPacket(packet106transaction);
     }
 
-    public void func_21146_a(Packet25EntityPainting packet25entitypainting)
+    public void handleEntityPainting(Packet25EntityPainting packet25entitypainting)
     {
         registerPacket(packet25entitypainting);
     }
@@ -251,7 +253,7 @@ public abstract class NetHandler
         registerPacket(packet54playnoteblock);
     }
 
-    public void func_27245_a(Packet200Statistic packet200statistic)
+    public void handleStatistic(Packet200Statistic packet200statistic)
     {
         registerPacket(packet200statistic);
     }
@@ -261,7 +263,7 @@ public abstract class NetHandler
         registerPacket(packet17sleep);
     }
 
-    public void func_22185_a(Packet27Position packet27position)
+    public void handlePosition(Packet27Position packet27position)
     {
         registerPacket(packet27position);
     }
@@ -284,5 +286,45 @@ public abstract class NetHandler
     public void handleAuxSFX(Packet61DoorChange packet61doorchange)
     {
         registerPacket(packet61doorchange);
+    }
+
+    public void func_35782_a(Packet254ServerPing packet254serverping)
+    {
+        registerPacket(packet254serverping);
+    }
+
+    public void func_35780_a(Packet41EntityEffect packet41entityeffect)
+    {
+        registerPacket(packet41entityeffect);
+    }
+
+    public void func_35783_a(Packet42RemoveEntityEffect packet42removeentityeffect)
+    {
+        registerPacket(packet42removeentityeffect);
+    }
+
+    public void func_35779_a(Packet201PlayerInfo packet201playerinfo)
+    {
+        registerPacket(packet201playerinfo);
+    }
+
+    public void func_35784_a(Packet0KeepAlive packet0keepalive)
+    {
+        registerPacket(packet0keepalive);
+    }
+
+    public void func_35777_a(Packet43Experience packet43experience)
+    {
+        registerPacket(packet43experience);
+    }
+
+    public void func_35781_a(Packet107CreativeSetSlot packet107creativesetslot)
+    {
+        registerPacket(packet107creativesetslot);
+    }
+
+    public void func_35778_a(Packet26EntityExpOrb packet26entityexporb)
+    {
+        registerPacket(packet26entityexporb);
     }
 }

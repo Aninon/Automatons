@@ -7,10 +7,10 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
-//            Item, ItemStack, World, Block, 
-//            BlockSapling, BlockCrops, BlockGrass, BlockTallGrass, 
-//            BlockFlower, EntitySheep, BlockCloth, EntityPlayer, 
-//            EntityLiving
+//            Item, ItemStack, EntityPlayer, World, 
+//            Block, BlockSapling, BlockFlower, BlockMushroom, 
+//            BlockStem, BlockCrops, BlockGrass, BlockTallGrass, 
+//            EntitySheep, BlockCloth, EntityLiving
 
 public class ItemDye extends Item
 {
@@ -35,6 +35,10 @@ public class ItemDye extends Item
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
+        }
         if(itemstack.getItemDamage() == 15)
         {
             int i1 = world.getBlockId(i, j, k);
@@ -43,6 +47,23 @@ public class ItemDye extends Item
                 if(!world.multiplayerWorld)
                 {
                     ((BlockSapling)Block.sapling).growTree(world, i, j, k, world.rand);
+                    itemstack.stackSize--;
+                }
+                return true;
+            }
+            if(i1 == Block.mushroomBrown.blockID || i1 == Block.mushroomRed.blockID)
+            {
+                if(!world.multiplayerWorld && ((BlockMushroom)Block.blocksList[i1]).func_35293_c(world, i, j, k, world.rand))
+                {
+                    itemstack.stackSize--;
+                }
+                return true;
+            }
+            if(i1 == Block.field_35283_bu.blockID || i1 == Block.field_35284_bt.blockID)
+            {
+                if(!world.multiplayerWorld)
+                {
+                    ((BlockStem)Block.blocksList[i1]).func_35294_i(world, i, j, k);
                     itemstack.stackSize--;
                 }
                 return true;
@@ -108,7 +129,7 @@ label0:
         if(entityliving instanceof EntitySheep)
         {
             EntitySheep entitysheep = (EntitySheep)entityliving;
-            int i = BlockCloth.func_21034_c(itemstack.getItemDamage());
+            int i = BlockCloth.getBlockFromDye(itemstack.getItemDamage());
             if(!entitysheep.getSheared() && entitysheep.getFleeceColor() != i)
             {
                 entitysheep.setFleeceColor(i);

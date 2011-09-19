@@ -24,11 +24,11 @@ final class StatTypeDistance
         double d1 = d / 1000D;
         if(d1 > 0.5D)
         {
-            return (new StringBuilder()).append(StatBase.func_27081_j().format(d1)).append(" km").toString();
+            return (new StringBuilder()).append(StatBase.getDecimalFormat().format(d1)).append(" km").toString();
         }
         if(d > 0.5D)
         {
-            return (new StringBuilder()).append(StatBase.func_27081_j().format(d)).append(" m").toString();
+            return (new StringBuilder()).append(StatBase.getDecimalFormat().format(d)).append(" m").toString();
         } else
         {
             return (new StringBuilder()).append(i).append(" cm").toString();

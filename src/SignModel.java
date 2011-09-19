@@ -6,16 +6,16 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            ModelRenderer
+//            ModelBase, ModelRenderer
 
-public class SignModel
+public class SignModel extends ModelBase
 {
 
     public SignModel()
     {
-        signBoard = new ModelRenderer(0, 0);
+        signBoard = new ModelRenderer(this, 0, 0);
         signBoard.addBox(-12F, -14F, -1F, 24, 12, 2, 0.0F);
-        signStick = new ModelRenderer(0, 14);
+        signStick = new ModelRenderer(this, 0, 14);
         signStick.addBox(-1F, -2F, -1F, 2, 14, 2, 0.0F);
     }
 

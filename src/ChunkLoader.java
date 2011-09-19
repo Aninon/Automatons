@@ -185,24 +185,30 @@ label0:
         int j = nbttagcompound.getInteger("zPos");
         Chunk chunk = new Chunk(world, i, j);
         chunk.blocks = nbttagcompound.getByteArray("Blocks");
-        chunk.data = new NibbleArray(nbttagcompound.getByteArray("Data"));
-        chunk.skylightMap = new NibbleArray(nbttagcompound.getByteArray("SkyLight"));
-        chunk.blocklightMap = new NibbleArray(nbttagcompound.getByteArray("BlockLight"));
+        world.getClass();
+        chunk.data = new NibbleArray(nbttagcompound.getByteArray("Data"), 7);
+        world.getClass();
+        chunk.skylightMap = new NibbleArray(nbttagcompound.getByteArray("SkyLight"), 7);
+        world.getClass();
+        chunk.blocklightMap = new NibbleArray(nbttagcompound.getByteArray("BlockLight"), 7);
         chunk.heightMap = nbttagcompound.getByteArray("HeightMap");
         chunk.isTerrainPopulated = nbttagcompound.getBoolean("TerrainPopulated");
         if(!chunk.data.isValid())
         {
-            chunk.data = new NibbleArray(chunk.blocks.length);
+            world.getClass();
+            chunk.data = new NibbleArray(chunk.blocks.length, 7);
         }
         if(chunk.heightMap == null || !chunk.skylightMap.isValid())
         {
             chunk.heightMap = new byte[256];
-            chunk.skylightMap = new NibbleArray(chunk.blocks.length);
-            chunk.func_1024_c();
+            world.getClass();
+            chunk.skylightMap = new NibbleArray(chunk.blocks.length, 7);
+            chunk.generateSkylightMap();
         }
         if(!chunk.blocklightMap.isValid())
         {
-            chunk.blocklightMap = new NibbleArray(chunk.blocks.length);
+            world.getClass();
+            chunk.blocklightMap = new NibbleArray(chunk.blocks.length, 7);
             chunk.func_1014_a();
         }
         NBTTagList nbttaglist = nbttagcompound.getTagList("Entities");

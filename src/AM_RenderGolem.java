@@ -34,7 +34,7 @@ public class AM_RenderGolem extends RenderLiving
 			AM_EntityGolem ea=((AM_EntityGolem)entityliving);
 			int ii=ea.getType();
 			int dam=ea.getColo();
-			if(ii>0 &&ii!=2)
+			if(ii>0) // &&ii!=2
 			{
 				ItemStack itemstack = new ItemStack(ii,1,dam);
 				//if(itemstack.itemID!=0){

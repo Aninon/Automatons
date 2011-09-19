@@ -24,7 +24,8 @@ import java.util.Random;
 
 // Referenced classes of package net.minecraft.src:
 //            OsMap, EnumOS1, IsoImageBuffer, World, 
-//            SaveHandler, ThreadRunIsoClient, TerrainTextureManager, ChunkCoordinates
+//            SaveHandler, WorldSettings, ThreadRunIsoClient, TerrainTextureManager, 
+//            ChunkCoordinates
 
 public class CanvasIsomPreview extends Canvas
     implements KeyListener, MouseListener, MouseMotionListener, Runnable
@@ -139,7 +140,7 @@ public class CanvasIsomPreview extends Canvas
     public void loadWorld(String s)
     {
         field_1785_i = field_1784_j = 0;
-        worldObj = new World(new SaveHandler(new File(dataFolder, "saves"), s, false), s, (new Random()).nextLong());
+        worldObj = new World(new SaveHandler(new File(dataFolder, "saves"), s, false), s, new WorldSettings((new Random()).nextLong(), 0, true));
         worldObj.skylightSubtracted = 0;
         synchronized(imageBufferList)
         {
@@ -174,7 +175,7 @@ public class CanvasIsomPreview extends Canvas
         }
     }
 
-    public void func_1272_b()
+    public void startThreads()
     {
         (new ThreadRunIsoClient(this)).start();
         for(int i = 0; i < 8; i++)
@@ -286,6 +287,7 @@ public class CanvasIsomPreview extends Canvas
         int i = rectangle.x / byte0 / 2 - 2 - byte1;
         int j = (rectangle.x + rectangle.width) / byte0 / 2 + 1 + byte1;
         int k = rectangle.y / byte0 - 1 - byte1 * 2;
+        worldObj.getClass();
         int l = (rectangle.y + rectangle.height + 16 + 128) / byte0 + 1 + byte1 * 2;
         for(int i1 = k; i1 <= l; i1++)
         {
@@ -308,6 +310,7 @@ public class CanvasIsomPreview extends Canvas
                 if(!isoimagebuffer.field_1351_f)
                 {
                     int j2 = k1 * byte0 * 2 + (i1 & 1) * byte0;
+                    worldObj.getClass();
                     int k2 = i1 * byte0 - 128 - 16;
                     graphics2d.drawImage(isoimagebuffer.field_1348_a, j2, k2, null);
                 }

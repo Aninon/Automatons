@@ -15,6 +15,14 @@ public class InventoryLargeChest
     public InventoryLargeChest(String s, IInventory iinventory, IInventory iinventory1)
     {
         name = s;
+        if(iinventory == null)
+        {
+            iinventory = iinventory1;
+        }
+        if(iinventory1 == null)
+        {
+            iinventory1 = iinventory;
+        }
         upperChest = iinventory;
         lowerChest = iinventory1;
     }
@@ -76,6 +84,18 @@ public class InventoryLargeChest
     public boolean canInteractWith(EntityPlayer entityplayer)
     {
         return upperChest.canInteractWith(entityplayer) && lowerChest.canInteractWith(entityplayer);
+    }
+
+    public void func_35142_x_()
+    {
+        upperChest.func_35142_x_();
+        lowerChest.func_35142_x_();
+    }
+
+    public void func_35141_y_()
+    {
+        upperChest.func_35141_y_();
+        lowerChest.func_35141_y_();
     }
 
     private String name;

@@ -251,22 +251,22 @@ public class StatsSyncher
         return statssyncher.func_27415_a(file, file1, file2);
     }
 
-    static boolean func_27416_a(StatsSyncher statssyncher, boolean flag)
+    static boolean setBusy(StatsSyncher statssyncher, boolean flag)
     {
         return statssyncher.isBusy = flag;
     }
 
-    static File func_27414_e(StatsSyncher statssyncher)
+    static File getUnsentDataFile(StatsSyncher statssyncher)
     {
         return statssyncher.unsentDataFile;
     }
 
-    static File func_27417_f(StatsSyncher statssyncher)
+    static File getUnsentTempFile(StatsSyncher statssyncher)
     {
         return statssyncher.unsentTempFile;
     }
 
-    static File func_27419_g(StatsSyncher statssyncher)
+    static File getUnsentOldFile(StatsSyncher statssyncher)
     {
         return statssyncher.unsentOldFile;
     }

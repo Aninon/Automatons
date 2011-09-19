@@ -93,7 +93,7 @@ public class EntityFX extends Entity
         float f11 = (float)((prevPosX + (posX - prevPosX) * (double)f) - interpPosX);
         float f12 = (float)((prevPosY + (posY - prevPosY) * (double)f) - interpPosY);
         float f13 = (float)((prevPosZ + (posZ - prevPosZ) * (double)f) - interpPosZ);
-        float f14 = getEntityBrightness(f);
+        float f14 = 1.0F;
         tessellator.setColorOpaque_F(particleRed * f14, particleGreen * f14, particleBlue * f14);
         tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, f7, f9);
         tessellator.addVertexWithUV((f11 - f1 * f10) + f4 * f10, f12 + f2 * f10, (f13 - f3 * f10) + f5 * f10, f7, f8);

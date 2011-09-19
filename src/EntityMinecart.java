@@ -12,7 +12,8 @@ import java.util.Random;
 //            Entity, IInventory, ItemStack, World, 
 //            Item, EntityItem, Block, MathHelper, 
 //            BlockRail, Vec3D, AxisAlignedBB, NBTTagCompound, 
-//            NBTTagList, EntityLiving, EntityPlayer, InventoryPlayer
+//            NBTTagList, EntityLiving, EntityPlayer, InventoryPlayer, 
+//            DamageSource
 
 public class EntityMinecart extends Entity
     implements IInventory
@@ -74,7 +75,7 @@ public class EntityMinecart extends Entity
         return (double)height * 0.0D - 0.30000001192092896D;
     }
 
-    public boolean attackEntityFrom(Entity entity, int i)
+    public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         if(worldObj.multiplayerWorld || isDead)
         {
@@ -696,7 +697,7 @@ label0:
                 int j = nbttagcompound1.getByte("Slot") & 0xff;
                 if(j >= 0 && j < cargoItems.length)
                 {
-                    cargoItems[j] = new ItemStack(nbttagcompound1);
+                    cargoItems[j] = ItemStack.func_35864_a(nbttagcompound1);
                 }
             }
 
@@ -909,6 +910,14 @@ label0:
             return false;
         }
         return entityplayer.getDistanceSqToEntity(this) <= 64D;
+    }
+
+    public void func_35142_x_()
+    {
+    }
+
+    public void func_35141_y_()
+    {
     }
 
     private ItemStack cargoItems[];

@@ -6,8 +6,8 @@ package net.minecraft.src;
 
 
 // Referenced classes of package net.minecraft.src:
-//            Item, EnumToolMaterial, World, Block, 
-//            BlockGrass, StepSound, ItemStack, EntityPlayer
+//            Item, EnumToolMaterial, EntityPlayer, World, 
+//            Block, BlockGrass, StepSound, ItemStack
 
 public class ItemHoe extends Item
 {
@@ -21,12 +21,16 @@ public class ItemHoe extends Item
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
+        if(!entityplayer.func_35190_e(i, j, k))
+        {
+            return false;
+        }
         int i1 = world.getBlockId(i, j, k);
         int j1 = world.getBlockId(i, j + 1, k);
         if(l != 0 && j1 == 0 && i1 == Block.grass.blockID || i1 == Block.dirt.blockID)
         {
             Block block = Block.tilledField;
-            world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.func_1145_d(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+            world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.stepSoundDir2(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
             if(world.multiplayerWorld)
             {
                 return true;

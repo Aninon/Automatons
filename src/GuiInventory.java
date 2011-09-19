@@ -9,23 +9,36 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
-//            GuiContainer, EntityPlayer, AchievementList, FontRenderer, 
-//            RenderEngine, EntityPlayerSP, RenderHelper, RenderManager, 
-//            GuiButton, GuiAchievements, GuiStats
+//            GuiContainer, EntityPlayer, AchievementList, PlayerController, 
+//            GuiContainerCreative, FontRenderer, RenderEngine, EntityPlayerSP, 
+//            RenderHelper, RenderManager, GuiButton, GuiAchievements, 
+//            GuiStats
 
 public class GuiInventory extends GuiContainer
 {
 
     public GuiInventory(EntityPlayer entityplayer)
     {
-        super(entityplayer.slots);
+        super(entityplayer.inventorySlots);
         allowUserInput = true;
         entityplayer.addStat(AchievementList.openInventory, 1);
+    }
+
+    public void updateScreen()
+    {
+        if(mc.playerController.func_35640_h())
+        {
+            mc.displayGuiScreen(new GuiContainerCreative(mc.thePlayer));
+        }
     }
 
     public void initGui()
     {
         controlList.clear();
+        if(mc.playerController.func_35640_h())
+        {
+            mc.displayGuiScreen(new GuiContainerCreative(mc.thePlayer));
+        }
     }
 
     protected void drawGuiContainerForegroundLayer()
@@ -67,11 +80,9 @@ public class GuiInventory extends GuiContainer
         mc.thePlayer.renderYawOffset = (float)Math.atan(f5 / 40F) * 20F;
         mc.thePlayer.rotationYaw = (float)Math.atan(f5 / 40F) * 40F;
         mc.thePlayer.rotationPitch = -(float)Math.atan(f6 / 40F) * 20F;
-        mc.thePlayer.entityBrightness = 1.0F;
         GL11.glTranslatef(0.0F, mc.thePlayer.yOffset, 0.0F);
         RenderManager.instance.playerViewY = 180F;
         RenderManager.instance.renderEntityWithPosYaw(mc.thePlayer, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
-        mc.thePlayer.entityBrightness = 0.0F;
         mc.thePlayer.renderYawOffset = f2;
         mc.thePlayer.rotationYaw = f3;
         mc.thePlayer.rotationPitch = f4;

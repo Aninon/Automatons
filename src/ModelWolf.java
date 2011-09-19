@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
 //            ModelBase, ModelRenderer, EntityWolf, MathHelper, 
-//            EntityLiving
+//            Entity, EntityLiving
 
 public class ModelWolf extends ModelBase
 {
@@ -17,44 +17,44 @@ public class ModelWolf extends ModelBase
     {
         float f = 0.0F;
         float f1 = 13.5F;
-        wolfHeadMain = new ModelRenderer(0, 0);
+        wolfHeadMain = new ModelRenderer(this, 0, 0);
         wolfHeadMain.addBox(-3F, -3F, -2F, 6, 6, 4, f);
         wolfHeadMain.setRotationPoint(-1F, f1, -7F);
-        wolfBody = new ModelRenderer(18, 14);
+        wolfBody = new ModelRenderer(this, 18, 14);
         wolfBody.addBox(-4F, -2F, -3F, 6, 9, 6, f);
         wolfBody.setRotationPoint(0.0F, 14F, 2.0F);
-        wolfMane = new ModelRenderer(21, 0);
+        wolfMane = new ModelRenderer(this, 21, 0);
         wolfMane.addBox(-4F, -3F, -3F, 8, 6, 7, f);
         wolfMane.setRotationPoint(-1F, 14F, 2.0F);
-        wolfLeg1 = new ModelRenderer(0, 18);
+        wolfLeg1 = new ModelRenderer(this, 0, 18);
         wolfLeg1.addBox(-1F, 0.0F, -1F, 2, 8, 2, f);
         wolfLeg1.setRotationPoint(-2.5F, 16F, 7F);
-        wolfLeg2 = new ModelRenderer(0, 18);
+        wolfLeg2 = new ModelRenderer(this, 0, 18);
         wolfLeg2.addBox(-1F, 0.0F, -1F, 2, 8, 2, f);
         wolfLeg2.setRotationPoint(0.5F, 16F, 7F);
-        wolfLeg3 = new ModelRenderer(0, 18);
+        wolfLeg3 = new ModelRenderer(this, 0, 18);
         wolfLeg3.addBox(-1F, 0.0F, -1F, 2, 8, 2, f);
         wolfLeg3.setRotationPoint(-2.5F, 16F, -4F);
-        wolfLeg4 = new ModelRenderer(0, 18);
+        wolfLeg4 = new ModelRenderer(this, 0, 18);
         wolfLeg4.addBox(-1F, 0.0F, -1F, 2, 8, 2, f);
         wolfLeg4.setRotationPoint(0.5F, 16F, -4F);
-        wolfTail = new ModelRenderer(9, 18);
+        wolfTail = new ModelRenderer(this, 9, 18);
         wolfTail.addBox(-1F, 0.0F, -1F, 2, 8, 2, f);
         wolfTail.setRotationPoint(-1F, 12F, 8F);
-        wolfRightEar = new ModelRenderer(16, 14);
+        wolfRightEar = new ModelRenderer(this, 16, 14);
         wolfRightEar.addBox(-3F, -5F, 0.0F, 2, 2, 1, f);
         wolfRightEar.setRotationPoint(-1F, f1, -7F);
-        wolfLeftEar = new ModelRenderer(16, 14);
+        wolfLeftEar = new ModelRenderer(this, 16, 14);
         wolfLeftEar.addBox(1.0F, -5F, 0.0F, 2, 2, 1, f);
         wolfLeftEar.setRotationPoint(-1F, f1, -7F);
-        wolfSnout = new ModelRenderer(0, 10);
+        wolfSnout = new ModelRenderer(this, 0, 10);
         wolfSnout.addBox(-2F, 0.0F, -5F, 3, 3, 4, f);
         wolfSnout.setRotationPoint(-0.5F, f1, -7F);
     }
 
-    public void render(float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
-        super.render(f, f1, f2, f3, f4, f5);
+        super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5);
         wolfHeadMain.renderWithRotation(f5);
         wolfBody.render(f5);

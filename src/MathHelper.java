@@ -4,6 +4,7 @@
 
 package net.minecraft.src;
 
+import java.util.Random;
 
 public class MathHelper
 {
@@ -44,9 +45,20 @@ public class MathHelper
         return d >= (double)i ? i : i - 1;
     }
 
+    public static long func_35599_c(double d)
+    {
+        long l = (long)d;
+        return d >= (double)l ? l : l - 1L;
+    }
+
     public static float abs(float f)
     {
         return f < 0.0F ? -f : f;
+    }
+
+    public static int func_35597_a(int i)
+    {
+        return i < 0 ? -i : i;
     }
 
     public static double abs_max(double d, double d1)
@@ -76,6 +88,17 @@ public class MathHelper
     public static boolean stringNullOrLengthZero(String s)
     {
         return s == null || s.length() == 0;
+    }
+
+    public static int func_35598_a(Random random, int i, int j)
+    {
+        if(i >= j)
+        {
+            return i;
+        } else
+        {
+            return random.nextInt((j - i) + 1) + i;
+        }
     }
 
     private static float SIN_TABLE[];

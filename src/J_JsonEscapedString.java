@@ -10,13 +10,13 @@ final class J_JsonEscapedString
 
     J_JsonEscapedString(String s)
     {
-        field_27031_a = s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\b", "\\b").replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+        escapedString = s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\b", "\\b").replace("\f", "\\f").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
     }
 
     public String toString()
     {
-        return field_27031_a;
+        return escapedString;
     }
 
-    private final String field_27031_a;
+    private final String escapedString;
 }

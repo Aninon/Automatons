@@ -8,8 +8,8 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 // Referenced classes of package net.minecraft.src:
-//            GuiContainer, ContainerWorkbench, Container, FontRenderer, 
-//            RenderEngine, InventoryPlayer, World
+//            GuiContainer, ContainerWorkbench, FontRenderer, RenderEngine, 
+//            InventoryPlayer, World
 
 public class GuiCrafting extends GuiContainer
 {
@@ -22,7 +22,6 @@ public class GuiCrafting extends GuiContainer
     public void onGuiClosed()
     {
         super.onGuiClosed();
-        inventorySlots.onCraftGuiClosed(mc.thePlayer);
     }
 
     protected void drawGuiContainerForegroundLayer()

@@ -109,6 +109,16 @@ public class GuiTexturePacks extends GuiScreen
         return guitexturepacks.mc;
     }
 
+    static Minecraft func_35307_f(GuiTexturePacks guitexturepacks)
+    {
+        return guitexturepacks.mc;
+    }
+
+    static Minecraft func_35308_g(GuiTexturePacks guitexturepacks)
+    {
+        return guitexturepacks.mc;
+    }
+
     static Minecraft func_22118_f(GuiTexturePacks guitexturepacks)
     {
         return guitexturepacks.mc;

@@ -21,7 +21,7 @@ final class J_JsonListenerToJdomAdapter
 
     J_JsonRootNode func_27208_a()
     {
-        return (J_JsonRootNode)field_27209_b.func_27234_b();
+        return (J_JsonRootNode)field_27209_b.buildNode();
     }
 
     public void func_27195_b()
@@ -58,7 +58,7 @@ final class J_JsonListenerToJdomAdapter
 
     public void func_27205_a(String s)
     {
-        J_JsonFieldBuilder j_jsonfieldbuilder = J_JsonFieldBuilder.func_27301_a().func_27304_a(J_JsonNodeBuilders.func_27254_b(s));
+        J_JsonFieldBuilder j_jsonfieldbuilder = J_JsonFieldBuilder.aJsonFieldBuilder().func_27304_a(J_JsonNodeBuilders.func_27254_b(s));
         ((J_NodeContainer)field_27210_a.peek()).func_27289_a(j_jsonfieldbuilder);
         field_27210_a.push(new J_FieldNodeContainer(this, j_jsonfieldbuilder));
     }

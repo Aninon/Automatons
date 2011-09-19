@@ -54,7 +54,7 @@ public class AM_EntityChopper extends AM_EntityFlying2
 	
 	
 	
-	protected void updatePlayerActionState()
+	protected void updateEntityActionState()
     {
         /*if(!worldObj.multiplayerWorld && worldObj.difficultySetting == 0)
         {
@@ -82,7 +82,7 @@ public class AM_EntityChopper extends AM_EntityFlying2
 			if(posY<50){
             waypointY = posY + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16F);
 			}else{
-			waypointY=worldObj.findTopSolidBlock((int)waypointX,(int)waypointZ)+5;
+			waypointY=worldObj.getTopSolidOrLiquidBlock((int)waypointX,(int)waypointZ)+5;
 			
 			}
            
@@ -166,10 +166,10 @@ public class AM_EntityChopper extends AM_EntityFlying2
 
         return true;
     }
-	/*
+	
 	public boolean getCanSpawnHere(){
 		return true;
-	}*/
+	}
 	
 
 	

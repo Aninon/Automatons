@@ -41,7 +41,7 @@ final class J_PositionTrackingPushbackReader
         }
     }
 
-    public int func_27333_c()
+    public int read()
         throws IOException
     {
         int i = field_27338_a.read();
@@ -85,12 +85,12 @@ final class J_PositionTrackingPushbackReader
         }
     }
 
-    public int func_27331_a()
+    public int getColumn()
     {
         return field_27337_b;
     }
 
-    public int func_27330_b()
+    public int getRow()
     {
         return field_27340_c;
     }
