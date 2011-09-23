@@ -13,8 +13,13 @@ public class AM_Buildo extends Block
 		setTickOnLoad(true);
 		blockIndexInTexture=21;
     }
+	/*
+	public void onBlockAdded(World world, int i, int j, int k)
+    {
+		world.setBlockMetadata(i,j,k,world.rand.nextInt(2));
+    }
 	
-	
+	*/
 	
 	public void updateTick(World world, int i, int j, int k, Random random)
     {
@@ -37,8 +42,8 @@ public class AM_Buildo extends Block
 	}else{
 		//world.setBlock(i,j,k,1);
 		
-		AM_WorldGenStructure wg= new AM_WorldGenStructure();
-		wg.set=meta;
+		AM_WorldGenEmpire wg= new AM_WorldGenEmpire();
+		//wg.set=meta;
 		wg.generate(world, random, i, j, k);
 		/*int y=world.findTopSolidBlock(i,k);
 		for(int n=0;n<30;n++){

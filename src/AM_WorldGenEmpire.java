@@ -11,161 +11,116 @@ import java.util.ArrayList;
 //            WorldGenerator, World, Material, Block, 
 //            TileEntityChest, TileEntityMobSpawner, ItemStack, Item
 
-public class AM_WorldGenStructure extends WorldGenerator
+public class AM_WorldGenEmpire extends WorldGenerator
 {
 
-    public AM_WorldGenStructure()
+    public AM_WorldGenEmpire()
     {
     }
-	public int M=7;
+	public int M=16;
 	public int W;
 	public int set=0;
+	
+	
 	
 	//int JJ=0;
 
     public boolean generate(World world, Random random, int i, int j, int k)
     {
 
-	//JJ=j;
-	
-	//int bb=world.getBlockId(i,j-1,k);
-	//if(bb==2 || bb==12 || bb==AutomatonLogger.frass){
-
 	int m2=M/2;
-	
 	int m=M-1;
-	int m5=M+1;
-	int m6=M+3;
-	
+	int m5=M+2;
+	int m6=M+4;
 	int m22=m/2;
-	
 	int m33=m22-1;
-	//System.out.println(i+","+k);
-	
 	W=M;
-	//i=(i/W)*W;
-	//k=(k/W)*W;
+	int w=W;
+	int w1=w-1;
 	j=AutomatonLogger.builderLevel;
 	
+	/*
 	if(world.getBlockId(i,j,k)==AutomatonLogger.tech){
 	return true;
-	}
-	
-	System.out.println("city generating.........");
-	
-	//for(int ii=0;ii<M;ii++){
-	//for(int jj=0;jj<M;jj++){
-	
-	int RRR=set;
-	if(RRR==0){
-	emptyOut(world,24,m,m,i,j,k);
-	}else{
+	}*/
+	if(world.getBlockId(i,j,k)!=AutomatonLogger.sky){
 	cavernize(world,random,27,m,m,i,j,k);
 	return true;
 	}
-	
-	//}
-	//}
-	
-	//for(int ii=0;ii<M;ii++){
-	//for(int jj=0;jj<M;jj++){
-	if(RRR==0){
-	boolean[] bo={true,true,true,true};
-	
-	int w=W;
-	//if(jj<m ){
-	
-	int bb1=world.getBlockId(i,j,k+w);
-	//int mm1=world.getBlockMetadata(i,j,k+w);
-	bo[0]=!(bb1==AutomatonLogger.sky || (bb1==AutomatonLogger.importantBuildingThingy));
-	
-	/*if(bo[0] && bb1!=AutomatonLogger.frass){
-	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	//foliage.set=1;
-	//foliage.generate( world,  random,  i,  j,  k+w);
-	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
-	}*/
-		//bo[0]=!cell[ii][jj+1];
-	//}
-	
-	//if(jj>0){
-		//bo[1]=!cell[ii][jj-1];
-		
-		int bb2=world.getBlockId(i,j,k-w);
-	//int mm2=world.getBlockMetadata(i,j,k-w);
-	bo[1]=!(bb2==AutomatonLogger.sky || (bb2==AutomatonLogger.importantBuildingThingy));
-	/*if(bo[1] && bb2!=AutomatonLogger.frass){
-	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	//foliage.set=1;
-	//foliage.generate( world,  random,  i,  j,  k-w);
-	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
-	}*/
-		
-	//}
-	
-	//if(ii<m ){
-		//bo[2]=!cell[ii+1][jj];
-			int bb3=world.getBlockId(i+w,j,k);
-		//int mm3=world.getBlockMetadata(i+w,j,k);
-	bo[2]=!(bb3==AutomatonLogger.sky || (bb3==AutomatonLogger.importantBuildingThingy));
-	/*if(bo[2] && bb3!=AutomatonLogger.frass){
-	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	//foliage.set=1;
-	//foliage.generate( world,  random,  i+w,  j,  k);
-	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
-	}*/
-	
-	//}
-	
-	//if(ii>0){
-		//bo[3]=!cell[ii-1][jj];
-				int bb4=world.getBlockId(i-w,j,k);
-		//int mm4=world.getBlockMetadata(i-w,j,k);
-	bo[3]=!(bb4==AutomatonLogger.sky || (bb4==AutomatonLogger.importantBuildingThingy));
-	/*if(bo[3] && bb4!=AutomatonLogger.frass){
-	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	//foliage.set=1;
-	//foliage.generate( world,  random,  i-w,  j,  k);
-	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
-	}*/
-	//}
-	
+
 
 	
-	boxy(world,random,bo,7,m,m,i,j,k);
+	
+	//boolean HouseMe=false;
+
+//if(HouseMe){
+	boolean[] bo={true,true,true,true};
+	
+
+	int bb1=world.getBlockId(i,j,k+w);
+	int bb2=world.getBlockId(i,j,k-w);
+	int bb3=world.getBlockId(i+w,j,k);
+	int bb4=world.getBlockId(i-w,j,k);
+	//boolean mustBeInside=false;
+	/*
+	if(bb1==AutomatonLogger.sky && world.getBlockId(i,j-1,(k+w1))==AutomatonLogger.tech){
+		mustBeInside=true;
+		bo[0]=false;
+	}
+	if(bb2==AutomatonLogger.sky && world.getBlockId(i,j-1,(k-w1))==AutomatonLogger.tech){
+		mustBeInside=true;
+		bo[1]=false;
+	}
+	if(bb3==AutomatonLogger.sky && world.getBlockId((i+w1),j-1,k)==AutomatonLogger.tech){
+		mustBeInside=true;
+		bo[2]=false;
+	}
+	if(bb4==AutomatonLogger.sky && world.getBlockId((i-w1),j-1,k)==AutomatonLogger.tech){
+		mustBeInside=true;
+		bo[3]=false;
+	}*/
+	bo[0]=(bb1!=AutomatonLogger.sky);
+	bo[1]=(bb2!=AutomatonLogger.sky);
+	bo[2]=(bb3!=AutomatonLogger.sky);
+	bo[3]=(bb4!=AutomatonLogger.sky);
+
+	
 		
-		boxy(world,random,bo,7,m5,m5,i,j+8,k);
-		boxy(world,random,bo,7,m6,m6,i,j+16,k);
+		//boxy(world,random,bo,7,m,m,i,j,k,false);
 		
-		for(int z=0;z<=m;z++){
+		boxy(world,random,bo,7,m5,m5,i,j+8,k,false);
+		boxy(world,random,bo,7,m6,m6,i,j+16,k,false);
+		
+		/*for(int z=0;z<=m;z++){
 		for(int x=0;x<=m;x++){
 		world.setBlockAndMetadata(i+(x-m22), j, k+(z-m22), AutomatonLogger.sky,1);
 		}
+		}*/
+		
+		if(bo[0]){
+			world.setBlock(i,j-1,k-1,AutomatonLogger.tech);
 		}
-	}
+		if(bo[1]){
+			world.setBlock(i,j-1,k+1,AutomatonLogger.tech);
+		}
+		if(bo[2]){
+			world.setBlock(i-1,j-1,k,AutomatonLogger.tech);
+		}
+		if(bo[3]){
+			world.setBlock(i+1,j-1,k,AutomatonLogger.tech);
+		}
+	//}else{
+	//cavernize(world,random,27,m,m,i,j,k);
+	//return true;
 	//}
-	//}
+
+		
 	int r= m2;
-	
-	
-	/*for(int x=j;x<=j+20;x++){
-		world.setBlockAndMetadata(i, x, k, AutomatonLogger.frass,1); //AndMetadata
-	}*/
-		
-		
-	world.markBlocksDirty(i-r,j-3,k-r,i+r,j+24,k+r);
-	
-	
+	//world.markBlocksDirty(i-r,j-3,k-r,i+r,j+24,k+r);
 	//addTunnels(world,i,j,k);
-	
-	
 	//applyChests(world,random);
-	
-	
 	//cell=null;
 	chests=null;
-
-	System.out.println("done");
         return true;
     }
 	
@@ -361,8 +316,8 @@ public class AM_WorldGenStructure extends WorldGenerator
 	}
 	
 	
-	private void boxy(World world,Random random,boolean[] boo, int height,int width,int length, int i, int j, int k){
-	struct(world,random,boo,height,width,length,i,j,k);
+	private void boxy(World world,Random random,boolean[] boo, int height,int width,int length, int i, int j, int k,boolean BOOL){
+	struct(world,random,boo,height,width,length,i,j,k,BOOL);
 	}
 	
 	private void emptyOut(World world, int height,int width,int length, int i, int j, int k){
@@ -389,17 +344,17 @@ public class AM_WorldGenStructure extends WorldGenerator
 		int newheight=random.nextInt((height/2))+(height/2);
 		int he=newheight-(height/6);
 		
-		
+		/*
 		for(int z=0;z<=length;z++){
 
 		for(int x=0;x<=width;x++){
 		world.setBlockAndMetadata(i+(x-w2), j, k+(z-l2), AutomatonLogger.frass,1); //AndMetadata
 		}
 		
-		}
+		}*/
 		
 		
-		
+		/*
 		for(int z=0;z<=length;z++){
 		for(int y=1;y<=he;y++){
 		for(int x=0;x<=width;x++){
@@ -421,7 +376,7 @@ public class AM_WorldGenStructure extends WorldGenerator
 		}
 		}
 		}
-		}
+		}*/
 		
 		
 		
@@ -448,7 +403,7 @@ public class AM_WorldGenStructure extends WorldGenerator
 		
 	}
 	
-	private void struct(World world,Random random,boolean[] boo, int height,int width,int length, int i, int j, int k){
+	private void struct(World world,Random random,boolean[] boo, int height,int width,int length, int i, int j, int k,boolean BOOL){
 		int b=AutomatonLogger.tech;
 	
 		int m=2;
@@ -519,7 +474,7 @@ int zh=1;
 		
 		for(int x=0;x<=w3;x++){
 
-		world.setBlockAndMetadata((x-w4)+i, j+h5, k+l2-zh,  AutomatonLogger.sky,0);
+		world.setBlockAndMetadata((x-w4)+i, j+h5, k+l2-zh,  AutomatonLogger.sky,1);
 		
 		}
 		
@@ -551,7 +506,7 @@ int zh=1;
 		
 		for(int x=0;x<=w3;x++){
 		
-		world.setBlockAndMetadata((x-w4)+i, j+h5, k-l2+zh, AutomatonLogger.sky,0);
+		world.setBlockAndMetadata((x-w4)+i, j+h5, k-l2+zh, AutomatonLogger.sky,1);
 		
 		}
 		
@@ -579,7 +534,7 @@ int zh=1;
 		
 		
 		for(int z=0;z<=l3;z++){
-		world.setBlockAndMetadata(i+w2-zh, j+h5, k+(z-l4), AutomatonLogger.sky,0);
+		world.setBlockAndMetadata(i+w2-zh, j+h5, k+(z-l4), AutomatonLogger.sky,1);
 		}
 		
 		for(int z=0;z<=l3;z++){
@@ -606,7 +561,7 @@ int zh=1;
 		
 		for(int z=0;z<=l3;z++){
 		
-		world.setBlockAndMetadata(i-w2+zh, j+h5, k+(z-l4),AutomatonLogger.sky,0);
+		world.setBlockAndMetadata(i-w2+zh, j+h5, k+(z-l4),AutomatonLogger.sky,1);
 		
 		}
 		
@@ -623,7 +578,7 @@ int zh=1;
 		w3--;
 		//w5+=2;
 		//l5+=2;
-		if(random.nextInt(4)!=0){
+		if(BOOL&&random.nextInt(4)!=0){
 		
 		for(int z=1;z<=l3;z++){
 		for(int x=1;x<=w3;x++){

@@ -101,7 +101,7 @@ public class AutomatonLogger {
 	
 	
 
-	public static int builderLevel=30;
+	public static int builderLevel=8;
 	
 	
 	public  AutomatonLogger(){

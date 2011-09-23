@@ -23,8 +23,8 @@ public class AM_BlockLumo extends Block
 	static int D[];
 	static void loadSprites(){
 		D=new int[2];
-		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/sky.png");
-		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/walk.png");
+		D[1]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/sky.png");
+		D[0]=AutomatonUniversal.modOverride("/terrain.png", "/automatons/walk.png");
 		
 	}
     public int getBlockTextureFromSideAndMetadata(int i, int j)
