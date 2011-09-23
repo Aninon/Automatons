@@ -72,7 +72,7 @@ public class AM_ItemWerg extends Item
 		
 		
 		//AutomatonActions.Naturalization(world,i,j,k);
-		
+		 AM_DimensionBot.usePortal();
 
 		return true;
 	}
@@ -102,7 +102,7 @@ public class AM_ItemWerg extends Item
 	
 	//world.setBlock(i, j, k, 0);
 	//for(int i=0;i<100;i++){
-        world.entityJoinedWorld(new AM_EntityArborist(world,ep.posX,ep.posY,ep.posZ ));
+        //world.entityJoinedWorld(new AM_EntityArborist(world,ep.posX,ep.posY,ep.posZ ));
 		//}
 	
 	

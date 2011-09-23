@@ -32,7 +32,7 @@ public class GenLayerRiverMix extends GenLayer
         int ai2[] = IntCache.func_35267_a(k * l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
-            if(ai[i1] == BiomeGenBase.field_35484_b.field_35494_y)
+            if(ai[i1] == BiomeGenBase.ocean.biomeID)
             {
                 ai2[i1] = ai[i1];
             } else

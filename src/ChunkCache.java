@@ -77,7 +77,7 @@ public class ChunkCache
         return worldObj.worldProvider.lightBrightnessTable[i1];
     }
 
-    public int func_35451_b(int i, int j, int k, int l)
+    public int getLightBrightnessFromSunlight(int i, int j, int k, int l)
     {
         int i1 = func_35454_a(EnumSkyBlock.Sky, i, j, k);
         int j1 = func_35454_a(EnumSkyBlock.Block, i, j, k);

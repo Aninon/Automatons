@@ -47,12 +47,12 @@ public class EntityClientPlayerMP extends EntityPlayerSP
         } else
         {
             super.onUpdate();
-            func_4056_N();
+            onUpdate2();
             return;
         }
     }
 
-    public void func_4056_N()
+    public void onUpdate2()
     {
         if(field_9380_bx++ == 20)
         {

@@ -91,8 +91,8 @@ public class RenderBlocks
         byte byte0 = 13;
         byte byte1 = 52;
         byte byte2 = 32;
-        int i1 = MathHelper.func_35597_a(i - byte0);
-        int j1 = MathHelper.func_35597_a(k - byte1);
+        int i1 = MathHelper.abs_int(i - byte0);
+        int j1 = MathHelper.abs_int(k - byte1);
         if(j1 <= byte2 && i1 <= byte2 && (i1 == byte2 || j1 == byte2) && field_35942_c[blockAccess.getBlockId(i, j, k)])
         {
             int k1 = 5;
@@ -138,7 +138,7 @@ public class RenderBlocks
         float f2 = 0.8F;
         float f3 = 0.6F;
         int j1 = block.func_35275_c(blockAccess, i, j, k);
-        tessellator.func_35835_b(j1);
+        tessellator.setBrightness(j1);
         tessellator.setColorOpaque_F(f, f, f);
         int k1 = block.getBlockTexture(blockAccess, i, j, k, 0);
         int l1 = (k1 & 0xf) << 4;
@@ -156,7 +156,7 @@ public class RenderBlocks
         tessellator.addVertexWithUV(d4, d6, d7, d, d2);
         tessellator.addVertexWithUV(d5, d6, d7, d1, d2);
         tessellator.addVertexWithUV(d5, d6, d8, d1, d3);
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j + 1, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j + 1, k));
         tessellator.setColorOpaque_F(f1, f1, f1);
         k1 = block.getBlockTexture(blockAccess, i, j, k, 1);
         l1 = (k1 & 0xf) << 4;
@@ -229,28 +229,28 @@ public class RenderBlocks
         }
         if(k1 != 2 && (renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j, k - 1, 2)))
         {
-            tessellator.func_35835_b(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : j1);
+            tessellator.setBrightness(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : j1);
             tessellator.setColorOpaque_F(f2, f2, f2);
             flipTexture = byte0 == 2;
             renderEastFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 2));
         }
         if(k1 != 3 && (renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j, k + 1, 3)))
         {
-            tessellator.func_35835_b(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : j1);
+            tessellator.setBrightness(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : j1);
             tessellator.setColorOpaque_F(f2, f2, f2);
             flipTexture = byte0 == 3;
             renderWestFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 3));
         }
         if(k1 != 4 && (renderAllFaces || block.shouldSideBeRendered(blockAccess, i - 1, j, k, 4)))
         {
-            tessellator.func_35835_b(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : j1);
+            tessellator.setBrightness(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : j1);
             tessellator.setColorOpaque_F(f3, f3, f3);
             flipTexture = byte0 == 4;
             renderNorthFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 4));
         }
         if(k1 != 5 && (renderAllFaces || block.shouldSideBeRendered(blockAccess, i + 1, j, k, 5)))
         {
-            tessellator.func_35835_b(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : j1);
+            tessellator.setBrightness(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : j1);
             tessellator.setColorOpaque_F(f3, f3, f3);
             flipTexture = byte0 == 5;
             renderSouthFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 5));
@@ -263,7 +263,7 @@ public class RenderBlocks
     {
         int l = blockAccess.getBlockMetadata(i, j, k);
         Tessellator tessellator = Tessellator.instance;
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
         double d = 0.40000000596046448D;
         double d1 = 0.5D - d;
@@ -695,7 +695,7 @@ public class RenderBlocks
         {
             overrideBlockTexture = -1;
         }
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         float f3 = 1.0F;
         if(Block.lightValue[block.blockID] > 0)
         {
@@ -973,7 +973,7 @@ public class RenderBlocks
             {
                 char c = '\u4000';
                 tessellator.setColorOpaque_I(c);
-                tessellator.func_35835_b(blockAccess.func_35451_b(j1, k1, l1, 2));
+                tessellator.setBrightness(blockAccess.getLightBrightnessFromSunlight(j1, k1, l1, 2));
                 int k2 = (i2 & 0xf) << 4;
                 int l2 = i2 & 0xf0;
                 double d = ((double)k2 + 0.0D) / 256D;
@@ -1084,7 +1084,7 @@ public class RenderBlocks
             l = overrideBlockTexture;
         }
         tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         int i1 = (l & 0xf) << 4;
         int j1 = l & 0xf0;
         double d = (float)i1 / 256F;
@@ -1270,7 +1270,7 @@ public class RenderBlocks
         {
             i1 = overrideBlockTexture;
         }
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         float f = 1.0F;
         float f1 = (float)l / 15F;
         float f2 = f1 * 0.6F + 0.4F;
@@ -1484,7 +1484,7 @@ public class RenderBlocks
         {
             l &= 7;
         }
-        tessellator.func_35835_b(blockrail.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(blockrail.func_35275_c(blockAccess, i, j, k));
         tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
         int j1 = (i1 & 0xf) << 4;
         int k1 = i1 & 0xf0;
@@ -1559,7 +1559,7 @@ public class RenderBlocks
         {
             l = overrideBlockTexture;
         }
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         float f = 1.0F;
         tessellator.setColorOpaque_F(f, f, f);
         int i1 = (l & 0xf) << 4;
@@ -1611,7 +1611,7 @@ public class RenderBlocks
             l = overrideBlockTexture;
         }
         float f = 1.0F;
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         int i1 = block.colorMultiplier(blockAccess, i, j, k);
         float f1 = (float)(i1 >> 16 & 0xff) / 255F;
         float f2 = (float)(i1 >> 8 & 0xff) / 255F;
@@ -1683,7 +1683,7 @@ public class RenderBlocks
     {
         int l = blockAccess.func_35452_b();
         Tessellator tessellator = Tessellator.instance;
-        tessellator.func_35835_b(blockpane.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(blockpane.func_35275_c(blockAccess, i, j, k));
         float f = 1.0F;
         int i1 = blockpane.colorMultiplier(blockAccess, i, j, k);
         float f1 = (float)(i1 >> 16 & 0xff) / 255F;
@@ -2091,7 +2091,7 @@ public class RenderBlocks
     public boolean renderBlockReed(Block block, int i, int j, int k)
     {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         float f = 1.0F;
         int l = block.colorMultiplier(blockAccess, i, j, k);
         float f1 = (float)(l >> 16 & 0xff) / 255F;
@@ -2126,7 +2126,7 @@ public class RenderBlocks
     {
         BlockStem blockstem = (BlockStem)block;
         Tessellator tessellator = Tessellator.instance;
-        tessellator.func_35835_b(blockstem.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(blockstem.func_35275_c(blockAccess, i, j, k));
         float f = 1.0F;
         int l = blockstem.colorMultiplier(blockAccess, i, j, k);
         float f1 = (float)(l >> 16 & 0xff) / 255F;
@@ -2158,7 +2158,7 @@ public class RenderBlocks
     public boolean func_35930_l(Block block, int i, int j, int k)
     {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
         tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
         func_1245_b(block, blockAccess.getBlockMetadata(i, j, k), i, (float)j - 0.0625F, k);
         return true;
@@ -2443,7 +2443,7 @@ public class RenderBlocks
             }
             double d9 = (double)(MathHelper.sin(f7) * 8F) / 256D;
             double d11 = (double)(MathHelper.cos(f7) * 8F) / 256D;
-            tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j, k));
+            tessellator.setBrightness(block.func_35275_c(blockAccess, i, j, k));
             float f9 = 1.0F;
             tessellator.setColorOpaque_F(f4 * f9 * f, f4 * f9 * f1, f4 * f9 * f2);
             tessellator.addVertexWithUV(i + 0, (double)j + d2, k + 0, d6 - d11 - d9, (d7 - d11) + d9);
@@ -2453,7 +2453,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || flag1)
         {
-            tessellator.func_35835_b(block.func_35275_c(blockAccess, i, j - 1, k));
+            tessellator.setBrightness(block.func_35275_c(blockAccess, i, j - 1, k));
             float f8 = 1.0F;
             tessellator.setColorOpaque_F(f3 * f8, f3 * f8, f3 * f8);
             renderBottomFace(block, i, j, k, block.getBlockTextureFromSide(0));
@@ -2531,7 +2531,7 @@ public class RenderBlocks
                 double d18 = ((double)j3 + (1.0D - d8) * 16D) / 256D;
                 double d19 = ((double)j3 + (1.0D - d12) * 16D) / 256D;
                 double d20 = ((double)(j3 + 16) - 0.01D) / 256D;
-                tessellator.func_35835_b(block.func_35275_c(blockAccess, j2, j, k1));
+                tessellator.setBrightness(block.func_35275_c(blockAccess, j2, j, k1));
                 float f10 = 1.0F;
                 if(i2 < 2)
                 {
@@ -2595,7 +2595,7 @@ public class RenderBlocks
         float f3 = 0.6F;
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.func_35835_b(block.func_35275_c(world, i, j, k));
+        tessellator.setBrightness(block.func_35275_c(world, i, j, k));
         float f4 = 1.0F;
         float f5 = 1.0F;
         if(f5 < f4)
@@ -2688,7 +2688,7 @@ public class RenderBlocks
         int l1 = block.func_35275_c(blockAccess, i, j + 1, k);
         int i2 = block.func_35275_c(blockAccess, i, j, k + 1);
         Tessellator tessellator = Tessellator.instance;
-        tessellator.func_35835_b(0xf000f);
+        tessellator.setBrightness(0xf000f);
         aoGrassXYZPPC = Block.canBlockGrass[blockAccess.getBlockId(i + 1, j + 1, k)];
         aoGrassXYZPNC = Block.canBlockGrass[blockAccess.getBlockId(i + 1, j - 1, k)];
         aoGrassXYZPCP = Block.canBlockGrass[blockAccess.getBlockId(i + 1, j, k + 1)];
@@ -3370,21 +3370,21 @@ public class RenderBlocks
         int l = block.func_35275_c(blockAccess, i, j, k);
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j - 1, k, 0))
         {
-            tessellator.func_35835_b(block.minY <= 0.0D ? block.func_35275_c(blockAccess, i, j - 1, k) : l);
+            tessellator.setBrightness(block.minY <= 0.0D ? block.func_35275_c(blockAccess, i, j - 1, k) : l);
             tessellator.setColorOpaque_F(f10, f13, f16);
             renderBottomFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 0));
             flag = true;
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j + 1, k, 1))
         {
-            tessellator.func_35835_b(block.maxY >= 1.0D ? block.func_35275_c(blockAccess, i, j + 1, k) : l);
+            tessellator.setBrightness(block.maxY >= 1.0D ? block.func_35275_c(blockAccess, i, j + 1, k) : l);
             tessellator.setColorOpaque_F(f7, f8, f9);
             renderTopFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 1));
             flag = true;
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j, k - 1, 2))
         {
-            tessellator.func_35835_b(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : l);
+            tessellator.setBrightness(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : l);
             tessellator.setColorOpaque_F(f11, f14, f17);
             int i1 = block.getBlockTexture(blockAccess, i, j, k, 2);
             renderEastFace(block, i, j, k, i1);
@@ -3397,7 +3397,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j, k + 1, 3))
         {
-            tessellator.func_35835_b(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : l);
+            tessellator.setBrightness(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : l);
             tessellator.setColorOpaque_F(f11, f14, f17);
             int j1 = block.getBlockTexture(blockAccess, i, j, k, 3);
             renderWestFace(block, i, j, k, j1);
@@ -3410,7 +3410,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i - 1, j, k, 4))
         {
-            tessellator.func_35835_b(block.minX <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : l);
+            tessellator.setBrightness(block.minX <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : l);
             tessellator.setColorOpaque_F(f12, f15, f18);
             int k1 = block.getBlockTexture(blockAccess, i, j, k, 4);
             renderNorthFace(block, i, j, k, k1);
@@ -3423,7 +3423,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i + 1, j, k, 5))
         {
-            tessellator.func_35835_b(block.maxX >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : l);
+            tessellator.setBrightness(block.maxX >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : l);
             tessellator.setColorOpaque_F(f12, f15, f18);
             int l1 = block.getBlockTexture(blockAccess, i, j, k, 5);
             renderSouthFace(block, i, j, k, l1);
@@ -3479,21 +3479,21 @@ public class RenderBlocks
         int l = block.func_35275_c(blockAccess, i, j, k);
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j - 1, k, 0))
         {
-            tessellator.func_35835_b(block.minY <= 0.0D ? block.func_35275_c(blockAccess, i, j - 1, k) : l);
+            tessellator.setBrightness(block.minY <= 0.0D ? block.func_35275_c(blockAccess, i, j - 1, k) : l);
             tessellator.setColorOpaque_F(f7, f11, f15);
             renderBottomFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 0));
             flag = true;
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j + 1, k, 1))
         {
-            tessellator.func_35835_b(block.maxY >= 1.0D ? block.func_35275_c(blockAccess, i, j + 1, k) : l);
+            tessellator.setBrightness(block.maxY >= 1.0D ? block.func_35275_c(blockAccess, i, j + 1, k) : l);
             tessellator.setColorOpaque_F(f8, f12, f16);
             renderTopFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 1));
             flag = true;
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j, k - 1, 2))
         {
-            tessellator.func_35835_b(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : l);
+            tessellator.setBrightness(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : l);
             tessellator.setColorOpaque_F(f9, f13, f17);
             tessellator.setTranslationF(0.0F, 0.0F, f19);
             renderEastFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 2));
@@ -3502,7 +3502,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i, j, k + 1, 3))
         {
-            tessellator.func_35835_b(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : l);
+            tessellator.setBrightness(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : l);
             tessellator.setColorOpaque_F(f9, f13, f17);
             tessellator.setTranslationF(0.0F, 0.0F, -f19);
             renderWestFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 3));
@@ -3511,7 +3511,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i - 1, j, k, 4))
         {
-            tessellator.func_35835_b(block.minX <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : l);
+            tessellator.setBrightness(block.minX <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : l);
             tessellator.setColorOpaque_F(f10, f14, f18);
             tessellator.setTranslationF(f19, 0.0F, 0.0F);
             renderNorthFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 4));
@@ -3520,7 +3520,7 @@ public class RenderBlocks
         }
         if(renderAllFaces || block.shouldSideBeRendered(blockAccess, i + 1, j, k, 5))
         {
-            tessellator.func_35835_b(block.maxX >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : l);
+            tessellator.setBrightness(block.maxX >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : l);
             tessellator.setColorOpaque_F(f10, f14, f18);
             tessellator.setTranslationF(-f19, 0.0F, 0.0F);
             renderSouthFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 5));
@@ -3791,15 +3791,15 @@ public class RenderBlocks
         float f2 = 0.8F;
         float f3 = 0.6F;
         int l = block.func_35275_c(blockAccess, i, j, k);
-        tessellator.func_35835_b(block.minY <= 0.0D ? block.func_35275_c(blockAccess, i, j - 1, k) : l);
+        tessellator.setBrightness(block.minY <= 0.0D ? block.func_35275_c(blockAccess, i, j - 1, k) : l);
         tessellator.setColorOpaque_F(f, f, f);
         renderBottomFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 0));
         flag = true;
-        tessellator.func_35835_b(block.maxY >= 1.0D ? block.func_35275_c(blockAccess, i, j + 1, k) : l);
+        tessellator.setBrightness(block.maxY >= 1.0D ? block.func_35275_c(blockAccess, i, j + 1, k) : l);
         tessellator.setColorOpaque_F(f1, f1, f1);
         renderTopFace(block, i, j, k, block.getBlockTexture(blockAccess, i, j, k, 1));
         flag = true;
-        tessellator.func_35835_b(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : l);
+        tessellator.setBrightness(block.minZ <= 0.0D ? block.func_35275_c(blockAccess, i, j, k - 1) : l);
         tessellator.setColorOpaque_F(f2, f2, f2);
         int i1 = block.getBlockTexture(blockAccess, i, j, k, 2);
         if(i1 < 0)
@@ -3810,7 +3810,7 @@ public class RenderBlocks
         renderEastFace(block, i, j, k, i1);
         flag = true;
         flipTexture = false;
-        tessellator.func_35835_b(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : l);
+        tessellator.setBrightness(block.maxZ >= 1.0D ? block.func_35275_c(blockAccess, i, j, k + 1) : l);
         tessellator.setColorOpaque_F(f2, f2, f2);
         i1 = block.getBlockTexture(blockAccess, i, j, k, 3);
         if(i1 < 0)
@@ -3821,7 +3821,7 @@ public class RenderBlocks
         renderWestFace(block, i, j, k, i1);
         flag = true;
         flipTexture = false;
-        tessellator.func_35835_b(block.minX <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : l);
+        tessellator.setBrightness(block.minX <= 0.0D ? block.func_35275_c(blockAccess, i - 1, j, k) : l);
         tessellator.setColorOpaque_F(f3, f3, f3);
         i1 = block.getBlockTexture(blockAccess, i, j, k, 4);
         if(i1 < 0)
@@ -3832,7 +3832,7 @@ public class RenderBlocks
         renderNorthFace(block, i, j, k, i1);
         flag = true;
         flipTexture = false;
-        tessellator.func_35835_b(block.maxX >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : l);
+        tessellator.setBrightness(block.maxX >= 1.0D ? block.func_35275_c(blockAccess, i + 1, j, k) : l);
         tessellator.setColorOpaque_F(f3, f3, f3);
         i1 = block.getBlockTexture(blockAccess, i, j, k, 5);
         if(i1 < 0)
@@ -3919,16 +3919,16 @@ public class RenderBlocks
         if(enableAO)
         {
             tessellator.setColorOpaque_F(colorRedTopLeft, colorGreenTopLeft, colorBlueTopLeft);
-            tessellator.func_35835_b(field_35943_ak);
+            tessellator.setBrightness(field_35943_ak);
             tessellator.addVertexWithUV(d11, d13, d15, d8, d10);
             tessellator.setColorOpaque_F(colorRedBottomLeft, colorGreenBottomLeft, colorBlueBottomLeft);
-            tessellator.func_35835_b(field_35944_al);
+            tessellator.setBrightness(field_35944_al);
             tessellator.addVertexWithUV(d11, d13, d14, d3, d5);
             tessellator.setColorOpaque_F(colorRedBottomRight, colorGreenBottomRight, colorBlueBottomRight);
-            tessellator.func_35835_b(field_35947_am);
+            tessellator.setBrightness(field_35947_am);
             tessellator.addVertexWithUV(d12, d13, d14, d7, d9);
             tessellator.setColorOpaque_F(colorRedTopRight, colorGreenTopRight, colorBlueTopRight);
-            tessellator.func_35835_b(field_35948_an);
+            tessellator.setBrightness(field_35948_an);
             tessellator.addVertexWithUV(d12, d13, d15, d4, d6);
         } else
         {
@@ -4012,16 +4012,16 @@ public class RenderBlocks
         if(enableAO)
         {
             tessellator.setColorOpaque_F(colorRedTopLeft, colorGreenTopLeft, colorBlueTopLeft);
-            tessellator.func_35835_b(field_35943_ak);
+            tessellator.setBrightness(field_35943_ak);
             tessellator.addVertexWithUV(d12, d13, d15, d4, d6);
             tessellator.setColorOpaque_F(colorRedBottomLeft, colorGreenBottomLeft, colorBlueBottomLeft);
-            tessellator.func_35835_b(field_35944_al);
+            tessellator.setBrightness(field_35944_al);
             tessellator.addVertexWithUV(d12, d13, d14, d7, d9);
             tessellator.setColorOpaque_F(colorRedBottomRight, colorGreenBottomRight, colorBlueBottomRight);
-            tessellator.func_35835_b(field_35947_am);
+            tessellator.setBrightness(field_35947_am);
             tessellator.addVertexWithUV(d11, d13, d14, d3, d5);
             tessellator.setColorOpaque_F(colorRedTopRight, colorGreenTopRight, colorBlueTopRight);
-            tessellator.func_35835_b(field_35948_an);
+            tessellator.setBrightness(field_35948_an);
             tessellator.addVertexWithUV(d11, d13, d15, d8, d10);
         } else
         {
@@ -4111,16 +4111,16 @@ public class RenderBlocks
         if(enableAO)
         {
             tessellator.setColorOpaque_F(colorRedTopLeft, colorGreenTopLeft, colorBlueTopLeft);
-            tessellator.func_35835_b(field_35943_ak);
+            tessellator.setBrightness(field_35943_ak);
             tessellator.addVertexWithUV(d12, d15, d16, d8, d10);
             tessellator.setColorOpaque_F(colorRedBottomLeft, colorGreenBottomLeft, colorBlueBottomLeft);
-            tessellator.func_35835_b(field_35944_al);
+            tessellator.setBrightness(field_35944_al);
             tessellator.addVertexWithUV(d13, d15, d16, d3, d5);
             tessellator.setColorOpaque_F(colorRedBottomRight, colorGreenBottomRight, colorBlueBottomRight);
-            tessellator.func_35835_b(field_35947_am);
+            tessellator.setBrightness(field_35947_am);
             tessellator.addVertexWithUV(d13, d14, d16, d9, d11);
             tessellator.setColorOpaque_F(colorRedTopRight, colorGreenTopRight, colorBlueTopRight);
-            tessellator.func_35835_b(field_35948_an);
+            tessellator.setBrightness(field_35948_an);
             tessellator.addVertexWithUV(d12, d14, d16, d4, d6);
         } else
         {
@@ -4210,16 +4210,16 @@ public class RenderBlocks
         if(enableAO)
         {
             tessellator.setColorOpaque_F(colorRedTopLeft, colorGreenTopLeft, colorBlueTopLeft);
-            tessellator.func_35835_b(field_35943_ak);
+            tessellator.setBrightness(field_35943_ak);
             tessellator.addVertexWithUV(d12, d15, d16, d3, d5);
             tessellator.setColorOpaque_F(colorRedBottomLeft, colorGreenBottomLeft, colorBlueBottomLeft);
-            tessellator.func_35835_b(field_35944_al);
+            tessellator.setBrightness(field_35944_al);
             tessellator.addVertexWithUV(d12, d14, d16, d9, d11);
             tessellator.setColorOpaque_F(colorRedBottomRight, colorGreenBottomRight, colorBlueBottomRight);
-            tessellator.func_35835_b(field_35947_am);
+            tessellator.setBrightness(field_35947_am);
             tessellator.addVertexWithUV(d13, d14, d16, d4, d6);
             tessellator.setColorOpaque_F(colorRedTopRight, colorGreenTopRight, colorBlueTopRight);
-            tessellator.func_35835_b(field_35948_an);
+            tessellator.setBrightness(field_35948_an);
             tessellator.addVertexWithUV(d13, d15, d16, d8, d10);
         } else
         {
@@ -4309,16 +4309,16 @@ public class RenderBlocks
         if(enableAO)
         {
             tessellator.setColorOpaque_F(colorRedTopLeft, colorGreenTopLeft, colorBlueTopLeft);
-            tessellator.func_35835_b(field_35943_ak);
+            tessellator.setBrightness(field_35943_ak);
             tessellator.addVertexWithUV(d12, d14, d16, d8, d10);
             tessellator.setColorOpaque_F(colorRedBottomLeft, colorGreenBottomLeft, colorBlueBottomLeft);
-            tessellator.func_35835_b(field_35944_al);
+            tessellator.setBrightness(field_35944_al);
             tessellator.addVertexWithUV(d12, d14, d15, d3, d5);
             tessellator.setColorOpaque_F(colorRedBottomRight, colorGreenBottomRight, colorBlueBottomRight);
-            tessellator.func_35835_b(field_35947_am);
+            tessellator.setBrightness(field_35947_am);
             tessellator.addVertexWithUV(d12, d13, d15, d9, d11);
             tessellator.setColorOpaque_F(colorRedTopRight, colorGreenTopRight, colorBlueTopRight);
-            tessellator.func_35835_b(field_35948_an);
+            tessellator.setBrightness(field_35948_an);
             tessellator.addVertexWithUV(d12, d13, d16, d4, d6);
         } else
         {
@@ -4408,16 +4408,16 @@ public class RenderBlocks
         if(enableAO)
         {
             tessellator.setColorOpaque_F(colorRedTopLeft, colorGreenTopLeft, colorBlueTopLeft);
-            tessellator.func_35835_b(field_35943_ak);
+            tessellator.setBrightness(field_35943_ak);
             tessellator.addVertexWithUV(d12, d13, d16, d9, d11);
             tessellator.setColorOpaque_F(colorRedBottomLeft, colorGreenBottomLeft, colorBlueBottomLeft);
-            tessellator.func_35835_b(field_35944_al);
+            tessellator.setBrightness(field_35944_al);
             tessellator.addVertexWithUV(d12, d13, d15, d4, d6);
             tessellator.setColorOpaque_F(colorRedBottomRight, colorGreenBottomRight, colorBlueBottomRight);
-            tessellator.func_35835_b(field_35947_am);
+            tessellator.setBrightness(field_35947_am);
             tessellator.addVertexWithUV(d12, d14, d15, d8, d10);
             tessellator.setColorOpaque_F(colorRedTopRight, colorGreenTopRight, colorBlueTopRight);
-            tessellator.func_35835_b(field_35948_an);
+            tessellator.setBrightness(field_35948_an);
             tessellator.addVertexWithUV(d12, d14, d16, d3, d5);
         } else
         {

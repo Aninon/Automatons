@@ -31,7 +31,7 @@ public class ItemBlock extends Item
         {
             l = 0;
         } else
-        if(i1 != Block.field_35278_bv.blockID)
+        if(i1 != Block.vine.blockID)
         {
             if(l == 0)
             {

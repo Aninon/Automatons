@@ -75,7 +75,7 @@ public class AM_EntityRemnant extends EntityMob
 	
 	public void onDeath(DamageSource damagesource)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(scoreValue >= 0 && entity != null)
         {
             entity.addToPlayerScore(this, scoreValue);

@@ -79,7 +79,7 @@ public class TileEntityRenderer
     {
         if(tileentity.getDistanceFrom(playerX, playerY, playerZ) < 4096D)
         {
-            int i = worldObj.func_35451_b(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, 0);
+            int i = worldObj.getLightBrightnessFromSunlight(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, 0);
             int j = i % 0x10000;
             int k = i / 0x10000;
             GL13.glMultiTexCoord2f(33985 /*GL_TEXTURE1_ARB*/, (float)j / 1.0F, (float)k / 1.0F);

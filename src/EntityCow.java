@@ -68,10 +68,10 @@ public class EntityCow extends EntityAnimal
         {
             if(fire > 0)
             {
-                dropItem(Item.field_35418_bk.shiftedIndex, 1);
+                dropItem(Item.beefCooked.shiftedIndex, 1);
             } else
             {
-                dropItem(Item.field_35417_bj.shiftedIndex, 1);
+                dropItem(Item.beefRaw.shiftedIndex, 1);
             }
         }
 

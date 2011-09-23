@@ -156,7 +156,7 @@ public class Block
 
     public int func_35275_c(IBlockAccess iblockaccess, int i, int j, int k)
     {
-        return iblockaccess.func_35451_b(i, j, k, lightValue[blockID]);
+        return iblockaccess.getLightBrightnessFromSunlight(i, j, k, lightValue[blockID]);
     }
 
     public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l)
@@ -743,19 +743,19 @@ public class Block
     public static final Block redstoneRepeaterActive;
     public static final Block lockedChest;
     public static final Block trapdoor;
-    public static final Block field_35289_bm = (new BlockSilverfish(97)).setHardness(0.75F);
-    public static final Block field_35285_bn;
-    public static final Block field_35286_bo;
-    public static final Block field_35287_bp;
-    public static final Block field_35288_bq;
-    public static final Block field_35282_br;
-    public static final Block field_35281_bs;
-    public static final Block field_35284_bt;
-    public static final Block field_35283_bu;
-    public static final Block field_35278_bv;
-    public static final Block field_35277_bw;
-    public static final Block field_35280_bx;
-    public static final Block field_35279_by;
+    public static final Block silverfish = (new BlockSilverfish(97)).setHardness(0.75F);
+    public static final Block stoneBrick;
+    public static final Block mushroomCapBrown;
+    public static final Block mushroomCapRed;
+    public static final Block fenceIron;
+    public static final Block thinGlass;
+    public static final Block melon;
+    public static final Block pumpkinStem;
+    public static final Block melonStem;
+    public static final Block vine;
+    public static final Block fenceGate;
+    public static final Block stairsBrick;
+    public static final Block stairsStoneBrickSmooth;
     public int blockIndexInTexture;
     public final int blockID;
     protected float blockHardness;
@@ -876,25 +876,25 @@ public class Block
         redstoneRepeaterActive = (new BlockRedstoneRepeater(94, true)).setHardness(0.0F).setLightValue(0.625F).setStepSound(soundWoodFootstep).setBlockName("diode").disableStats().setRequiresSelfNotify();
         lockedChest = (new BlockLockedChest(95)).setHardness(0.0F).setLightValue(1.0F).setStepSound(soundWoodFootstep).setBlockName("lockedchest").setTickOnLoad(true).setRequiresSelfNotify();
         trapdoor = (new BlockTrapDoor(96, Material.wood)).setHardness(3F).setStepSound(soundWoodFootstep).setBlockName("trapdoor").disableStats().setRequiresSelfNotify();
-        field_35285_bn = (new BlockStoneBrick(98)).setHardness(1.5F).setResistance(10F).setStepSound(soundStoneFootstep).setBlockName("stonebricksmooth");
-        field_35286_bo = (new BlockMushroomCap(99, Material.wood, 142, 0)).setHardness(0.2F).setStepSound(soundWoodFootstep).setBlockName("mushroom").setRequiresSelfNotify();
-        field_35287_bp = (new BlockMushroomCap(100, Material.wood, 142, 1)).setHardness(0.2F).setStepSound(soundWoodFootstep).setBlockName("mushroom").setRequiresSelfNotify();
-        field_35288_bq = (new BlockPane(101, 85, 85, Material.iron)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("fenceIron");
-        field_35282_br = (new BlockPane(102, 49, 148, Material.glass)).setHardness(0.3F).setStepSound(soundGlassFootstep).setBlockName("thinGlass");
-        field_35281_bs = (new BlockMelon(103)).setHardness(1.0F).setStepSound(soundWoodFootstep).setBlockName("melon");
-        field_35284_bt = (new BlockStem(104, pumpkin)).setHardness(0.0F).setStepSound(soundWoodFootstep).setBlockName("pumpkinStem").setRequiresSelfNotify();
-        field_35283_bu = (new BlockStem(105, field_35281_bs)).setHardness(0.0F).setStepSound(soundWoodFootstep).setBlockName("pumpkinStem").setRequiresSelfNotify();
-        field_35278_bv = (new BlockVine(106)).setHardness(0.2F).setStepSound(soundGrassFootstep).setBlockName("vine").setRequiresSelfNotify();
-        field_35277_bw = (new BlockFenceGate(107, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("fenceGate").setRequiresSelfNotify();
-        field_35280_bx = (new BlockStairs(108, brick)).setBlockName("stairsBrick").setRequiresSelfNotify();
-        field_35279_by = (new BlockStairs(109, field_35285_bn)).setBlockName("stairsStoneBrickSmooth").setRequiresSelfNotify();
+        stoneBrick = (new BlockStoneBrick(98)).setHardness(1.5F).setResistance(10F).setStepSound(soundStoneFootstep).setBlockName("stonebricksmooth");
+        mushroomCapBrown = (new BlockMushroomCap(99, Material.wood, 142, 0)).setHardness(0.2F).setStepSound(soundWoodFootstep).setBlockName("mushroom").setRequiresSelfNotify();
+        mushroomCapRed = (new BlockMushroomCap(100, Material.wood, 142, 1)).setHardness(0.2F).setStepSound(soundWoodFootstep).setBlockName("mushroom").setRequiresSelfNotify();
+        fenceIron = (new BlockPane(101, 85, 85, Material.iron)).setHardness(5F).setResistance(10F).setStepSound(soundMetalFootstep).setBlockName("fenceIron");
+        thinGlass = (new BlockPane(102, 49, 148, Material.glass)).setHardness(0.3F).setStepSound(soundGlassFootstep).setBlockName("thinGlass");
+        melon = (new BlockMelon(103)).setHardness(1.0F).setStepSound(soundWoodFootstep).setBlockName("melon");
+        pumpkinStem = (new BlockStem(104, pumpkin)).setHardness(0.0F).setStepSound(soundWoodFootstep).setBlockName("pumpkinStem").setRequiresSelfNotify();
+        melonStem = (new BlockStem(105, melon)).setHardness(0.0F).setStepSound(soundWoodFootstep).setBlockName("pumpkinStem").setRequiresSelfNotify();
+        vine = (new BlockVine(106)).setHardness(0.2F).setStepSound(soundGrassFootstep).setBlockName("vine").setRequiresSelfNotify();
+        fenceGate = (new BlockFenceGate(107, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep).setBlockName("fenceGate").setRequiresSelfNotify();
+        stairsBrick = (new BlockStairs(108, brick)).setBlockName("stairsBrick").setRequiresSelfNotify();
+        stairsStoneBrickSmooth = (new BlockStairs(109, stoneBrick)).setBlockName("stairsStoneBrickSmooth").setRequiresSelfNotify();
         Item.itemsList[cloth.blockID] = (new ItemCloth(cloth.blockID - 256)).setItemName("cloth");
         Item.itemsList[wood.blockID] = (new ItemLog(wood.blockID - 256, wood)).setItemName("log");
-        Item.itemsList[field_35285_bn.blockID] = (new ItemLog(field_35285_bn.blockID - 256, field_35285_bn)).setItemName("stonebricksmooth");
+        Item.itemsList[stoneBrick.blockID] = (new ItemLog(stoneBrick.blockID - 256, stoneBrick)).setItemName("stonebricksmooth");
         Item.itemsList[stairSingle.blockID] = (new ItemSlab(stairSingle.blockID - 256)).setItemName("stoneSlab");
         Item.itemsList[sapling.blockID] = (new ItemSapling(sapling.blockID - 256)).setItemName("sapling");
         Item.itemsList[leaves.blockID] = (new ItemLeaves(leaves.blockID - 256)).setItemName("leaves");
-        Item.itemsList[field_35278_bv.blockID] = new ItemVine(field_35278_bv.blockID - 256, false);
+        Item.itemsList[vine.blockID] = new ItemVine(vine.blockID - 256, false);
         Item.itemsList[tallGrass.blockID] = new ItemVine(tallGrass.blockID - 256, true);
         Item.itemsList[pistonBase.blockID] = new ItemPiston(pistonBase.blockID - 256);
         Item.itemsList[pistonStickyBase.blockID] = new ItemPiston(pistonStickyBase.blockID - 256);

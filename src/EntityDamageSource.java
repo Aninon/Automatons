@@ -14,13 +14,13 @@ public class EntityDamageSource extends DamageSource
     public EntityDamageSource(String s, Entity entity)
     {
         super(s);
-        field_35552_n = entity;
+        damageSourceEntity = entity;
     }
 
-    public Entity func_35532_a()
+    public Entity getEntity()
     {
-        return field_35552_n;
+        return damageSourceEntity;
     }
 
-    private Entity field_35552_n;
+    private Entity damageSourceEntity;
 }

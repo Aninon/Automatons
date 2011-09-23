@@ -27,7 +27,7 @@ public interface IInventory
 
     public abstract boolean canInteractWith(EntityPlayer entityplayer);
 
-    public abstract void func_35142_x_();
+    public abstract void openChest();
 
-    public abstract void func_35141_y_();
+    public abstract void closeChest();
 }

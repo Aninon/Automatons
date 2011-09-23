@@ -32,7 +32,7 @@ public class BlockSilverfish extends Block
         }
         if(j == 2)
         {
-            return Block.field_35285_bn.blockIndexInTexture;
+            return Block.stoneBrick.blockIndexInTexture;
         } else
         {
             return Block.stone.blockIndexInTexture;
@@ -58,7 +58,7 @@ public class BlockSilverfish extends Block
 
     public static boolean func_35305_d(int i)
     {
-        return i == Block.stone.blockID || i == Block.cobblestone.blockID || i == Block.field_35285_bn.blockID;
+        return i == Block.stone.blockID || i == Block.cobblestone.blockID || i == Block.stoneBrick.blockID;
     }
 
     public static int func_35304_f(int i)
@@ -67,6 +67,6 @@ public class BlockSilverfish extends Block
         {
             return 1;
         }
-        return i != Block.field_35285_bn.blockID ? 0 : 2;
+        return i != Block.stoneBrick.blockID ? 0 : 2;
     }
 }

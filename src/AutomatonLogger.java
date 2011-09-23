@@ -12,6 +12,13 @@ public class AutomatonLogger {
 
 	static File f;
 
+	
+		public static int tempBlock1=131;
+	public static int tempBlock2=132;
+	
+		public static int tempItem1=130;
+
+		
 	public static int automaton=144;
 	public static int itemOmni=145;
 	public static int itemBally=146;
@@ -35,6 +42,7 @@ public class AutomatonLogger {
 	public static int daymaker=162;
 	public static int techifier=163;
 	public static int naturizer=164;
+	public static int misc=165;
 
 	public static int tech=118;
 	public static int crystal=119;
@@ -76,6 +84,9 @@ public class AutomatonLogger {
 	public static int sleeper=105;
 	public static int seeker=106;
 	public static int remnant=107;
+	public static int beam=108;
+	public static int deltaLaser=109;
+	public static int knave=110;
 	
 	public static int tvRenderId=27;
 	public static int crinkRenderId=28;
@@ -90,6 +101,7 @@ public class AutomatonLogger {
 	
 	
 
+	public static int builderLevel=30;
 	
 	
 	public  AutomatonLogger(){
@@ -183,6 +195,7 @@ public class AutomatonLogger {
 				out.write("daymaker="+daymaker+"\n");
 				out.write("techifier="+techifier+"\n");
 				out.write("naturizer="+naturizer+"\n");
+				out.write("misc="+misc+"\n");
 
 				out.write("//\n//\n//BLOCKS:\n");
 
@@ -232,6 +245,10 @@ public class AutomatonLogger {
 				out.write("ziz="+ziz+"\n");
 				out.write("seeker="+seeker+"\n");
 				out.write("remnant="+remnant+"\n");
+				out.write("beam="+beam+"\n");
+				out.write("deltaLaser="+deltaLaser+"\n");
+				out.write("knave="+knave+"\n");
+				
 				
 				
 				out.close();

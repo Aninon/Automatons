@@ -18,6 +18,10 @@ public class AM_Buildo extends Block
 	
 	public void updateTick(World world, int i, int j, int k, Random random)
     {
+	
+		if(AutomatonUniversal.otherWorld(world)){
+		return;
+		}
 		if(world.getClosestPlayer(i,j,k,65D)!=null){
 			ACTIVATE(world,i,j,k,random);
 		}
@@ -28,10 +32,10 @@ public class AM_Buildo extends Block
 	int meta =world.getBlockMetadata(i,j,k);
 	
 	world.setBlock(i,j,k,1);
-	if(j!=30){
-		world.setBlock(i,j,k,1);
+	if(j!=AutomatonLogger.builderLevel){
+		//world.setBlock(i,j,k,1);
 	}else{
-		world.setBlock(i,j,k,1);
+		//world.setBlock(i,j,k,1);
 		
 		AM_WorldGenStructure wg= new AM_WorldGenStructure();
 		wg.set=meta;
@@ -51,6 +55,23 @@ public class AM_Buildo extends Block
 
 	
 	
+	
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    public int getRenderType()
+    {
+        return 1;
+    }
+	
+	/*
 	public void deploy(int R,World world,int i,int j,int k){
 	
 	AxisAlignedBB aab=getCollisionBoundingBoxFromPool( world,  i,  j,  k);
@@ -77,5 +98,5 @@ public class AM_Buildo extends Block
 	}
 	}
    
-
+*/
 }

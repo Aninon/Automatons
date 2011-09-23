@@ -30,7 +30,7 @@ public class BlockMelon extends Block
 
     public int idDropped(int i, Random random)
     {
-        return Item.field_35421_bg.shiftedIndex;
+        return Item.melon.shiftedIndex;
     }
 
     public int quantityDropped(Random random)

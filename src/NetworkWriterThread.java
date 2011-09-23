@@ -31,9 +31,9 @@ class NetworkWriterThread extends Thread
             while(NetworkManager.sendNetworkPacket(netManager)) ;
             try
             {
-                if(NetworkManager.func_28140_f(netManager) != null)
+                if(NetworkManager.getOutputStream(netManager) != null)
                 {
-                    NetworkManager.func_28140_f(netManager).flush();
+                    NetworkManager.getOutputStream(netManager).flush();
                 }
             }
             catch(IOException ioexception)

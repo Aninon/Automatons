@@ -20,11 +20,13 @@ public class AM_WorldGenStructure extends WorldGenerator
 	public int M=7;
 	public int W;
 	public int set=0;
+	
+	int JJ=0;
 
     public boolean generate(World world, Random random, int i, int j, int k)
     {
 
-	
+	JJ=j;
 	
 	//int bb=world.getBlockId(i,j-1,k);
 	//if(bb==2 || bb==12 || bb==AutomatonLogger.frass){
@@ -43,7 +45,7 @@ public class AM_WorldGenStructure extends WorldGenerator
 	W=M;
 	//i=(i/W)*W;
 	//k=(k/W)*W;
-	
+	j=AutomatonLogger.builderLevel;
 	
 	if(world.getBlockId(i,j,k)==AutomatonLogger.tech){
 	return true;
@@ -59,6 +61,7 @@ public class AM_WorldGenStructure extends WorldGenerator
 	emptyOut(world,24,m,m,i,j,k);
 	}else{
 	cavernize(world,random,27,m,m,i,j,k);
+	return true;
 	}
 	
 	//}
@@ -73,13 +76,14 @@ public class AM_WorldGenStructure extends WorldGenerator
 	//if(jj<m ){
 	
 	int bb1=world.getBlockId(i,j,k+w);
-	int mm1=world.getBlockMetadata(i,j,k+w);
-	bo[0]=!(bb1==AutomatonLogger.sky || (bb1==AutomatonLogger.importantBuildingThingy && mm1==0));
+	//int mm1=world.getBlockMetadata(i,j,k+w);
+	bo[0]=!(bb1==AutomatonLogger.sky || (bb1==AutomatonLogger.importantBuildingThingy));
 	
 	if(bo[0] && bb1!=AutomatonLogger.frass){
-	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	foliage.set=1;
-	foliage.generate( world,  random,  i,  j,  k+w);
+	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	//foliage.set=1;
+	//foliage.generate( world,  random,  i,  j,  k+w);
+	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
 	}
 		//bo[0]=!cell[ii][jj+1];
 	//}
@@ -88,12 +92,13 @@ public class AM_WorldGenStructure extends WorldGenerator
 		//bo[1]=!cell[ii][jj-1];
 		
 		int bb2=world.getBlockId(i,j,k-w);
-	int mm2=world.getBlockMetadata(i,j,k-w);
-	bo[1]=!(bb2==AutomatonLogger.sky || (bb2==AutomatonLogger.importantBuildingThingy && mm2==0));
+	//int mm2=world.getBlockMetadata(i,j,k-w);
+	bo[1]=!(bb2==AutomatonLogger.sky || (bb2==AutomatonLogger.importantBuildingThingy));
 	if(bo[1] && bb2!=AutomatonLogger.frass){
-	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	foliage.set=1;
-	foliage.generate( world,  random,  i,  j,  k-w);
+	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	//foliage.set=1;
+	//foliage.generate( world,  random,  i,  j,  k-w);
+	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
 	}
 		
 	//}
@@ -101,12 +106,13 @@ public class AM_WorldGenStructure extends WorldGenerator
 	//if(ii<m ){
 		//bo[2]=!cell[ii+1][jj];
 			int bb3=world.getBlockId(i+w,j,k);
-		int mm3=world.getBlockMetadata(i+w,j,k);
-	bo[2]=!(bb3==AutomatonLogger.sky || (bb3==AutomatonLogger.importantBuildingThingy && mm3==0));
+		//int mm3=world.getBlockMetadata(i+w,j,k);
+	bo[2]=!(bb3==AutomatonLogger.sky || (bb3==AutomatonLogger.importantBuildingThingy));
 	if(bo[2] && bb3!=AutomatonLogger.frass){
-	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	foliage.set=1;
-	foliage.generate( world,  random,  i+w,  j,  k);
+	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	//foliage.set=1;
+	//foliage.generate( world,  random,  i+w,  j,  k);
+	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
 	}
 	
 	//}
@@ -114,12 +120,13 @@ public class AM_WorldGenStructure extends WorldGenerator
 	//if(ii>0){
 		//bo[3]=!cell[ii-1][jj];
 				int bb4=world.getBlockId(i-w,j,k);
-		int mm4=world.getBlockMetadata(i-w,j,k);
-	bo[3]=!(bb4==AutomatonLogger.sky || (bb4==AutomatonLogger.importantBuildingThingy && mm4==0));
+		//int mm4=world.getBlockMetadata(i-w,j,k);
+	bo[3]=!(bb4==AutomatonLogger.sky || (bb4==AutomatonLogger.importantBuildingThingy));
 	if(bo[3] && bb4!=AutomatonLogger.frass){
-	AM_WorldGenStructure foliage = new AM_WorldGenStructure();
-	foliage.set=1;
-	foliage.generate( world,  random,  i-w,  j,  k);
+	//AM_WorldGenStructure foliage = new AM_WorldGenStructure();
+	//foliage.set=1;
+	//foliage.generate( world,  random,  i-w,  j,  k);
+	world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,1);
 	}
 	//}
 	

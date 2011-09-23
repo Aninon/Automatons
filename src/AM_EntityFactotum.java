@@ -15,7 +15,7 @@ import java.util.*;
 //setTarget( = setEntityToAttack(
 //hasCurrentTarget() = func_25021_O()
 //getIsWolfsFavoriteMeat()=func_25010_k()
-//func_25026_x=func_25018_n_
+//getVerticalFaceSpeed=func_25018_n_
 //isMovementCeased=func_25026_u
 public class AM_EntityFactotum extends EntityCreature
 implements IInventory
@@ -78,7 +78,7 @@ implements IInventory
 	}
 
 
-	protected void func_31026_E() //kills wandering!
+	protected void updateWanderPath() //kills wandering!
 	{
 	}
 
@@ -135,7 +135,7 @@ implements IInventory
 			int j = nbttagcompound1.getByte("Slot") & 0xff;
 			if(j >= 0 && j < cargoItems.length)
 			{
-				cargoItems[j] = ItemStack.func_35864_a(nbttagcompound1);
+				cargoItems[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
 			}
 		}
 		
@@ -231,7 +231,7 @@ implements IInventory
 		super.setEntityDead();
 	}
 	
-	/*protected void func_31026_E(){
+	/*protected void updateWanderPath(){
 	}*/
 
 	protected int getDropItemId(){
@@ -638,12 +638,12 @@ implements IInventory
 	
 	
 	//open inventory
-	public void func_35142_x_()
+	public void openChest()
     {
     }
 
 	//close inventory
-    public void func_35141_y_()
+    public void closeChest()
     {
     }
 	

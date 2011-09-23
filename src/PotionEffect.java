@@ -14,14 +14,14 @@ public class PotionEffect
 
     public PotionEffect(int i, int j, int k)
     {
-        field_35805_a = i;
+        potionID = i;
         field_35803_b = j;
         field_35804_c = k;
     }
 
     public void func_35796_a(PotionEffect potioneffect)
     {
-        if(field_35805_a != potioneffect.field_35805_a)
+        if(potionID != potioneffect.potionID)
         {
             System.err.println("This method should only be called for matching effects!");
         }
@@ -32,9 +32,9 @@ public class PotionEffect
         }
     }
 
-    public int func_35799_a()
+    public int getPotionID()
     {
-        return field_35805_a;
+        return potionID;
     }
 
     public int func_35802_b()
@@ -51,7 +51,7 @@ public class PotionEffect
     {
         if(field_35803_b > 0)
         {
-            if(Potion.field_35678_a[field_35805_a].func_35660_a(field_35803_b, field_35804_c))
+            if(Potion.potionArray[potionID].func_35660_a(field_35803_b, field_35804_c))
             {
                 func_35800_b(entityliving);
             }
@@ -69,16 +69,16 @@ public class PotionEffect
     {
         if(field_35803_b > 0)
         {
-            Potion.field_35678_a[field_35805_a].func_35662_a(entityliving, field_35804_c);
+            Potion.potionArray[potionID].performEffect(entityliving, field_35804_c);
         }
     }
 
     public int hashCode()
     {
-        return field_35805_a;
+        return potionID;
     }
 
-    private int field_35805_a;
+    private int potionID;
     private int field_35803_b;
     private int field_35804_c;
 }

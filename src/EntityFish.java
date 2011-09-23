@@ -233,7 +233,7 @@ public class EntityFish extends Entity
         {
             if(movingobjectposition.entityHit != null)
             {
-                if(movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35524_a(this, angler), 0))
+                if(movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, angler), 0))
                 {
                     bobber = movingobjectposition.entityHit;
                 }

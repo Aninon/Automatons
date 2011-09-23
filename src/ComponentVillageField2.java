@@ -59,10 +59,10 @@ public class ComponentVillageField2 extends ComponentVillage
         func_35011_a(world, structureboundingbox, 3, 0, 1, 3, 0, 7, Block.waterMoving.blockID, Block.waterMoving.blockID, false);
         for(int i = 1; i <= 7; i++)
         {
-            func_35018_a(world, Block.crops.blockID, MathHelper.func_35598_a(random, 2, 7), 1, 1, i, structureboundingbox);
-            func_35018_a(world, Block.crops.blockID, MathHelper.func_35598_a(random, 2, 7), 2, 1, i, structureboundingbox);
-            func_35018_a(world, Block.crops.blockID, MathHelper.func_35598_a(random, 2, 7), 4, 1, i, structureboundingbox);
-            func_35018_a(world, Block.crops.blockID, MathHelper.func_35598_a(random, 2, 7), 5, 1, i, structureboundingbox);
+            func_35018_a(world, Block.crops.blockID, MathHelper.getRandomIntegerInRange(random, 2, 7), 1, 1, i, structureboundingbox);
+            func_35018_a(world, Block.crops.blockID, MathHelper.getRandomIntegerInRange(random, 2, 7), 2, 1, i, structureboundingbox);
+            func_35018_a(world, Block.crops.blockID, MathHelper.getRandomIntegerInRange(random, 2, 7), 4, 1, i, structureboundingbox);
+            func_35018_a(world, Block.crops.blockID, MathHelper.getRandomIntegerInRange(random, 2, 7), 5, 1, i, structureboundingbox);
         }
 
         for(int j = 0; j < 9; j++)

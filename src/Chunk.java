@@ -489,7 +489,7 @@ public class Chunk
             if(tileentity != null)
             {
                 tileentity.func_35144_b();
-                tileentity.field_35145_n = l;
+                tileentity.blockMetadata = l;
             }
         }
     }
@@ -854,7 +854,7 @@ public class Chunk
         ChunkBlockMap.func_26002_a(blocks);
     }
 
-    public void func_35843_a(IChunkProvider ichunkprovider, IChunkProvider ichunkprovider1, int i, int j)
+    public void populateChunk(IChunkProvider ichunkprovider, IChunkProvider ichunkprovider1, int i, int j)
     {
         if(!isTerrainPopulated && ichunkprovider.chunkExists(i + 1, j + 1) && ichunkprovider.chunkExists(i, j + 1) && ichunkprovider.chunkExists(i + 1, j))
         {

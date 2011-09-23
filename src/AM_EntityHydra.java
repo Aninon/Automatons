@@ -54,7 +54,7 @@ public class AM_EntityHydra extends EntityMob
 	
 	protected boolean attackEntityAsMob(Entity entity)
     {
-        return entity.attackEntityFrom(DamageSource.func_35525_a(this), attackStrength);
+        return entity.attackEntityFrom(DamageSource.causeMobDamage(this), attackStrength);
     }
 	
 	protected void attackEntity(Entity entity, float f)
@@ -143,7 +143,7 @@ public class AM_EntityHydra extends EntityMob
 		} else
 		if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || rand.nextInt(80) == 0))
 		{
-			func_31026_E();
+			updateWanderPath();
 		}
 		int i = MathHelper.floor_double(boundingBox.minY + 0.5D);
 		boolean flag = isInWater();
@@ -218,7 +218,7 @@ public class AM_EntityHydra extends EntityMob
 		}
 	}
 
-	protected void func_31026_E()
+	protected void updateWanderPath()
 	{
 		boolean flag = false;
 		int i = -1;
@@ -287,7 +287,7 @@ public class AM_EntityHydra extends EntityMob
 	
 	public void onDeath(DamageSource damagesource)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(scoreValue >= 0 && entity != null)
         {
             entity.addToPlayerScore(this, scoreValue);

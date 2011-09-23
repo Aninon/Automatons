@@ -13,44 +13,44 @@ public class Potion
 
     protected Potion(int i)
     {
-        field_35671_I = "";
-        field_35670_H = i;
-        field_35678_a[i] = this;
+        name = "";
+        id = i;
+        potionArray[i] = this;
     }
 
-    public void func_35662_a(EntityLiving entityliving, int i)
+    public void performEffect(EntityLiving entityliving, int i)
     {
-        if(field_35670_H == field_35681_l.field_35670_H)
+        if(id == potionRegeneration.id)
         {
             if(entityliving.health < 20)
             {
                 entityliving.heal(1);
             }
         } else
-        if(field_35670_H == field_35689_u.field_35670_H)
+        if(id == potionPoison.id)
         {
             if(entityliving.health > 1)
             {
-                entityliving.attackEntityFrom(DamageSource.field_35545_l, 1);
+                entityliving.attackEntityFrom(DamageSource.magic, 1);
             }
         } else
-        if(field_35670_H == field_35691_s.field_35670_H && (entityliving instanceof EntityPlayer))
+        if(id == potionHunger.id && (entityliving instanceof EntityPlayer))
         {
             ((EntityPlayer)entityliving).func_35198_d(0.025F * (float)(i + 1));
         } else
-        if(field_35670_H == field_35685_h.field_35670_H)
+        if(id == potionHeal.id)
         {
             entityliving.heal(4 << i);
         } else
-        if(field_35670_H == field_35686_i.field_35670_H)
+        if(id == potionHealDamage.id)
         {
-            entityliving.attackEntityFrom(DamageSource.field_35545_l, 4 << i);
+            entityliving.attackEntityFrom(DamageSource.magic, 4 << i);
         }
     }
 
     public boolean func_35660_a(int i, int j)
     {
-        if(field_35670_H == field_35681_l.field_35670_H || field_35670_H == field_35689_u.field_35670_H)
+        if(id == potionRegeneration.id || id == potionPoison.id)
         {
             int k = 25 >> j;
             if(k > 0)
@@ -61,49 +61,49 @@ public class Potion
                 return true;
             }
         }
-        return field_35670_H == field_35691_s.field_35670_H;
+        return id == potionHunger.id;
     }
 
-    public Potion func_35661_a(String s)
+    public Potion setPotionName(String s)
     {
-        field_35671_I = s;
+        name = s;
         return this;
     }
 
-    public static final Potion field_35678_a[] = new Potion[32];
-    public static final Potion field_35676_b = null;
-    public static final Potion field_35677_c = (new Potion(1)).func_35661_a("potion.moveSpeed");
-    public static final Potion field_35674_d = (new Potion(2)).func_35661_a("potion.moveSlowdown");
-    public static final Potion field_35675_e = (new Potion(3)).func_35661_a("potion.digSpeed");
-    public static final Potion field_35672_f = (new Potion(4)).func_35661_a("potion.digSlowDown");
-    public static final Potion field_35673_g = (new Potion(5)).func_35661_a("potion.damageBoost");
-    public static final Potion field_35685_h = (new PotionHealth(6)).func_35661_a("potion.heal");
-    public static final Potion field_35686_i = (new PotionHealth(7)).func_35661_a("potion.harm");
-    public static final Potion field_35683_j = (new Potion(8)).func_35661_a("potion.jump");
-    public static final Potion field_35684_k = (new Potion(9)).func_35661_a("potion.confusion");
-    public static final Potion field_35681_l = (new Potion(10)).func_35661_a("potion.regeneration");
-    public static final Potion field_35682_m = (new Potion(11)).func_35661_a("potion.resistance");
-    public static final Potion field_35679_n = (new Potion(12)).func_35661_a("potion.fireResistance");
-    public static final Potion field_35680_o = (new Potion(13)).func_35661_a("potion.waterBreathing");
-    public static final Potion field_35694_p = (new Potion(14)).func_35661_a("potion.invisibility");
-    public static final Potion field_35693_q = (new Potion(15)).func_35661_a("potion.blindness");
-    public static final Potion field_35692_r = (new Potion(16)).func_35661_a("potion.nightVision");
-    public static final Potion field_35691_s = (new Potion(17)).func_35661_a("potion.hunger");
-    public static final Potion field_35690_t = (new Potion(18)).func_35661_a("potion.weakness");
-    public static final Potion field_35689_u = (new Potion(19)).func_35661_a("potion.poison");
-    public static final Potion field_35688_v = null;
-    public static final Potion field_35687_w = null;
-    public static final Potion field_35697_x = null;
-    public static final Potion field_35696_y = null;
-    public static final Potion field_35695_z = null;
-    public static final Potion field_35667_A = null;
-    public static final Potion field_35668_B = null;
-    public static final Potion field_35669_C = null;
-    public static final Potion field_35663_D = null;
-    public static final Potion field_35664_E = null;
-    public static final Potion field_35665_F = null;
-    public static final Potion field_35666_G = null;
-    public final int field_35670_H;
-    private String field_35671_I;
+    public static final Potion potionArray[] = new Potion[32];
+    public static final Potion potionNull = null;
+    public static final Potion potionSpeed = (new Potion(1)).setPotionName("potion.moveSpeed");
+    public static final Potion potionSlowdown = (new Potion(2)).setPotionName("potion.moveSlowdown");
+    public static final Potion potionDigSpeed = (new Potion(3)).setPotionName("potion.digSpeed");
+    public static final Potion potionDigSlow = (new Potion(4)).setPotionName("potion.digSlowDown");
+    public static final Potion potionDamageBoost = (new Potion(5)).setPotionName("potion.damageBoost");
+    public static final Potion potionHeal = (new PotionHealth(6)).setPotionName("potion.heal");
+    public static final Potion potionHealDamage = (new PotionHealth(7)).setPotionName("potion.harm");
+    public static final Potion potionJump = (new Potion(8)).setPotionName("potion.jump");
+    public static final Potion potionConfusion = (new Potion(9)).setPotionName("potion.confusion");
+    public static final Potion potionRegeneration = (new Potion(10)).setPotionName("potion.regeneration");
+    public static final Potion potionResistance = (new Potion(11)).setPotionName("potion.resistance");
+    public static final Potion potionFireReistance = (new Potion(12)).setPotionName("potion.fireResistance");
+    public static final Potion potionWaterBreathing = (new Potion(13)).setPotionName("potion.waterBreathing");
+    public static final Potion potionInvisibility = (new Potion(14)).setPotionName("potion.invisibility");
+    public static final Potion potionBlindness = (new Potion(15)).setPotionName("potion.blindness");
+    public static final Potion potionNightVision = (new Potion(16)).setPotionName("potion.nightVision");
+    public static final Potion potionHunger = (new Potion(17)).setPotionName("potion.hunger");
+    public static final Potion potionWeakness = (new Potion(18)).setPotionName("potion.weakness");
+    public static final Potion potionPoison = (new Potion(19)).setPotionName("potion.poison");
+    public static final Potion potionNull2 = null;
+    public static final Potion potionNull3 = null;
+    public static final Potion potionNull4 = null;
+    public static final Potion potionNull5 = null;
+    public static final Potion potionNull6 = null;
+    public static final Potion potionNull7 = null;
+    public static final Potion potionNull8 = null;
+    public static final Potion potionNull9 = null;
+    public static final Potion potionNull10 = null;
+    public static final Potion potionNull11 = null;
+    public static final Potion potionNull12 = null;
+    public static final Potion potionNull13 = null;
+    public final int id;
+    private String name;
 
 }

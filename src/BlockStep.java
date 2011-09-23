@@ -51,7 +51,7 @@ public class BlockStep extends Block
         }
         if(j == 5)
         {
-            return Block.field_35285_bn.blockIndexInTexture;
+            return Block.stoneBrick.blockIndexInTexture;
         } else
         {
             return 6;

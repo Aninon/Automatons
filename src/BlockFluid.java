@@ -263,8 +263,8 @@ public abstract class BlockFluid extends Block
 
     public int func_35275_c(IBlockAccess iblockaccess, int i, int j, int k)
     {
-        int l = iblockaccess.func_35451_b(i, j, k, 0);
-        int i1 = iblockaccess.func_35451_b(i, j + 1, k, 0);
+        int l = iblockaccess.getLightBrightnessFromSunlight(i, j, k, 0);
+        int i1 = iblockaccess.getLightBrightnessFromSunlight(i, j + 1, k, 0);
         int j1 = l & 0xff;
         int k1 = i1 & 0xff;
         int l1 = l >> 16 & 0xff;

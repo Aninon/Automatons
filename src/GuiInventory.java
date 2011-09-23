@@ -26,7 +26,7 @@ public class GuiInventory extends GuiContainer
 
     public void updateScreen()
     {
-        if(mc.playerController.func_35640_h())
+        if(mc.playerController.isInCreativeMode())
         {
             mc.displayGuiScreen(new GuiContainerCreative(mc.thePlayer));
         }
@@ -35,7 +35,7 @@ public class GuiInventory extends GuiContainer
     public void initGui()
     {
         controlList.clear();
-        if(mc.playerController.func_35640_h())
+        if(mc.playerController.isInCreativeMode())
         {
             mc.displayGuiScreen(new GuiContainerCreative(mc.thePlayer));
         }

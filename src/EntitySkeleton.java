@@ -43,14 +43,14 @@ public class EntitySkeleton extends EntityMob
     public void onDeath(DamageSource damagesource)
     {
         super.onDeath(damagesource);
-        if((damagesource.func_35526_e() instanceof EntityArrow) && (damagesource.func_35532_a() instanceof EntityPlayer))
+        if((damagesource.func_35526_e() instanceof EntityArrow) && (damagesource.getEntity() instanceof EntityPlayer))
         {
-            EntityPlayer entityplayer = (EntityPlayer)damagesource.func_35532_a();
+            EntityPlayer entityplayer = (EntityPlayer)damagesource.getEntity();
             double d = entityplayer.posX - posX;
             double d1 = entityplayer.posZ - posZ;
             if(d * d + d1 * d1 >= 2500D)
             {
-                entityplayer.triggerAchievement(AchievementList.field_35608_v);
+                entityplayer.triggerAchievement(AchievementList.snipeSkeleton);
             }
         }
     }

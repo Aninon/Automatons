@@ -115,7 +115,7 @@ public class Material
     public static final Material lava;
     public static final Material leaves;
     public static final Material plants;
-    public static final Material field_35495_k;
+    public static final Material vine;
     public static final Material sponge;
     public static final Material cloth;
     public static final Material fire;
@@ -153,7 +153,7 @@ public class Material
         lava = (new MaterialLiquid(MapColor.tntColor)).setNoPushMobility();
         leaves = (new Material(MapColor.foliageColor)).setBurning().setIsTranslucent().setNoPushMobility();
         plants = (new MaterialLogic(MapColor.foliageColor)).setNoPushMobility();
-        field_35495_k = (new MaterialLogic(MapColor.foliageColor)).setBurning().setNoPushMobility().setIsGroundCover();
+        vine = (new MaterialLogic(MapColor.foliageColor)).setBurning().setNoPushMobility().setIsGroundCover();
         sponge = new Material(MapColor.clothColor);
         cloth = (new Material(MapColor.clothColor)).setBurning();
         fire = (new MaterialTransparent(MapColor.airColor)).setNoPushMobility();

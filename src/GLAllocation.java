@@ -34,7 +34,7 @@ public class GLAllocation
 
     }
 
-    public static synchronized void func_28194_b(int i)
+    public static synchronized void deleteDisplayLists(int i)
     {
         int j = displayLists.indexOf(Integer.valueOf(i));
         GL11.glDeleteLists(((Integer)displayLists.get(j)).intValue(), ((Integer)displayLists.get(j + 1)).intValue());

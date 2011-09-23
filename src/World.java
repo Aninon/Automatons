@@ -158,8 +158,10 @@ public class World
         if(worldInfo != null && worldInfo.getDimension() == -1)
         {
             worldProvider = WorldProvider.getProviderForDimension(-1);
-        } else
-        {
+        } else if(worldInfo != null && worldInfo.getDimension() == 1989){
+			worldProvider = new AM_WorldProviderBot();
+		
+		}else{ 
             worldProvider = WorldProvider.getProviderForDimension(0);
         }
         boolean flag = false;
@@ -191,7 +193,7 @@ public class World
     {
         findingSpawnPoint = true;
         WorldChunkManager worldchunkmanager = getWorldChunkManager();
-        List list = worldchunkmanager.func_35559_a();
+        List list = worldchunkmanager.getBiomesToSpawnIn();
         Random random = new Random(getRandomSeed());
         ChunkPosition chunkposition = worldchunkmanager.func_35556_a(0, 0, 256, list, random);
         int i = 0;
@@ -802,7 +804,7 @@ public class World
 
     }
 
-    public int func_35451_b(int i, int j, int k, int l)
+    public int getLightBrightnessFromSunlight(int i, int j, int k, int l)
     {
         int i1 = func_35457_a(EnumSkyBlock.Sky, i, j, k);
         int j1 = func_35457_a(EnumSkyBlock.Block, i, j, k);
@@ -2675,7 +2677,7 @@ public class World
         {
             return false;
         }
-        if(block == Block.waterMoving || block == Block.waterStill || block == Block.lavaMoving || block == Block.lavaStill || block == Block.fire || block == Block.snow || block == Block.field_35278_bv)
+        if(block == Block.waterMoving || block == Block.waterStill || block == Block.lavaMoving || block == Block.lavaStill || block == Block.fire || block == Block.snow || block == Block.vine)
         {
             block = null;
         }

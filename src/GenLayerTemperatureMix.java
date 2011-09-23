@@ -26,7 +26,7 @@ public class GenLayerTemperatureMix extends GenLayer
         int ai2[] = IntCache.func_35267_a(k * l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
-            ai2[i1] = ai1[i1] + (BiomeGenBase.field_35486_a[ai[i1]].func_35474_f() - ai1[i1]) / (field_35506_c * 2 + 1);
+            ai2[i1] = ai1[i1] + (BiomeGenBase.biomeList[ai[i1]].func_35474_f() - ai1[i1]) / (field_35506_c * 2 + 1);
         }
 
         return ai2;

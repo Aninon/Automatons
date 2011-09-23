@@ -139,7 +139,7 @@ public class EntitySlime extends EntityLiving
     public void onCollideWithPlayer(EntityPlayer entityplayer)
     {
         int i = getSlimeSize();
-        if(i > 1 && canEntityBeSeen(entityplayer) && (double)getDistanceToEntity(entityplayer) < 0.59999999999999998D * (double)i && entityplayer.attackEntityFrom(DamageSource.func_35525_a(this), i))
+        if(i > 1 && canEntityBeSeen(entityplayer) && (double)getDistanceToEntity(entityplayer) < 0.59999999999999998D * (double)i && entityplayer.attackEntityFrom(DamageSource.causeMobDamage(this), i))
         {
             worldObj.playSoundAtEntity(this, "mob.slimeattack", 1.0F, (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
         }

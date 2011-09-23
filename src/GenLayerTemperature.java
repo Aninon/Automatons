@@ -23,7 +23,7 @@ public class GenLayerTemperature extends GenLayer
         int ai1[] = IntCache.func_35267_a(k * l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
-            ai1[i1] = BiomeGenBase.field_35486_a[ai[i1]].func_35474_f();
+            ai1[i1] = BiomeGenBase.biomeList[ai[i1]].func_35474_f();
         }
 
         return ai1;

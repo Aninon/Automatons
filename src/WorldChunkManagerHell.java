@@ -50,7 +50,7 @@ public class WorldChunkManagerHell extends WorldChunkManager
         return af;
     }
 
-    public float[] func_35560_b(float af[], int i, int j, int k, int l)
+    public float[] getRainfall(float af[], int i, int j, int k, int l)
     {
         if(af == null || af.length < k * l)
         {

@@ -195,7 +195,7 @@ public class EntityEgg extends Entity
         {
             if(movingobjectposition.entityHit != null)
             {
-                if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35524_a(this, field_20051_g), 0));
+                if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, field_20051_g), 0));
             }
             if(!worldObj.multiplayerWorld && rand.nextInt(8) == 0)
             {

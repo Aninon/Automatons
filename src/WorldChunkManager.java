@@ -15,11 +15,12 @@ public class WorldChunkManager
 
     protected WorldChunkManager()
     {
-        field_35563_f = new BiomeCache(this);
-        field_35564_g = new ArrayList();
-        field_35564_g.add(BiomeGenBase.forest);
-        field_35564_g.add(BiomeGenBase.swampland);
-        field_35564_g.add(BiomeGenBase.taiga);
+        biomeCache = new BiomeCache(this);
+        biomesToSpawnIn = new ArrayList();
+		biomesToSpawnIn.add(BiomeGenBase.tech);
+        biomesToSpawnIn.add(BiomeGenBase.forest);
+        biomesToSpawnIn.add(BiomeGenBase.swampland);
+        biomesToSpawnIn.add(BiomeGenBase.taiga);
     }
 
     public WorldChunkManager(World world)
@@ -28,13 +29,13 @@ public class WorldChunkManager
         GenLayer agenlayer[] = GenLayer.func_35497_a(world.getRandomSeed());
         field_34903_b = agenlayer[0];
         field_34902_c = agenlayer[1];
-        field_34901_d = agenlayer[2];
-        field_35565_e = agenlayer[3];
+        temperatureLayer = agenlayer[2];
+        rainfallLayer = agenlayer[3];
     }
 
-    public List func_35559_a()
+    public List getBiomesToSpawnIn()
     {
-        return field_35564_g;
+        return biomesToSpawnIn;
     }
 
     public BiomeGenBase getBiomeGenAtChunkCoord(ChunkCoordIntPair chunkcoordintpair)
@@ -44,22 +45,22 @@ public class WorldChunkManager
 
     public BiomeGenBase getBiomeGenAt(int i, int j)
     {
-        return field_35563_f.func_35725_a(i, j);
+        return biomeCache.func_35725_a(i, j);
     }
 
     public float func_35558_c(int i, int j)
     {
-        return field_35563_f.func_35727_c(i, j);
+        return biomeCache.func_35727_c(i, j);
     }
 
-    public float[] func_35560_b(float af[], int i, int j, int k, int l)
+    public float[] getRainfall(float af[], int i, int j, int k, int l)
     {
         IntCache.func_35268_a();
         if(af == null || af.length < k * l)
         {
             af = new float[k * l];
         }
-        int ai[] = field_35565_e.func_35500_a(i, j, k, l);
+        int ai[] = rainfallLayer.func_35500_a(i, j, k, l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
             float f = (float)ai[i1] / 65536F;
@@ -75,7 +76,7 @@ public class WorldChunkManager
 
     public float func_35554_b(int i, int j)
     {
-        return field_35563_f.func_35722_b(i, j);
+        return biomeCache.func_35722_b(i, j);
     }
 
     public float[] getTemperatures(float af[], int i, int j, int k, int l)
@@ -85,7 +86,7 @@ public class WorldChunkManager
         {
             af = new float[k * l];
         }
-        int ai[] = field_34901_d.func_35500_a(i, j, k, l);
+        int ai[] = temperatureLayer.func_35500_a(i, j, k, l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
             float f = (float)ai[i1] / 65536F;
@@ -109,7 +110,7 @@ public class WorldChunkManager
         int ai[] = field_34903_b.func_35500_a(i, j, k, l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
-            abiomegenbase[i1] = BiomeGenBase.field_35486_a[ai[i1]];
+            abiomegenbase[i1] = BiomeGenBase.biomeList[ai[i1]];
         }
 
         return abiomegenbase;
@@ -119,7 +120,7 @@ public class WorldChunkManager
     {
         if(k == 16 && l == 16 && (i & 0xf) == 0 && (j & 0xf) == 0)
         {
-            return field_35563_f.func_35723_d(i, j);
+            return biomeCache.func_35723_d(i, j);
         } else
         {
             field_4195_d = loadBlockGeneratorData(field_4195_d, i, j, k, l);
@@ -141,14 +142,14 @@ public class WorldChunkManager
         }
         if(flag && k == 16 && l == 16 && (i & 0xf) == 0 && (j & 0xf) == 0)
         {
-            BiomeGenBase abiomegenbase1[] = field_35563_f.func_35723_d(i, j);
+            BiomeGenBase abiomegenbase1[] = biomeCache.func_35723_d(i, j);
             System.arraycopy(abiomegenbase1, 0, abiomegenbase, 0, k * l);
             return abiomegenbase;
         }
         int ai[] = field_34902_c.func_35500_a(i, j, k, l);
         for(int i1 = 0; i1 < k * l; i1++)
         {
-            abiomegenbase[i1] = BiomeGenBase.field_35486_a[ai[i1]];
+            abiomegenbase[i1] = BiomeGenBase.biomeList[ai[i1]];
         }
 
         return abiomegenbase;
@@ -165,7 +166,7 @@ public class WorldChunkManager
         int ai[] = field_34903_b.func_35500_a(l, i1, l1, i2);
         for(int j2 = 0; j2 < l1 * i2; j2++)
         {
-            BiomeGenBase biomegenbase = BiomeGenBase.field_35486_a[ai[j2]];
+            BiomeGenBase biomegenbase = BiomeGenBase.biomeList[ai[j2]];
             if(!list.contains(biomegenbase))
             {
                 return false;
@@ -190,7 +191,7 @@ public class WorldChunkManager
         {
             int l2 = l + k2 % l1 << 2;
             int i3 = i1 + k2 / l1 << 2;
-            BiomeGenBase biomegenbase = BiomeGenBase.field_35486_a[ai[k2]];
+            BiomeGenBase biomegenbase = BiomeGenBase.biomeList[ai[k2]];
             if(list.contains(biomegenbase) && (chunkposition == null || random.nextInt(j2 + 1) == 0))
             {
                 chunkposition = new ChunkPosition(l2, 0, i3);
@@ -203,14 +204,14 @@ public class WorldChunkManager
 
     public void func_35561_b()
     {
-        field_35563_f.func_35724_a();
+        biomeCache.func_35724_a();
     }
 
     private GenLayer field_34903_b;
     private GenLayer field_34902_c;
-    private GenLayer field_34901_d;
-    private GenLayer field_35565_e;
-    private BiomeCache field_35563_f;
-    private List field_35564_g;
+    private GenLayer temperatureLayer;
+    private GenLayer rainfallLayer;
+    private BiomeCache biomeCache;
+    private List biomesToSpawnIn;
     public BiomeGenBase field_4195_d[];
 }

@@ -68,9 +68,9 @@ public class ComponentVillageHouse4_Garden extends ComponentVillage
         func_35011_a(world, structureboundingbox, 0, 1, 1, 0, 3, 3, Block.planks.blockID, Block.planks.blockID, false);
         func_35011_a(world, structureboundingbox, 4, 1, 1, 4, 3, 3, Block.planks.blockID, Block.planks.blockID, false);
         func_35011_a(world, structureboundingbox, 1, 1, 4, 3, 3, 4, Block.planks.blockID, Block.planks.blockID, false);
-        func_35018_a(world, Block.field_35282_br.blockID, 0, 0, 2, 2, structureboundingbox);
-        func_35018_a(world, Block.field_35282_br.blockID, 0, 2, 2, 4, structureboundingbox);
-        func_35018_a(world, Block.field_35282_br.blockID, 0, 4, 2, 2, structureboundingbox);
+        func_35018_a(world, Block.thinGlass.blockID, 0, 0, 2, 2, structureboundingbox);
+        func_35018_a(world, Block.thinGlass.blockID, 0, 2, 2, 4, structureboundingbox);
+        func_35018_a(world, Block.thinGlass.blockID, 0, 4, 2, 2, structureboundingbox);
         func_35018_a(world, Block.planks.blockID, 0, 1, 1, 0, structureboundingbox);
         func_35018_a(world, Block.planks.blockID, 0, 1, 2, 0, structureboundingbox);
         func_35018_a(world, Block.planks.blockID, 0, 1, 3, 0, structureboundingbox);

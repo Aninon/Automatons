@@ -56,7 +56,7 @@ public class EntityEnderman extends EntityMob
         EntityPlayer entityplayer = worldObj.getClosestPlayerToEntity(this, 64D);
         if(entityplayer != null)
         {
-            if(func_35183_c(entityplayer))
+            if(shouldAttackPlayer(entityplayer))
             {
                 if(field_35185_e++ == 5)
                 {
@@ -81,7 +81,7 @@ public class EntityEnderman extends EntityMob
         return super.getEntityBrightness(f);
     }
 
-    private boolean func_35183_c(EntityPlayer entityplayer)
+    private boolean shouldAttackPlayer(EntityPlayer entityplayer)
     {
         ItemStack itemstack = entityplayer.inventory.armorInventory[3];
         if(itemstack != null && itemstack.itemID == Block.pumpkin.blockID)
@@ -106,7 +106,7 @@ public class EntityEnderman extends EntityMob
     {
         if(isWet())
         {
-            attackEntityFrom(DamageSource.field_35539_e, 1);
+            attackEntityFrom(DamageSource.drown, 1);
         }
         field_35187_a = entityToAttack != null;
         moveSpeed = entityToAttack == null ? 0.3F : 4.5F;
@@ -120,7 +120,7 @@ public class EntityEnderman extends EntityMob
                     int l = MathHelper.floor_double(posY + rand.nextDouble() * 3D);
                     int j1 = MathHelper.floor_double((posZ - 2D) + rand.nextDouble() * 4D);
                     int l1 = worldObj.getBlockId(i, l, j1);
-                    if(field_35186_b[l1])
+                    if(canCarryBlocks[l1])
                     {
                         func_35177_b(worldObj.getBlockId(i, l, j1));
                         func_35181_c(worldObj.getBlockMetadata(i, l, j1));
@@ -164,7 +164,7 @@ public class EntityEnderman extends EntityMob
         {
             if(entityToAttack != null)
             {
-                if((entityToAttack instanceof EntityPlayer) && func_35183_c((EntityPlayer)entityToAttack))
+                if((entityToAttack instanceof EntityPlayer) && shouldAttackPlayer((EntityPlayer)entityToAttack))
                 {
                     moveStrafing = moveForward = 0.0F;
                     moveSpeed = 0.0F;
@@ -280,7 +280,7 @@ public class EntityEnderman extends EntityMob
 
     protected int getDropItemId()
     {
-        return Item.field_35416_bo.shiftedIndex;
+        return Item.enderPearl.shiftedIndex;
     }
 
     protected void a(boolean flag)
@@ -317,58 +317,58 @@ public class EntityEnderman extends EntityMob
         return dataWatcher.getWatchableObjectByte(17);
     }
 
-    private static boolean field_35186_b[];
+    private static boolean canCarryBlocks[];
     public boolean field_35187_a;
     private int field_35184_d;
     private int field_35185_e;
 
     static 
     {
-        field_35186_b = new boolean[256];
-        field_35186_b[Block.stone.blockID] = true;
-        field_35186_b[Block.grass.blockID] = true;
-        field_35186_b[Block.dirt.blockID] = true;
-        field_35186_b[Block.cobblestone.blockID] = true;
-        field_35186_b[Block.planks.blockID] = true;
-        field_35186_b[Block.sand.blockID] = true;
-        field_35186_b[Block.gravel.blockID] = true;
-        field_35186_b[Block.oreGold.blockID] = true;
-        field_35186_b[Block.oreIron.blockID] = true;
-        field_35186_b[Block.oreCoal.blockID] = true;
-        field_35186_b[Block.wood.blockID] = true;
-        field_35186_b[Block.leaves.blockID] = true;
-        field_35186_b[Block.sponge.blockID] = true;
-        field_35186_b[Block.glass.blockID] = true;
-        field_35186_b[Block.oreLapis.blockID] = true;
-        field_35186_b[Block.blockLapis.blockID] = true;
-        field_35186_b[Block.sandStone.blockID] = true;
-        field_35186_b[Block.cloth.blockID] = true;
-        field_35186_b[Block.plantYellow.blockID] = true;
-        field_35186_b[Block.plantRed.blockID] = true;
-        field_35186_b[Block.mushroomBrown.blockID] = true;
-        field_35186_b[Block.mushroomRed.blockID] = true;
-        field_35186_b[Block.blockGold.blockID] = true;
-        field_35186_b[Block.blockSteel.blockID] = true;
-        field_35186_b[Block.brick.blockID] = true;
-        field_35186_b[Block.tnt.blockID] = true;
-        field_35186_b[Block.bookShelf.blockID] = true;
-        field_35186_b[Block.cobblestoneMossy.blockID] = true;
-        field_35186_b[Block.oreDiamond.blockID] = true;
-        field_35186_b[Block.blockDiamond.blockID] = true;
-        field_35186_b[Block.workbench.blockID] = true;
-        field_35186_b[Block.oreRedstone.blockID] = true;
-        field_35186_b[Block.oreRedstoneGlowing.blockID] = true;
-        field_35186_b[Block.ice.blockID] = true;
-        field_35186_b[Block.cactus.blockID] = true;
-        field_35186_b[Block.blockClay.blockID] = true;
-        field_35186_b[Block.pumpkin.blockID] = true;
-        field_35186_b[Block.netherrack.blockID] = true;
-        field_35186_b[Block.slowSand.blockID] = true;
-        field_35186_b[Block.glowStone.blockID] = true;
-        field_35186_b[Block.pumpkinLantern.blockID] = true;
-        field_35186_b[Block.field_35285_bn.blockID] = true;
-        field_35186_b[Block.field_35286_bo.blockID] = true;
-        field_35186_b[Block.field_35287_bp.blockID] = true;
-        field_35186_b[Block.field_35281_bs.blockID] = true;
+        canCarryBlocks = new boolean[256];
+        canCarryBlocks[Block.stone.blockID] = true;
+        canCarryBlocks[Block.grass.blockID] = true;
+        canCarryBlocks[Block.dirt.blockID] = true;
+        canCarryBlocks[Block.cobblestone.blockID] = true;
+        canCarryBlocks[Block.planks.blockID] = true;
+        canCarryBlocks[Block.sand.blockID] = true;
+        canCarryBlocks[Block.gravel.blockID] = true;
+        canCarryBlocks[Block.oreGold.blockID] = true;
+        canCarryBlocks[Block.oreIron.blockID] = true;
+        canCarryBlocks[Block.oreCoal.blockID] = true;
+        canCarryBlocks[Block.wood.blockID] = true;
+        canCarryBlocks[Block.leaves.blockID] = true;
+        canCarryBlocks[Block.sponge.blockID] = true;
+        canCarryBlocks[Block.glass.blockID] = true;
+        canCarryBlocks[Block.oreLapis.blockID] = true;
+        canCarryBlocks[Block.blockLapis.blockID] = true;
+        canCarryBlocks[Block.sandStone.blockID] = true;
+        canCarryBlocks[Block.cloth.blockID] = true;
+        canCarryBlocks[Block.plantYellow.blockID] = true;
+        canCarryBlocks[Block.plantRed.blockID] = true;
+        canCarryBlocks[Block.mushroomBrown.blockID] = true;
+        canCarryBlocks[Block.mushroomRed.blockID] = true;
+        canCarryBlocks[Block.blockGold.blockID] = true;
+        canCarryBlocks[Block.blockSteel.blockID] = true;
+        canCarryBlocks[Block.brick.blockID] = true;
+        canCarryBlocks[Block.tnt.blockID] = true;
+        canCarryBlocks[Block.bookShelf.blockID] = true;
+        canCarryBlocks[Block.cobblestoneMossy.blockID] = true;
+        canCarryBlocks[Block.oreDiamond.blockID] = true;
+        canCarryBlocks[Block.blockDiamond.blockID] = true;
+        canCarryBlocks[Block.workbench.blockID] = true;
+        canCarryBlocks[Block.oreRedstone.blockID] = true;
+        canCarryBlocks[Block.oreRedstoneGlowing.blockID] = true;
+        canCarryBlocks[Block.ice.blockID] = true;
+        canCarryBlocks[Block.cactus.blockID] = true;
+        canCarryBlocks[Block.blockClay.blockID] = true;
+        canCarryBlocks[Block.pumpkin.blockID] = true;
+        canCarryBlocks[Block.netherrack.blockID] = true;
+        canCarryBlocks[Block.slowSand.blockID] = true;
+        canCarryBlocks[Block.glowStone.blockID] = true;
+        canCarryBlocks[Block.pumpkinLantern.blockID] = true;
+        canCarryBlocks[Block.stoneBrick.blockID] = true;
+        canCarryBlocks[Block.mushroomCapBrown.blockID] = true;
+        canCarryBlocks[Block.mushroomCapRed.blockID] = true;
+        canCarryBlocks[Block.melon.blockID] = true;
     }
 }

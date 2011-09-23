@@ -240,7 +240,7 @@ public class NetworkManager
         return networkmanager.sendPacket();
     }
 
-    static DataOutputStream func_28140_f(NetworkManager networkmanager)
+    static DataOutputStream getOutputStream(NetworkManager networkmanager)
     {
         return networkmanager.socketOutputStream;
     }

@@ -55,6 +55,6 @@ public class BlockFence extends Block
     public boolean func_35303_f(IBlockAccess iblockaccess, int i, int j, int k)
     {
         int l = iblockaccess.getBlockId(i, j, k);
-        return l == blockID || l == Block.field_35277_bw.blockID;
+        return l == blockID || l == Block.fenceGate.blockID;
     }
 }

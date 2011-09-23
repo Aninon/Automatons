@@ -195,7 +195,7 @@ public class EntitySnowball extends Entity
         {
             if(movingobjectposition.entityHit != null)
             {
-                if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35524_a(this, shootingEntity), 0));
+                if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, shootingEntity), 0));
             }
             for(int j = 0; j < 8; j++)
             {

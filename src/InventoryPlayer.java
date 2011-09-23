@@ -279,7 +279,7 @@ public class InventoryPlayer
         {
             NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
             int j = nbttagcompound.getByte("Slot") & 0xff;
-            ItemStack itemstack = ItemStack.func_35864_a(nbttagcompound);
+            ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
             if(itemstack == null)
             {
                 continue;
@@ -469,11 +469,11 @@ public class InventoryPlayer
         return false;
     }
 
-    public void func_35142_x_()
+    public void openChest()
     {
     }
 
-    public void func_35141_y_()
+    public void closeChest()
     {
     }
 

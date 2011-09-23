@@ -697,7 +697,7 @@ label0:
                 int j = nbttagcompound1.getByte("Slot") & 0xff;
                 if(j >= 0 && j < cargoItems.length)
                 {
-                    cargoItems[j] = ItemStack.func_35864_a(nbttagcompound1);
+                    cargoItems[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
                 }
             }
 
@@ -912,11 +912,11 @@ label0:
         return entityplayer.getDistanceSqToEntity(this) <= 64D;
     }
 
-    public void func_35142_x_()
+    public void openChest()
     {
     }
 
-    public void func_35141_y_()
+    public void closeChest()
     {
     }
 

@@ -101,10 +101,10 @@ public class EntityChicken extends EntityAnimal
 
         if(fire > 0)
         {
-            dropItem(Item.field_35420_bm.shiftedIndex, 1);
+            dropItem(Item.chickenCooked.shiftedIndex, 1);
         } else
         {
-            dropItem(Item.field_35419_bl.shiftedIndex, 1);
+            dropItem(Item.chickenRaw.shiftedIndex, 1);
         }
     }
 

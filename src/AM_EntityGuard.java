@@ -187,7 +187,7 @@ public class AM_EntityGuard extends EntityCreature
 	
 	public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-            Entity entity = damagesource.func_35532_a();
+            Entity entity = damagesource.getEntity();
             if(entity != null && entity != this && (entity instanceof EntityPlayer) )
             {
                i=20;

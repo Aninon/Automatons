@@ -203,11 +203,11 @@ public class BlockStem extends BlockFlower
         Item item = null;
         if(field_35297_a == Block.pumpkin)
         {
-            item = Item.field_35422_bh;
+            item = Item.pumpkinSeeds;
         }
-        if(field_35297_a == Block.field_35281_bs)
+        if(field_35297_a == Block.melon)
         {
-            item = Item.field_35423_bi;
+            item = Item.melonSeeds;
         }
         for(int i1 = 0; i1 < 3; i1++)
         {

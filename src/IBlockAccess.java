@@ -15,7 +15,7 @@ public interface IBlockAccess
 
     public abstract TileEntity getBlockTileEntity(int i, int j, int k);
 
-    public abstract int func_35451_b(int i, int j, int k, int l);
+    public abstract int getLightBrightnessFromSunlight(int i, int j, int k, int l);
 
     public abstract float getBrightness(int i, int j, int k, int l);
 

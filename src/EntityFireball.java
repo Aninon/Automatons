@@ -160,7 +160,7 @@ public class EntityFireball extends Entity
             {
                 if(movingobjectposition.entityHit != null)
                 {
-                    if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35530_a(this, shootingEntity), 0));
+                    if(!movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeFireballDamage(this, shootingEntity), 0));
                 }
                 worldObj.newExplosion(null, posX, posY, posZ, 1.0F, true);
             }
@@ -231,9 +231,9 @@ public class EntityFireball extends Entity
     public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
         setBeenAttacked();
-        if(damagesource.func_35532_a() != null)
+        if(damagesource.getEntity() != null)
         {
-            Vec3D vec3d = damagesource.func_35532_a().getLookVec();
+            Vec3D vec3d = damagesource.getEntity().getLookVec();
             if(vec3d != null)
             {
                 motionX = vec3d.xCoord;

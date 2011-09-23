@@ -63,7 +63,7 @@ public class EntitySilverfish extends EntityMob
         if(attackTime <= 0 && f < 1.2F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
         {
             attackTime = 20;
-            entity.attackEntityFrom(DamageSource.func_35525_a(this), attackStrength);
+            entity.attackEntityFrom(DamageSource.causeMobDamage(this), attackStrength);
         }
     }
 
@@ -111,13 +111,13 @@ public class EntitySilverfish extends EntityMob
                         for(int k2 = 0; !flag && k2 <= 10 && k2 >= -10; k2 = k2 > 0 ? 0 - k2 : 1 - k2)
                         {
                             int l2 = worldObj.getBlockId(i + j2, k + l1, i1 + k2);
-                            if(l2 != Block.field_35289_bm.blockID)
+                            if(l2 != Block.silverfish.blockID)
                             {
                                 continue;
                             }
-                            worldObj.playAuxSFX(2001, i + j2, k + l1, i1 + k2, Block.field_35289_bm.blockID + worldObj.getBlockMetadata(i + j2, k + l1, i1 + k2) * 256);
+                            worldObj.playAuxSFX(2001, i + j2, k + l1, i1 + k2, Block.silverfish.blockID + worldObj.getBlockMetadata(i + j2, k + l1, i1 + k2) * 256);
                             worldObj.setBlockWithNotify(i + j2, k + l1, i1 + k2, 0);
-                            Block.field_35289_bm.onBlockDestroyedByPlayer(worldObj, i + j2, k + l1, i1 + k2, 0);
+                            Block.silverfish.onBlockDestroyedByPlayer(worldObj, i + j2, k + l1, i1 + k2, 0);
                             if(!rand.nextBoolean())
                             {
                                 continue;
@@ -141,12 +141,12 @@ public class EntitySilverfish extends EntityMob
             int i2 = worldObj.getBlockId(j + PistonBlockTextures.offsetsXForSide[k1], l + PistonBlockTextures.offsetsYForSide[k1], j1 + PistonBlockTextures.offsetsZForSide[k1]);
             if(BlockSilverfish.func_35305_d(i2))
             {
-                worldObj.setBlockAndMetadataWithNotify(j + PistonBlockTextures.offsetsXForSide[k1], l + PistonBlockTextures.offsetsYForSide[k1], j1 + PistonBlockTextures.offsetsZForSide[k1], Block.field_35289_bm.blockID, BlockSilverfish.func_35304_f(i2));
+                worldObj.setBlockAndMetadataWithNotify(j + PistonBlockTextures.offsetsXForSide[k1], l + PistonBlockTextures.offsetsYForSide[k1], j1 + PistonBlockTextures.offsetsZForSide[k1], Block.silverfish.blockID, BlockSilverfish.func_35304_f(i2));
                 spawnExplosionParticle();
                 setEntityDead();
             } else
             {
-                func_31026_E();
+                updateWanderPath();
             }
         } else
         if(entityToAttack != null && !hasPath())

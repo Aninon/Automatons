@@ -24,6 +24,8 @@ public class EntityPlayerSP extends EntityPlayer
 
     public EntityPlayerSP(Minecraft minecraft, World world, Session session, int i)
     {
+	
+	
         super(world);
         field_35224_c = 0;
         field_35221_d = 0;
@@ -63,7 +65,7 @@ public class EntityPlayerSP extends EntityPlayer
             field_35221_d--;
             if(field_35221_d == 0)
             {
-                func_35113_c(false);
+                setSprinting(false);
             }
         }
         if(field_35224_c > 0)
@@ -112,7 +114,7 @@ public class EntityPlayerSP extends EntityPlayer
             }
             inPortal = false;
         } else
-        if(func_35160_a(Potion.field_35684_k) && func_35167_b(Potion.field_35684_k).func_35802_b() > 60)
+        if(func_35160_a(Potion.potionConfusion) && func_35167_b(Potion.potionConfusion).func_35802_b() > 60)
         {
             timeInPortal += 0.006666667F;
             if(timeInPortal > 1.0F)
@@ -152,7 +154,7 @@ public class EntityPlayerSP extends EntityPlayer
         pushOutOfBlocks(posX - (double)width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double)width * 0.34999999999999998D);
         pushOutOfBlocks(posX + (double)width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double)width * 0.34999999999999998D);
         pushOutOfBlocks(posX + (double)width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ + (double)width * 0.34999999999999998D);
-        boolean flag2 = (float)func_35191_at().func_35765_a() > 6F;
+        boolean flag2 = (float)getFoodStats().getFoodLevel() > 6F;
         if(onGround && !flag1 && movementInput.moveForward >= f && !func_35117_Q() && flag2 && !func_35196_Z())
         {
             if(field_35224_c == 0)
@@ -160,26 +162,26 @@ public class EntityPlayerSP extends EntityPlayer
                 field_35224_c = 7;
             } else
             {
-                func_35113_c(true);
+                setSprinting(true);
                 field_35224_c = 0;
             }
         }
         if(func_35117_Q() && (movementInput.moveForward < f || isCollidedHorizontally || !flag2))
         {
-            func_35113_c(false);
+            setSprinting(false);
         }
-        if(field_35212_aW.field_35758_c && !flag && movementInput.jump)
+        if(capabilities.field_35758_c && !flag && movementInput.jump)
         {
             if(field_35216_aw == 0)
             {
                 field_35216_aw = 7;
             } else
             {
-                field_35212_aW.field_35757_b = !field_35212_aW.field_35757_b;
+                capabilities.isFlying = !capabilities.isFlying;
                 field_35216_aw = 0;
             }
         }
-        if(field_35212_aW.field_35757_b)
+        if(capabilities.isFlying)
         {
             if(movementInput.sneak)
             {
@@ -191,16 +193,16 @@ public class EntityPlayerSP extends EntityPlayer
             }
         }
         super.onLivingUpdate();
-        if(onGround && field_35212_aW.field_35757_b)
+        if(onGround && capabilities.isFlying)
         {
-            field_35212_aW.field_35757_b = false;
+            capabilities.isFlying = false;
         }
     }
 
-    public float func_35220_u_()
+    public float getFOVMultiplier()
     {
         float f = 1.0F;
-        if(field_35212_aW.field_35757_b)
+        if(capabilities.isFlying)
         {
             f *= 1.1F;
         }
@@ -303,7 +305,7 @@ public class EntityPlayerSP extends EntityPlayer
             field_9346_af = j;
             prevHealth = health;
             heartsLife = heartsHalvesLife;
-            b(DamageSource.field_35547_j, j);
+            b(DamageSource.generic, j);
             hurtTime = maxHurtTime = 10;
         }
     }
@@ -406,9 +408,9 @@ public class EntityPlayerSP extends EntityPlayer
         return false;
     }
 
-    public void func_35113_c(boolean flag)
+    public void setSprinting(boolean flag)
     {
-        super.func_35113_c(flag);
+        super.setSprinting(flag);
         if(!flag)
         {
             field_35221_d = 0;
@@ -418,11 +420,11 @@ public class EntityPlayerSP extends EntityPlayer
         }
     }
 
-    public void func_35219_c(int i, int j, int k)
+    public void setXPStats(int i, int j, int k)
     {
-        field_35211_aX = i;
-        field_35209_aZ = j;
-        field_35210_aY = k;
+        currentXP = i;
+        totalXP = j;
+        playerLevel = k;
     }
 
     public MovementInput movementInput;

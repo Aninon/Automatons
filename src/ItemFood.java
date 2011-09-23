@@ -29,7 +29,7 @@ public class ItemFood extends Item
     public ItemStack func_35413_b(ItemStack itemstack, World world, EntityPlayer entityplayer)
     {
         itemstack.stackSize--;
-        entityplayer.func_35191_at().func_35761_a(this);
+        entityplayer.getFoodStats().func_35761_a(this);
         if(!world.multiplayerWorld && field_35433_bx > 0 && world.rand.nextFloat() < field_35429_bA)
         {
             entityplayer.func_35165_a(new PotionEffect(field_35433_bx, field_35432_by * 20, field_35427_bz));

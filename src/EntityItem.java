@@ -103,7 +103,7 @@ public class EntityItem extends Entity
 
     protected void dealFireDamage(int i)
     {
-        attackEntityFrom(DamageSource.field_35542_a, i);
+        attackEntityFrom(DamageSource.inFire, i);
     }
 
     public boolean attackEntityFrom(DamageSource damagesource, int i)
@@ -129,7 +129,7 @@ public class EntityItem extends Entity
         health = nbttagcompound.getShort("Health") & 0xff;
         age = nbttagcompound.getShort("Age");
         NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Item");
-        item = ItemStack.func_35864_a(nbttagcompound1);
+        item = ItemStack.loadItemStackFromNBT(nbttagcompound1);
         if(item == null)
         {
             setEntityDead();

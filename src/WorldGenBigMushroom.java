@@ -170,7 +170,7 @@ label0:
                     }
                     if((i4 != 0 || j >= (j + i1) - 1) && !Block.opaqueCubeLookup[world.getBlockId(j3, l1, l3)])
                     {
-                        world.setBlockAndMetadata(j3, l1, l3, Block.field_35286_bo.blockID + l, i4);
+                        world.setBlockAndMetadata(j3, l1, l3, Block.mushroomCapBrown.blockID + l, i4);
                     }
                 }
 
@@ -183,7 +183,7 @@ label0:
             int l2 = world.getBlockId(i, j + i2, k);
             if(!Block.opaqueCubeLookup[l2])
             {
-                world.setBlockAndMetadata(i, j + i2, k, Block.field_35286_bo.blockID + l, 10);
+                world.setBlockAndMetadata(i, j + i2, k, Block.mushroomCapBrown.blockID + l, 10);
             }
         }
 

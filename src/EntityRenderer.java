@@ -69,7 +69,7 @@ public class EntityRenderer
         fogColorBuffer = GLAllocation.createDirectFloatBuffer(16);
         mc = minecraft;
         itemRenderer = new ItemRenderer(minecraft);
-        field_35818_d = minecraft.renderEngine.allocateAndSetupTexture(new BufferedImage(16, 16, 1));
+        emptyTexture = minecraft.renderEngine.allocateAndSetupTexture(new BufferedImage(16, 16, 1));
         field_35811_L = new int[256];
     }
 
@@ -171,7 +171,7 @@ public class EntityRenderer
     private void func_35809_c()
     {
         EntityPlayerSP entityplayersp = (EntityPlayerSP)mc.renderViewEntity;
-        field_35814_O = entityplayersp.func_35220_u_();
+        field_35814_O = entityplayersp.getFOVMultiplier();
         field_35813_N = field_35812_M;
         field_35812_M += (field_35814_O - field_35812_M) * 0.5F;
     }
@@ -186,7 +186,7 @@ public class EntityRenderer
         float f1 = 70F;
         if(flag)
         {
-            f1 += mc.gameSettings.field_35379_L * 40F;
+            f1 += mc.gameSettings.fovSetting * 40F;
             f1 *= field_35813_N + (field_35812_M - field_35813_N) * f;
         }
         if(entityplayer.health <= 0)
@@ -368,7 +368,7 @@ public class EntityRenderer
         if(f3 > 0.0F)
         {
             int j = 20;
-            if(mc.thePlayer.func_35160_a(Potion.field_35684_k))
+            if(mc.thePlayer.func_35160_a(Potion.potionConfusion))
             {
                 j = 7;
             }
@@ -481,7 +481,7 @@ public class EntityRenderer
         GL11.glScalef(f, f, f);
         GL11.glTranslatef(8F, 8F, 8F);
         GL11.glMatrixMode(5888 /*GL_MODELVIEW0_ARB*/);
-        mc.renderEngine.bindTexture(field_35818_d);
+        mc.renderEngine.bindTexture(emptyTexture);
         GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10241 /*GL_TEXTURE_MIN_FILTER*/, 9729 /*GL_LINEAR*/);
         GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10240 /*GL_TEXTURE_MAG_FILTER*/, 9729 /*GL_LINEAR*/);
         GL11.glTexParameteri(3553 /*GL_TEXTURE_2D*/, 10241 /*GL_TEXTURE_MIN_FILTER*/, 9729 /*GL_LINEAR*/);
@@ -505,7 +505,7 @@ public class EntityRenderer
         field_35815_V = true;
     }
 
-    private void func_35808_e()
+    private void updateLightmap()
     {
         World world = mc.theWorld;
         if(world == null)
@@ -533,7 +533,7 @@ public class EntityRenderer
             f9 = f9 * 0.96F + 0.03F;
             f10 = f10 * 0.96F + 0.03F;
             f11 = f11 * 0.96F + 0.03F;
-            float f12 = mc.gameSettings.field_35380_M;
+            float f12 = mc.gameSettings.gammaSetting;
             if(f9 > 1.0F)
             {
                 f9 = 1.0F;
@@ -589,14 +589,14 @@ public class EntityRenderer
             field_35811_L[i] = c << 24 | j << 16 | k << 8 | l;
         }
 
-        mc.renderEngine.createTextureFromBytes(field_35811_L, 16, 16, field_35818_d);
+        mc.renderEngine.createTextureFromBytes(field_35811_L, 16, 16, emptyTexture);
     }
 
     public void updateCameraAndRender(float f)
     {
         if(field_35815_V)
         {
-            func_35808_e();
+            updateLightmap();
         }
         if(!Display.isActive())
         {
@@ -1054,7 +1054,7 @@ public class EntityRenderer
                     double d4 = (double)((float)j2 + 0.5F) - entityliving.posZ;
                     float f13 = MathHelper.sqrt_double(d3 * d3 + d4 * d4) / (float)k1;
                     float f14 = 1.0F;
-                    tessellator.func_35835_b(world.func_35451_b(i2, k3, j2, 0));
+                    tessellator.setBrightness(world.getLightBrightnessFromSunlight(i2, k3, j2, 0));
                     tessellator.setColorRGBA_F(f14, f14, f14, ((1.0F - f13 * f13) * 0.5F + 0.5F) * f1);
                     tessellator.setTranslationD(-d * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
                     tessellator.addVertexWithUV((double)((float)i2 - f6) + 0.5D, i3, (double)((float)j2 - f7) + 0.5D, 0.0F * f8, ((float)i3 * f8) / 4F + f9 * f8);
@@ -1081,7 +1081,7 @@ public class EntityRenderer
                 double d6 = (double)((float)j2 + 0.5F) - entityliving.posZ;
                 float f15 = MathHelper.sqrt_double(d5 * d5 + d6 * d6) / (float)k1;
                 float f16 = 1.0F;
-                tessellator.func_35835_b((world.func_35451_b(i2, k3, j2, 0) * 3 + 0xf000f0) / 4);
+                tessellator.setBrightness((world.getLightBrightnessFromSunlight(i2, k3, j2, 0) * 3 + 0xf000f0) / 4);
                 tessellator.setColorRGBA_F(f16, f16, f16, ((1.0F - f15 * f15) * 0.3F + 0.5F) * f1);
                 tessellator.setTranslationD(-d * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
                 tessellator.addVertexWithUV((double)((float)i2 - f6) + 0.5D, i3, (double)((float)j2 - f7) + 0.5D, 0.0F * f8 + f11, ((float)i3 * f8) / 4F + f10 * f8 + f12);
@@ -1358,7 +1358,7 @@ public class EntityRenderer
     private float prevDebugCamFOV;
     private float camRoll;
     private float prevCamRoll;
-    public int field_35818_d;
+    public int emptyTexture;
     private int field_35811_L[];
     private float field_35812_M;
     private float field_35813_N;

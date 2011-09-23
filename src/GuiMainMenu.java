@@ -72,7 +72,7 @@ public class GuiMainMenu extends GuiScreen
 
     public void initGui()
     {
-        field_35358_g = mc.renderEngine.allocateAndSetupTexture(new java.awt.image.BufferedImage(256, 256, 2));
+        viewportTexture = mc.renderEngine.allocateAndSetupTexture(new java.awt.image.BufferedImage(256, 256, 2));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         if(calendar.get(2) + 1 == 11 && calendar.get(5) == 9)
@@ -214,7 +214,7 @@ public class GuiMainMenu extends GuiScreen
 
     private void func_35354_a(float f)
     {
-        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, field_35358_g);
+        GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, viewportTexture);
         GL11.glCopyTexSubImage2D(3553 /*GL_TEXTURE_2D*/, 0, 0, 0, 0, 0, 256, 256);
         GL11.glEnable(3042 /*GL_BLEND*/);
         GL11.glBlendFunc(770, 771);
@@ -301,6 +301,6 @@ public class GuiMainMenu extends GuiScreen
     private String splashText;
     private GuiButton multiplayerButton;
     private int field_35357_f;
-    private int field_35358_g;
+    private int viewportTexture;
 
 }

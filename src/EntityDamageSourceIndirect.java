@@ -17,7 +17,7 @@ public class EntityDamageSourceIndirect extends EntityDamageSource
         field_35553_n = entity1;
     }
 
-    public Entity func_35532_a()
+    public Entity getEntity()
     {
         return field_35553_n;
     }

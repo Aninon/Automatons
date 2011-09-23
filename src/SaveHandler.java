@@ -89,8 +89,12 @@ public class SaveHandler
             File file = new File(saveDirectory, "DIM-1");
             file.mkdirs();
             return new ChunkLoader(file, true);
-        } else
-        {
+        }else if(worldprovider instanceof AM_WorldProviderBot){
+			File file = new File(saveDirectory, "AUTOMATON-1");
+            file.mkdirs();
+            return new ChunkLoader(file, true);
+
+		}else{
             return new ChunkLoader(saveDirectory, true);
         }
     }

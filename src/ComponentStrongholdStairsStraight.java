@@ -56,9 +56,9 @@ public class ComponentStrongholdStairsStraight extends ComponentStronghold
             func_35018_a(world, Block.stairCompactCobblestone.blockID, i, 3, 6 - j, 1 + j, structureboundingbox);
             if(j < 5)
             {
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 1, 5 - j, 1 + j, structureboundingbox);
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 2, 5 - j, 1 + j, structureboundingbox);
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 3, 5 - j, 1 + j, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 1, 5 - j, 1 + j, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 2, 5 - j, 1 + j, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 3, 5 - j, 1 + j, structureboundingbox);
             }
         }
 

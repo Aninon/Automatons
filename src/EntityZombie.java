@@ -50,6 +50,6 @@ public class EntityZombie extends EntityMob
 
     protected int getDropItemId()
     {
-        return Item.field_35415_bn.shiftedIndex;
+        return Item.rottenFlesh.shiftedIndex;
     }
 }

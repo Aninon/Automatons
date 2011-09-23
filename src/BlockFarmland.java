@@ -90,7 +90,7 @@ public class BlockFarmland extends Block
             for(int j1 = k - l; j1 <= k + l; j1++)
             {
                 int k1 = world.getBlockId(i1, j + 1, j1);
-                if(k1 == Block.crops.blockID || k1 == Block.field_35283_bu.blockID || k1 == Block.field_35284_bt.blockID)
+                if(k1 == Block.crops.blockID || k1 == Block.melonStem.blockID || k1 == Block.pumpkinStem.blockID)
                 {
                     return true;
                 }

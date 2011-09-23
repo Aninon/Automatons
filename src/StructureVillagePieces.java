@@ -23,15 +23,15 @@ public class StructureVillagePieces
     public static ArrayList func_35705_a(Random random, int i)
     {
         ArrayList arraylist = new ArrayList();
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse4_Garden.class, 4, MathHelper.func_35598_a(random, 2 + i, 4 + i * 2)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageChurch.class, 20, MathHelper.func_35598_a(random, 0 + i, 1 + i)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse1.class, 20, MathHelper.func_35598_a(random, 0 + i, 2 + i)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageWoodHut.class, 3, MathHelper.func_35598_a(random, 2 + i, 5 + i * 3)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHall.class, 15, MathHelper.func_35598_a(random, 0 + i, 2 + i)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageField.class, 3, MathHelper.func_35598_a(random, 1 + i, 4 + i)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageField2.class, 3, MathHelper.func_35598_a(random, 2 + i, 4 + i * 2)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse2.class, 15, MathHelper.func_35598_a(random, 0, 1 + i)));
-        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse3.class, 8, MathHelper.func_35598_a(random, 0 + i, 3 + i * 2)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse4_Garden.class, 4, MathHelper.getRandomIntegerInRange(random, 2 + i, 4 + i * 2)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageChurch.class, 20, MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse1.class, 20, MathHelper.getRandomIntegerInRange(random, 0 + i, 2 + i)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageWoodHut.class, 3, MathHelper.getRandomIntegerInRange(random, 2 + i, 5 + i * 3)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHall.class, 15, MathHelper.getRandomIntegerInRange(random, 0 + i, 2 + i)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageField.class, 3, MathHelper.getRandomIntegerInRange(random, 1 + i, 4 + i)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageField2.class, 3, MathHelper.getRandomIntegerInRange(random, 2 + i, 4 + i * 2)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse2.class, 15, MathHelper.getRandomIntegerInRange(random, 0, 1 + i)));
+        arraylist.add(new StructureVillagePieceWeight(net.minecraft.src.ComponentVillageHouse3.class, 8, MathHelper.getRandomIntegerInRange(random, 0 + i, 3 + i * 2)));
         Iterator iterator = arraylist.iterator();
         do
         {

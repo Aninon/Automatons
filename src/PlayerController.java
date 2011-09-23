@@ -134,7 +134,7 @@ public abstract class PlayerController
         return true;
     }
 
-    public boolean func_35640_h()
+    public boolean isInCreativeMode()
     {
         return false;
     }

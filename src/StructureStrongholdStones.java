@@ -24,7 +24,7 @@ class StructureStrongholdStones extends StructurePieceBlockSelector
             field_35709_b = 0;
         } else
         {
-            field_35710_a = Block.field_35285_bn.blockID;
+            field_35710_a = Block.stoneBrick.blockID;
             float f = random.nextFloat();
             if(f < 0.2F)
             {
@@ -36,7 +36,7 @@ class StructureStrongholdStones extends StructurePieceBlockSelector
             } else
             if(f < 0.55F)
             {
-                field_35710_a = Block.field_35289_bm.blockID;
+                field_35710_a = Block.silverfish.blockID;
                 field_35709_b = 2;
             } else
             {

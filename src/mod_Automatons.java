@@ -18,7 +18,7 @@ public class mod_Automatons extends BaseMod
 {                              
 	public String Version()
 	{
-		return "v0.5.8";
+		return "v0.6";
 	}
 	
 	//DERP DERP TEST MESSAGE GOES HERE
@@ -60,6 +60,8 @@ public class mod_Automatons extends BaseMod
 	public static Item techifier = (new AM_ItemFunctional(AutomatonLogger.techifier,2)).setIconCoord(4, 10).setItemName("techifier");
 	public static Item smack = (new AM_ItemSmack(AutomatonLogger.smack)).setIconCoord(4, 10).setItemName("smack");
 	public static Item naturizer = (new AM_ItemFunctional(AutomatonLogger.naturizer,4)).setIconCoord(4, 10).setItemName("naturizer");
+	public static Item misc =  (new AM_ItemMisc(AutomatonLogger.misc)).setIconCoord(5, 8).setItemName("misc");
+	
 	
 	
 	static 
@@ -105,18 +107,17 @@ public class mod_Automatons extends BaseMod
 	public static Block arbor = (new AM_BlockArbor(AutomatonLogger.arbor)).setHardness(0f).setStepSound(Block.soundGrassFootstep).setBlockName("arbor");
 	
 	
-	
-	
-	
-	
-	
 	public static Achievement techAchievement;
 	
 	
+
 	
 	public mod_Automatons()
 	{
 
+
+		(new AM_DimensionBot()).name = "Bot Land";
+		
 		
 		techAchievement = (new Achievement(4281,"WERG",-4,-6,Item.appleRed,null)).registerAchievement();
 		ModLoader.AddAchievementDesc(techAchievement, "YOU IS WINRAR!", "herpy derp derp?");
@@ -491,19 +492,22 @@ public class mod_Automatons extends BaseMod
 			"##", "##", Character.valueOf('#'), Item.redstone
 		});
 		
+		ModLoader.AddRecipe(new ItemStack(frass, 64,1), new Object[] {
+			"##", "##", Character.valueOf('#'),Block.dirt
+		});
 		
-		ModLoader.AddRecipe(new ItemStack(factotum, 1), new Object[] {
+		ModLoader.AddRecipe(new ItemStack(cheatStick, 1), new Object[] {
 			"##", "##", Character.valueOf('#'), frass
 		});
 		
-		ModLoader.AddRecipe(new ItemStack(automaton, 50), new Object[] {
-			"##", "# ", Character.valueOf('#'), frass
+		ModLoader.AddRecipe(new ItemStack(Block.reed, 50), new Object[] {
+			"##", "# ", Character.valueOf('#'), Block.dirt
 		});
 		ModLoader.AddRecipe(new ItemStack(stuffs, 10,10), new Object[] {
 			"#", "#", Character.valueOf('#'),frass
 		});
-		ModLoader.AddRecipe(new ItemStack(stuffs, 10,9), new Object[] {
-			" #", "##", Character.valueOf('#'),frass
+		ModLoader.AddRecipe(new ItemStack(Item.ingotIron, 10,0), new Object[] {
+			" #", "##", Character.valueOf('#'),Block.dirt
 		});
 		ModLoader.AddRecipe(new ItemStack(arbor, 64), new Object[] {
 			"##", Character.valueOf('#'),frass
@@ -586,7 +590,7 @@ public class mod_Automatons extends BaseMod
     }
 
 	public void redoTexture(){
-	GL11.glBindTexture(3553 ,at.textureID);
+	GL11.glBindTexture(3553  ,at.textureID);
 		
 		
 		
@@ -611,7 +615,7 @@ public class mod_Automatons extends BaseMod
 				buffer );
 				
 				//int hj =defaultTerrain;
-       // GL11.glBindTexture(3553 , hj);
+       // GL11.glBindTexture(3553  , hj);
 	}
 
 	public boolean renderFire(Block block, int i, int j, int k)
@@ -627,7 +631,7 @@ public class mod_Automatons extends BaseMod
 		//at.B.createGraphics().drawLine(G/100000, 0, 20, 20);
 		
 		
-		GL11.glBindTexture(3553 ,at.textureID);
+		GL11.glBindTexture(3553  ,at.textureID);
 
         int l = block.getBlockTextureFromSide(0);
 		
@@ -662,7 +666,7 @@ public class mod_Automatons extends BaseMod
 
 		
 		int hj =defaultTerrain;
-        GL11.glBindTexture(3553 , hj);
+        GL11.glBindTexture(3553  , hj);
 		
 		
 		
@@ -682,7 +686,7 @@ public class mod_Automatons extends BaseMod
 		RenderBlocks.cfgGrassFix = false;
 
 		
-		GL11.glBindTexture(3553 ,at.textureID);
+		GL11.glBindTexture(3553  ,at.textureID);
 
 		 GL11.glReadBuffer(GL11.GL_FRONT);
 		int width = Display.getDisplayMode().getWidth();
@@ -747,7 +751,7 @@ public class mod_Automatons extends BaseMod
 
 		
 		int hj =defaultTerrain;
-        GL11.glBindTexture(3553 , hj);
+        GL11.glBindTexture(3553  , hj);
 		
 		
 		

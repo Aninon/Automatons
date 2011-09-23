@@ -24,9 +24,9 @@ public class EntityCaveSpider extends EntitySpider
         return 0.7F;
     }
 
-    protected boolean func_35175_b(Entity entity)
+    protected boolean attackEntityAsMob(Entity entity)
     {
-        if(super.func_35175_b(entity))
+        if(super.attackEntityAsMob(entity))
         {
             if(entity instanceof EntityLiving)
             {
@@ -44,7 +44,7 @@ public class EntityCaveSpider extends EntitySpider
                 }
                 if(byte0 > 0)
                 {
-                    ((EntityLiving)entity).func_35165_a(new PotionEffect(Potion.field_35689_u.field_35670_H, byte0 * 20, 0));
+                    ((EntityLiving)entity).func_35165_a(new PotionEffect(Potion.potionPoison.id, byte0 * 20, 0));
                 }
             }
             return true;

@@ -131,6 +131,10 @@ public abstract class WorldProvider
         {
             return new WorldProviderSurface();
         }
+		if(i == 1989)
+        {
+            return new AM_WorldProviderBot();
+        }
         if(i == 1)
         {
             return new WorldProviderSky();

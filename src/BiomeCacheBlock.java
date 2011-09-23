@@ -20,7 +20,7 @@ class BiomeCacheBlock
         field_35655_d = i;
         field_35656_e = j;
         BiomeCache.func_35721_a(biomecache).getTemperatures(field_35659_a, i << 4, j << 4, 16, 16);
-        BiomeCache.func_35721_a(biomecache).func_35560_b(field_35657_b, i << 4, j << 4, 16, 16);
+        BiomeCache.func_35721_a(biomecache).getRainfall(field_35657_b, i << 4, j << 4, 16, 16);
         BiomeCache.func_35721_a(biomecache).func_35555_a(field_35658_c, i << 4, j << 4, 16, 16, false);
     }
 

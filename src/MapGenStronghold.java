@@ -17,7 +17,7 @@ public class MapGenStronghold extends MapGenStructure
     public MapGenStronghold()
     {
         field_35634_a = (new BiomeGenBase[] {
-            BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.field_35483_e, BiomeGenBase.swampland
+            BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.hills, BiomeGenBase.swampland
         });
         field_35633_g = new ChunkCoordIntPair[3];
     }

@@ -32,7 +32,7 @@ public class BlockFire extends Block
         setBurnRate(Block.tnt.blockID, 15, 100);
         setBurnRate(Block.tallGrass.blockID, 60, 100);
         setBurnRate(Block.cloth.blockID, 30, 60);
-        setBurnRate(Block.field_35278_bv.blockID, 15, 100);
+        setBurnRate(Block.vine.blockID, 15, 100);
     }
 
     private void setBurnRate(int i, int j, int k)

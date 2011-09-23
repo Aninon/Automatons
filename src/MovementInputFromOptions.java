@@ -20,24 +20,24 @@ public class MovementInputFromOptions extends MovementInput
     {
         moveStrafe = 0.0F;
         moveForward = 0.0F;
-        if(gameSettings.keyBindForward.field_35965_e)
+        if(gameSettings.keyBindForward.pressed)
         {
             moveForward++;
         }
-        if(gameSettings.keyBindBack.field_35965_e)
+        if(gameSettings.keyBindBack.pressed)
         {
             moveForward--;
         }
-        if(gameSettings.keyBindLeft.field_35965_e)
+        if(gameSettings.keyBindLeft.pressed)
         {
             moveStrafe++;
         }
-        if(gameSettings.keyBindRight.field_35965_e)
+        if(gameSettings.keyBindRight.pressed)
         {
             moveStrafe--;
         }
-        jump = gameSettings.keyBindJump.field_35965_e;
-        sneak = gameSettings.keyBindSneak.field_35965_e;
+        jump = gameSettings.keyBindJump.pressed;
+        sneak = gameSettings.keyBindSneak.pressed;
         if(sneak)
         {
             moveStrafe *= 0.29999999999999999D;

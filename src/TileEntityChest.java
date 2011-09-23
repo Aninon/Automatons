@@ -80,7 +80,7 @@ public class TileEntityChest extends TileEntity
             int j = nbttagcompound1.getByte("Slot") & 0xff;
             if(j >= 0 && j < chestContents.length)
             {
-                chestContents[j] = ItemStack.func_35864_a(nbttagcompound1);
+                chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
 
@@ -235,13 +235,13 @@ public class TileEntityChest extends TileEntity
         }
     }
 
-    public void func_35142_x_()
+    public void openChest()
     {
         field_35156_h++;
         worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, field_35156_h);
     }
 
-    public void func_35141_y_()
+    public void closeChest()
     {
         field_35156_h--;
         worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, field_35156_h);

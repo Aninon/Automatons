@@ -1555,7 +1555,7 @@ public class RenderGlobal
 
     public void func_28137_f()
     {
-        GLAllocation.func_28194_b(glRenderListBase);
+        GLAllocation.deleteDisplayLists(glRenderListBase);
     }
 
     public void playAuxSFX(EntityPlayer entityplayer, int i, int j, int k, int l, int i1)

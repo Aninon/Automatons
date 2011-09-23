@@ -71,7 +71,7 @@ public class EntityPigZombie extends EntityZombie
 
     public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(entity instanceof EntityPlayer)
         {
             List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(32D, 32D, 32D));

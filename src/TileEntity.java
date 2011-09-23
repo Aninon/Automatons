@@ -18,7 +18,7 @@ public class TileEntity
 
     public TileEntity()
     {
-        field_35145_n = -1;
+        blockMetadata = -1;
     }
 
     private static void addMapping(Class class1, String s)
@@ -88,18 +88,18 @@ public class TileEntity
 
     public int getBlockMetadata()
     {
-        if(field_35145_n == -1)
+        if(blockMetadata == -1)
         {
-            field_35145_n = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+            blockMetadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         }
-        return field_35145_n;
+        return blockMetadata;
     }
 
     public void onInventoryChanged()
     {
         if(worldObj != null)
         {
-            field_35145_n = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+            blockMetadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
             worldObj.updateTileEntityChunkAndDoNothing(xCoord, yCoord, zCoord, this);
         }
     }
@@ -143,7 +143,7 @@ public class TileEntity
     public void func_35144_b()
     {
         field_35146_o = null;
-        field_35145_n = -1;
+        blockMetadata = -1;
     }
 
     static Class _mthclass$(String s)
@@ -165,7 +165,7 @@ public class TileEntity
     public int yCoord;
     public int zCoord;
     protected boolean tileEntityInvalid;
-    public int field_35145_n;
+    public int blockMetadata;
     public Block field_35146_o;
 
     static 

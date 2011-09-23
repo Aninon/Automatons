@@ -436,9 +436,9 @@ public class AM_WorldGenBigFakeTree extends WorldGenerator
 			int W=7;//M*M;
 			i=(i/W)*W;
 			k=(k/W)*W;
-			int bbb=world.getBlockId(i,30,k);
+			int bbb=world.getBlockId(i,AutomatonLogger.builderLevel,k);
 			if(bbb!=AutomatonLogger.tech && bbb!=AutomatonLogger.importantBuildingThingy){
-				world.setBlockAndMetadata(i,30,k,AutomatonLogger.importantBuildingThingy,random.nextInt(2));
+				world.setBlockAndMetadata(i,AutomatonLogger.builderLevel,k,AutomatonLogger.importantBuildingThingy,random.nextInt(2));
 			}
 			}
 			

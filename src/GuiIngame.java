@@ -52,7 +52,7 @@ public class GuiIngame extends Gui
         {
             renderPumpkinBlur(k, l);
         }
-        if(!mc.thePlayer.func_35160_a(Potion.field_35684_k))
+        if(!mc.thePlayer.func_35160_a(Potion.potionConfusion))
         {
             float f1 = mc.thePlayer.prevTimeInPortal + (mc.thePlayer.timeInPortal - mc.thePlayer.prevTimeInPortal) * f;
             if(f1 > 0.0F)
@@ -82,18 +82,18 @@ public class GuiIngame extends Gui
             int i3 = mc.thePlayer.prevHealth;
             rand.setSeed(updateCounter * 0x4c627);
             boolean flag3 = false;
-            FoodStats foodstats = mc.thePlayer.func_35191_at();
-            int j4 = foodstats.func_35765_a();
+            FoodStats foodstats = mc.thePlayer.getFoodStats();
+            int j4 = foodstats.getFoodLevel();
             int i5 = foodstats.func_35769_b();
             if(mc.playerController.shouldDrawHUD())
             {
                 int l5 = k / 2 - 91;
                 int k6 = k / 2 + 91;
-                int i7 = mc.thePlayer.func_35193_as();
+                int i7 = mc.thePlayer.xpBarCap();
                 if(i7 > 0)
                 {
                     char c = '\266';
-                    int j8 = (mc.thePlayer.field_35211_aX * (c + 1)) / mc.thePlayer.func_35193_as();
+                    int j8 = (mc.thePlayer.currentXP * (c + 1)) / mc.thePlayer.xpBarCap();
                     int i9 = (l - 32) + 3;
                     drawTexturedModalRect(l5, i9, 0, 64, c, 5);
                     if(j8 > 0)
@@ -105,7 +105,7 @@ public class GuiIngame extends Gui
                 int k8 = l7 - 10;
                 int j9 = mc.thePlayer.getPlayerArmorValue();
                 int k9 = -1;
-                if(mc.thePlayer.func_35160_a(Potion.field_35681_l))
+                if(mc.thePlayer.func_35160_a(Potion.potionRegeneration))
                 {
                     k9 = updateCounter % 25;
                 }
@@ -128,7 +128,7 @@ public class GuiIngame extends Gui
                         }
                     }
                     int i11 = 16;
-                    if(mc.thePlayer.func_35160_a(Potion.field_35689_u))
+                    if(mc.thePlayer.func_35160_a(Potion.potionPoison))
                     {
                         i11 += 36;
                     }
@@ -174,12 +174,12 @@ public class GuiIngame extends Gui
                     int j11 = l7;
                     int i12 = 16;
                     byte byte4 = 0;
-                    if(mc.thePlayer.func_35160_a(Potion.field_35691_s))
+                    if(mc.thePlayer.func_35160_a(Potion.potionHunger))
                     {
                         i12 += 36;
                         byte4 = 13;
                     }
-                    if(mc.thePlayer.func_35191_at().func_35760_d() <= 0.0F && updateCounter % (j4 * 3 + 1) == 0)
+                    if(mc.thePlayer.getFoodStats().getFoodSaturationLevel() <= 0.0F && updateCounter % (j4 * 3 + 1) == 0)
                     {
                         j11 += rand.nextInt(3) - 1;
                     }
@@ -260,7 +260,7 @@ public class GuiIngame extends Gui
         }
         if(mc.playerController.func_35642_f())
         {
-            if(mc.thePlayer.field_35210_aY <= 0);
+            if(mc.thePlayer.playerLevel <= 0);
         }
         if(mc.gameSettings.showDebugInfo)
         {
@@ -363,7 +363,7 @@ public class GuiIngame extends Gui
         }
 
         GL11.glPopMatrix();
-        if((mc.thePlayer instanceof EntityClientPlayerMP) && mc.gameSettings.field_35384_x.field_35965_e)
+        if((mc.thePlayer instanceof EntityClientPlayerMP) && mc.gameSettings.keyBindPlayerList.pressed)
         {
             NetClientHandler netclienthandler = ((EntityClientPlayerMP)mc.thePlayer).sendQueue;
             java.util.List list = netclienthandler.field_35786_c;

@@ -37,7 +37,7 @@ public class ItemBow extends Item
             EntityArrow entityarrow = new EntityArrow(world, entityplayer, f * 2.0F);
             if(f == 1.0F)
             {
-                entityarrow.field_35140_d = true;
+                entityarrow.arrowCritical = true;
             }
             world.playSoundAtEntity(entityplayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
             entityplayer.inventory.consumeInventoryItem(Item.arrow.shiftedIndex);

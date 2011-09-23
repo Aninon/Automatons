@@ -18,7 +18,7 @@ import java.util.*;
 //setEntityToAttack( = setEntityToAttack(
 //hasCurrentTarget() = func_25021_O()
 //getIsWolfsFavoriteMeat()=func_25010_k()
-//func_25026_x=func_25018_n_
+//getVerticalFaceSpeed=func_25018_n_
 //isMovementCeased=func_25026_u
 public class AM_EntitySentry extends EntityCreature
 {
@@ -59,7 +59,7 @@ public class AM_EntitySentry extends EntityCreature
 		
 	}
 
-	protected void func_31026_E() //kills wandering!
+	protected void updateWanderPath() //kills wandering!
     {
 		
 	}
@@ -305,7 +305,7 @@ public class AM_EntitySentry extends EntityCreature
 
 	public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-            Entity entity = damagesource.func_35532_a();
+            Entity entity = damagesource.getEntity();
             if(entity != null && entity != this && (entity instanceof EntityPlayer) && ((EntityPlayer)entity).username==getBotOwner() )
             {
                i=20;
@@ -317,7 +317,7 @@ public class AM_EntitySentry extends EntityCreature
 	
 	protected boolean attackEntityAsMob(Entity entity)
     {
-        return entity.attackEntityFrom(DamageSource.func_35525_a(this), 8);
+        return entity.attackEntityFrom(DamageSource.causeMobDamage(this), 8);
     }
 
     protected void attackEntity(Entity entity, float f)

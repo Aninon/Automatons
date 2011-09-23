@@ -27,8 +27,11 @@ public class SaveOldDir extends SaveHandler
             File file1 = new File(file, "DIM-1");
             file1.mkdirs();
             return new McRegionChunkLoader(file1);
-        } else
-        {
+        } else if(worldprovider instanceof AM_WorldProviderBot){
+			File file2 = new File(file, "AUTOMATON-1");
+            file2.mkdirs();
+            return new McRegionChunkLoader(file2);
+		}else{
             return new McRegionChunkLoader(file);
         }
     }

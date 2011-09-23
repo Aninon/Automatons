@@ -88,7 +88,7 @@ public class ChunkProviderLoadOrGenerate
             {
                 chunks[i1].onChunkLoad();
             }
-            chunks[i1].func_35843_a(this, this, i, j);
+            chunks[i1].populateChunk(this, this, i, j);
         }
         lastQueriedChunkXPos = i;
         lastQueriedChunkZPos = j;

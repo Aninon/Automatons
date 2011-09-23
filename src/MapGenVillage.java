@@ -61,7 +61,7 @@ public class MapGenVillage extends MapGenStructure
     static 
     {
         field_35635_a = Arrays.asList(new BiomeGenBase[] {
-            BiomeGenBase.field_35485_c, BiomeGenBase.desert
+            BiomeGenBase.plains, BiomeGenBase.desert
         });
     }
 }

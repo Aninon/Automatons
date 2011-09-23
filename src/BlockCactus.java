@@ -128,6 +128,6 @@ public class BlockCactus extends Block
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
-        entity.attackEntityFrom(DamageSource.field_35537_g, 1);
+        entity.attackEntityFrom(DamageSource.cactus, 1);
     }
 }

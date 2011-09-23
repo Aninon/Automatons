@@ -107,7 +107,7 @@ label0:
                 d10 /= d11;
                 double d12 = worldObj.func_675_a(vec3d, entity.boundingBox);
                 double d13 = (1.0D - d4) * d12;
-                entity.attackEntityFrom(DamageSource.field_35548_k, (int)(((d13 * d13 + d13) / 2D) * 8D * (double)explosionSize + 1.0D));
+                entity.attackEntityFrom(DamageSource.explosion, (int)(((d13 * d13 + d13) / 2D) * 8D * (double)explosionSize + 1.0D));
                 double d14 = d13;
                 entity.motionX += d6 * d14;
                 entity.motionY += d8 * d14;

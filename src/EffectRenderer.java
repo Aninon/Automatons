@@ -94,7 +94,7 @@ public class EffectRenderer
             for(int k = 0; k < fxLayers[i].size(); k++)
             {
                 EntityFX entityfx = (EntityFX)fxLayers[i].get(k);
-                tessellator.func_35835_b(entityfx.func_35115_a(f));
+                tessellator.setBrightness(entityfx.func_35115_a(f));
                 entityfx.renderParticle(tessellator, f, f1, f5, f2, f3, f4);
             }
 
@@ -119,7 +119,7 @@ public class EffectRenderer
         for(int i = 0; i < fxLayers[byte0].size(); i++)
         {
             EntityFX entityfx = (EntityFX)fxLayers[byte0].get(i);
-            tessellator.func_35835_b(entityfx.func_35115_a(f));
+            tessellator.setBrightness(entityfx.func_35115_a(f));
             entityfx.renderParticle(tessellator, f, f1, f5, f2, f3, f4);
         }
 

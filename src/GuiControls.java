@@ -64,7 +64,7 @@ public class GuiControls extends GuiScreen
             options.setKeyBinding(buttonId, -100 + k);
             ((GuiButton)controlList.get(buttonId)).displayString = options.getOptionDisplayString(buttonId);
             buttonId = -1;
-            KeyBinding.func_35961_b();
+            KeyBinding.resetKeyBindingArrayAndHash();
         } else
         {
             super.mouseClicked(i, j, k);
@@ -78,7 +78,7 @@ public class GuiControls extends GuiScreen
             options.setKeyBinding(buttonId, i);
             ((GuiButton)controlList.get(buttonId)).displayString = options.getOptionDisplayString(buttonId);
             buttonId = -1;
-            KeyBinding.func_35961_b();
+            KeyBinding.resetKeyBindingArrayAndHash();
         } else
         {
             super.keyTyped(c, i);

@@ -614,13 +614,13 @@ public class NetClientHandler extends NetHandler
     public void handleHealth(Packet8UpdateHealth packet8updatehealth)
     {
         mc.thePlayer.setHealth(packet8updatehealth.healthMP);
-        mc.thePlayer.func_35191_at().func_35764_a(packet8updatehealth.field_35231_b);
-        mc.thePlayer.func_35191_at().func_35767_b(packet8updatehealth.field_35232_c);
+        mc.thePlayer.getFoodStats().setFoodLevel(packet8updatehealth.field_35231_b);
+        mc.thePlayer.getFoodStats().setFoodSaturationLevel(packet8updatehealth.field_35232_c);
     }
 
     public void func_35777_a(Packet43Experience packet43experience)
     {
-        mc.thePlayer.func_35219_c(packet43experience.field_35230_a, packet43experience.field_35228_b, packet43experience.field_35229_c);
+        mc.thePlayer.setXPStats(packet43experience.field_35230_a, packet43experience.field_35228_b, packet43experience.field_35229_c);
     }
 
     public void handleRespawn(Packet9Respawn packet9respawn)

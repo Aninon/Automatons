@@ -267,13 +267,13 @@ public class ChunkProviderGenerate
                     for(int j3 = -byte0; j3 <= byte0; j3++)
                     {
                         BiomeGenBase biomegenbase1 = biomesForGeneration[k2 + i3 + 2 + (l2 + j3 + 2) * (l + 5)];
-                        float f4 = field_35388_l[i3 + 2 + (j3 + 2) * 5] / (biomegenbase1.field_35492_q + 2.0F);
-                        if(biomegenbase1.field_35492_q > biomegenbase.field_35492_q)
+                        float f4 = field_35388_l[i3 + 2 + (j3 + 2) * 5] / (biomegenbase1.minHeight + 2.0F);
+                        if(biomegenbase1.minHeight > biomegenbase.minHeight)
                         {
                             f4 /= 2.0F;
                         }
-                        f1 += biomegenbase1.field_35491_r * f4;
-                        f2 += biomegenbase1.field_35492_q * f4;
+                        f1 += biomegenbase1.maxHeight * f4;
+                        f2 += biomegenbase1.minHeight * f4;
                         f3 += f4;
                     }
 

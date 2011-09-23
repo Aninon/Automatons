@@ -57,25 +57,25 @@ public class ComponentStrongholdCorridor extends ComponentStronghold
         }
         for(int i = 0; i < field_35052_a; i++)
         {
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 0, 0, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 1, 0, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 2, 0, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 3, 0, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 4, 0, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 0, 0, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 1, 0, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 2, 0, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 3, 0, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 4, 0, i, structureboundingbox);
             for(int j = 1; j <= 3; j++)
             {
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 0, j, i, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 0, j, i, structureboundingbox);
                 func_35018_a(world, 0, 0, 1, j, i, structureboundingbox);
                 func_35018_a(world, 0, 0, 2, j, i, structureboundingbox);
                 func_35018_a(world, 0, 0, 3, j, i, structureboundingbox);
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 4, j, i, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 4, j, i, structureboundingbox);
             }
 
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 0, 4, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 1, 4, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 2, 4, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 3, 4, i, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 4, 4, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 0, 4, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 1, 4, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 2, 4, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 3, 4, i, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 4, 4, i, structureboundingbox);
         }
 
         return true;

@@ -18,7 +18,7 @@ public class Tessellator
         vertexCount = 0;
         hasColor = false;
         hasTexture = false;
-        field_35838_p = false;
+        hasBrightness = false;
         hasNormals = false;
         rawBufferIndex = 0;
         addedVertices = 0;
@@ -72,7 +72,7 @@ public class Tessellator
                 }
                 GL11.glEnableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
             }
-            if(field_35838_p)
+            if(hasBrightness)
             {
                 GL13.glClientActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
                 if(useVBO)
@@ -131,7 +131,7 @@ public class Tessellator
             {
                 GL11.glDisableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
             }
-            if(field_35838_p)
+            if(hasBrightness)
             {
                 GL13.glClientActiveTexture(33985 /*GL_TEXTURE1_ARB*/);
                 GL11.glDisableClientState(32888 /*GL_TEXTURE_COORD_ARRAY_EXT*/);
@@ -175,7 +175,7 @@ public class Tessellator
             hasNormals = false;
             hasColor = false;
             hasTexture = false;
-            field_35838_p = false;
+            hasBrightness = false;
             isColorDisabled = false;
             return;
         }
@@ -188,10 +188,10 @@ public class Tessellator
         textureV = d1;
     }
 
-    public void func_35835_b(int i)
+    public void setBrightness(int i)
     {
-        field_35838_p = true;
-        field_35837_l = i;
+        hasBrightness = true;
+        brightness = i;
     }
 
     public void setColorOpaque_F(float f, float f1, float f2)
@@ -276,7 +276,7 @@ public class Tessellator
                     rawBuffer[rawBufferIndex + 3] = rawBuffer[(rawBufferIndex - j) + 3];
                     rawBuffer[rawBufferIndex + 4] = rawBuffer[(rawBufferIndex - j) + 4];
                 }
-                if(field_35838_p)
+                if(hasBrightness)
                 {
                     rawBuffer[rawBufferIndex + 7] = rawBuffer[(rawBufferIndex - j) + 7];
                 }
@@ -297,9 +297,9 @@ public class Tessellator
             rawBuffer[rawBufferIndex + 3] = Float.floatToRawIntBits((float)textureU);
             rawBuffer[rawBufferIndex + 4] = Float.floatToRawIntBits((float)textureV);
         }
-        if(field_35838_p)
+        if(hasBrightness)
         {
-            rawBuffer[rawBufferIndex + 7] = field_35837_l;
+            rawBuffer[rawBufferIndex + 7] = brightness;
         }
         if(hasColor)
         {
@@ -375,11 +375,11 @@ public class Tessellator
     private int vertexCount;
     private double textureU;
     private double textureV;
-    private int field_35837_l;
+    private int brightness;
     private int color;
     private boolean hasColor;
     private boolean hasTexture;
-    private boolean field_35838_p;
+    private boolean hasBrightness;
     private boolean hasNormals;
     private int rawBufferIndex;
     private int addedVertices;

@@ -53,10 +53,10 @@ public class ComponentStrongholdPrison extends ComponentStronghold
             func_35022_a(world, structureboundingbox, 4, 1, 3, 4, 3, 3, false, random, StructureStrongholdPieces.func_35852_b());
             func_35022_a(world, structureboundingbox, 4, 1, 7, 4, 3, 7, false, random, StructureStrongholdPieces.func_35852_b());
             func_35022_a(world, structureboundingbox, 4, 1, 9, 4, 3, 9, false, random, StructureStrongholdPieces.func_35852_b());
-            func_35011_a(world, structureboundingbox, 4, 1, 4, 4, 3, 6, Block.field_35288_bq.blockID, Block.field_35288_bq.blockID, false);
-            func_35011_a(world, structureboundingbox, 5, 1, 5, 7, 3, 5, Block.field_35288_bq.blockID, Block.field_35288_bq.blockID, false);
-            func_35018_a(world, Block.field_35288_bq.blockID, 0, 4, 3, 2, structureboundingbox);
-            func_35018_a(world, Block.field_35288_bq.blockID, 0, 4, 3, 8, structureboundingbox);
+            func_35011_a(world, structureboundingbox, 4, 1, 4, 4, 3, 6, Block.fenceIron.blockID, Block.fenceIron.blockID, false);
+            func_35011_a(world, structureboundingbox, 5, 1, 5, 7, 3, 5, Block.fenceIron.blockID, Block.fenceIron.blockID, false);
+            func_35018_a(world, Block.fenceIron.blockID, 0, 4, 3, 2, structureboundingbox);
+            func_35018_a(world, Block.fenceIron.blockID, 0, 4, 3, 8, structureboundingbox);
             func_35018_a(world, Block.doorSteel.blockID, func_35009_c(Block.doorSteel.blockID, 3), 4, 1, 2, structureboundingbox);
             func_35018_a(world, Block.doorSteel.blockID, func_35009_c(Block.doorSteel.blockID, 3) + 8, 4, 2, 2, structureboundingbox);
             func_35018_a(world, Block.doorSteel.blockID, func_35009_c(Block.doorSteel.blockID, 3), 4, 1, 8, structureboundingbox);

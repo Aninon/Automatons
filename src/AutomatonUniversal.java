@@ -6,9 +6,9 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
-import java.lang.reflect.Field;
+import java.lang.reflect.Field;*/
 import net.minecraft.client.Minecraft;
-*/
+
 import java.util.Random;
 
 
@@ -75,7 +75,9 @@ public class AutomatonUniversal {
 	}
 	
 	
-	
+	public static Minecraft mc(){
+	return ModLoader.getMinecraftInstance();
+	}
 	public static EffectRenderer effectRenderer=ModLoader.getMinecraftInstance().effectRenderer;
 	
 	

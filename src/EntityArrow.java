@@ -28,7 +28,7 @@ public class EntityArrow extends Entity
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
         ticksInAir = 0;
-        field_35140_d = false;
+        arrowCritical = false;
         setSize(0.5F, 0.5F);
     }
 
@@ -44,7 +44,7 @@ public class EntityArrow extends Entity
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
         ticksInAir = 0;
-        field_35140_d = false;
+        arrowCritical = false;
         setSize(0.5F, 0.5F);
         setPosition(d, d1, d2);
         yOffset = 0.0F;
@@ -62,7 +62,7 @@ public class EntityArrow extends Entity
         doesArrowBelongToPlayer = false;
         arrowShake = 0;
         ticksInAir = 0;
-        field_35140_d = false;
+        arrowCritical = false;
         shootingEntity = entityliving;
         doesArrowBelongToPlayer = entityliving instanceof EntityPlayer;
         setSize(0.5F, 0.5F);
@@ -210,11 +210,11 @@ public class EntityArrow extends Entity
             {
                 float f1 = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ);
                 int j1 = (int)Math.ceil((double)f1 * 2D);
-                if(field_35140_d)
+                if(arrowCritical)
                 {
                     j1 = (j1 * 3) / 2 + 1;
                 }
-                if(movingobjectposition.entityHit.attackEntityFrom(DamageSource.func_35535_a(this, shootingEntity), j1))
+                if(movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeArrowDamage(this, shootingEntity), j1))
                 {
                     if(movingobjectposition.entityHit instanceof EntityLiving)
                     {
@@ -248,10 +248,10 @@ public class EntityArrow extends Entity
                 worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
                 inGround = true;
                 arrowShake = 7;
-                field_35140_d = false;
+                arrowCritical = false;
             }
         }
-        if(field_35140_d)
+        if(arrowCritical)
         {
             for(int i1 = 0; i1 < 4; i1++)
             {
@@ -343,5 +343,5 @@ public class EntityArrow extends Entity
     public Entity shootingEntity;
     private int ticksInGround;
     private int ticksInAir;
-    public boolean field_35140_d;
+    public boolean arrowCritical;
 }

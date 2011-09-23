@@ -40,7 +40,7 @@ public class CraftingManager
         addRecipe(new ItemStack(Block.fence, 2), new Object[] {
             "###", "###", Character.valueOf('#'), Item.stick
         });
-        addRecipe(new ItemStack(Block.field_35277_bw, 1), new Object[] {
+        addRecipe(new ItemStack(Block.fenceGate, 1), new Object[] {
             "#W#", "#W#", Character.valueOf('#'), Item.stick, Character.valueOf('W'), Block.planks
         });
         addRecipe(new ItemStack(Block.jukebox, 1), new Object[] {
@@ -86,7 +86,7 @@ public class CraftingManager
             "###", Character.valueOf('#'), Block.brick
         });
         addRecipe(new ItemStack(Block.stairSingle, 3, 5), new Object[] {
-            "###", Character.valueOf('#'), Block.field_35285_bn
+            "###", Character.valueOf('#'), Block.stoneBrick
         });
         addRecipe(new ItemStack(Block.ladder, 2), new Object[] {
             "# #", "###", "# #", Character.valueOf('#'), Item.stick
@@ -167,11 +167,11 @@ public class CraftingManager
         addRecipe(new ItemStack(Block.stairCompactCobblestone, 4), new Object[] {
             "#  ", "## ", "###", Character.valueOf('#'), Block.cobblestone
         });
-        addRecipe(new ItemStack(Block.field_35280_bx, 4), new Object[] {
+        addRecipe(new ItemStack(Block.stairsBrick, 4), new Object[] {
             "#  ", "## ", "###", Character.valueOf('#'), Block.brick
         });
-        addRecipe(new ItemStack(Block.field_35279_by, 4), new Object[] {
-            "#  ", "## ", "###", Character.valueOf('#'), Block.field_35285_bn
+        addRecipe(new ItemStack(Block.stairsStoneBrickSmooth, 4), new Object[] {
+            "#  ", "## ", "###", Character.valueOf('#'), Block.stoneBrick
         });
         addRecipe(new ItemStack(Item.painting, 1), new Object[] {
             "###", "#X#", "###", Character.valueOf('#'), Item.stick, Character.valueOf('X'), Block.cloth

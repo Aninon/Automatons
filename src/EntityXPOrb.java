@@ -28,7 +28,7 @@ public class EntityXPOrb extends Entity
         motionX = (float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D) * 2.0F;
         motionY = (float)(Math.random() * 0.20000000000000001D) * 2.0F;
         motionZ = (float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D) * 2.0F;
-        field_35125_ap = i;
+        xpValue = i;
     }
 
     protected boolean canTriggerWalking()
@@ -141,7 +141,7 @@ public class EntityXPOrb extends Entity
 
     protected void dealFireDamage(int i)
     {
-        attackEntityFrom(DamageSource.field_35542_a, i);
+        attackEntityFrom(DamageSource.inFire, i);
     }
 
     public boolean attackEntityFrom(DamageSource damagesource, int i)
@@ -159,14 +159,14 @@ public class EntityXPOrb extends Entity
     {
         nbttagcompound.setShort("Health", (byte)field_35123_e);
         nbttagcompound.setShort("Age", (short)field_35124_b);
-        nbttagcompound.setShort("Value", (short)field_35125_ap);
+        nbttagcompound.setShort("Value", (short)xpValue);
     }
 
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
         field_35123_e = nbttagcompound.getShort("Health") & 0xff;
         field_35124_b = nbttagcompound.getShort("Age");
-        field_35125_ap = nbttagcompound.getShort("Value");
+        xpValue = nbttagcompound.getShort("Value");
     }
 
     public void onCollideWithPlayer(EntityPlayer entityplayer)
@@ -180,55 +180,55 @@ public class EntityXPOrb extends Entity
             entityplayer.field_35214_aG = 2;
             worldObj.playSoundAtEntity(this, "random.pop", 0.2F, 0.5F * ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F));
             entityplayer.onItemPickup(this, 1);
-            entityplayer.func_35204_c(field_35125_ap);
+            entityplayer.increaseXP(xpValue);
             setEntityDead();
         }
     }
 
     public int func_35119_j_()
     {
-        return field_35125_ap;
+        return xpValue;
     }
 
     public int func_35120_i()
     {
-        if(field_35125_ap >= 2477)
+        if(xpValue >= 2477)
         {
             return 10;
         }
-        if(field_35125_ap >= 1237)
+        if(xpValue >= 1237)
         {
             return 9;
         }
-        if(field_35125_ap >= 617)
+        if(xpValue >= 617)
         {
             return 8;
         }
-        if(field_35125_ap >= 307)
+        if(xpValue >= 307)
         {
             return 7;
         }
-        if(field_35125_ap >= 149)
+        if(xpValue >= 149)
         {
             return 6;
         }
-        if(field_35125_ap >= 73)
+        if(xpValue >= 73)
         {
             return 5;
         }
-        if(field_35125_ap >= 37)
+        if(xpValue >= 37)
         {
             return 4;
         }
-        if(field_35125_ap >= 17)
+        if(xpValue >= 17)
         {
             return 3;
         }
-        if(field_35125_ap >= 7)
+        if(xpValue >= 7)
         {
             return 2;
         }
-        return field_35125_ap < 3 ? 0 : 1;
+        return xpValue < 3 ? 0 : 1;
     }
 
     public static int func_35121_b(int i)
@@ -276,6 +276,6 @@ public class EntityXPOrb extends Entity
     public int field_35124_b;
     public int field_35126_c;
     private int field_35123_e;
-    private int field_35125_ap;
+    private int xpValue;
     public float field_35122_d;
 }

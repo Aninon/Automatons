@@ -114,7 +114,7 @@ public class AM_EntityOmni extends EntityLiving
 				return true;
 			}
 			
-			if(itemstack.itemID == Item.egg.shiftedIndex || itemstack.itemID == Item.field_35419_bl.shiftedIndex || itemstack.itemID == Item.feather.shiftedIndex)
+			if(itemstack.itemID == Item.egg.shiftedIndex || itemstack.itemID == Item.chickenRaw.shiftedIndex || itemstack.itemID == Item.feather.shiftedIndex)
 			{
 				metamorph(new EntityChicken(worldObj));
 				return true;
@@ -124,7 +124,7 @@ public class AM_EntityOmni extends EntityLiving
 				metamorph(new EntityCow(worldObj));
 				return true;
 			}
-			if(itemstack.itemID == Item.field_35415_bn.shiftedIndex)
+			if(itemstack.itemID == Item.rottenFlesh.shiftedIndex)
 			{
 				metamorph(new EntityZombie(worldObj));
 				return true;
@@ -183,7 +183,7 @@ public class AM_EntityOmni extends EntityLiving
 				metamorph(new AM_EntityWatcher(worldObj));
 				return true;
 			}
-			if(itemstack.itemID == Item.field_35416_bo.shiftedIndex)
+			if(itemstack.itemID == Item.enderPearl.shiftedIndex)
 			{
 				metamorph(new EntityEnderman(worldObj));
 				return true;

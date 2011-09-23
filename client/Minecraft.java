@@ -567,7 +567,7 @@ public abstract class Minecraft
                 }
                 catch(OutOfMemoryError outofmemoryerror)
                 {
-                    func_28002_e();
+                    freeMemory();
                     displayGuiScreen(new GuiErrorScreen());
                     System.gc();
                 }
@@ -576,7 +576,7 @@ public abstract class Minecraft
         catch(MinecraftError minecrafterror) { }
         catch(Throwable throwable)
         {
-            func_28002_e();
+            freeMemory();
             throwable.printStackTrace();
             onMinecraftCrash(new UnexpectedThrowable("Unexpected error", throwable));
         }
@@ -586,7 +586,7 @@ public abstract class Minecraft
         }
     }
 
-    public void func_28002_e()
+    public void freeMemory()
     {
         try
         {
@@ -732,7 +732,7 @@ public abstract class Minecraft
             return;
         } else
         {
-            KeyBinding.func_35959_a();
+            KeyBinding.unPressAllKeys();
             inGameHasFocus = false;
             mouseHelper.ungrabMouseCursor();
             return;
@@ -838,7 +838,7 @@ public abstract class Minecraft
                 {
                     thePlayer.inventory.mainInventory[thePlayer.inventory.currentItem] = null;
                 } else
-                if(itemstack2.stackSize != j1 || playerController.func_35640_h())
+                if(itemstack2.stackSize != j1 || playerController.isInCreativeMode())
                 {
                     entityRenderer.itemRenderer.func_9449_b();
                 }
@@ -926,7 +926,7 @@ public abstract class Minecraft
         }
     }
 
-    private void func_28001_B()
+    private void startThreadCheckHasPaid()
     {
         (new ThreadCheckHasPaid(this)).start();
     }
@@ -939,7 +939,7 @@ public abstract class Minecraft
         }
         if(ticksRan == 6000)
         {
-            func_28001_B();
+            startThreadCheckHasPaid();
         }
         statFileWriter.func_27178_d();
         ingameGUI.updateTick();
@@ -1000,10 +1000,10 @@ public abstract class Minecraft
                 {
                     break;
                 }
-                KeyBinding.func_35963_a(Mouse.getEventButton() - 100, Mouse.getEventButtonState());
+                KeyBinding.setKeyBindState(Mouse.getEventButton() - 100, Mouse.getEventButtonState());
                 if(Mouse.getEventButtonState())
                 {
-                    KeyBinding.func_35960_a(Mouse.getEventButton() - 100);
+                    KeyBinding.onTick(Mouse.getEventButton() - 100);
                 }
                 long l = System.currentTimeMillis() - systemTime;
                 if(l <= 200L)
@@ -1048,10 +1048,10 @@ public abstract class Minecraft
                 {
                     break;
                 }
-                KeyBinding.func_35963_a(Keyboard.getEventKey(), Keyboard.getEventKeyState());
+                KeyBinding.setKeyBindState(Keyboard.getEventKey(), Keyboard.getEventKeyState());
                 if(Keyboard.getEventKeyState())
                 {
-                    KeyBinding.func_35960_a(Keyboard.getEventKey());
+                    KeyBinding.onTick(Keyboard.getEventKey());
                 }
                 if(Keyboard.getEventKeyState())
                 {
@@ -1103,26 +1103,26 @@ public abstract class Minecraft
                     }
                 }
             } while(true);
-            for(; gameSettings.keyBindInventory.func_35962_c(); displayGuiScreen(new GuiInventory(thePlayer))) { }
-            for(; gameSettings.keyBindDrop.func_35962_c(); thePlayer.dropCurrentItem()) { }
-            for(; isMultiplayerWorld() && gameSettings.keyBindChat.func_35962_c(); displayGuiScreen(new GuiChat())) { }
+            for(; gameSettings.keyBindInventory.isPressed(); displayGuiScreen(new GuiInventory(thePlayer))) { }
+            for(; gameSettings.keyBindDrop.isPressed(); thePlayer.dropCurrentItem()) { }
+            for(; isMultiplayerWorld() && gameSettings.keyBindChat.isPressed(); displayGuiScreen(new GuiChat())) { }
             if(thePlayer.func_35196_Z())
             {
-                if(!gameSettings.field_35381_w.field_35965_e)
+                if(!gameSettings.keyBindUseItem.pressed)
                 {
                     playerController.func_35638_c(thePlayer);
                 }
             } else
             {
-                for(; gameSettings.field_35382_v.func_35962_c(); clickMouse(0)) { }
-                for(; gameSettings.field_35381_w.func_35962_c(); clickMouse(1)) { }
-                for(; gameSettings.field_35383_y.func_35962_c(); clickMiddleMouseButton()) { }
+                for(; gameSettings.keyBindAttack.isPressed(); clickMouse(0)) { }
+                for(; gameSettings.keyBindUseItem.isPressed(); clickMouse(1)) { }
+                for(; gameSettings.keyBindPickBlock.isPressed(); clickMiddleMouseButton()) { }
             }
-            if(gameSettings.field_35381_w.field_35965_e && field_35001_ab == 0 && !thePlayer.func_35196_Z())
+            if(gameSettings.keyBindUseItem.pressed && field_35001_ab == 0 && !thePlayer.func_35196_Z())
             {
                 clickMouse(1);
             }
-            sendClickBlockToController(0, currentScreen == null && gameSettings.field_35382_v.field_35965_e && inGameHasFocus);
+            sendClickBlockToController(0, currentScreen == null && gameSettings.keyBindAttack.pressed && inGameHasFocus);
         }
         if(theWorld != null)
         {

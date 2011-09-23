@@ -339,15 +339,15 @@ public class Item
     public static Item cookie = (new ItemFood(101, 1, 0.1F, false)).setIconCoord(12, 5).setItemName("cookie");
     public static ItemMap map = (ItemMap)(new ItemMap(102)).setIconCoord(12, 3).setItemName("map");
     public static ItemShears shears = (ItemShears)(new ItemShears(103)).setIconCoord(13, 5).setItemName("shears");
-    public static Item field_35421_bg = (new ItemFood(104, 2, 0.3F, false)).setIconCoord(13, 6).setItemName("melon");
-    public static Item field_35422_bh;
-    public static Item field_35423_bi;
-    public static Item field_35417_bj = (new ItemFood(107, 3, 0.3F, true)).setIconCoord(9, 6).setItemName("beefRaw");
-    public static Item field_35418_bk = (new ItemFood(108, 8, 0.8F, true)).setIconCoord(10, 6).setItemName("beefCooked");
-    public static Item field_35419_bl;
-    public static Item field_35420_bm = (new ItemFood(110, 6, 0.6F, true)).setIconCoord(10, 7).setItemName("chickenCooked");
-    public static Item field_35415_bn;
-    public static Item field_35416_bo = (new Item(112)).setIconCoord(11, 6).setItemName("enderPearl");
+    public static Item melon = (new ItemFood(104, 2, 0.3F, false)).setIconCoord(13, 6).setItemName("melon");
+    public static Item pumpkinSeeds;
+    public static Item melonSeeds;
+    public static Item beefRaw = (new ItemFood(107, 3, 0.3F, true)).setIconCoord(9, 6).setItemName("beefRaw");
+    public static Item beefCooked = (new ItemFood(108, 8, 0.8F, true)).setIconCoord(10, 6).setItemName("beefCooked");
+    public static Item chickenRaw;
+    public static Item chickenCooked = (new ItemFood(110, 6, 0.6F, true)).setIconCoord(10, 7).setItemName("chickenCooked");
+    public static Item rottenFlesh;
+    public static Item enderPearl = (new Item(112)).setIconCoord(11, 6).setItemName("enderPearl");
     public static Item record13 = (new ItemRecord(2000, "13")).setIconCoord(0, 15).setItemName("record");
     public static Item recordCat = (new ItemRecord(2001, "cat")).setIconCoord(1, 15).setItemName("record");
     public final int shiftedIndex;
@@ -387,7 +387,7 @@ public class Item
         hoeDiamond = (new ItemHoe(37, EnumToolMaterial.EMERALD)).setIconCoord(3, 8).setItemName("hoeDiamond");
         hoeGold = (new ItemHoe(38, EnumToolMaterial.GOLD)).setIconCoord(4, 8).setItemName("hoeGold");
         seeds = (new ItemSeeds(39, Block.crops.blockID)).setIconCoord(9, 0).setItemName("seeds");
-        appleGold = (new ItemFood(66, 10, 1.2F, false)).func_35424_o().func_35425_a(Potion.field_35681_l.field_35670_H, 30, 0, 1.0F).setIconCoord(11, 0).setItemName("appleGold");
+        appleGold = (new ItemFood(66, 10, 1.2F, false)).func_35424_o().func_35425_a(Potion.potionRegeneration.id, 30, 0, 1.0F).setIconCoord(11, 0).setItemName("appleGold");
         doorWood = (new ItemDoor(68, Material.wood)).setIconCoord(11, 2).setItemName("doorWood");
         bucketEmpty = (new ItemBucket(69, 0)).setIconCoord(10, 4).setItemName("bucket");
         bucketWater = (new ItemBucket(70, Block.waterMoving.blockID)).setIconCoord(11, 4).setItemName("bucketWater").setContainerItem(bucketEmpty);
@@ -397,10 +397,10 @@ public class Item
         reed = (new ItemReed(82, Block.reed)).setIconCoord(11, 1).setItemName("reeds");
         cake = (new ItemReed(98, Block.cake)).setMaxStackSize(1).setIconCoord(13, 1).setItemName("cake");
         redstoneRepeater = (new ItemReed(100, Block.redstoneRepeaterIdle)).setIconCoord(6, 5).setItemName("diode");
-        field_35422_bh = (new ItemSeeds(105, Block.field_35284_bt.blockID)).setIconCoord(13, 3).setItemName("seeds_pumpkin");
-        field_35423_bi = (new ItemSeeds(106, Block.field_35283_bu.blockID)).setIconCoord(14, 3).setItemName("seeds_melon");
-        field_35419_bl = (new ItemFood(109, 2, 0.3F, true)).func_35425_a(Potion.field_35691_s.field_35670_H, 30, 0, 0.3F).setIconCoord(9, 7).setItemName("chickenRaw");
-        field_35415_bn = (new ItemFood(111, 4, 0.1F, true)).func_35425_a(Potion.field_35691_s.field_35670_H, 30, 0, 0.8F).setIconCoord(11, 5).setItemName("rottenFlesh");
+        pumpkinSeeds = (new ItemSeeds(105, Block.pumpkinStem.blockID)).setIconCoord(13, 3).setItemName("seeds_pumpkin");
+        melonSeeds = (new ItemSeeds(106, Block.melonStem.blockID)).setIconCoord(14, 3).setItemName("seeds_melon");
+        chickenRaw = (new ItemFood(109, 2, 0.3F, true)).func_35425_a(Potion.potionHunger.id, 30, 0, 0.3F).setIconCoord(9, 7).setItemName("chickenRaw");
+        rottenFlesh = (new ItemFood(111, 4, 0.1F, true)).func_35425_a(Potion.potionHunger.id, 30, 0, 0.8F).setIconCoord(11, 5).setItemName("rottenFlesh");
         StatList.func_25151_b();
     }
 }

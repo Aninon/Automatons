@@ -91,11 +91,11 @@ public class InventoryBasic
         return true;
     }
 
-    public void func_35142_x_()
+    public void openChest()
     {
     }
 
-    public void func_35141_y_()
+    public void closeChest()
     {
     }
 

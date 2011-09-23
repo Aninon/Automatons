@@ -58,7 +58,7 @@ public abstract class EntityMob extends EntityCreature
     {
         if(super.attackEntityFrom(damagesource, i))
         {
-            Entity entity = damagesource.func_35532_a();
+            Entity entity = damagesource.getEntity();
             if(riddenByEntity == entity || ridingEntity == entity)
             {
                 return true;
@@ -74,9 +74,9 @@ public abstract class EntityMob extends EntityCreature
         }
     }
 
-    protected boolean func_35175_b(Entity entity)
+    protected boolean attackEntityAsMob(Entity entity)
     {
-        return entity.attackEntityFrom(DamageSource.func_35525_a(this), attackStrength);
+        return entity.attackEntityFrom(DamageSource.causeMobDamage(this), attackStrength);
     }
 
     protected void attackEntity(Entity entity, float f)
@@ -84,7 +84,7 @@ public abstract class EntityMob extends EntityCreature
         if(attackTime <= 0 && f < 2.0F && entity.boundingBox.maxY > boundingBox.minY && entity.boundingBox.minY < boundingBox.maxY)
         {
             attackTime = 20;
-            func_35175_b(entity);
+            attackEntityAsMob(entity);
         }
     }
 

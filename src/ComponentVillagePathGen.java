@@ -91,7 +91,7 @@ public class ComponentVillagePathGen extends ComponentVillageRoadPiece
 
     public static StructureBoundingBox func_35087_a(ComponentVillageStartPiece componentvillagestartpiece, List list, Random random, int i, int j, int k, int l)
     {
-        for(int i1 = 7 * MathHelper.func_35598_a(random, 3, 5); i1 >= 7; i1 -= 7)
+        for(int i1 = 7 * MathHelper.getRandomIntegerInRange(random, 3, 5); i1 >= 7; i1 -= 7)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.func_35747_a(i, j, k, 0, 0, 0, 3, 3, i1, l);
             if(StructureComponent.func_35020_a(list, structureboundingbox) == null)

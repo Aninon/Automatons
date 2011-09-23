@@ -86,16 +86,16 @@ public class InventoryLargeChest
         return upperChest.canInteractWith(entityplayer) && lowerChest.canInteractWith(entityplayer);
     }
 
-    public void func_35142_x_()
+    public void openChest()
     {
-        upperChest.func_35142_x_();
-        lowerChest.func_35142_x_();
+        upperChest.openChest();
+        lowerChest.openChest();
     }
 
-    public void func_35141_y_()
+    public void closeChest()
     {
-        upperChest.func_35141_y_();
-        lowerChest.func_35141_y_();
+        upperChest.closeChest();
+        lowerChest.closeChest();
     }
 
     private String name;

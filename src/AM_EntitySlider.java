@@ -78,7 +78,7 @@ public class AM_EntitySlider extends EntityAnimal
         } else
         if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || rand.nextInt(80) == 0))
         {
-            func_31026_E();
+            updateWanderPath();
         }
         int i = MathHelper.floor_double(boundingBox.minY + 0.5D);
         boolean flag = isInWater();
@@ -153,7 +153,7 @@ public class AM_EntitySlider extends EntityAnimal
         }
     }*/
 
-    protected void func_31026_E()
+    protected void updateWanderPath()
     {
         boolean flag = false;
         int i = -1;
@@ -188,7 +188,7 @@ public class AM_EntitySlider extends EntityAnimal
 	
 	public void onDeath(DamageSource damagesource)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(scoreValue >= 0 && entity != null)
         {
             entity.addToPlayerScore(this, scoreValue);
@@ -275,7 +275,7 @@ public class AM_EntitySlider extends EntityAnimal
         if(super.attackEntityFrom(damagesource, i))
         {
 			field_35174_at=0;
-            Entity entity = damagesource.func_35532_a();
+            Entity entity = damagesource.getEntity();
             if(riddenByEntity == entity || ridingEntity == entity)
             {
                 return true;

@@ -17,7 +17,7 @@ public class ContainerChest extends Container
     {
         lowerChestInventory = iinventory1;
         numRows = iinventory1.getSizeInventory() / 9;
-        iinventory1.func_35142_x_();
+        iinventory1.openChest();
         int i = (numRows - 4) * 18;
         for(int j = 0; j < numRows; j++)
         {
@@ -82,7 +82,7 @@ public class ContainerChest extends Container
     public void onCraftGuiClosed(EntityPlayer entityplayer)
     {
         super.onCraftGuiClosed(entityplayer);
-        lowerChestInventory.func_35141_y_();
+        lowerChestInventory.closeChest();
     }
 
     private IInventory lowerChestInventory;

@@ -439,7 +439,7 @@ label1:
         {
             l7 -= 20;
         }
-        if(biomegenbase == BiomeGenBase.field_35485_c)
+        if(biomegenbase == BiomeGenBase.plains)
         {
             l7 -= 20;
         }

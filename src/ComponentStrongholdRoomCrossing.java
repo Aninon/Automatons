@@ -60,9 +60,9 @@ public class ComponentStrongholdRoomCrossing extends ComponentStronghold
             break;
 
         case 0: // '\0'
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 5, 1, 5, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 5, 2, 5, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 5, 3, 5, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 5, 1, 5, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 5, 2, 5, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 5, 3, 5, structureboundingbox);
             func_35018_a(world, Block.torchWood.blockID, 0, 4, 3, 5, structureboundingbox);
             func_35018_a(world, Block.torchWood.blockID, 0, 6, 3, 5, structureboundingbox);
             func_35018_a(world, Block.torchWood.blockID, 0, 5, 3, 4, structureboundingbox);
@@ -80,15 +80,15 @@ public class ComponentStrongholdRoomCrossing extends ComponentStronghold
         case 1: // '\001'
             for(int i = 0; i < 5; i++)
             {
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 3, 1, 3 + i, structureboundingbox);
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 7, 1, 3 + i, structureboundingbox);
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 3 + i, 1, 3, structureboundingbox);
-                func_35018_a(world, Block.field_35285_bn.blockID, 0, 3 + i, 1, 7, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 3, 1, 3 + i, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 7, 1, 3 + i, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 3 + i, 1, 3, structureboundingbox);
+                func_35018_a(world, Block.stoneBrick.blockID, 0, 3 + i, 1, 7, structureboundingbox);
             }
 
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 5, 1, 5, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 5, 2, 5, structureboundingbox);
-            func_35018_a(world, Block.field_35285_bn.blockID, 0, 5, 3, 5, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 5, 1, 5, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 5, 2, 5, structureboundingbox);
+            func_35018_a(world, Block.stoneBrick.blockID, 0, 5, 3, 5, structureboundingbox);
             func_35018_a(world, Block.waterMoving.blockID, 0, 5, 4, 5, structureboundingbox);
             break;
 

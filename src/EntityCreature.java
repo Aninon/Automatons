@@ -61,7 +61,7 @@ public abstract class EntityCreature extends EntityLiving
         } else
         if(!hasAttacked && (pathToEntity == null && rand.nextInt(80) == 0 || field_35174_at > 0 || rand.nextInt(80) == 0))
         {
-            func_31026_E();
+            updateWanderPath();
         }
         int i = MathHelper.floor_double(boundingBox.minY + 0.5D);
         boolean flag = isInWater();
@@ -136,7 +136,7 @@ public abstract class EntityCreature extends EntityLiving
         }
     }
 
-    protected void func_31026_E()
+    protected void updateWanderPath()
     {
         boolean flag = false;
         int i = -1;

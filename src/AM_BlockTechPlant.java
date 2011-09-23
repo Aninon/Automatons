@@ -35,11 +35,11 @@ public class AM_BlockTechPlant extends Block
     public void onNeighborBlockChange(World world, int i, int j, int k, int l)
     {
         super.onNeighborBlockChange(world, i, j, k, l);
-        func_268_h(world, i, j, k);
+        checkFlowerChange(world, i, j, k);
     }
 
 
-    protected final void func_268_h(World world, int i, int j, int k)
+    protected final void checkFlowerChange(World world, int i, int j, int k)
     {
         if(!canBlockStay(world, i, j, k))
         {

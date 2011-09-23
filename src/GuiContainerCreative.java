@@ -32,7 +32,7 @@ public class GuiContainerCreative extends GuiContainer
 
     public void updateScreen()
     {
-        if(!mc.playerController.func_35640_h())
+        if(!mc.playerController.isInCreativeMode())
         {
             mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
         }
@@ -118,7 +118,7 @@ public class GuiContainerCreative extends GuiContainer
 
     public void initGui()
     {
-        if(!mc.playerController.func_35640_h())
+        if(!mc.playerController.isInCreativeMode())
         {
             mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
         }
@@ -136,7 +136,7 @@ public class GuiContainerCreative extends GuiContainer
         int i = Mouse.getEventDWheel();
         if(i != 0)
         {
-            int j = (((ContainerCreative)inventorySlots).field_35375_a.size() / 8 - 8) + 1;
+            int j = (((ContainerCreative)inventorySlots).itemList.size() / 8 - 8) + 1;
             if(i > 0)
             {
                 i = 1;

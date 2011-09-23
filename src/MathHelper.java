@@ -45,7 +45,7 @@ public class MathHelper
         return d >= (double)i ? i : i - 1;
     }
 
-    public static long func_35599_c(double d)
+    public static long floor_double_long(double d)
     {
         long l = (long)d;
         return d >= (double)l ? l : l - 1L;
@@ -56,7 +56,7 @@ public class MathHelper
         return f < 0.0F ? -f : f;
     }
 
-    public static int func_35597_a(int i)
+    public static int abs_int(int i)
     {
         return i < 0 ? -i : i;
     }
@@ -90,7 +90,7 @@ public class MathHelper
         return s == null || s.length() == 0;
     }
 
-    public static int func_35598_a(Random random, int i, int j)
+    public static int getRandomIntegerInRange(Random random, int i, int j)
     {
         if(i >= j)
         {

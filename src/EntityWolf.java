@@ -327,7 +327,7 @@ public class EntityWolf extends EntityAnimal
 
     public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         setIsSitting(false);
         if(entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow))
         {
@@ -417,7 +417,7 @@ public class EntityWolf extends EntityAnimal
             {
                 byte0 = 4;
             }
-            entity.attackEntityFrom(DamageSource.func_35525_a(this), byte0);
+            entity.attackEntityFrom(DamageSource.causeMobDamage(this), byte0);
         }
     }
 

@@ -51,7 +51,7 @@ public final class ItemStack
         itemDamage = k;
     }
 
-    public static ItemStack func_35864_a(NBTTagCompound nbttagcompound)
+    public static ItemStack loadItemStackFromNBT(NBTTagCompound nbttagcompound)
     {
         ItemStack itemstack = new ItemStack();
         itemstack.readFromNBT(nbttagcompound);

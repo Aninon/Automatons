@@ -18,6 +18,15 @@ public class AM_BiomeGenTech extends BiomeGenBase
 		 fillerBlock = (byte)Block.blockClay.blockID;
 		 topBlock = (byte)AutomatonLogger.frass;
 		 
+		 
+		field_35488_u.field_35911_r = 2;
+        field_35488_u.field_35910_s = -999;
+        field_35488_u.field_35908_u = 1;
+        field_35488_u.field_35907_v = 8;
+        field_35488_u.field_35906_w = 10;
+        field_35488_u.field_35888_A = 1;
+		 
+		 
 		//if(AutomatonLogger.allTech!=1){
 		spawnableMonsterList.clear();
         spawnableCreatureList.clear();
@@ -28,12 +37,12 @@ public class AM_BiomeGenTech extends BiomeGenBase
 		
 		
 
-		/*
+		
         spawnableCreatureList.add(new SpawnListEntry(AM_EntityChopper.class, 30,4,4));
 		spawnableCreatureList.add(new SpawnListEntry(AM_EntityBobby.class, 28,4,4));
 		spawnableCreatureList.add(new SpawnListEntry(AM_EntityGolem.class, 8,4,4));
 		spawnableMonsterList.add(new SpawnListEntry(AM_EntityWatcher.class, 20,4,4));
-		spawnableMonsterList.add(new SpawnListEntry(AM_EntitySlider.class, 8,4,4));*/
+		spawnableMonsterList.add(new SpawnListEntry(AM_EntitySlider.class, 8,4,4));
 		//spawnableMonsterList.add(new SpawnListEntry(net.minecraft.src.EntityChopper.class, 14));
     }
 	public WorldGenerator getRandomWorldGenForTrees(Random random)

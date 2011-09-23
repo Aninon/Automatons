@@ -22,17 +22,17 @@ public class PlayerControllerTest extends PlayerController
 
     public static void func_35646_d(EntityPlayer entityplayer)
     {
-        entityplayer.field_35212_aW.field_35758_c = true;
-        entityplayer.field_35212_aW.field_35756_d = true;
-        entityplayer.field_35212_aW.field_35759_a = true;
+        entityplayer.capabilities.field_35758_c = true;
+        entityplayer.capabilities.field_35756_d = true;
+        entityplayer.capabilities.disableDamage = true;
     }
 
     public static void func_35645_e(EntityPlayer entityplayer)
     {
-        entityplayer.field_35212_aW.field_35758_c = false;
-        entityplayer.field_35212_aW.field_35757_b = false;
-        entityplayer.field_35212_aW.field_35756_d = false;
-        entityplayer.field_35212_aW.field_35759_a = false;
+        entityplayer.capabilities.field_35758_c = false;
+        entityplayer.capabilities.isFlying = false;
+        entityplayer.capabilities.field_35756_d = false;
+        entityplayer.capabilities.disableDamage = false;
     }
 
     public void func_6473_b(EntityPlayer entityplayer)
@@ -115,7 +115,7 @@ public class PlayerControllerTest extends PlayerController
         return false;
     }
 
-    public boolean func_35640_h()
+    public boolean isInCreativeMode()
     {
         return true;
     }

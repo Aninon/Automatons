@@ -48,7 +48,7 @@ public class EntityLargeExplodeFX extends EntityFX
             tessellator.startDrawingQuads();
             tessellator.setColorRGBA_F(particleRed, particleGreen, particleBlue, 1.0F);
             tessellator.setNormal(0.0F, 1.0F, 0.0F);
-            tessellator.func_35835_b(240);
+            tessellator.setBrightness(240);
             tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, f7, f9);
             tessellator.addVertexWithUV((f11 - f1 * f10) + f4 * f10, f12 + f2 * f10, (f13 - f3 * f10) + f5 * f10, f7, f8);
             tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, f6, f8);

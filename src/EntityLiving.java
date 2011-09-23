@@ -114,13 +114,13 @@ public abstract class EntityLiving extends Entity
         }
         if(isEntityAlive() && isEntityInsideOpaqueBlock())
         {
-            attackEntityFrom(DamageSource.field_35538_d, 1);
+            attackEntityFrom(DamageSource.inWall, 1);
         }
         if(isImmuneToFire || worldObj.multiplayerWorld)
         {
             fire = 0;
         }
-        if(isEntityAlive() && isInsideOfMaterial(Material.water) && !canBreatheUnderwater() && !field_35170_bR.containsKey(Integer.valueOf(Potion.field_35680_o.field_35670_H)))
+        if(isEntityAlive() && isInsideOfMaterial(Material.water) && !canBreatheUnderwater() && !field_35170_bR.containsKey(Integer.valueOf(Potion.potionWaterBreathing.id)))
         {
             air--;
             if(air == -20)
@@ -134,7 +134,7 @@ public abstract class EntityLiving extends Entity
                     worldObj.spawnParticle("bubble", posX + (double)f, posY + (double)f1, posZ + (double)f2, motionX, motionY, motionZ);
                 }
 
-                attackEntityFrom(DamageSource.field_35539_e, 2);
+                attackEntityFrom(DamageSource.drown, 2);
             }
             fire = 0;
         } else
@@ -359,7 +359,7 @@ public abstract class EntityLiving extends Entity
             hurtTime = maxHurtTime = 10;
         }
         attackedAtYaw = 0.0F;
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(entity != null)
         {
             if(entity instanceof EntityPlayer)
@@ -462,7 +462,7 @@ public abstract class EntityLiving extends Entity
 
     public void onDeath(DamageSource damagesource)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(scoreValue >= 0 && entity != null)
         {
             entity.addToPlayerScore(this, scoreValue);
@@ -504,7 +504,7 @@ public abstract class EntityLiving extends Entity
         int i = (int)Math.ceil(f - 3F);
         if(i > 0)
         {
-            attackEntityFrom(DamageSource.field_35549_h, i);
+            attackEntityFrom(DamageSource.fall, i);
             int j = worldObj.getBlockId(MathHelper.floor_double(posX), MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset), MathHelper.floor_double(posZ));
             if(j > 0)
             {
@@ -641,7 +641,7 @@ public abstract class EntityLiving extends Entity
             {
                 PotionEffect potioneffect = (PotionEffect)iterator.next();
                 nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Id", (byte)potioneffect.func_35799_a());
+                nbttagcompound1.setByte("Id", (byte)potioneffect.getPotionID());
                 nbttagcompound1.setByte("Amplifier", (byte)potioneffect.func_35801_c());
                 nbttagcompound1.setInteger("Duration", potioneffect.func_35802_b());
             }
@@ -926,7 +926,7 @@ public abstract class EntityLiving extends Entity
 
     protected void kill()
     {
-        attackEntityFrom(DamageSource.field_35550_i, 4);
+        attackEntityFrom(DamageSource.outOfWorld, 4);
     }
 
     public float getSwingProgress(float f)
@@ -1011,13 +1011,13 @@ public abstract class EntityLiving extends Entity
             hurtTime = maxHurtTime = 10;
             attackedAtYaw = 0.0F;
             worldObj.playSoundAtEntity(this, getHurtSound(), getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
-            attackEntityFrom(DamageSource.field_35547_j, 0);
+            attackEntityFrom(DamageSource.generic, 0);
         } else
         if(byte0 == 3)
         {
             worldObj.playSoundAtEntity(this, getDeathSound(), getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
             health = 0;
-            onDeath(DamageSource.field_35547_j);
+            onDeath(DamageSource.generic);
         } else
         {
             super.handleHealthUpdate(byte0);
@@ -1055,23 +1055,23 @@ public abstract class EntityLiving extends Entity
 
     public boolean func_35160_a(Potion potion)
     {
-        return field_35170_bR.containsKey(Integer.valueOf(potion.field_35670_H));
+        return field_35170_bR.containsKey(Integer.valueOf(potion.id));
     }
 
     public PotionEffect func_35167_b(Potion potion)
     {
-        return (PotionEffect)field_35170_bR.get(Integer.valueOf(potion.field_35670_H));
+        return (PotionEffect)field_35170_bR.get(Integer.valueOf(potion.id));
     }
 
     public void func_35165_a(PotionEffect potioneffect)
     {
-        if(field_35170_bR.containsKey(Integer.valueOf(potioneffect.func_35799_a())))
+        if(field_35170_bR.containsKey(Integer.valueOf(potioneffect.getPotionID())))
         {
-            ((PotionEffect)field_35170_bR.get(Integer.valueOf(potioneffect.func_35799_a()))).func_35796_a(potioneffect);
-            func_35161_c((PotionEffect)field_35170_bR.get(Integer.valueOf(potioneffect.func_35799_a())));
+            ((PotionEffect)field_35170_bR.get(Integer.valueOf(potioneffect.getPotionID()))).func_35796_a(potioneffect);
+            func_35161_c((PotionEffect)field_35170_bR.get(Integer.valueOf(potioneffect.getPotionID())));
         } else
         {
-            field_35170_bR.put(Integer.valueOf(potioneffect.func_35799_a()), potioneffect);
+            field_35170_bR.put(Integer.valueOf(potioneffect.getPotionID()), potioneffect);
             func_35164_b(potioneffect);
         }
     }
@@ -1096,13 +1096,13 @@ public abstract class EntityLiving extends Entity
     protected float func_35166_t_()
     {
         float f = 1.0F;
-        if(func_35160_a(Potion.field_35677_c))
+        if(func_35160_a(Potion.potionSpeed))
         {
-            f *= 1.0F + 0.2F * (float)(func_35167_b(Potion.field_35677_c).func_35801_c() + 1);
+            f *= 1.0F + 0.2F * (float)(func_35167_b(Potion.potionSpeed).func_35801_c() + 1);
         }
-        if(func_35160_a(Potion.field_35674_d))
+        if(func_35160_a(Potion.potionSlowdown))
         {
-            f *= 1.0F - 0.15F * (float)(func_35167_b(Potion.field_35674_d).func_35801_c() + 1);
+            f *= 1.0F - 0.15F * (float)(func_35167_b(Potion.potionSlowdown).func_35801_c() + 1);
         }
         return f;
     }

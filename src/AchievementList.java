@@ -43,7 +43,7 @@ public class AchievementList
     public static Achievement killEnemy;
     public static Achievement killCow;
     public static Achievement flyPig;
-    public static Achievement field_35608_v;
+    public static Achievement snipeSkeleton;
 
     static 
     {
@@ -64,7 +64,7 @@ public class AchievementList
         killEnemy = (new Achievement(13, "killEnemy", 8, -1, Item.bone, buildSword)).registerAchievement();
         killCow = (new Achievement(14, "killCow", 7, -3, Item.leather, buildSword)).registerAchievement();
         flyPig = (new Achievement(15, "flyPig", 8, -4, Item.saddle, killCow)).setSpecial().registerAchievement();
-        field_35608_v = (new Achievement(16, "snipeSkeleton", 7, 0, Item.bow, killEnemy)).setSpecial().registerAchievement();
+        snipeSkeleton = (new Achievement(16, "snipeSkeleton", 7, 0, Item.bow, killEnemy)).setSpecial().registerAchievement();
         System.out.println((new StringBuilder()).append(achievementList.size()).append(" achievements").toString());
     }
 }

@@ -21,7 +21,7 @@ public class ItemShears extends Item
 
     public boolean onBlockDestroyed(ItemStack itemstack, int i, int j, int k, int l, EntityLiving entityliving)
     {
-        if(i == Block.leaves.blockID || i == Block.web.blockID || i == Block.tallGrass.blockID || i == Block.field_35278_bv.blockID)
+        if(i == Block.leaves.blockID || i == Block.web.blockID || i == Block.tallGrass.blockID || i == Block.vine.blockID)
         {
             itemstack.damageItem(1, entityliving);
             return true;

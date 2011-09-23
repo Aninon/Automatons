@@ -226,7 +226,7 @@ public abstract class Entity
             {
                 if(fire % 20 == 0)
                 {
-                    attackEntityFrom(DamageSource.field_35540_b, 1);
+                    attackEntityFrom(DamageSource.onFire, 1);
                 }
                 fire--;
             }
@@ -251,7 +251,7 @@ public abstract class Entity
     {
         if(!isImmuneToFire)
         {
-            attackEntityFrom(DamageSource.field_35541_c, 4);
+            attackEntityFrom(DamageSource.lava, 4);
             fire = 600;
         }
     }
@@ -566,7 +566,7 @@ public abstract class Entity
     {
         if(!isImmuneToFire)
         {
-            attackEntityFrom(DamageSource.field_35542_a, i);
+            attackEntityFrom(DamageSource.inFire, i);
         }
     }
 
@@ -650,7 +650,7 @@ public abstract class Entity
         {
             double d = (boundingBox.maxY - boundingBox.minY) * 0.66000000000000003D;
             int k = MathHelper.floor_double((posY - (double)yOffset) + d);
-            return worldObj.func_35451_b(i, k, j, 0);
+            return worldObj.getLightBrightnessFromSunlight(i, k, j, 0);
         } else
         {
             return 0;
@@ -1166,7 +1166,7 @@ public abstract class Entity
         return getEntityFlag(3);
     }
 
-    public void func_35113_c(boolean flag)
+    public void setSprinting(boolean flag)
     {
         setFlag(3, flag);
     }

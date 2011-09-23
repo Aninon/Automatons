@@ -21,7 +21,7 @@ public class ChunkProvider
         droppedChunksSet = new HashSet();
         chunkMap = new PlayerList();
         chunkList = new ArrayList();
-        field_28064_b = new EmptyChunk(world, new byte[32768], 0, 0);
+        emptyChunk = new EmptyChunk(world, new byte[32768], 0, 0);
         worldObj = world;
         chunkLoader = ichunkloader;
         chunkProvider = ichunkprovider;
@@ -54,14 +54,14 @@ public class ChunkProvider
             int k = 0x1c9c3c;
             if(i < -k || j < -k || i >= k || j >= k)
             {
-                return field_28064_b;
+                return emptyChunk;
             }
             chunk = loadChunkFromFile(i, j);
             if(chunk == null)
             {
                 if(chunkProvider == null)
                 {
-                    chunk = field_28064_b;
+                    chunk = emptyChunk;
                 } else
                 {
                     chunk = chunkProvider.provideChunk(i, j);
@@ -74,7 +74,7 @@ public class ChunkProvider
                 chunk.func_4143_d();
                 chunk.onChunkLoad();
             }
-            chunk.func_35843_a(this, this, i, j);
+            chunk.populateChunk(this, this, i, j);
         }
         return chunk;
     }
@@ -235,7 +235,7 @@ public class ChunkProvider
     }
 
     private Set droppedChunksSet;
-    private Chunk field_28064_b;
+    private Chunk emptyChunk;
     private IChunkProvider chunkProvider;
     private IChunkLoader chunkLoader;
     private PlayerList chunkMap;

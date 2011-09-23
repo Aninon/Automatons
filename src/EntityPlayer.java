@@ -26,7 +26,7 @@ public abstract class EntityPlayer extends EntityLiving
     {
         super(world);
         inventory = new InventoryPlayer(this);
-        field_35217_av = new FoodStats();
+        foodStats = new FoodStats();
         field_35216_aw = 0;
         field_9371_f = 0;
         score = 0;
@@ -35,7 +35,7 @@ public abstract class EntityPlayer extends EntityLiving
         field_35214_aG = 0;
         timeUntilPortal = 20;
         inPortal = false;
-        field_35212_aW = new PlayerCapabilities();
+        capabilities = new PlayerCapabilities();
         field_35215_ba = 0.1F;
         field_35213_bb = 0.02F;
         damageRemainder = 0;
@@ -166,11 +166,11 @@ public abstract class EntityPlayer extends EntityLiving
             closeScreen();
             craftingInventory = inventorySlots;
         }
-        if(field_35212_aW.field_35757_b)
+        if(capabilities.isFlying)
         {
             for(int i = 0; i < 8; i++) { }
         }
-        if(fire > 0 && field_35212_aW.field_35759_a)
+        if(fire > 0 && capabilities.disableDamage)
         {
             fire = 0;
         }
@@ -215,7 +215,7 @@ public abstract class EntityPlayer extends EntityLiving
         }
         if(!worldObj.multiplayerWorld)
         {
-            field_35217_av.func_35768_a(this);
+            foodStats.func_35768_a(this);
         }
     }
 
@@ -307,13 +307,13 @@ public abstract class EntityPlayer extends EntityLiving
 
     private int func_35202_aE()
     {
-        if(func_35160_a(Potion.field_35675_e))
+        if(func_35160_a(Potion.potionDigSpeed))
         {
-            return 6 - (1 + func_35167_b(Potion.field_35675_e).func_35801_c()) * 1;
+            return 6 - (1 + func_35167_b(Potion.potionDigSpeed).func_35801_c()) * 1;
         }
-        if(func_35160_a(Potion.field_35672_f))
+        if(func_35160_a(Potion.potionDigSlow))
         {
-            return 6 + (1 + func_35167_b(Potion.field_35672_f).func_35801_c()) * 2;
+            return 6 + (1 + func_35167_b(Potion.potionDigSlow).func_35801_c()) * 2;
         } else
         {
             return 6;
@@ -496,13 +496,13 @@ public abstract class EntityPlayer extends EntityLiving
         {
             f /= 5F;
         }
-        if(func_35160_a(Potion.field_35675_e))
+        if(func_35160_a(Potion.potionDigSpeed))
         {
-            f *= 1.0F + (float)(func_35167_b(Potion.field_35675_e).func_35801_c() + 1) * 0.2F;
+            f *= 1.0F + (float)(func_35167_b(Potion.potionDigSpeed).func_35801_c() + 1) * 0.2F;
         }
-        if(func_35160_a(Potion.field_35672_f))
+        if(func_35160_a(Potion.potionDigSlow))
         {
-            f *= 1.0F - (float)(func_35167_b(Potion.field_35672_f).func_35801_c() + 1) * 0.2F;
+            f *= 1.0F - (float)(func_35167_b(Potion.potionDigSlow).func_35801_c() + 1) * 0.2F;
         }
         return f;
     }
@@ -520,9 +520,9 @@ public abstract class EntityPlayer extends EntityLiving
         dimension = nbttagcompound.getInteger("Dimension");
         sleeping = nbttagcompound.getBoolean("Sleeping");
         sleepTimer = nbttagcompound.getShort("SleepTimer");
-        field_35211_aX = nbttagcompound.getInteger("Xp");
-        field_35210_aY = nbttagcompound.getInteger("XpLevel");
-        field_35209_aZ = nbttagcompound.getInteger("XpTotal");
+        currentXP = nbttagcompound.getInteger("Xp");
+        playerLevel = nbttagcompound.getInteger("XpLevel");
+        totalXP = nbttagcompound.getInteger("XpTotal");
         if(sleeping)
         {
             bedChunkCoordinates = new ChunkCoordinates(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ));
@@ -532,7 +532,7 @@ public abstract class EntityPlayer extends EntityLiving
         {
             playerSpawnCoordinate = new ChunkCoordinates(nbttagcompound.getInteger("SpawnX"), nbttagcompound.getInteger("SpawnY"), nbttagcompound.getInteger("SpawnZ"));
         }
-        field_35217_av.func_35766_a(nbttagcompound);
+        foodStats.readStatsFromNBT(nbttagcompound);
     }
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
@@ -542,16 +542,16 @@ public abstract class EntityPlayer extends EntityLiving
         nbttagcompound.setInteger("Dimension", dimension);
         nbttagcompound.setBoolean("Sleeping", sleeping);
         nbttagcompound.setShort("SleepTimer", (short)sleepTimer);
-        nbttagcompound.setInteger("Xp", field_35211_aX);
-        nbttagcompound.setInteger("XpLevel", field_35210_aY);
-        nbttagcompound.setInteger("XpTotal", field_35209_aZ);
+        nbttagcompound.setInteger("Xp", currentXP);
+        nbttagcompound.setInteger("XpLevel", playerLevel);
+        nbttagcompound.setInteger("XpTotal", totalXP);
         if(playerSpawnCoordinate != null)
         {
             nbttagcompound.setInteger("SpawnX", playerSpawnCoordinate.posX);
             nbttagcompound.setInteger("SpawnY", playerSpawnCoordinate.posY);
             nbttagcompound.setInteger("SpawnZ", playerSpawnCoordinate.posZ);
         }
-        field_35217_av.func_35763_b(nbttagcompound);
+        foodStats.writeStatsToNBT(nbttagcompound);
     }
 
     public void displayGUIChest(IInventory iinventory)
@@ -578,7 +578,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-        if(field_35212_aW.field_35759_a && !damagesource.func_35529_d())
+        if(capabilities.disableDamage && !damagesource.func_35529_d())
         {
             return false;
         }
@@ -591,7 +591,7 @@ public abstract class EntityPlayer extends EntityLiving
         {
             wakeUpPlayer(true, true, false);
         }
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if((entity instanceof EntityMob) || (entity instanceof EntityArrow))
         {
             if(worldObj.difficultySetting == 0)
@@ -747,7 +747,7 @@ public abstract class EntityPlayer extends EntityLiving
             {
                 i = (i * 3) / 2 + 1;
             }
-            boolean flag1 = entity.attackEntityFrom(DamageSource.func_35527_a(this), i);
+            boolean flag1 = entity.attackEntityFrom(DamageSource.causePlayerDamage(this), i);
             if(flag1)
             {
                 if(func_35117_Q())
@@ -755,7 +755,7 @@ public abstract class EntityPlayer extends EntityLiving
                     entity.addVelocity(-MathHelper.sin((rotationYaw * 3.141593F) / 180F) * 1.0F, 0.10000000000000001D, MathHelper.cos((rotationYaw * 3.141593F) / 180F) * 1.0F);
                     motionX *= 0.59999999999999998D;
                     motionZ *= 0.59999999999999998D;
-                    func_35113_c(false);
+                    setSprinting(false);
                 }
                 if(flag)
                 {
@@ -1043,7 +1043,7 @@ public abstract class EntityPlayer extends EntityLiving
         double d = posX;
         double d1 = posY;
         double d2 = posZ;
-        if(field_35212_aW.field_35757_b)
+        if(capabilities.isFlying)
         {
             double d3 = motionY;
             float f2 = field_35168_bw;
@@ -1146,7 +1146,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     protected void fall(float f)
     {
-        if(field_35212_aW.field_35758_c)
+        if(capabilities.field_35758_c)
         {
             return;
         }
@@ -1204,50 +1204,50 @@ public abstract class EntityPlayer extends EntityLiving
         }
     }
 
-    public void func_35204_c(int i)
+    public void increaseXP(int i)
     {
-        field_35211_aX += i;
-        field_35209_aZ += i;
-        for(; field_35211_aX >= func_35193_as(); func_35203_aG())
+        currentXP += i;
+        totalXP += i;
+        for(; currentXP >= xpBarCap(); increaseLevel())
         {
-            field_35211_aX -= func_35193_as();
+            currentXP -= xpBarCap();
         }
 
     }
 
-    public int func_35193_as()
+    public int xpBarCap()
     {
-        return (field_35210_aY + 1) * 10;
+        return (playerLevel + 1) * 10;
     }
 
-    private void func_35203_aG()
+    private void increaseLevel()
     {
-        field_35210_aY++;
+        playerLevel++;
     }
 
     public void func_35198_d(float f)
     {
-        if(field_35212_aW.field_35759_a)
+        if(capabilities.disableDamage)
         {
             return;
         }
         if(!worldObj.multiplayerWorld)
         {
-            field_35217_av.func_35762_a(f);
+            foodStats.func_35762_a(f);
         }
     }
 
-    public FoodStats func_35191_at()
+    public FoodStats getFoodStats()
     {
-        return field_35217_av;
+        return foodStats;
     }
 
     public boolean func_35197_b(boolean flag)
     {
-        return (flag || field_35217_av.func_35770_c()) && !field_35212_aW.field_35759_a;
+        return (flag || foodStats.func_35770_c()) && !capabilities.disableDamage;
     }
 
-    public boolean func_35194_au()
+    public boolean shouldHeal()
     {
         return health > 0 && health < 20;
     }
@@ -1273,7 +1273,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     protected int a(EntityPlayer entityplayer)
     {
-        return field_35209_aZ >> 1;
+        return totalXP >> 1;
     }
 
     protected boolean func_35163_av()
@@ -1284,7 +1284,7 @@ public abstract class EntityPlayer extends EntityLiving
     public InventoryPlayer inventory;
     public Container inventorySlots;
     public Container craftingInventory;
-    protected FoodStats field_35217_av;
+    protected FoodStats foodStats;
     protected int field_35216_aw;
     public byte field_9371_f;
     public int score;
@@ -1314,10 +1314,10 @@ public abstract class EntityPlayer extends EntityLiving
     protected boolean inPortal;
     public float timeInPortal;
     public float prevTimeInPortal;
-    public PlayerCapabilities field_35212_aW;
-    public int field_35211_aX;
-    public int field_35210_aY;
-    public int field_35209_aZ;
+    public PlayerCapabilities capabilities;
+    public int currentXP;
+    public int playerLevel;
+    public int totalXP;
     private ItemStack field_34907_d;
     private int field_34906_e;
     protected float field_35215_ba;

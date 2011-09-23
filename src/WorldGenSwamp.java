@@ -167,10 +167,10 @@ label1:
 
     private void func_35265_a(World world, int i, int j, int k, int l)
     {
-        world.setBlockAndMetadataWithNotify(i, j, k, Block.field_35278_bv.blockID, l);
+        world.setBlockAndMetadataWithNotify(i, j, k, Block.vine.blockID, l);
         for(int i1 = 4; world.getBlockId(i, --j, k) == 0 && i1 > 0; i1--)
         {
-            world.setBlockAndMetadataWithNotify(i, j, k, Block.field_35278_bv.blockID, l);
+            world.setBlockAndMetadataWithNotify(i, j, k, Block.vine.blockID, l);
         }
 
     }

@@ -12,39 +12,39 @@ import java.util.*;
 public class KeyBinding
 {
 
-    public static void func_35960_a(int i)
+    public static void onTick(int i)
     {
-        KeyBinding keybinding = (KeyBinding)field_35966_b.lookup(i);
+        KeyBinding keybinding = (KeyBinding)hash.lookup(i);
         if(keybinding != null)
         {
-            keybinding.field_35964_f++;
+            keybinding.pressTime++;
         }
     }
 
-    public static void func_35963_a(int i, boolean flag)
+    public static void setKeyBindState(int i, boolean flag)
     {
-        KeyBinding keybinding = (KeyBinding)field_35966_b.lookup(i);
+        KeyBinding keybinding = (KeyBinding)hash.lookup(i);
         if(keybinding != null)
         {
-            keybinding.field_35965_e = flag;
+            keybinding.pressed = flag;
         }
     }
 
-    public static void func_35959_a()
+    public static void unPressAllKeys()
     {
         KeyBinding keybinding;
-        for(Iterator iterator = field_35967_a.iterator(); iterator.hasNext(); keybinding.func_35958_d())
+        for(Iterator iterator = keybindArray.iterator(); iterator.hasNext(); keybinding.unpressKey())
         {
             keybinding = (KeyBinding)iterator.next();
         }
 
     }
 
-    public static void func_35961_b()
+    public static void resetKeyBindingArrayAndHash()
     {
-        field_35966_b.clearMap();
+        hash.clearMap();
         KeyBinding keybinding;
-        for(Iterator iterator = field_35967_a.iterator(); iterator.hasNext(); field_35966_b.addKey(keybinding.keyCode, keybinding))
+        for(Iterator iterator = keybindArray.iterator(); iterator.hasNext(); hash.addKey(keybinding.keyCode, keybinding))
         {
             keybinding = (KeyBinding)iterator.next();
         }
@@ -53,36 +53,36 @@ public class KeyBinding
 
     public KeyBinding(String s, int i)
     {
-        field_35964_f = 0;
+        pressTime = 0;
         keyDescription = s;
         keyCode = i;
-        field_35967_a.add(this);
-        field_35966_b.addKey(i, this);
+        keybindArray.add(this);
+        hash.addKey(i, this);
     }
 
-    public boolean func_35962_c()
+    public boolean isPressed()
     {
-        if(field_35964_f == 0)
+        if(pressTime == 0)
         {
             return false;
         } else
         {
-            field_35964_f--;
+            pressTime--;
             return true;
         }
     }
 
-    private void func_35958_d()
+    private void unpressKey()
     {
-        field_35964_f = 0;
-        field_35965_e = false;
+        pressTime = 0;
+        pressed = false;
     }
 
-    public static List field_35967_a = new ArrayList();
-    public static MCHash field_35966_b = new MCHash();
+    public static List keybindArray = new ArrayList();
+    public static MCHash hash = new MCHash();
     public String keyDescription;
     public int keyCode;
-    public boolean field_35965_e;
-    public int field_35964_f;
+    public boolean pressed;
+    public int pressTime;
 
 }

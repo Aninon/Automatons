@@ -118,7 +118,7 @@ public class ItemBucket extends Item
                     {
                         world.setBlockAndMetadataWithNotify(i, j, k, isFull, 0);
                     }
-                    if(entityplayer.field_35212_aW.field_35756_d)
+                    if(entityplayer.capabilities.field_35756_d)
                     {
                         return itemstack;
                     } else

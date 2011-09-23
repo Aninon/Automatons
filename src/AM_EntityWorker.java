@@ -15,7 +15,7 @@ import java.util.*;
 //setTarget( = setEntityToAttack(
 //hasCurrentTarget() = func_25021_O()
 //isMovementCeased=func_25026_u
-//func_31026_E =func_31021_B  wander
+//updateWanderPath =func_31021_B  wander
 public class AM_EntityWorker extends EntityAnimal
 {
 
@@ -49,10 +49,10 @@ public class AM_EntityWorker extends EntityAnimal
 		
 	}
 	
-	protected void func_31026_E() //kills wandering!
+	protected void updateWanderPath() //kills wandering!
 	{
 		if(getMode()!=1){
-			super.func_31026_E();
+			super.updateWanderPath();
 		}
 	}
 
@@ -162,7 +162,7 @@ public class AM_EntityWorker extends EntityAnimal
 	/*
 	public void onDeath(DamageSource damagesource)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(scoreValue >= 0 && entity != null)
         {
             entity.addToPlayerScore(this, scoreValue);
@@ -621,7 +621,7 @@ public class AM_EntityWorker extends EntityAnimal
 	
 	public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-            Entity entity = damagesource.func_35532_a();
+            Entity entity = damagesource.getEntity();
             if(entity != null && entity != this && (entity instanceof EntityPlayer) && ((EntityPlayer)entity).username==getBotOwner() )
             {
                i=20;

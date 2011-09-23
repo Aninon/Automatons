@@ -112,7 +112,7 @@ public class BlockCake extends Block
     {
         if(entityplayer.func_35197_b(false))
         {
-            entityplayer.func_35191_at().func_35771_a(2, 0.1F);
+            entityplayer.getFoodStats().func_35771_a(2, 0.1F);
             int l = world.getBlockMetadata(i, j, k) + 1;
             if(l >= 6)
             {

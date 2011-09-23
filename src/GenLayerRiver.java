@@ -36,12 +36,12 @@ public class GenLayerRiver extends GenLayer
                 int k3 = ai[j2 + 1 + (i2 + 1) * k1];
                 if(k3 == 0 || k2 == 0 || l2 == 0 || i3 == 0 || j3 == 0)
                 {
-                    ai1[j2 + i2 * k] = BiomeGenBase.field_35487_i.field_35494_y;
+                    ai1[j2 + i2 * k] = BiomeGenBase.river.biomeID;
                     continue;
                 }
                 if(k3 != k2 || k3 != i3 || k3 != l2 || k3 != j3)
                 {
-                    ai1[j2 + i2 * k] = BiomeGenBase.field_35487_i.field_35494_y;
+                    ai1[j2 + i2 * k] = BiomeGenBase.river.biomeID;
                 } else
                 {
                     ai1[j2 + i2 * k] = -1;

@@ -83,7 +83,7 @@ public class AM_EntityGolem2 extends EntityAnimal
 	public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
 		moveSpeed = 1.6F;
-		Entity e=damagesource.func_35532_a();
+		Entity e=damagesource.getEntity();
 		if(e!=null || e!=this){
 			setEntityToAttack(e);
 		}
@@ -106,7 +106,7 @@ public class AM_EntityGolem2 extends EntityAnimal
 	
 	protected boolean attackEntityAsMob(Entity entity)
     {
-        return entity.attackEntityFrom(DamageSource.func_35525_a(this), 3);
+        return entity.attackEntityFrom(DamageSource.causeMobDamage(this), 3);
     }
 
     protected void attackEntity(Entity entity, float f)

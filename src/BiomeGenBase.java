@@ -26,10 +26,10 @@ public abstract class BiomeGenBase
         topBlock = (byte)Block.grass.blockID;
         fillerBlock = (byte)Block.dirt.blockID;
         field_6502_q = 0x4ee031;
-        field_35492_q = 0.1F;
-        field_35491_r = 0.3F;
-        field_35490_s = 0.5F;
-        field_35489_t = 0.5F;
+        minHeight = 0.1F;
+        maxHeight = 0.3F;
+        temperature = 0.5F;
+        rainfall = 0.5F;
         spawnableMonsterList = new ArrayList();
         spawnableCreatureList = new ArrayList();
         spawnableWaterCreatureList = new ArrayList();
@@ -38,8 +38,8 @@ public abstract class BiomeGenBase
         field_35480_A = new WorldGenBigTree();
         field_35481_B = new WorldGenForest();
         field_35482_C = new WorldGenSwamp();
-        field_35494_y = i;
-        field_35486_a[i] = this;
+        biomeID = i;
+        biomeList[i] = this;
         field_35488_u = func_35475_a();
         spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntitySheep.class, 12, 4, 4));
         spawnableCreatureList.add(new SpawnListEntry(net.minecraft.src.EntityPig.class, 10, 4, 4));
@@ -59,17 +59,17 @@ public abstract class BiomeGenBase
         return new BiomeDecorator(this);
     }
 
-    private BiomeGenBase func_35478_a(float f, float f1)
+    private BiomeGenBase setTemperatureRainfall(float f, float f1)
     {
-        field_35490_s = f;
-        field_35489_t = f1;
+        temperature = f;
+        rainfall = f1;
         return this;
     }
 
-    private BiomeGenBase func_35479_b(float f, float f1)
+    private BiomeGenBase setMinMaxHeight(float f, float f1)
     {
-        field_35492_q = f;
-        field_35491_r = f1;
+        minHeight = f;
+        maxHeight = f1;
         return this;
     }
 
@@ -164,46 +164,51 @@ public abstract class BiomeGenBase
 
     public final int func_35476_e()
     {
-        return (int)(field_35489_t * 65536F);
+        return (int)(rainfall * 65536F);
     }
 
     public final int func_35474_f()
     {
-        return (int)(field_35490_s * 65536F);
+        return (int)(temperature * 65536F);
     }
 
     public void func_35477_a(World world, Random random, int i, int j)
     {
-        field_35488_u.func_35881_a(world, random, i, j);
+        field_35488_u.decorate(world, random, i, j);
     }
 
-    public static final BiomeGenBase field_35486_a[] = new BiomeGenBase[256];
-    public static final BiomeGenBase field_35484_b = (new BiomeGenOcean(0)).setColor(112).setBiomeName("Ocean").func_35479_b(-1F, 0.5F);
-    public static final BiomeGenBase field_35485_c = (new BiomeGenPlains(1)).setColor(0x8db360).setBiomeName("Plains").func_35478_a(0.8F, 0.4F);
-    public static final BiomeGenBase desert = (new BiomeGenDesert(2)).setColor(0xfa9418).setBiomeName("Desert").setDisableRain().func_35478_a(2.0F, 0.0F).func_35479_b(0.1F, 0.2F);
-    public static final BiomeGenBase field_35483_e = (new BiomeGenHills(3)).setColor(0x606060).setBiomeName("Extreme Hills").func_35479_b(0.2F, 1.8F).func_35478_a(0.2F, 0.3F);
-    public static final BiomeGenBase forest = (new BiomeGenForest(4)).setColor(0x56621).setBiomeName("Forest").func_4124_a(0x4eba31).func_35478_a(0.7F, 0.8F);
-    public static final BiomeGenBase taiga = (new BiomeGenTaiga(5)).setColor(0xb6659).setBiomeName("Taiga").func_4124_a(0x4eba31).func_35478_a(0.3F, 0.8F).func_35479_b(0.1F, 0.4F);
-    public static final BiomeGenBase swampland = (new BiomeGenSwamp(6)).setColor(0x7f9b2).setBiomeName("Swampland").func_4124_a(0x8baf48).func_35479_b(-0.2F, 0.1F).func_35478_a(0.8F, 0.9F);
-    public static final BiomeGenBase field_35487_i = (new BiomeGenRiver(7)).setColor(255).setBiomeName("River").func_35479_b(-0.5F, 0.0F);
+    public static final BiomeGenBase biomeList[] = new BiomeGenBase[256];
+    public static final BiomeGenBase ocean = (new BiomeGenOcean(0)).setColor(112).setBiomeName("Ocean").setMinMaxHeight(-1F, 0.5F);
+    public static final BiomeGenBase plains = (new BiomeGenPlains(1)).setColor(0x8db360).setBiomeName("Plains").setTemperatureRainfall(0.8F, 0.4F);
+    public static final BiomeGenBase desert = (new BiomeGenDesert(2)).setColor(0xfa9418).setBiomeName("Desert").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setMinMaxHeight(0.1F, 0.2F);
+    public static final BiomeGenBase hills = (new BiomeGenHills(3)).setColor(0x606060).setBiomeName("Extreme Hills").setMinMaxHeight(0.2F, 1.8F).setTemperatureRainfall(0.2F, 0.3F);
+    public static final BiomeGenBase forest = (new BiomeGenForest(4)).setColor(0x56621).setBiomeName("Forest").func_4124_a(0x4eba31).setTemperatureRainfall(0.7F, 0.8F);
+    public static final BiomeGenBase taiga = (new BiomeGenTaiga(5)).setColor(0xb6659).setBiomeName("Taiga").func_4124_a(0x4eba31).setTemperatureRainfall(0.3F, 0.8F).setMinMaxHeight(0.1F, 0.4F);
+    public static final BiomeGenBase swampland = (new BiomeGenSwamp(6)).setColor(0x7f9b2).setBiomeName("Swampland").func_4124_a(0x8baf48).setMinMaxHeight(-0.2F, 0.1F).setTemperatureRainfall(0.8F, 0.9F);
+    public static final BiomeGenBase river = (new BiomeGenRiver(7)).setColor(255).setBiomeName("River").setMinMaxHeight(-0.5F, 0.0F);
     public static final BiomeGenBase hell = (new BiomeGenHell(8)).setColor(0xff0000).setBiomeName("Hell").setDisableRain();
     public static final BiomeGenBase sky = (new BiomeGenSky(9)).setColor(0x8080ff).setBiomeName("Sky").setDisableRain();
-    public String biomeName;
+    public static final BiomeGenBase tech = (new AM_BiomeGenTech(10)).setColor(0xffffff).setBiomeName("Tech").func_4124_a(0xffffff).setMinMaxHeight(0.8f, 0.8f).setTemperatureRainfall(0.2F, 0.1F);
+	//BiomeGenTaiga BiomeGenPlains
+	
+	
+	
+	public String biomeName;
     public int color;
     public byte topBlock;
     public byte fillerBlock;
     public int field_6502_q;
-    public float field_35492_q;
-    public float field_35491_r;
-    public float field_35490_s;
-    public float field_35489_t;
+    public float minHeight;
+    public float maxHeight;
+    public float temperature;
+    public float rainfall;
     public BiomeDecorator field_35488_u;
     protected List spawnableMonsterList;
     protected List spawnableCreatureList;
     protected List spawnableWaterCreatureList;
     private boolean enableSnow;
     private boolean enableRain;
-    public final int field_35494_y;
+    public final int biomeID;
     protected WorldGenTrees field_35493_z;
     protected WorldGenBigTree field_35480_A;
     protected WorldGenForest field_35481_B;

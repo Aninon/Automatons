@@ -59,7 +59,7 @@ public class ItemDye extends Item
                 }
                 return true;
             }
-            if(i1 == Block.field_35283_bu.blockID || i1 == Block.field_35284_bt.blockID)
+            if(i1 == Block.melonStem.blockID || i1 == Block.pumpkinStem.blockID)
             {
                 if(!world.multiplayerWorld)
                 {

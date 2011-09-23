@@ -18,7 +18,7 @@ import java.util.*;
 //setTarget( = setEntityToAttack(
 //hasCurrentTarget() = func_25021_O()
 //getIsWolfsFavoriteMeat()=func_25010_k()
-//func_25026_x=func_25018_n_
+//getVerticalFaceSpeed=func_25018_n_
 //isMovementCeased=func_25026_u
 public class AM_EntityBally extends EntityLiving
 {
@@ -78,7 +78,7 @@ protected void entityInit(){
 
     public void onDeath(DamageSource damagesource)
     {
-        Entity entity = damagesource.func_35532_a();
+        Entity entity = damagesource.getEntity();
         if(scoreValue >= 0 && entity != null)
         {
             entity.addToPlayerScore(this, scoreValue);
